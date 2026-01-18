@@ -1,0 +1,319 @@
+
+% =============================================
+%  Encoding and Fonts
+% =============================================
+\usepackage[utf8]{inputenc} % UTF-8 encoding for compatibility
+\usepackage{lmodern}        % Latin Modern for improved scaling and clarity
+\usepackage{microtype}      % Enhances spacing and readability
+\usepackage{amsmath, amssymb}
+\usepackage{caption}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{placeins}
+
+% ---- Sans-Serif Font (Helvetica) ----
+\usepackage{helvet}              % Use Helvetica for a modern sans-serif look
+\renewcommand{\familydefault}{\sfdefault}  % Set sans-serif as the default font
+
+% ---- Monospace Font (Fira Code) ----
+\usepackage[T1]{fontenc}  % Ensure proper font encoding
+\usepackage{FiraMono}      % Use Fira Mono for monospaced text
+%\renewcommand{\ttdefault}{firamono} % Apply Fira Code globally to monospace
+\renewcommand{\ttdefault}{zi4} % Apply Fira Code globally to monospace
+
+% =============================================
+%  Graphics and Colors
+% =============================================
+\usepackage{graphicx} % Enables image handling
+\usepackage[table]{xcolor}
+\usepackage{colortbl}        % explicitly load colortbl for table colors
+\usepackage{longtable}
+
+% fixing latex3 bug: 
+%\makeatletter
+%\providecommand{\g__tbl_row_int}{0}
+%\makeatother
+
+% ---- Define DWD-Inspired Colors ----
+\definecolor{DWDblue}{RGB}{0,68,136}     % Primary DWD blue
+\definecolor{dwdspecial}{RGB}{50,30,80}  % Slightly lighter blue for contrast
+\definecolor{dwdblue}{RGB}{0,68,136}     % Alternative DWD blue (identical to primary)
+% Define Colors
+\definecolor{codegreen}{rgb}{0.0, 0.5, 0.0} % Dark green for comments
+\definecolor{codeblue}{rgb}{0.0, 0.2, 0.6} % Muted dark blue for keywords
+\definecolor{codered}{rgb}{0.6, 0.1, 0.1}  % Muted red for strings
+\definecolor{codegray}{rgb}{0.4, 0.4, 0.4} % Gray for numbers and operators
+\definecolor{backcolor}{rgb}{0.97, 0.97, 0.97} % Very light gray background
+%\definecolor{DWDblue}{rgb}{0, 0.35, 0.7} % Define DWDblue
+% Define a light blue color
+\definecolor{lightblue}{RGB}{220, 230, 241} % Light blue for alternating rows
+\definecolor{headerblue}{RGB}{180, 200, 230} % Slightly darker blue for headers
+\definecolor{appendixblue}{RGB}{200, 220, 240} % Blue for appendix header
+
+
+% --- Page Geometry ---
+\usepackage[margin=1in]{geometry}
+
+% --- Fancy Headers ---
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\nouppercase{\leftmark}}
+\fancyhead[R]{\nouppercase{\rightmark}}
+\fancyfoot[C]{\thepage}
+% Update chapter and section marks for header display
+\renewcommand{\chaptermark}[1]{\markboth{Chapter \thechapter: #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{Section \thesection: #1}}
+
+% --- Section and Chapter Title Formatting ---
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+  {\normalfont\Huge\bfseries\color{DWDblue}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+  
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{DWDblue}}
+  {\thesection}{1em}{}
+
+%\usepackage[utf8]{inputenc}
+
+% --- For Dummy Text ---
+\usepackage{lipsum}
+
+\fancyhead[R]{%
+  \raisebox{-0.5\height}{%
+    \includegraphics[height=16pt]{images/img00/ecmwf.png}\hspace{6pt}%
+    \includegraphics[height=16pt]{images/img00/university-of-reading-logo-vector.png}\hspace{6pt}%
+    \raisebox{0.5mm}{\includegraphics[height=16pt]{images/img00/DWD-Logo_2013.svg.png}}%
+  }%
+}
+%\fancyhead[R]{\includegraphics[width=0.2\textwidth]{images/img00/DWD-Logo_2013.svg.png}}
+\setlength{\headsep}{40pt}  % Adjust the value as needed
+
+\usepackage{listings}
+\usepackage[listings, breakable]{tcolorbox} % Enable listings inside tcolorbox
+%\usepackage{xcolor}
+\usepackage{accsupp}
+
+\lstdefinelanguage{Markdown}{
+  morekeywords={[1]\#,\#\#,\#\#\#,\#\#\#\#},
+  morekeywords={[2]*,**,---,-},
+  sensitive=false,
+  morecomment=[l][\color{gray}]{<!--},
+  morestring=[b]",
+}
+
+\lstdefinestyle{mdstyle}{
+  language=Markdown,
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  keywordstyle={[1]\color{blue}\bfseries},
+  keywordstyle={[2]\color{purple}},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+}
+
+% Define the Python syntax highlighting style
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,    % Monospace font
+    keywordstyle=\color{codeblue}\bfseries, % Keywords in blue
+    stringstyle=\color{codered},  % Strings in red
+    commentstyle=\color{codegreen}\itshape, % Comments in green italics
+    numberstyle=\tiny\color{codegray}, % Line numbers in gray
+    backgroundcolor=\color{gray!5}, % Light gray background
+    breaklines=true,
+    columns=fixed,
+    showspaces=false,
+    showstringspaces=false,
+    keepspaces=true,
+    numbers=left, % Show line numbers
+    numbersep=5pt, % Adjust separation between numbers and text
+    xleftmargin=7pt, % **Fix: Keeps numbers inside the box**
+    framexleftmargin=15pt, % **Fix: Adds padding inside the box for numbers**
+}
+
+\lstdefinestyle{outputstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,    % Monospace font
+    keywordstyle=\color{codeblue}, % Dark blue for keywords
+    stringstyle=\color{codered},   % Muted red for strings
+    commentstyle=\color{codegreen}\itshape, % Dark green italic for comments
+    numberstyle=\color{codegray},  % Gray for numbers
+    backgroundcolor=\color{backcolor}, % Light gray background
+    breaklines=true,
+    columns=fullflexible,
+    showspaces=false,
+    showstringspaces=false,
+    keepspaces=true,
+    xleftmargin=5pt, % Moves the entire box to the right
+    framexleftmargin=5pt, % Keeps the frame aligned inside the box
+}
+
+% Define the Python syntax highlighting style
+\lstdefinestyle{pythonstyle2}{
+    language=Python,
+    basicstyle=\ttfamily\small,    % Monospace font
+    keywordstyle=\color{codeblue}\bfseries, % Keywords in blue
+    stringstyle=\color{codered},  % Strings in red
+    commentstyle=\color{codegreen}\itshape, % Comments in green italics
+    numberstyle=\tiny\color{codegray}, % Line numbers in gray
+    backgroundcolor=\color{gray!5}, % Light gray background
+    breaklines=true,
+    columns=fixed,
+    showspaces=false,
+    showstringspaces=false,
+    keepspaces=true,
+    numbers=none, % Show line numbers
+    numbersep=5pt, % Adjust separation between numbers and text
+    xleftmargin=7pt, % **Fix: Keeps numbers inside the box**
+    framexleftmargin=15pt, % **Fix: Adds padding inside the box for numbers**
+}
+
+
+\newcommand{\includeexternalcode}[2]{%
+  \begin{tcolorbox}[breakable,
+    colback=gray!5,                        % Soft light gray background
+    colframe=white,                      % Light gray thin border
+    frame style={line width=0.2pt, draw=gray!30}, % Ultra-thin frame
+    borderline west={0.2pt}{0pt}{DWDblue!50}, % Optional subtle blue accent on the left
+    arc=1.5mm,                              % Smooth rounded corners
+    left=2mm, right=2mm, top=1mm, bottom=1mm, % Modern compact spacing
+    before skip=8pt, after skip=8pt,         % Keeps spacing subtle
+    coltitle=gray!100,                          % **Fix: Ensure title text is black**
+    title={#1},                             % Box title
+    fonttitle=\bfseries\footnotesize        % Small, clean, modern title
+  ]
+    \lstinputlisting[style=pythonstyle]{code/#2}
+  \end{tcolorbox}%
+}
+
+
+\newcommand{\includeexternaltext}[2]{%
+  \begin{tcolorbox}[breakable,
+    colback=gray!5,
+    colframe=white, % Use a slightly visible gray border
+		coltitle=black
+    title={#1},
+    left=2mm,
+    right=2mm,
+    top=2mm,
+    bottom=2mm,
+    before skip=8pt, after skip=8pt,         % Keeps spacing subtle
+    listing only,
+    enhanced jigsaw % Ensures compatibility with lstlisting
+  ]
+    \lstinputlisting[style=pythonstyle]{code/#2}
+  \end{tcolorbox}%
+}
+
+
+\newtcblisting{codeonly}[2][]{%
+  listing only,
+  listing options={
+		style=pythonstyle, 
+		basicstyle=\ttfamily\fontsize{9pt}{13pt}\selectfont,
+		tabsize=2,          % Tabs = 2 spaces
+    showtabs=false      % Don't show visible tab markers
+		},
+  breakable,
+  colback=gray!5,
+  colframe=gray!30,
+  boxrule=0.2pt,
+  arc=1.5mm,
+  left=2mm, right=2mm, top=1mm, bottom=1mm,
+  before skip=8pt, after skip=8pt,
+  coltitle=gray!100,
+  title={#2},
+  fonttitle=\bfseries\footnotesize,
+  #1
+}
+
+
+\newtcblisting{codeonlysmall}[2][]{%
+  listing only,
+  listing options={style=pythonstyle2, basicstyle=\ttfamily\scriptsize},
+  breakable,
+  colback=gray!5,
+  colframe=gray!30,
+  boxrule=0.2pt,
+  arc=1.5mm,
+  left=2mm, right=2mm, top=1mm, bottom=1mm,
+  before skip=8pt, after skip=8pt,
+  coltitle=gray!100,
+  title={#2},
+  fonttitle=\bfseries\scriptsize,
+  #1
+}
+
+
+
+\newcommand{\runpythoncode}[1]{%
+  %\immediate\write18{cmd /c "D:/ropy/Scripts/activate && python #1"}%
+}\setlength{\parskip}{3pt}
+
+
+\newtcolorbox{recommendationbox}[1][]{%
+  colback=yellow!10,      % light yellow background
+  colframe=yellow!50!black, % darker yellow frame
+  fonttitle=\bfseries,     % bold title
+  title=Recommendation,    % title text
+  arc=4mm,                 % rounded corners
+  auto outer arc,
+  boxrule=1pt,
+  left=2mm, right=2mm, top=2mm, bottom=2mm,
+  breakable,
+  #1
+}
+
+\usepackage{verbatimbox} % to capture verbatim content into a macro
+\usepackage{accsupp}      % to override ActualText
+
+\newsavebox{\codebox}
+
+\usepackage{tikz}
+\usetikzlibrary{matrix,positioning, arrows.meta, calc}
+\usepackage{lmodern}  % Lightweight modern font
+
+
+\DeclareRobustCommand{\bbb}[1]{\textbf{\textcolor{black}{#1}}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+
+\usepackage[
+  colorlinks=true,
+  linkcolor=dwdblue,
+  urlcolor=dwdblue,
+  citecolor=dwdblue,
+  pdfborder={0 0 1}
+]{hyperref}
+
+\newcommand{\mytext}[1]{\mbox{#1}}
+
+
+
+% Required packages
+\usepackage{tocloft}  % For styling Table of Contents
+\usepackage{titlesec} % For section title formatting
+
+% Customize Table of Contents Title
+\renewcommand{\contentsname}{\color{dwdblue}Table of Contents}
+\renewcommand{\cfttoctitlefont}{\color{dwdblue}\Huge\bfseries} % ToC title color
+
+% Customize ToC Entries
+\renewcommand{\cftchapfont}{\color{dwdblue}\bfseries}  % Chapter entries
+\renewcommand{\cftsecfont}{\color{dwdblue}}            % Section entries
+\renewcommand{\cftsubsecfont}{\color{dwdblue}}         % Subsection entries
+
+% Customize Chapter Titles in Document
+\titleformat{\chapter}[display]
+  {\normalfont\Huge\bfseries\color{dwdblue}}{\chaptername\ \thechapter}{20pt}{\Huge}
+
+\setcounter{tocdepth}{1}
+
+\usepackage{enumitem}
+
+\lstset{style=outputstyle} % Set pythonstyle as the default for lstinputlisting
