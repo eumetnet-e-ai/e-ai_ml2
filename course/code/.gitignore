@@ -1,0 +1,61 @@
+# ============================================================
+# Course code examples: keep notebooks/scripts, ignore outputs
+# ============================================================
+
+# --- Python / Jupyter caches
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# --- Virtual environments
+venv/
+.venv/
+
+# --- Training / experiment outputs
+outputs/
+lightning_logs/
+.hydra/
+wandb/
+mlruns/
+*.ckpt
+*.pth
+*.pt
+
+# --- Downloaded / generated data (keep repo small)
+*.grib
+*.grib2
+*.grb
+*.bufr
+*.idx
+*.nc
+*.zarr/
+*.h5
+*.hdf5
+*.npz
+*.npy
+*.csv
+
+# compressed data
+*.bz2
+*.gz
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# --- Generated plots / figures (optional but recommended)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+
+# --- OS / editor junk
+.DS_Store
+*.swp
+*.kate-swp
+
+# --- "copy duplicates" created by browsers etc.
+*"(1)"*
