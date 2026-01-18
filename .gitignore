@@ -182,3 +182,30 @@ Thumbs.db
 
 *.env*
 
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.synctex.gz
+*.listing
+*.fdb_latexmk
+*.fls
+*.run.xml
+*.bbl
+*.blg
+*.bcf
+
+# Editor / OS junk
+*.swp
+*.kate-swp
+.DS_Store
+
+
+# macOS junk
+.DS_Store
+**/.DS_Store
