@@ -97,17 +97,18 @@ Under the following terms:
 
 The material has been generated mainly by **Roland Potthast**, with contributions and support from:
 
-- Stefanie Hollborn
-- Jan Keller
-- Marek Jacob
-- Florian Prill
-- Tobias Göcke
-- Felix Fundel
-- Thomas Deppisch
-- Mareike Burba
-- Matthias Mages
-- Sarah Heibutzki
-
+- Stefanie Hollborn (FRAIM, Transformer, LLM)
+- Jan Keller (AI-VAR)
+- Marek Jacob (Anemoi Product Application Example)
+- Florian Prill (Aicon Walkthrough)
+- Tobias Göcke (AICON)
+- Felix Fundel (Front Detection)
+- Thomas Deppisch (FRAIM)
+- Mareike Burba (Python)
+- Matthias Mages (FRAIM)
+- Sarah Heibutzki (AI-VAR)
+- Nikolas Porz (DAWID)
+s
 ---
 
 ## Acknowledgements
