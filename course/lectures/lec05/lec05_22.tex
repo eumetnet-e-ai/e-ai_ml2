@@ -1,0 +1,74 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 21b
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From LSTM States to Reconstruction Error}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\textbf{What goes in}
+
+\begin{itemize}
+  \item Input sequence $x_{1:T}$
+  \item One value per time step
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What the LSTM does}
+
+\begin{itemize}
+  \item Updates $(h_t, c_t)$ sequentially
+  \item Encodes temporal structure
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What comes out}
+
+\begin{itemize}
+  \item Hidden states $h_t$
+  \item Latent temporal representation
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-2mm}
+\textbf{Reconstruction step}
+
+\[
+\hat{x}_t = W_y h_t + b_y
+\]
+
+\vspace{1mm}
+\textbf{Training objective}
+
+\[
+\mathcal{L}
+= \frac{1}{T} \sum_{t=1}^T
+\left\| x_t - \hat{x}_t \right\|^2
+\]
+
+\vspace{1mm}
+\textbf{Anomaly detection}
+
+\begin{itemize}
+  \item Low error: normal sequence
+  \item High error: anomalous sequence
+\end{itemize}
+
+\vspace{1mm}
+\raggedright
+$W_y, b_y$ learned jointly with LSTM weights
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

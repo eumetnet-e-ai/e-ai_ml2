@@ -1,0 +1,58 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{GPU Tests in Python — Minimal Backend Checks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.53\textwidth}
+
+\vspace{-2mm}
+\textbf{\y{NVIDIA GPU (CUDA)}}
+
+\vspace{1mm}
+\begin{codeonly}{CUDA test}
+import torch
+print(torch.cuda.is_available())
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{\y{Apple GPU (Metal / MPS)}}
+
+\vspace{1mm}
+\begin{codeonly}{Apple GPU test}
+import torch
+print(torch.backends.mps.is_available())
+\end{codeonly}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.45\textwidth}
+
+\vspace{-2mm}
+\textbf{\y{AMD / Radeon GPUs}}
+
+\vspace{1mm}
+\begin{itemize}
+\item No native PyTorch GPU backend
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item \texttt{True} → GPU usable
+  \item \texttt{False} → CPU fallback
+  \item Backend determines capability
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

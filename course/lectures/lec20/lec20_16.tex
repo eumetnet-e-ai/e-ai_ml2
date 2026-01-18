@@ -1,0 +1,46 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Observation-based Reconstruction \& Inversion for Generative Emulation of Nonlinear Systems: \rtext{ORIGEN}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\begin{itemize}
+  \item A \y{closed learning cycle} linking
+  \y{observations}, \y{analysis reconstruction}, and \y{forecast models}.
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Conceptual loop}
+\begin{itemize}
+  \item Start from a \y{current model} (here: persistence / baseline)
+  \item Use \y{observations} to reconstruct state: \y{AI analysis / inversion}
+  \item Update the model/forecast emulator from reconstructed states
+  \item Iterate: \y{next cycle uses the new model}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{ORIGEN cycle schematic}
+\vspace{1mm}
+
+\begin{center}
+\includegraphics[width=0.98\textwidth]{../../images/img20/origen/origen_graphics.pdf}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}

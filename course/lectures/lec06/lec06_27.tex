@@ -1,0 +1,60 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 27
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Running a Local LLM with Ollama}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Download a model}
+
+\begin{itemize}
+  \item Models are pulled on demand
+  \item Stored locally
+\end{itemize}
+
+\vspace{1mm}
+Examples:
+\begin{itemize}
+  \item mistral
+  \item llama3
+  \item deepseek-r1
+\end{itemize}
+
+\end{column}
+
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-10mm}
+\begin{codeonly}{Run a model}
+ollama pull mistral
+ollama run mistral
+\end{codeonly}
+
+\vspace{1mm}
+\begin{codeonly}{Example prompt}
+> Explain self-attention in one paragraph.
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize
+Responses are generated locally.
+}
+
+\hspace*{-3.5cm}\includegraphics[width=11cm]{../../images/img06/ollama_local_prompt.png}
+
+\end{column}
+
+\end{columns}
+
+
+
+\vspace{2mm}
+\centering
+\y{This is a full LLM running on your machine.}
+
+\end{frame}

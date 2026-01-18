@@ -1,0 +1,72 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Vision Transformer — Slide A
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Vision Transformer: Patch Embedding}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Image representation}
+
+An \y{input image} is represented as
+\[
+\mathbf{x} \in \mathbb{R}^{H \times W \times 3}
+\]
+
+\begin{itemize}
+  \item $H, W$: image height and width (pixels)
+  \item $3$: RGB color channels
+\end{itemize}
+
+\vspace{2mm}
+The image is split into non-overlapping patches
+of size $P \times P$.
+
+\vspace{1mm}
+Number of patches:
+\[
+N = \frac{H \cdot W}{P^2}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Patch embedding}
+
+Each image patch is flattened:
+\[
+\mathbf{x}_p \in \mathbb{R}^{P^2 \cdot 3}
+\]
+
+and projected into an embedding space:
+\[
+\mathbf{x}_p
+\;\xrightarrow{\;E\;}\;
+\mathbf{z}_p \in \mathbb{R}^{D}
+\]
+
+\vspace{2mm}
+The full input sequence is:
+\[
+\mathbf{Z}_0 =
+[\mathbf{z}_{\text{CLS}}, \mathbf{z}_1, \dots, \mathbf{z}_N]
+\in \mathbb{R}^{(N+1) \times D}
+\]
+
+\vspace{1mm}
+$D$ is the \y{transformer embedding} dimension.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

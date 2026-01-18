@@ -1,0 +1,62 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Town Forecast Dynamics (build time series table)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Prepare time series data}
+
+\vspace{0mm}
+We convert the extracted point dataset into a clean table:
+\begin{itemize}
+  \item convert times to \texttt{datetime}
+  \item convert lead time to hours
+  \item compute derived variables (e.g.\ wind speed)
+\end{itemize}
+
+\vspace{-2mm}
+\begin{minipage}{7.2cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+# ------------------------------------------------------------
+# Create a clean timeseries table
+# ------------------------------------------------------------
+lead_h = (pt["lead_time"].values / np.timedelta64(1, "h")).astype(int)
+
+df = pd.DataFrame({
+    "valid_time": pd.to_datetime(pt["valid_time"].values),
+    "lead_h": lead_h,
+    "t2m_C": pt["t2m"].values,
+    "wind_ms": np.sqrt(pt["u10"].values**2 + pt["v10"].values**2),
+    "mslp_hPa": pt["mslp"].values,
+    "tp_mm": pt["tp"].values,
+})
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+
+\includegraphics[width=6.2cm]{../../images/img14/zarr_t2m_dynamics.png}
+
+\vspace{2mm}
+\includegraphics[width=6.2cm]{../../images/img14/zarr_wind_dynamics.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

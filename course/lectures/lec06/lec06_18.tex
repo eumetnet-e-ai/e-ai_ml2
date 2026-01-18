@@ -1,0 +1,84 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training the Transformer Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Training objective}
+
+\begin{itemize}
+  \item Minimize cross-entropy loss
+  \item Over all tokens in the sequence
+\end{itemize}
+
+\vspace{-3mm}
+\[
+\mathcal{L}
+=
+- \sum_{t=1}^{n}
+\log p_t(y_t)
+\]
+
+\vspace{1mm}
+\textbf{Learnable parameters}
+
+\begin{itemize}
+  \item Embeddings
+  \item Attention projections ($W^Q, W^K, W^V, W^O$)
+  \item Feedforward weights
+  \item Output projection $W_{\text{out}}$
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Gradient-based optimization}
+
+\begin{itemize}
+  \item Compute gradients via backpropagation
+  \item Update parameters to reduce loss
+\end{itemize}
+
+\vspace{1mm}
+Generic update rule:
+
+\vspace{-4mm}
+\[
+\theta
+\;\leftarrow\;
+\theta
+-
+\eta
+\frac{\partial \mathcal{L}}{\partial \theta}
+\]
+
+\vspace{-3mm}
+\textbf{In practice}
+
+\begin{itemize}
+  \item Adam or AdamW optimizer
+  \item Mini-batch training
+  \item Many epochs over large corpora
+\end{itemize}
+
+\vspace{2mm}
+\centering
+Training adjusts all parameters to improve \y{next-token prediction.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

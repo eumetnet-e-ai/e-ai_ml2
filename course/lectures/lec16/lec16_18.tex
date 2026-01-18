@@ -1,0 +1,66 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16 — Slide 18
+% ================================================================================
+\begin{frame}[t]
+\mytitle{LLM Orchestration: Decisions \& Guardrails}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{LLM = Decision Engine}
+
+\vspace{2mm}
+For each user request, the model decides \y{what happens next}:
+
+\vspace{1mm}
+\begin{itemize}
+  \item answer directly (when trivial)
+  \item call a function tool (fast action)
+  \item delegate to an agent (multi-step work)
+  \item ask a clarifying question (missing info)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key idea:}
+The model routes the task to the best capability.
+
+\vspace{1mm}
+{\scriptsize \textit{(Like a dispatcher: choose the right action at the right time.)}}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{Guardrails = System Control}
+
+\vspace{2mm}
+The system stays in charge of \y{execution}:
+
+\vspace{1mm}
+\begin{itemize}
+  \item only approved tools exist (tool registry)
+  \item arguments are validated (schemas)
+  \item execution runs outside the LLM
+  \item logging \& reproducibility by design
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Result:}
+Reliable actions, not hallucinated actions.
+
+\vspace{1mm}
+{\scriptsize \textit{The LLM proposes --- the backend disposes.}}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

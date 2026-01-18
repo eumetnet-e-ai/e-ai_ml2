@@ -1,0 +1,73 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Evaluation: rollout forecast from initial time}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{One-step skill}
+
+\vspace{0mm}
+We test the CNN on random samples:
+\begin{itemize}
+  \item predict \texttt{t2m(t+1)} from \texttt{X(t)}
+  \item compare to truth with RMSE
+  \item compare to persistence baseline
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Rollout forecast}
+
+\vspace{0mm}
+Starting from the initial forecast field:
+\begin{itemize}
+  \item use CNN repeatedly: $\hat{x}_{t+1} = f_\theta(\hat{x}_t)$
+  \item build a full forecast trajectory
+  \item then extract town series for comparison
+\end{itemize}
+
+\vspace{1mm}
+This gives a realistic "mini NWP" demonstration:
+\y{Zarr archive -> ML training -> forecast rollout}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+Example (rollout):
+
+\vspace{0mm}
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+# rollout: start from true initial field at t0
+t2m_hat = t2m[0].copy()
+
+pred_series = [t2m_hat]
+for k in range(0, nt-1):
+    Xk = build_features(t2m_hat, u10[k], v10[k], mslp[k])
+    t2m_hat = predict_next_field(model, Xk)
+    pred_series.append(t2m_hat)
+
+pred_series = np.stack(pred_series, axis=0)  # (time, lat, lon)
+\end{lstlisting}
+\end{minipage}
+
+\vspace{1mm}
+\includegraphics[width=6.2cm]{../../images/img14/town_forecasts/fc_Berlin.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

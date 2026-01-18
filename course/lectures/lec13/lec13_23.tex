@@ -1,0 +1,76 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Triggering the SIF Build via GitHub Actions, YAML}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{What this workflow does}
+
+\begin{itemize}
+  \item Listens for a \y{successful Docker build}
+  \item Runs \y{only if the image exists}
+  \item Converts Docker $\rightarrow$ Apptainer
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Why this design}
+
+\begin{itemize}
+  \item Avoids duplicate builds
+  \item Enforces a clean dependency chain
+  \item CI controls the runtime environment
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Docker build is a prerequisite.}
+
+\vspace{2mm}
+This makes the SIF build:
+\begin{itemize}
+  \item deterministic, reproducible
+  \item traceable to a commit
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\begin{minipage}{7cm}
+\tiny
+\begin{lstlisting}
+name: Export Apptainer SIF (Example 03)
+on:
+  workflow_run:
+    workflows: ["Build and publish Docker image (03 plot)"]
+    types: [completed]
+jobs:
+  build-sif:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Install Apptainer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,65 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID System Architecture — Frontend Stack}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-3mm}
+\textbf{User Interface Layer}
+
+\begin{itemize}
+  \item \textbf{HTML5}  
+        Page structure, forms, UI elements
+  \item \textbf{CSS}  
+        Layout, styling, responsive design
+  \item \textbf{JavaScript}  
+        Interaction logic and event handling
+  \item \textbf{Fetch API}  
+        Asynchronous requests and streaming
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Dynamic Content}
+
+\begin{itemize}
+  \item \textbf{Markdown rendering}  
+        \rtext{Incremental formatting of streamed output}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Browser Capabilities}
+
+\begin{itemize}
+  \item \y{Audio} recording via Web APIs
+  \item Clipboard access
+  \item Local UI state and session handling
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item No heavy frontend frameworks
+  \item No client-side AI logic
+  \item Frontend as thin interaction layer
+  \item Works on \y{Laptop}, Workstation, \y{Mobile Device}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

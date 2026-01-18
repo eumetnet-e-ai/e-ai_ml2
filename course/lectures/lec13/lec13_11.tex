@@ -1,0 +1,75 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Starting Point: A Baseline ML Application}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+We start with a \y{minimal working ML example}.
+
+\vspace{2mm}
+The goal at this stage is simple:
+\begin{itemize}
+  \item load a pretrained model,
+  \item apply it to input data,
+  \item inspect the output.
+\end{itemize}
+
+\vspace{2mm}
+This corresponds to running the notebook:
+\begin{itemize}
+  \item \texttt{00\_face-detection-onnx.py}
+\end{itemize}
+
+\vspace{2mm}
+At this point:
+\begin{itemize}
+  \item the method works,
+  \item results can be inspected visually.
+\end{itemize}
+
+\vspace{2mm}
+\rtext{Nothing here is operational yet.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-4mm}
+\includegraphics[width=\textwidth]{../../images/img13/i01.png}
+
+\vspace{1mm}
+\footnotesize
+The notebook instantiates a \y{pretrained} \y{face-detection model}
+and applies it directly to an input image.
+
+\vspace{0mm}
+\color{darkgreen}
+\tiny
+\begin{lstlisting}
+def mark_faces(image_filename):
+    """Mark all faces recognized in the image"""
+    image = PIL.Image.open(image_filename)
+
+    faces = detect_faces(image)
+
+    render_data = detections_to_render_data(
+        faces, bounds_color=Colors.GREEN, line_width=3 )
+    render_to_image(render_data, image)
+    display(image)
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

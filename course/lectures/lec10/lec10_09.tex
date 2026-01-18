@@ -1,0 +1,73 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Prompting for Code Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Unambiguous task description
+  \item Explicit constraints
+  \item Predictable output format
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Critical constraints}
+
+\begin{itemize}
+  \item Code-only output
+  \item No explanations or markdown
+  \item Explicit library choices
+\end{itemize}
+
+\vspace{0mm}
+Poor prompts lead to:
+\begin{itemize}
+  \item mixed prose and code
+  \item missing imports
+  \item implicit assumptions
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1cm}
+\textbf{Example: strict \y{system prompt}}
+
+\vspace{1mm}
+\begin{codeonly}{System message}
+You are an AI coder.
+Output ONLY valid Python code.
+No markdown. No explanations.
+Assume Python 3.10.
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{\y{User prompt} pattern}
+
+\vspace{1mm}
+\begin{codeonly}{User message}
+Write a Python function f(x)
+using numpy that returns a
+polynomial with |f(x)| < 10
+for x in [-10, 10].
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key point:}  
+Prompting is part of the program.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

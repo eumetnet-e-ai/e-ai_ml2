@@ -1,0 +1,65 @@
+% ================================================================================
+% Lecture 17 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{AICON training setup (Anemoi): config-driven workflow}
+
+\begin{columns}[T,totalwidth=\textwidth]
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Main idea}
+\begin{itemize}
+\item training is \y{fully controlled by YAML configs}
+\item Hydra composes config blocks:
+\begin{itemize}
+\item data (Zarr), variables, normalization
+\item model architecture (AICON / GNN)
+\item trainer settings (epochs, batch, strategy)
+\end{itemize}
+\end{itemize}
+
+\vspace{-2mm}
+\textbf{Workflow}
+\begin{itemize}
+\item choose config (start from \y{integration test})
+\item instantiate trainer
+\item run training (checkpoints + logger)
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Notebook pattern (core lines)}
+\begin{lstlisting}
+config_filename = "test_aicon_01.yaml"
+
+# Hydra loads and resolves config
+config = load_config(config_filename)
+
+# Anemoi trainer wraps Lightning
+trainer = AnemoiTrainer(config)
+
+# run training
+trainer.train()
+\end{lstlisting}
+
+\vspace{1mm}
+\textbf{Outputs}
+
+\vspace{-2mm}
+\begin{itemize}
+\item checkpoints: \texttt{last.ckpt}, \texttt{inference-last.ckpt}
+\item logs: TensorBoard / MLflow-style metrics
+\end{itemize}
+
+\end{column}
+\end{columns}
+
+\end{frame}

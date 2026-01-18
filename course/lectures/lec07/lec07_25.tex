@@ -1,0 +1,61 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide XX+1
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Search to LLM Pipeline}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Pipeline steps}
+
+\begin{enumerate}
+  \item Issue search query
+  \item Retrieve top-$k$ URLs
+  \item Scrape page text
+  \item Build context block
+  \item Ask LLM to answer
+\end{enumerate}
+
+\vspace{0mm}
+\raggedright
+{\color{red}Answer = \\
+LLM (Query, Web Evidence)}
+
+\vspace{2mm}
+\textbf{Important}
+
+No embeddings are required —  
+\y{ranking by Search Engine}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-10mm}
+\begin{codeonly}{Google--LLM pipeline (schematic)}
+urls = search_google(query)
+texts = [ scrape_website(url), 
+  for url in urls ]
+
+prompt = f"""
+Answer the question using
+the sources below.
+Question: {query}
+Sources: {texts}
+"""
+
+response = client.chat.completions.create( model="gpt-4o-mini",
+  messages=[{"role":"user", "content":prompt}] )
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

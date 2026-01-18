@@ -1,0 +1,71 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Why This Scales: From Prototype to System}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\textbf{Problems with classic agent loops}
+\begin{itemize}
+  \item hidden prompt growth
+  \item non-reproducible behavior
+  \item difficult debugging
+  \item unclear failure causes
+\end{itemize}
+
+\vspace{0mm}
+\textbf{LangGraph advantages}
+\begin{itemize}
+  \item explicit state evolution
+  \item deterministic control flow
+  \item inspectable intermediate results
+  \item testable nodes
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{0mm}
+\textbf{Engineering outcome}
+\begin{itemize}
+  \item agents become \y{systems}
+  \item not demos or experiments
+\end{itemize}
+
+\vspace{0mm}
+\textbf{What becomes possible}
+
+\vspace{0mm}
+\begin{itemize}
+  \item unit tests per node
+  \item regression tests on state
+  \item logging and metrics
+  \item CI/CD integration
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key insight}
+
+\vspace{1mm}
+\begin{quote}
+Agents scale when they obey  
+the same rules as software.
+\end{quote}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

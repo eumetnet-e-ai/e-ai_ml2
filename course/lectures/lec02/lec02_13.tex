@@ -1,0 +1,58 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Task Server Setup — Minimal Flask Example}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.3\textwidth}
+
+\textbf{Goal}
+
+\begin{itemize}
+  \item Tasks as REST resources
+  \item Explicit task state
+  \item Minimal server logic
+\end{itemize}
+
+\vspace{1mm}
+\textbf{States}
+
+\begin{itemize}
+  \item \texttt{created}
+  \item \texttt{checked}
+  \item \texttt{executing}
+  \item \texttt{completed / failed}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{task\_server.py}
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+tasks = {}; i = 1
+
+@app.post("/tasks")
+def create():
+    global i
+    if not request.json: abort(400)
+    t = {"id": i, "state": "created", "data": request.json}
+    tasks[i] = t; i += 1
+    return jsonify(t), 201
+    
+app.run()
+\end{codeonly}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+\end{frame}

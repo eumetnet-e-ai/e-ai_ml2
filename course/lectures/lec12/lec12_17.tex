@@ -1,0 +1,65 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Lecture 12 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{\y{Server Mode} for Collaboration}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why server mode?}
+
+\begin{itemize}
+  \item \y{Multiple users}
+  \item Multiple machines
+  \item Shared experiment history
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Command}
+
+\begin{itemize}
+  \item \texttt{mlflow server}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Important point}
+
+\begin{itemize}
+  \item Training code stays \y{unchanged}
+  \item Only the tracking URI changes
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\begin{codeonly}{Server startup}
+mlflow server \\
+  --host 0.0.0.0 \\
+  --port 5000
+\end{codeonly}
+
+\vspace{2mm}
+\footnotesize
+Clients connect via \texttt{http://<server>:5000}
+and log runs remotely.
+
+\vspace{4mm}
+\rtext{
+{\bf Server Setup}
+
+An MLflow server can run on any host reachable by domain name or IP address; clients only need the tracking URI to connect.
+}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,82 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide XX
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Node-wise Feature Transformation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Input}
+
+\vspace{-3mm}
+\[
+X \in \mathbb{R}^{N \times d},
+\quad
+\mathbf{x}_i \in \mathbb{R}^d
+\]
+
+\medskip
+\textbf{Learned \y{feature map}}
+
+\begin{eqnarray*}
+&&
+\mathbf{h}_i =  
+\sigma\!\left(
+W \mathbf{x}_i + \mathbf{b}
+\right) 
+\\
+&& 
+W \in \mathbb{R}^{h \times d},
+\quad
+\mathbf{b} \in \mathbb{R}^h
+\\ 
+&&
+H \in \mathbb{R}^{N \times h}
+\end{eqnarray*}
+
+\medskip
+\textbf{Key property}
+
+Same transformation for every node.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\vspace{-8mm}
+\begin{codeonly}{Node-wise linear layer}
+self.lin = nn.Linear(d, h)
+h = F.relu(self.lin(x))
+\end{codeonly}
+
+\medskip
+\textbf{What happens here}
+
+\begin{itemize}
+\item Feature extraction
+\item Dimensionality change
+\item No neighbor interaction
+\end{itemize}
+
+\medskip
+\textbf{What does \emph{not} happen}
+
+\begin{itemize}
+\item No graph usage
+\item No message passing
+\item No dependence on $N$
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

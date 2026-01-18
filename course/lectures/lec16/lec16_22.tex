@@ -1,0 +1,62 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 15
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Neural Network Forecasting: One Step $\rightarrow$ Many Steps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{1mm}
+
+\textbf{\textcolor{blue}{How an AI forecast is produced}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item The model learns: \y{state now} $\rightarrow$ \y{state later}
+  \item Longer lead times come from \textbf{repeating the prediction step}
+\end{itemize}
+
+\vspace{-2mm}
+\[
+x(t) \rightarrow x(t+\Delta t) \rightarrow x(t+2\Delta t) \rightarrow \dots
+\]
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Physics detail: accumulated variables}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item precipitation is often stored as an \textbf{accumulated sum}
+  \item to get \textbf{1-hour rain} at lead $L$:
+\end{itemize}
+
+\vspace{-3mm}
+\[
+RAIN(L) - RAIN(L-1)
+\]
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{1mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/rain_gsp_1h_2x4_panels_crop.png}
+
+\vspace{1mm}
+\textcolor{gray}{
+Example: ICON-EU 1-hour precipitation for multiple lead times.
+}
+
+\vspace{3mm}
+\rtext{\bf Here: Nowcasting or NWP - depending on input, time scales and variables!}
+\end{column}
+
+\end{columns}
+
+\end{frame}

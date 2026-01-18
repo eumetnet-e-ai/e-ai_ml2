@@ -1,0 +1,78 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Writing the Zarr Archive (chunking for point extraction)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Zarr write: key decisions}
+
+\vspace{0mm}
+We write the dataset as a \y{chunked archive}:
+\begin{itemize}
+  \item \textbf{time chunk = 1:} fast town time series extraction
+  \item \textbf{lat/lon chunks = 60:} moderate patch size for ML sampling
+\end{itemize}
+
+\textbf{Chunk layout}
+
+\vspace{1mm}
+\begin{itemize}
+  \item chunks stored as independent files
+  \item town extraction reads \y{few chunks only}
+  \item patches match ML mini-batches
+\end{itemize}
+
+\vspace{2mm}
+We generate chunks that contain exactly \y{one lead time}
+and a \y{60$\times$60} spatial patch.
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+Example: \\
+\texttt{(valid\_time, lat, lon) = (1,60,60)}
+
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+# ------------------------------------------------------------
+# Zarr write
+# ------------------------------------------------------------
+OUTDIR = "data"
+os.makedirs(OUTDIR, exist_ok=True)
+
+ZARR_PATH = os.path.join(OUTDIR, "demo_eu_forecast.zarr")
+
+# best practice: chunk so point extraction is fast
+# - valid_time chunk = 1 (fast timeseries reading)
+# - lat/lon chunks ~ moderate
+chunked = ds.chunk({"valid_time": 1, "lat": 60, "lon": 60})
+
+# overwrite if exists
+if os.path.exists(ZARR_PATH):
+    import shutil
+    shutil.rmtree(ZARR_PATH)
+
+chunked.to_zarr(ZARR_PATH, mode="w", consolidated=True)
+print("Wrote:", ZARR_PATH)
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

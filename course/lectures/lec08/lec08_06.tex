@@ -1,0 +1,51 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Example A: Core Implementation Idea}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+
+\textbf{Step 1: Symbolic preprocessing}
+
+\begin{itemize}
+  \item Reduce the wind field to a few key descriptors
+  \item Physics-informed, human-designed
+  \item Low-dimensional and interpretable
+\end{itemize}
+
+\vspace{2mm}
+\rtext{This step encodes \emph{what matters} for the language model.}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.66\textwidth}
+
+\textbf{Step 2: Prompt-based text generation}
+
+\begin{codeonly}{Symbolic prompt and text generation}
+summary = f"Mean speed: {vmean:.1f} m/s, "
+summary += f"Direction: {direction}"
+
+inputs = tokenizer(
+    summary,
+    return_tensors="pt"
+)
+
+outputs = model.generate(**inputs)
+\end{codeonly}
+
+\vspace{1mm}
+In this example the \y{LLM sees only text, not physics}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

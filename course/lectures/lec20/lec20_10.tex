@@ -1,0 +1,35 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Normalization: The Key Practical Ingredient}
+
+\footnotesize
+\vspace{4mm}
+
+We normalize observations before training:
+
+\vspace{2mm}
+\textbf{SAT: per-channel statistics}
+\[
+y^{sat}_n
+=
+\frac{y^{sat}-\mu_{sat}}{\sigma_{sat}},
+\qquad
+\mu_{sat}=\mathbb{E}_{t,x}[y^{sat}],
+\qquad
+\sigma_{sat}=\mathrm{std}_{t,x}[y^{sat}].
+\]
+
+\textbf{RS / truth: global}
+\[
+\phi_n=\frac{\phi-\mu_\phi}{\sigma_\phi},
+\qquad
+y^{rs}_n=\frac{y^{rs}-\mu_\phi}{\sigma_\phi}.
+\]
+
+\vspace{4mm}
+\rtext{\bf Without normalization} the training becomes unstable and “learns the wrong scale”.
+
+\end{frame}

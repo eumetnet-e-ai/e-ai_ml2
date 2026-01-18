@@ -1,0 +1,39 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 14
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Evaluation 1: Predict a New RS Profile at an Unseen Location}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{2mm}
+
+We test \y{generalization}:
+
+\begin{itemize}
+  \item Input RS: taken from stored network \texttt{yrs[t,:,:]}
+  \item Choose a new $x$ column not used by RS
+  \item Query all heights $\{z_q\}$ at that $x$
+  \item Compare predicted profile $\hat y^{rs}_{t+1}$ vs truth $xtrue[t+1]$
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This checks whether the model learned physics-like transport information from SAT.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/rs_rec/rs_profile_pred_truth_ix002_t05_to_06.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}

@@ -1,0 +1,48 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Data Generation and Preprocessing}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\footnotesize
+\textbf{Synthetic dataset}
+
+\begin{itemize}
+  \item Random temperature values
+  \item Random wind speed values
+  \item Wind chill computed from physical formula
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Preparation}
+
+\begin{itemize}
+  \item Stack inputs into feature vectors
+  \item Convert to tensors
+  \item No normalization tricks required
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\includegraphics[width=\textwidth]{../../images/img12/windchill_training_data.png}
+
+\footnotesize
+Input–output relationship
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

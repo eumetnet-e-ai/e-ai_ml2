@@ -1,0 +1,56 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Using ecCodes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.30\textwidth}
+
+\vspace{-1mm}
+\begin{itemize}
+  \item See what is inside a GRIB file
+  \item Identify fields
+  \item Get size and structure
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item A GRIB file contains \y{multiple messages}
+  \item Each message holds one field
+  \item ecCodes iterates message by message
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.74\textwidth}
+
+\vspace{-1.1cm}
+
+\begin{codeonly}{Inspecting a GRIB file}
+import eccodes
+
+f = open("icon_eu_t2m_latest.grib2", "rb")
+while True:
+    gid = eccodes.codes_grib_new_from_file(f)
+    if gid is None:
+        break
+
+    short = eccodes.codes_get(gid, "shortName")
+    level = eccodes.codes_get(gid, "level")
+    size  = eccodes.codes_get_size(gid, "values")
+    print(short, level, size)
+    eccodes.codes_release(gid)
+f.close()
+\end{codeonly}
+
+\end{column}
+\end{columns}
+\end{frame}

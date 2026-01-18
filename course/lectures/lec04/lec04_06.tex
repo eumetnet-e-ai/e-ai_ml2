@@ -1,0 +1,58 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Torch Tensors — The Core Data Structure}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What is a tensor?}
+
+\begin{itemize}
+  \item Similar to NumPy arrays
+  \item Supports CPU and GPU
+  \item Tracks operations for gradients
+  \item Basis of all learning
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key properties}
+
+\begin{itemize}
+  \item Shape and dtype
+  \item Device awareness
+  \item \texttt{requires\_grad=True}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\begin{codeonly}{Basic tensor example}
+import torch
+
+x = torch.tensor([2.,3.], requires_grad=True)
+
+y = x[0]**2 + x[1]**2
+y.backward()
+
+print(x.grad)
+\end{codeonly}
+
+\vspace{1mm}
+\[
+\nabla_x (x_1^2 + x_2^2)
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

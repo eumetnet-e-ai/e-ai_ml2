@@ -1,0 +1,63 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{The Classical MLOps Cycle}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{From experiment to operation}
+
+\begin{itemize}
+  \item \y{Data ingestion} and preprocessing
+  \item \y{Model training} and validation
+  \item \y{Deployment} into an operational environment
+\end{itemize}
+
+\vspace{2mm}
+This cycle extends the classical DevOps loop by explicitly
+including \y{data and models}.
+
+\vspace{6mm}
+\color{darkgreen}\textbf{
+Modern MLOps has many elements of typical \g{NWP development
+cycles}. NWP also integrates data, e.g.\ orography, canopy layers,
+and real data through observations.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Operational feedback loop}
+
+\begin{itemize}
+  \item \y{Monitoring} of system and model performance
+  \item Detection of \rtext{drift and degradation}
+  \item Triggering \y{retraining or rollback}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key property}
+
+\begin{itemize}
+  \item The cycle is \rtext{continuous}, not linear
+  \item Operations actively influence development
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\hfill{\bf MLOps is a closed loop, not a one-time deployment.}
+
+\end{frame}

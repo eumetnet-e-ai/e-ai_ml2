@@ -1,0 +1,62 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{ICON Fields — Interpolation and Dateline Handling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item ICON uses an \y{unstructured triangular grid}
+  \item Direct plotting requires \y{triangulation}
+  \item Interpolation needed for:
+    \begin{itemize}
+      \item smooth visualization
+      \item map projections
+    \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key challenge}
+
+\begin{itemize}
+  \item Triangles crossing the \y{date line}
+  \item Incorrect rendering in global projections
+  \item Requires explicit geometric handling
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-0.3cm}
+\begin{itemize}
+  \item Use \texttt{matplotlib.tri.Triangulation}
+  \item Detect triangles spanning $>180^\circ$
+  \item Duplicate / shift vertices across $\pm180^\circ$
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Implementation}
+
+\begin{itemize}
+  \item See Python script:
+  \texttt{fix\_dateline\_triangles.py}
+  (adapted from ICON tutorial)
+\end{itemize}
+
+\vspace{0mm}
+\hspace{2cm}\includegraphics[width=0.5\textwidth]{../../images/img03/icon_t2m_global_interp.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

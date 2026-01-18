@@ -1,0 +1,70 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide XX
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Stacking Message Passing and Output Projection}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\textbf{\y{Layer stacking}}
+
+\begin{eqnarray*}
+&& H^{(0)} \in \mathbb{R}^{N \times d}, \\
+&& H^{(1)} = \Phi(H^{(0)}, \texttt{edge\_index}), \\
+&& H^{(2)} = \Phi(H^{(1)}, \texttt{edge\_index})
+\end{eqnarray*}
+
+Each layer expands the receptive field:
+\begin{itemize}
+\item 1 layer: 1-hop neighbors
+\item 2 layers: 2-hop neighbors
+\end{itemize}
+
+\medskip
+\textbf{Final node representation}
+
+\vspace{-2mm}
+\begin{eqnarray*}
+&& H^{(L)} \in \mathbb{R}^{N \times h}
+\end{eqnarray*}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{\y{Output projection}}
+
+\vspace{-3mm}
+\begin{eqnarray*}
+&& \hat{y}_i
+= w^\top \mathbf{h}_i^{(L)} + b, \\
+&& w \in \mathbb{R}^{h}, \quad b \in \mathbb{R} \\
+&& \hat{y} \in \mathbb{R}^{N}
+\end{eqnarray*}
+
+\begin{codeonly}{Final linear layer}
+self.out = nn.Linear(h, 1)
+y_hat = self.out(h).squeeze(-1)
+\end{codeonly}
+
+\textbf{Key properties}
+
+\begin{itemize}
+\item Same output map for all nodes
+\item Independent of graph size
+\item Fully permutation invariant
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

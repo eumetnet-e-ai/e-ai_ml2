@@ -1,0 +1,58 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 08
+% ================================================================================
+\begin{frame}[t, fragile]
+
+\mytitle{1D Data Assimilation Setup}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Toy problem}
+
+\vspace{1mm}
+We consider a \y{1D state} on a fixed grid, periodic (!).
+
+\vspace{1mm}
+\begin{itemize}
+  \item truth: modulated sine function
+  \item background $x_b$: shifted, smoothed, biased
+  \item observations $y$: sparse, noisy point samples
+\end{itemize}
+
+\vspace{2mm}
+All ingredients are \y{fully controlled}:
+\begin{itemize}
+  \item known truth
+  \item known error statistics
+  \item explicit observation locations
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\centering
+\vspace{-6mm}
+\hspace*{0cm}
+\begin{minipage}{8cm}
+\includegraphics[width=\textwidth]{../../images/img18/1d_xt_xb_obs.png}
+\end{minipage}
+
+\vspace{1mm}
+\footnotesize
+Truth $x_{true}$, background $x_b$, and sparse observations $y$.
+
+\vspace{8mm}
+\rtext{\bf Ideal testbed to explore data assimilation.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

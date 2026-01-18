@@ -1,0 +1,72 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Code and Test: Defining and Enforcing Behavior}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Formatted Code}
+
+\begin{codeonly}{test\_example.py}
+def add(a, b):
+    return a + b
+\end{codeonly}
+
+\vspace{2mm}
+This code:
+\begin{itemize}
+  \item is syntactically correct
+  \item is well formatted
+  \item may still be \rtext{logically wrong}
+\end{itemize}
+
+\vspace{2mm}
+Formatting alone cannot guarantee correctness.
+
+\vspace{2mm}
+\footnotesize
+\y{\rtext{\bf Correct behavior is defined by function tests,}}
+\y{\rtext{\bf not by appearance.}}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Test that enforces behavior}
+
+\begin{codeonly}{test\_example.py}
+def test_add():
+    assert add(2, 3) == 5
+\end{codeonly}
+
+\vspace{0mm}
+This test:
+\begin{itemize}
+  \item executes the function
+  \item checks the expected result
+  \item fails automatically if behavior changes
+\end{itemize}
+
+\vspace{0mm}
+The test can run:
+\begin{itemize}
+  \item locally
+  \item in Git hooks
+  \item in CI pipelines
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

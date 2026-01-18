@@ -1,0 +1,51 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Sine Example — Data and DataLoader}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Dataset construction}
+
+\begin{itemize}
+  \item Sample input values $x$
+  \item Compute labels \y{$y=\sin(x)$}
+  \item Supervised learning setup
+\end{itemize}
+
+\vspace{1mm}
+Each sample:
+\[
+x_i \;\rightarrow\; y_i
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Creating dataset and loader}
+x = np.linspace(0, 2*np.pi, 1000)
+y = np.sin(x)
+
+x_t = torch.tensor(x).float().unsqueeze(1)
+y_t = torch.tensor(y).float().unsqueeze(1)
+
+data = TensorDataset(x_t, y_t)
+loader = DataLoader(data,
+                    batch_size=32,
+                    shuffle=True)
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

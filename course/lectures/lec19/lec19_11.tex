@@ -1,0 +1,82 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 11
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Neural SINDy: Using Neural Networks as Smooth Surrogates}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+Neural SINDy augments classical SINDy by introducing a neural network
+as a smooth surrogate for the observed trajectory:
+\[
+\mathbf{x}(t)\;\longrightarrow\;\mathbf{x}_\theta(t).
+\]
+
+The neural network is trained on noisy observations
+$\mathbf{x}_{\text{obs}}(t_i)$, \rtext{but constrained to produce a
+\emph{smooth time-continuous representation}}.
+
+\vspace{0mm}
+\textbf{Neural trajectory fitting}
+
+The network parameters $\theta$ are obtained by minimizing
+
+\vspace{-4mm}
+\[
+\min_{\theta}
+\sum_i \|\mathbf{x}_\theta(t_i)-\mathbf{x}_{\text{obs}}(t_i)\|^2
+\;+\;
+\alpha \int \Bigl\|\tfrac{d}{dt}\mathbf{x}_\theta(t)\Bigr\|^2\,dt.
+\]
+
+\vspace{-2mm}
+A \y{regularization term} penalizes rapid temporal variations and suppresses
+noise amplification.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Derivative estimation via autograd}
+
+Once trained, time derivatives are computed analytically:
+\[
+\dot{\mathbf{x}}_\theta(t)
+=
+\frac{d}{dt}\mathbf{x}_\theta(t),
+\]
+using automatic differentiation.
+
+\vspace{2mm}
+\textbf{Sparse discovery step}
+
+The smoothed trajectory and its derivatives are then passed to the
+\emph{unchanged} SINDy pipeline:
+\[
+\dot{\mathbf{x}}_\theta(t)\;\approx\;\Theta(\mathbf{x}_\theta(t))\,\Xi,
+\qquad \Xi\ \text{sparse}.
+\]
+
+\vspace{-2mm}
+\rtext{\bf Here:}
+
+Neural networks are \emph{not} used to represent the dynamics,
+but only to \y{stabilize} \y{derivative} \y{estimation} prior to sparse regression.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

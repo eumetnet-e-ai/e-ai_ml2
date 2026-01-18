@@ -1,0 +1,83 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide XX
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Message Passing: Injecting Graph Structure}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Latent node features}
+
+\vspace{-3mm}
+\begin{eqnarray*}
+&& H \in \mathbb{R}^{N \times h}, \\
+&& \mathbf{h}_i \in \mathbb{R}^h
+\end{eqnarray*}
+
+\vspace{0mm}
+\textbf{\y{Neighborhood aggregation}}
+
+\vspace{-3mm}
+\begin{eqnarray*}
+&& \mathbf{a}_i
+= \sum_{j \in \mathcal{N}(i)} \mathbf{h}_j, \\
+&& A \in \mathbb{R}^{N \times h}
+\end{eqnarray*}
+
+\vspace{0mm}
+\textbf{Graph-aware update}
+
+\vspace{-3mm}
+\begin{eqnarray*}
+&& \mathbf{h}_i'
+= \sigma\!\left(
+W_{\text{self}} \mathbf{h}_i
++
+W_{\text{neigh}} \mathbf{a}_i
+\right)
+\end{eqnarray*}
+
+\vspace{1mm}
+\footnotesize
+Graph affects \emph{which terms are summed},  
+not the number of parameters.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Edge-based aggregation}
+row, col = edge_index
+agg = torch.zeros_like(h)
+agg.index_add_(0, row, h[col])
+\end{codeonly}
+
+\begin{itemize}
+\item \y{Uses \texttt{edge\_index} only}
+\item No learnable graph parameters
+\item Permutation invariant
+\end{itemize}
+
+\textbf{Effect}
+
+\begin{itemize}
+\item Information exchange
+\item Local propagation
+\item \y{One-hop interaction}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

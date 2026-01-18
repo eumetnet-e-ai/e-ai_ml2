@@ -1,0 +1,76 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Classical 3D-Var in 1D: Mathematics Made Explicit}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{3D-Var cost function}
+
+\vspace{1mm}
+The analysis $x_a$ minimizes $J(x)$ from above. 
+
+
+\vspace{2mm}
+\textbf{Linear case (this setup)}
+
+\vspace{1mm}
+\begin{itemize}
+  \item $H$: point-sampling operator
+  \item $B$: Gaussian covariance
+  \item $R = \sigma_o^2 I$
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Closed-form solution}
+
+\vspace{-3mm}
+\[
+x_a
+=
+x_b
++
+B H^T (H B H^T + R)^{-1}
+\bigl(y - H x_b\bigr)
+\]
+
+\vspace{2mm}
+\rtext{\bf This is the optimal Bayesian estimate.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\centering
+\vspace{-3mm}
+\hspace*{0cm}
+\begin{minipage}{7cm}
+\includegraphics[width=\textwidth]{../../images/img18/1d_xa_3dvar.png}
+\end{minipage}
+
+\vspace{1mm}
+\footnotesize
+
+Top: state space — truth, background, analysis.  
+
+Bottom: \y{analysis increment}
+\[
+\delta x = x_a - x_b
+\]
+
+\vspace{-2mm}
+\y{Information from sparse observations is spread by $B$.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

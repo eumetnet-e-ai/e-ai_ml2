@@ -1,0 +1,66 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Memory Management in LangGraph}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item No hidden chat history
+  \item No implicit conversation memory
+  \item No prompt accumulation
+\end{itemize}
+
+\vspace{0mm}
+Instead:
+\begin{itemize}
+  \item All memory lives in a \y{typed state object}
+  \item Each node reads and updates this state
+  \item State is passed explicitly between nodes
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Consequence:}
+\begin{itemize}
+  \item Deterministic execution
+  \item Fully inspectable memory
+  \item Reproducible agent behavior
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\textbf{Example: Agent state schema}
+
+\vspace{-14mm}
+\begin{codeonly}{LangGraph state}
+class MyState(TypedDict):
+  query: str
+  fc_datetime: str
+  fc_reference_datetime: str
+  fc_leadtime: str
+  fc_location_of_interest: str
+  fc_variable: str
+  temperature_data: Any
+  output: str
+\end{codeonly}
+
+\vspace{0mm}
+In LangGraph, chat history, tool memory, and agent scratchpads are replaced by a single typed state object. Memory is \y{explicit data}, not implicit text.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,67 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Reconstruction: 2D Trajectory over Iterative 3D-Var Cycles}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Iterative 3D-Var reconstruction}
+\vspace{-1mm}
+\begin{itemize}
+  \item Each cycle reconstructs the full sequence:
+
+  \vspace{-3mm}
+  \[
+  \{x_k^a\}_{k=0}^{n-1}
+  \]
+  \item Observations remain \y{noisy and partial}:
+
+  \vspace{-3mm}
+  \[
+  y_k = H_k x_k + \epsilon_k
+  \]
+  \item Repeated cycles reduce reconstruction error
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What you see on the right}
+\vspace{-1mm}
+\begin{itemize}
+  \item Truth trajectory (black)
+  \item Selected analysis cycles (colored)
+  \item Later cycles are closer to truth
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+3D-Var keeps error coming in from the observation error
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.92\textwidth]{../../images/img20/origen/origen07.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Iterative reconstruction in state space $(x_1,x_2)$}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+
+

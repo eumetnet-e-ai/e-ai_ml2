@@ -1,0 +1,32 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Learning Task: Next-Step Obs Forecasting}
+
+\footnotesize
+\vspace{4mm}
+
+We train an ML model that predicts the next observation state:
+
+\[
+(y^{sat}_t,\;y^{rs}_t)\;\mapsto\;(\hat y^{sat}_{t+1},\;\hat y^{rs}_{t+1}(\cdot)).
+\]
+
+\textbf{Inputs at time $t$}
+\begin{itemize}
+  \item Satellite curtain: $y^{sat}_t(c,x)$ for all columns
+  \item RS set of points: $\{(x_m,z_m,y_m)\}_{m=1}^{N_{in}}$
+\end{itemize}
+
+\textbf{Outputs at time $t+1$}
+\begin{itemize}
+  \item Predicted satellite curtain $\hat y^{sat}_{t+1}(c,x)$
+  \item Predicted RS values at query points $\hat y^{rs}_{t+1}(x_q,z_q)$
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf Important:} query points can be anywhere $\Rightarrow$ \y{generalization to new RS placements}.
+
+\end{frame}

@@ -1,0 +1,54 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16 — Slide 28
+% ================================================================================
+\begin{frame}[t]
+\mytitle{A Minimal Forecasting World: A Blob Moving on a Circle}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{4mm}
+We create a simple 1D world on $[0,10]$:
+
+\vspace{1mm}
+\begin{itemize}
+  \item a \y{function} $f(t,x)$ (a ``blob'')
+  \item periodic domain: $x=0$ connects to $x=10$
+  \item dynamics: \y{pure translation}
+  \[
+  f(t+\Delta,x) = f(t,x-\delta)
+  \]
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Forecasting task:}
+given $f(t,\cdot)$, predict $f(t+\Delta,\cdot)$.
+
+\vspace{2mm}
+This captures the essence of advection:
+\y{structures move}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-6mm}
+\begin{center}
+\includegraphics[width=\linewidth]{../../images/img16/cnn_translation_input_output.png}
+
+\vspace{1mm}
+{\scriptsize \textit{Input $f(t)$ and target/forecast $f(t+\Delta)$.}}
+
+\vspace{-8mm}
+\includegraphics[width=5cm]{../../images/img16/signal_on_circle_3d_crop.png}
+
+\end{center}
+\end{column}
+
+\end{columns}
+\end{frame}

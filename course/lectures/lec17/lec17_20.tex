@@ -1,0 +1,58 @@
+% ================================================================================
+% Lecture 17 — Slide 20
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Operational inference at DWD: why a dedicated tool?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Goal}
+\begin{itemize}
+\item run AICON forecasts \y{operationally} and \y{reproducibly}
+\item integrate into existing NWP infrastructure (GRIB2, workflows, monitoring)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why not only \texttt{anemoi-inference}?}
+\begin{itemize}
+\item DWD-specific I/O and preprocessing (GRIB2 conventions)
+\item additional input engineering (e.g.\ soil moisture index etc.)
+\item packaging as stable runtime for ops (container)
+\item hooks for monitoring and verification pipelines
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Key ingredients}
+\begin{itemize}
+\item \textbf{checkpoint:} \texttt{inference-last.ckpt}
+\item \textbf{input:} ICON / reanalysis data streams
+\item \textbf{output:} GRIB2 forecast products
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational packaging}
+\begin{itemize}
+\item Apptainer / Singularity container
+\item fixed paths to constants + weights
+\item versioning: container + config + checkpoint
+\end{itemize}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+DWD inference tool = \y{bridge from ML model to ops}.
+\end{column}
+
+\end{columns}
+\end{frame}

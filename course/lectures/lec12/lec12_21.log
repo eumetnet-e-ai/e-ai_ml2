@@ -1,0 +1,37 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.22)  1 JAN 2026 21:03
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**lec12_21.tex
+(./lec12_21.tex
+LaTeX2e <2024-11-01> patch level 2
+L3 programming layer <2025-01-18>
+
+./lec12_21.tex:4: LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4 \begin{frame}[
+                  t,fragile]
+? 
+./lec12_21.tex:4: Emergency stop.
+ ...                                              
+                                                  
+l.4 \begin{frame}[
+                  t,fragile]
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+ 
+Here is how much of TeX's memory you used:
+ 15 strings out of 473190
+ 481 string characters out of 5715799
+ 391984 words of memory out of 5000000
+ 23367 multiletter control sequences out of 15000+600000
+ 558837 words of font info for 36 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 17i,0n,19p,126b,22s stack positions out of 10000i,1000n,20000p,200000b,200000s
+./lec12_21.tex:4:  ==> Fatal error occurred, no output PDF file produced!

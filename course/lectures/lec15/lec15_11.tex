@@ -1,0 +1,63 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 11
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Edges, Neighbours, and Graph Topology}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Defining neighbourhoods}
+
+\begin{itemize}
+  \item edges encode spatial interaction
+  \item most common choice: \y{k-nearest neighbours (kNN)}
+  \item distance measured on the sphere
+\end{itemize}
+
+\vspace{0mm}
+Each node exchanges information only with its neighbours:
+\begin{itemize}
+  \item local interactions
+  \item scalable message passing
+\end{itemize}
+
+\textbf{Edge index representation}
+
+\begin{itemize}
+  \item graph stored as \texttt{edge\_index}
+  \item integer pairs $(i,j)$ define connections
+  \item independent of data values
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{Reuse across experiments}
+
+\begin{itemize}
+  \item graph built once
+  \item reused for training, validation, inference
+  \item ensures geometric consistency
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Topology is fixed; data changes.}
+
+\includegraphics[width=0.95\textwidth]{../../images/img15/Graph_connectivity.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

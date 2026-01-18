@@ -1,0 +1,60 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Flask Server Example — Task Endpoints}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Task Lifecycle}
+
+\begin{itemize}
+  \item \texttt{created}
+  \item \texttt{checked}
+  \item \texttt{executing}
+  \item \texttt{completed / failed}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Endpoints}
+
+\begin{itemize}
+  \item \texttt{POST /tasks}
+  \item \texttt{GET /tasks/<id>}
+  \item \texttt{PUT /tasks/<id>}
+\end{itemize}
+
+\end{column}
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Validation Pattern}
+
+\begin{itemize}
+  \item Check input JSON
+  \item Check task existence
+  \item Check valid state transitions
+\end{itemize}
+
+\begin{codeonly}{Flask validation}
+if not request.json:
+    abort(400)
+
+if task is None:
+    abort(404)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key Point}
+
+\begin{itemize}
+  \item State changes happen on the server
+\end{itemize}
+
+\end{column}
+\end{columns}
+\end{frame}

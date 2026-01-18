@@ -1,0 +1,59 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Interactive GPU Access and Verification Workflow}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Step 1: Interactive GPU login}
+
+\begin{codeonly}{Shell alias (interactive GPU)}
+alias gpu1='qlogin -q gp_inter_dgx \
+ --gpunum-lhost=1 \
+ --cpunum-lhost=16 \
+ -l elapstim_req=6:00:00 \
+ -l memsz_job=240gb'
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Step 2: Select GPU explicitly}
+
+\begin{codeonly}{Shell}
+export CUDA_VISIBLE_DEVICES=7
+echo $CUDA_VISIBLE_DEVICES
+\end{codeonly}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Step 3: Minimal verification}
+
+\begin{codeonly}{Mini GPU check in Python}
+import torch, os
+print("CUDA_VISIBLE_DEVICES =", os.getenv("CUDA_VISIBLE_DEVICES"))
+print("Visible GPUs =", torch.cuda.device_count())
+print("GPU name =", torch.cuda.get_device_name(0))
+\end{codeonly}
+
+\vspace{0mm}
+\begin{itemize}
+  \item Interactive login allocates resources
+  \item GPU visibility must be set \y{explicitly}
+  \item Always verify from inside Python
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

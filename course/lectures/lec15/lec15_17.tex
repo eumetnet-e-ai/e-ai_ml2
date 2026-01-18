@@ -1,0 +1,76 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Creating Zarr Datasets with anemoi-datasets}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.53\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\begin{itemize}
+  \item convert raw meteorological data into ML-ready format
+  \item standardize structure, metadata, and statistics
+  \item enable scalable training and validation
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item dataset creation is fully \y{configuration-driven}
+  \item no preprocessing logic is hard-coded
+  \item every dataset is reproducible
+\end{itemize}
+
+\vspace{0mm}
+Typical processing steps:
+\begin{itemize}
+  \item read GRIB or NetCDF input
+  \item reshape and flatten grids if required
+  \item compute global statistics
+  \item write chunked Zarr archive
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\begin{codeonly}{Command-line workflow}
+anemoi-datasets create \
+  dataset.yaml \
+  era5.zarr
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Result}
+
+\begin{itemize}
+  \item validated Zarr dataset
+  \item embedded metadata and statistics
+  \item directly usable by Anemoi training
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Data preparation becomes a reproducible pipeline.}
+
+\vspace{5mm}
+\footnotesize
+\hspace*{-2.5cm}\href{https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+     {\texttt{https://anemoi.readthedocs.io/projects/datasets/en/latest/}}
+
+\end{column}
+
+\end{columns}
+
+
+
+\end{frame}

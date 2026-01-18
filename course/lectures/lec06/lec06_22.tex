@@ -1,0 +1,56 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Self-Attention — Forward Pass in Code}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.3\textwidth}
+
+\textbf{Core computation}
+
+\begin{itemize}
+  \item Linear projections to $Q,K,V$
+  \item Scaled dot-product attention
+  \item Weighted value aggregation
+  \item Merge heads + output projection
+\end{itemize}
+
+\vspace{1mm}
+{\tiny \[
+Z = \operatorname{softmax}
+\!\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\]}
+
+\end{column}
+
+\begin{column}[T]{0.75\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Self-attention (PyTorch, condensed)}
+def forward(self, x):
+    B,T,_ = x.shape
+    q = self.q(x).view(B,T,H,D).transpose(1,2)
+    k = self.k(x).view(B,T,H,D).transpose(1,2)
+    v = self.v(x).view(B,T,H,D).transpose(1,2)
+
+    a = (q @ k.transpose(-2,-1)) / sqrt(D)
+    a = softmax(a, dim=-1)
+
+    z = (a @ v).transpose(1,2).reshape(B,T,H*D)
+    return self.out(z)
+\end{codeonly}
+
+\vspace{2mm}
+\centering
+\y{This is the attention equation executed in code.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

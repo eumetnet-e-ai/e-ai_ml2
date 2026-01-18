@@ -1,0 +1,61 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Example Setup: \y{Function Classification}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Goal}
+
+\begin{itemize}
+  \item Input: sampled 1D function
+  \item Output: function class
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Classes:}
+\begin{itemize}
+  \item Sine-like
+  \item Gaussian
+  \item Polynomial
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Samples:}
+\begin{itemize}
+  \item Same grid
+  \item Different shape
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+
+\vspace{1mm}
+\raggedright
+\textbf{CNN sees:}
+\begin{itemize}
+  \item Local patterns
+  \item Overall structure
+\end{itemize}
+
+\vspace{2mm}
+\hspace*{-2cm}\includegraphics[width=10cm]{../../images/img05/cnn_data_samples_selected.png}
+
+\vspace{1mm}
+\centering
+Example input functions (with noise)
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

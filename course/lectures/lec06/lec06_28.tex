@@ -1,0 +1,58 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 28
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Streaming Responses from an LLM}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Standard inference}
+
+\begin{itemize}
+  \item Request sent
+  \item Model computes full response
+  \item Response returned at once
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Drawback}
+
+\begin{itemize}
+  \item No intermediate output
+  \item Latency feels high
+\end{itemize}
+
+\end{column}
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Streaming inference}
+
+\begin{itemize}
+  \item Tokens generated sequentially
+  \item Output arrives chunk by chunk
+  \item Immediate user feedback
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+\[
+\text{tokens}_1,\;
+\text{tokens}_2,\;
+\text{tokens}_3,\;\dots
+\]
+
+\vspace{1mm}
+\centering
+\y{Streaming exposes the autoregressive nature of LLMs.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

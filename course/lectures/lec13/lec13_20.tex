@@ -1,0 +1,70 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Correct Apptainer Workflow on HPC}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Recommended solution}
+
+\begin{itemize}
+  \item Run container pulls as \y{batch jobs}
+  \item Request sufficient \y{memory}
+  \item Avoid compressed SIF builds on login nodes
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Use sandbox format}
+
+\begin{itemize}
+  \item Uncompressed directory container
+  \item Much lower memory pressure
+  \item Fully usable with Apptainer
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{-12mm}
+\begin{codeonly}{Batch job (concept)}
+#PBS -q gp_norm_all
+#PBS -l memsz_job=128gb
+#PBS -l cpunum_job=2
+
+apptainer build --sandbox \
+  my-container \
+  docker://ghcr.io/ORG/IMAGE:TAG
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Running the container}
+
+\begin{itemize}
+  \item No root privileges
+  \item Current directory mounted by default
+  \item Same performance as SIF
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf HPC rule: build elsewhere, run everywhere.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\centering
+\y{For production: build SIFs in CI, not on the cluster.}
+
+\end{frame}

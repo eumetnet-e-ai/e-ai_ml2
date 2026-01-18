@@ -1,0 +1,77 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 25
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Summary: Two AI Paths for Data Assimilation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{AI-Var (Keller \& Potthast)}
+
+\y{\bf What it learns:}
+
+\vspace{-3mm}
+\[
+(x_b,\;y)\;\mapsto\; x_a
+\]
+
+\vspace{0mm}
+\begin{itemize}
+  \item neural network approximates the minimizer
+  \item trained by variational cost $J(x)$
+  \item output = \y{one deterministic analysis field}
+\end{itemize}
+
+\vspace{2mm}
+\y{\bf Strengths}
+\begin{itemize}
+  \item stable, structured increments
+  \item scalable in dimension (1D $\rightarrow$ 2D demo)
+  \item direct link to operational 3D/4D-Var
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\textbf{AI Particle Filter (Gaussian mixture)}
+
+\y{\bf What it learns:}
+
+\vspace{-2mm}
+\[
+(X^b,\;y)\;\mapsto\; X^a
+\]
+
+\vspace{0mm}
+\begin{itemize}
+  \item neural update transforms particle cloud
+  \item trained to fit posterior mass distribution
+  \item output = \y{analysis distribution (ensemble)}
+\end{itemize}
+
+\vspace{2mm}
+\y{\bf Strengths}
+\begin{itemize}
+  \item non-Gaussian posteriors (multi-modal)
+  \item distribution-aware filtering
+  \item background-term ablation shows skill gain
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\rtext{\bf Take-home: AI-Var learns the analysis; AI-PF learns a posterior distribution.}
+
+\end{frame}

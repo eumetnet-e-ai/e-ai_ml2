@@ -1,0 +1,41 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Classes I: Encapsulate State (A Tiny Model Component)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{Why classes appear everywhere}
+
+\begin{itemize}
+  \item Components have a \y{state} (e.g., temperature)
+  \item Methods update that state consistently
+  \item Same structure in NWP, ESMs, and ML modules
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{A relaxating temperature}
+class RelaxTemp:
+    def __init__(self, T):
+        self.T = T
+    def step(self, dt, target):
+        self.T += 0.1*dt*(target - self.T)
+
+atm = RelaxTemp(288.0)
+atm.step(1.0, 290.0)
+print("T =", atm.T)
+\end{codeonly}
+
+{\footnotesize A tiny but real modeling pattern: relaxation toward forcing}
+
+\end{column}
+\end{columns}
+\end{frame}

@@ -1,0 +1,60 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Message Passing: How Information Flows}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\textbf{Local updates}
+
+Each node updates its state by combining:
+\begin{itemize}
+  \item its own current value,
+  \item information from neighboring nodes.
+\end{itemize}
+
+\vspace{2mm}
+This update is \emph{learned}, not prescribed.
+
+\vspace{2mm}
+\textbf{Key mechanism}
+
+\begin{itemize}
+  \item Same update rule for all nodes
+  \item Shared parameters across the graph
+  \item Repeated over multiple layers
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Observations act as sources
+  \item Information spreads gradually
+  \item Missing values are inferred
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item No fixed interpolation stencil
+  \item Flexible neighborhood influence
+  \item Scales to new domains
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

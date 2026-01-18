@@ -1,0 +1,57 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Multimodal AI Interpretation of Radar Images}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+
+\textbf{Multimodal model input}
+
+The AI model receives:
+\begin{itemize}
+  \item a radar image (\y{visual modality})
+  \item a \y{textual instruction} (language modality)
+\end{itemize}
+
+\vspace{1mm}
+The model jointly reasons over:
+\begin{itemize}
+  \item spatial precipitation patterns
+  \item reflectivity intensity gradients
+  \item mesoscale structure
+\end{itemize}
+
+\vspace{1mm}
+The {\bf output} is a \y{natural-language}
+meteorological interpretation.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Multimodal AI request}
+query = "Please interpret this radar reflectivity image ..."
+response = client.chat.completions.create(
+  model="gpt-4-turbo",
+  messages=[{ "role": "user",
+    "content": [
+    {"type": "text", "text": query},
+    {"type": "image_url",
+    "image_url": {"url": f"data:image/png;base64,{encoded}"
+         }} ] }],
+  max_tokens=800 )
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

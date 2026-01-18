@@ -1,0 +1,64 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Design Philosophy of Anemoi}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Core principles}
+
+\begin{itemize}
+  \item \y{configuration over hard-coded logic}
+  \item clear separation of responsibilities
+  \item scalable by construction
+\end{itemize}
+
+\vspace{2mm}
+Anemoi is designed such that:
+\begin{itemize}
+  \item data handling,
+  \item graph construction,
+  \item model definition,
+  \item training orchestration
+\end{itemize}
+are \rtext{independent but composable} components.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-6mm}
+\textbf{Declarative workflows}
+
+\begin{itemize}
+  \item experiments are defined in \y{YAML}
+  \item components are selected, not programmed
+  \item changes are traceable and reproducible
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational mindset}
+
+\begin{itemize}
+  \item same setup works on laptop, HPC, and cloud
+  \item parallelism is explicit, not accidental
+  \item full provenance of data and models
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Anemoi treats ML experiments as engineering systems.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

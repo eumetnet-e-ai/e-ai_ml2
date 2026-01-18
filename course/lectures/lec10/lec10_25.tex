@@ -1,0 +1,63 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{LLMs as Nodes in LangGraph}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item LLMs do \emph{not} control execution
+  \item LLMs do \emph{not} manage memory
+  \item LLMs do \emph{not} decide termination
+\end{itemize}
+
+\vspace{0mm}
+Instead:
+\begin{itemize}
+  \item LLMs are used for \y{local reasoning tasks}
+  \item Each call has a well-defined input
+  \item Each call produces a bounded output
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.59\textwidth}
+
+\vspace{-8mm}
+\hspace{1cm}\begin{minipage}{5cm}
+\textbf{Typical LLM roles:}
+\begin{itemize}
+  \item information extraction
+  \item classification
+  \item summarization
+\end{itemize}
+\end{minipage}
+
+\vspace{2mm}
+\begin{codeonly}{LangGraph node}
+def extr_loc_node(state: MyState) -> MyState:
+  location = extr_loc(state["query"])
+  state["fc_location"] = location
+  return state
+\end{codeonly}
+
+\vspace{0mm}
+The LLM acts as a \y{pure transformation}  
+from input fields to output fields.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

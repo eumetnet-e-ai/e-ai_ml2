@@ -1,0 +1,58 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Reverse Diffusion: Learning to Denoise}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\textbf{Idea:} Train a network to \\
+\hspace{2cm}\y{remove a \emph{small amount of noise}:}
+\[
+x_t \;\longrightarrow\; x_{t-1}
+\]
+
+\vspace{-1mm}
+\begin{codeonly}{Denoising step (learned reverse process)}
+# x_t : noisy signal at step t
+# model learns to predict a less noisy version
+
+for t in reversed(range(1, T)):
+  x = model(x, t) # denoise one step
+\end{codeonly}
+
+\vspace{1mm}
+Each step is simple and stable.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\vspace{-2mm}
+\textbf{Training principle}
+
+\begin{itemize}
+  \item Start from clean signal $x_0$
+  \item Add noise step by step
+  \item Train the model to undo each step
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key point}
+
+\begin{itemize}
+  \item Same network for all steps
+  \item Only local corrections
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

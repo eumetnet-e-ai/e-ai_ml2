@@ -1,0 +1,60 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{OmegaConf in Practice and in Anemoi}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Using OmegaConf in Python}
+
+\begin{itemize}
+  \item configuration is passed into the training code
+  \item parameters are accessed programmatically
+  \item no hard-coded values are needed
+\end{itemize}
+
+\vspace{2mm}
+\begin{codeonly}{Accessing the configuration}
+# cfg provided by Hydra
+print(cfg.model.layer_sizes)
+print(cfg.training.max_epochs)
+\end{codeonly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\begin{codeonly}{Resolving and converting}
+from omegaconf import OmegaConf
+
+OmegaConf.resolve(cfg)
+cfg_dict = OmegaConf.to_object(cfg)
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Role in Anemoi}
+
+\begin{itemize}
+  \item schemas validate configs before training
+  \item resolved configs are logged with results
+  \item the full configuration defines the experiment
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf OmegaConf links configuration and execution.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

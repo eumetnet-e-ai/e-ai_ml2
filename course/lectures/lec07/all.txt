@@ -1,0 +1,1261 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 01
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Why Retrieval-Augmented Generation (RAG)?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Limitations of standalone LLMs}
+
+\begin{itemize}
+  \item Fixed knowledge at training time
+  \item No access to private or local data
+  \item Risk of hallucinated answers
+\end{itemize}
+
+
+\includegraphics[width=7cm]{../../images/img07/hallucinations.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{1mm}
+LLMs answer from \emph{learned parameters only}. 
+\rtext{This can be completely off reality!}
+
+\vspace{3mm}
+\textbf{Typical real-world needs}
+
+\begin{itemize}
+  \item Large code bases
+  \item Technical documentation
+  \item Evolving project knowledge
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea:}  
+\y{Bring the knowledge to the model.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 02
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Core Idea of Retrieval-Augmented Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Standard LLM workflow}
+
+\[
+\text{Prompt} \;\rightarrow\; \text{LLM} \;\rightarrow\; \text{Answer}
+\]
+
+\begin{itemize}
+  \item No external knowledge
+  \item No verification
+\end{itemize}
+
+\vspace{4mm}
+\begin{minipage}{7cm}
+\fontsize{9pt}{10pt}\selectfont
+Pure LLMs work well for general reasoning, language understanding, summarization, and creative text generation when the required knowledge is common and static.
+They perform poorly when accurate, up-to-date, proprietary, or highly technical domain knowledge is required, because they cannot verify facts or access external sources.
+In such cases, LLMs tend to hallucinate plausible but incorrect answers.
+\end{minipage}
+
+
+
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{RAG workflow}
+
+{\color{red}\bf\[
+\text{Query}
+\;\rightarrow\;
+\text{Retrieve}
+\;\rightarrow\;
+\text{LLM}
+\;\rightarrow\;
+\text{Answer}
+\]}
+
+\begin{itemize}
+  \item Search relevant documents
+  \item Inject context into prompt
+  \item \y{Grounded answers}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 03
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{RAG Architecture Overview}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+
+\rtext{\bf RAG is more than just text search!}
+
+\vspace{5mm}
+\textbf{Main \y{components}}
+
+\begin{itemize}
+  \item Document collection
+  \item Vector database
+  \item Retriever
+  \item Language model
+\end{itemize}
+
+\vspace{2mm}
+Each component has a \emph{clear role}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=\textwidth]{../../images/img07/RAG.png}
+
+\vspace{1mm}
+\centering
+Documents provide context for generation
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 04
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Vector Databases and Transformer Embeddings}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{\y{Text to vector mapping}}
+
+Given a tokenized input sequence
+\[
+(w_1, w_2, \dots, w_n)
+\]
+
+a Transformer maps tokens to embeddings:
+\[
+x_i = E(w_i) \in \mathbb{R}^d
+\]
+
+After contextualization (self-attention):
+\[
+h_i = \mathrm{Transformer}(x_1,\dots,x_n)
+\]
+
+\vspace{1mm}
+A sentence or paragraph embedding is typically:
+
+\vspace{-7mm}
+\[
+z = \frac{1}{n}\sum_{i=1}^n h_i
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Vector database view}
+
+Each paragraph is stored as:
+\[
+z_j \in \mathbb{R}^d
+\]
+
+\y{Similarity search} uses a distance measure, e.g.
+\[
+\mathrm{sim}(z_q, z_j)
+=
+\frac{z_q \cdot z_j}{\|z_q\|\,\|z_j\|}
+\]
+
+or equivalently:
+\[
+\| z_q - z_j \|_2
+\]
+
+\vspace{1mm}
+\textbf{Key point:}  
+The same embedding space is reused —  
+now \emph{outside} the LLM.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Elementary Vector Database — Setup}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.33\textwidth}
+
+\textbf{Toy example}
+
+\begin{itemize}
+  \item Small set of short sentences
+  \item Different semantic topics
+  \item Some paraphrases, some unrelated
+\end{itemize}
+
+\vspace{1mm}
+We use this to build intuition  
+before scaling to real documents.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.65\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Example sentences }
+sentences = [
+  "The sun is shining brightly today.",
+  "Heavy rain is falling over the city.",
+  "Neural networks can learn patterns.",
+  "Transformers use self-attention."
+]
+\end{codeonly}
+
+\vspace{1mm}
+Each sentence will become  
+one vector in a shared space.
+
+\vspace{3mm}
+\begin{center}
+\rtext{\bf Sentence $\rightarrow {\bf z} \in \R^{d}$}
+\end{center}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Text to Vector Space}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Sentence \y{embedding}}
+
+\vspace{3mm}
+A sentence $s_{i}$ is mapped to a vector
+\[
+z_i \in \mathbb{R}^d
+\]
+
+using a pretrained Transformer:
+\[
+z_i = f_{\theta}(s_i)
+\]
+
+\vspace{1mm}
+In our example:
+\[
+d = 384
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\y{\textbf{Embedding matrix}}
+
+\vspace{2mm}
+For \(N\) sentences, we obtain:
+\[
+Z =
+\begin{bmatrix}
+z_1^\top \\
+z_2^\top \\
+\vdots \\
+z_N^\top
+\end{bmatrix}
+\in \mathbb{R}^{N \times d}
+\]
+
+\vspace{3mm}
+Each row corresponds to  
+\emph{one sentence}.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Similarity Search}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\textbf{Query embedding}
+
+A query sentence is mapped to:
+\[
+z_q \in \mathbb{R}^d
+\]
+
+\vspace{3mm}
+\y{\bf Similarity} to stored sentences is
+measured using cosine similarity:
+\[
+\mathrm{sim}(z_q, z_i)
+=
+\frac{z_q \cdot z_i}
+{\|z_q\|\,\|z_i\|}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.53\textwidth}
+
+\vspace{-8mm}
+\begin{codeonly}{Similarity search (conceptual)}
+scores = cosine_similarity(
+    query_embedding,
+    embeddings )
+
+top_k = argsort(scores)[-k:]
+\end{codeonly}
+
+\vspace{3mm}
+\textbf{Result:}  
+\y{Sentences with closest meaning}  
+\y{are retrieved — no keywords needed.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\begin{minipage}{\textwidth}
+\footnotesize
+See example 1\_vector\_db\_elementary.ipynb in the \texttt{code07/} directory carrying out transforms explicitely. The command \texttt{\color{red} SentenceTransformer("all-MiniLM-L6-v2")} loads a pretrained Transformer-based
+sentence embedding model that maps each input sentence to a fixed-size vector
+\( z \in \mathbb{R}^{384} \) capturing its semantic meaning.
+The model is publicly available at
+\href{https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2}
+{\texttt{huggingface.co/sentence-transformers/all-MiniLM-L6-v2}}.
+\end{minipage}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Document Search via Embeddings}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Goal}
+
+\begin{itemize}
+  \item Search \emph{inside} a document
+  \item Retrieve relevant pages or sections
+  \item No keyword matching required
+\end{itemize}
+
+\vspace{1mm}
+We use the same vector-space idea  
+as in the elementary example.
+
+\vspace{1cm}
+\raggedleft
+\textbf{"temporal pattern"}
+$\;\xrightarrow{\text{find pdf}}\;$
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Input}
+
+\begin{itemize}
+  \item One lecture PDF (Lecture 05)
+  \item Pages as semantic units
+  \item Natural-language queries
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Output:}  
+Relevant pages from the PDF
+
+\vspace{3mm}
+\includegraphics[width=5cm]{../../images/img07/slide_from_rag}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 09
+% ================================================================================
+\begin{frame}[t, fragile]
+\begin{tightmath}
+
+\mytitle{From PDF Pages to Vectors}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.37\textwidth}
+
+\textbf{Decomposition}
+
+The \y{PDF is split into pages:}
+\[
+\{\text{page}_1, \dots, \text{page}_N\}
+\]
+
+\y{Each page is embedded} as:
+\[
+z_i = f_{\theta}(\text{page}_i)
+\in \mathbb{R}^d
+\]
+
+\vspace{1mm}
+In our example:
+\[
+d = 384
+\]
+
+\textbf{Embedding matrix}
+
+All pages form:
+\[
+Z \in \mathbb{R}^{N \times d}
+\]
+
+\vspace{1mm}
+\begin{minipage}{6cm}
+\tiny
+Each row corresponds to  
+one PDF page.
+
+\textbf{Key point:}  
+Documents are represented as  
+collections of vectors.
+\end{minipage}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Extract text from PDF pages}
+for i, page in enumerate(reader.pages):
+    text = page.extract_text()
+    if text and len(text.strip()) > 50:
+        pages.append(text.strip())
+        page_ids.append(i + 1)
+\end{codeonly}
+
+\vspace{2mm}
+\begin{codeonly}{Embedding}
+page_embeddings = model.encode(
+    pages,
+    convert_to_numpy=True,
+    show_progress_bar=False)
+\end{codeonly}
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Semantic Search inside a PDF}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.30\textwidth}
+
+\textbf{Query embedding}
+
+A user query is mapped to:
+\[
+z_q \in \mathbb{R}^d
+\]
+
+\y{Similarity} to \y{page embeddings} is computed via:
+\[
+\mathrm{sim}(z_q, z_i)
+=
+\frac{z_q \cdot z_i}
+{\|z_q\|\,\|z_i\|}
+\]
+
+\vspace{1mm}
+Top-\(k\) most relevant pages are retrieved.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.73\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Semantic page search}
+def search_pdf(query, model, pages, embeddings, page_ids, top_k=3):
+   q_emb = model.encode(
+      query, convert_to_numpy=True)
+   scores = []
+   for i, emb in enumerate(embeddings):
+      score = cosine_similarity(q_emb, emb)
+      scores.append((page_ids[i], score, pages[i]))
+
+   scores.sort(key=lambda x: x[1], reverse=True)
+   return scores[:top_k]
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 11
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{From Retrieval to Evidence}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What we display}
+
+\begin{itemize}
+  \item Retrieved page number
+  \item Extracted text snippet
+  \item Original PDF page
+\end{itemize}
+
+\vspace{1mm}
+This allows direct verification  
+of the search result.
+
+\vspace{1mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Transparent retrieval
+  \item No hidden reasoning
+  \item Trust through inspectable sources
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1cm}
+\includegraphics[width=7cm]{../../images/img07/pdf-rag-result.png}
+
+\vspace{3mm}
+Next: \textbf{Retrieval Augmented Generation:}  
+Retrieve first — generate later.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Why Do We Need FAISS?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Above approach}
+
+\begin{itemize}
+  \item Loop over all embeddings
+  \item Compute similarity one by one
+  \item \y{Exact but very (!) slow}
+\end{itemize}
+
+\vspace{1mm}
+Cost of one query:
+\[
+\mathcal{O}(N \cdot d)
+\]
+
+\textbf{Problem size}
+
+\begin{itemize}
+  \item \(N\): number of stored vectors  
+        (pages, paragraphs, documents)
+  \item \(d\): embedding dimension  
+        (e.g.\ \(d = 384\))
+\end{itemize}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+Each query compares  
+against \emph{all} vectors.
+
+\vspace{2mm}
+\textbf{Scaling issue:}  
+Large \(N\) makes brute-force search infeasible.
+
+\vspace{2mm}
+\textbf{Typical RAG library sizes}
+
+\begin{itemize}
+  \item \textbf{Personal projects:}  
+        \(10^2\)–\(10^3\) documents  
+        \(\rightarrow\; N \sim 10^4\) chunks
+  \item \y{\textbf{Team / institutional data:}} 
+        \(10^4\)–\(10^5\) documents  
+        \(\rightarrow\; N \sim 10^6\)–\(10^7\) chunks
+  \item \y{\textbf{Enterprise-scale systems:}}  
+        \(10^6+\) documents  
+        \(\rightarrow\; N \gg 10^7\) chunks
+\end{itemize}
+
+\vspace{1mm}
+Chunking multiplies the number of stored vectors \(N\).
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{FAISS — Vector Search at Scale}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\begin{itemize}
+  \item \y{Facebook AI Similarity Search}
+  \item Optimized nearest-neighbor search
+  \item Designed for large vector collections
+\end{itemize}
+
+\vspace{1mm}
+Stores vectors:
+\[
+z_i \in \mathbb{R}^d
+\]
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item \y{Build an index once}
+  \item Query many times
+  \item Fast top-\(k\) retrieval
+\end{itemize}
+
+Search replaces explicit loops.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-5mm}
+\textbf{Hierarchical search in FAISS}
+
+FAISS accelerates nearest-neighbor search by introducing
+a \emph{coarse-to-fine hierarchy} in vector space.
+
+\vspace{3mm}
+\textbf{Step 1: Coarse partitioning}
+
+The vector space is partitioned into \(M\) regions
+using representative centroids:
+\[
+\{ c_1, \dots, c_M \}, \quad c_j \in \mathbb{R}^d .
+\]
+
+Each stored vector \(z_i\) is assigned to its nearest centroid:
+\[
+z_i \;\mapsto\; c(z_i).
+\]
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{FAISS in Practice}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+
+\textbf{Index construction}
+
+\begin{itemize}
+  \item Choose distance metric
+  \item Add all embeddings
+  \item Index lives in memory or on disk
+\end{itemize} 
+Common choice: IndexFlatL2
+
+\vspace{4mm}
+\textbf{Step 2: Query routing}
+
+For a query vector \(z_q\), FAISS finds the closest centroids:
+\[
+\mathcal{C}_q
+=
+\operatorname*{arg\,top}_{L}
+\; \| z_q - c_j \|_2 ,
+\quad L \ll M .
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-9mm}
+\begin{codeonly}{Build and query FAISS index}
+import faiss
+d = page_embeddings.shape[1]
+index = faiss.IndexFlatL2(d)
+
+index.add(page_embeddings)
+
+distances, indices = index.search(
+    query_embedding, k)
+\end{codeonly}
+
+
+\vspace{3mm}
+\textbf{Step 3: Local search}
+
+Exact distances are computed only for vectors
+stored in the selected regions:
+\[
+z_i \;\text{with}\; c(z_i) \in \mathcal{C}_q .
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Streaming LLM Responses}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Standard LLM interaction}
+
+\[
+\text{prompt}
+\;\longrightarrow\;
+\text{full response}
+\]
+
+User waits until generation is finished.
+
+\vspace{2mm}
+\textbf{\y{Streaming} interaction}
+
+\[
+\text{prompt}
+\;\longrightarrow\;
+(\delta_1, \delta_2, \dots)
+\]
+
+Partial tokens are delivered incrementally.
+
+\vspace{3mm}
+\rtext{Recall that \y{\bf LLMs generate tokens incrementally!}}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-7mm}
+\textbf{What streaming changes}
+
+\begin{itemize}
+  \item Faster perceived response
+  \item Progressive rendering
+  \item Interactive user experience
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What streaming does not change}
+
+\begin{itemize}
+  \item Model architecture
+  \item Reasoning capability
+  \item Final content
+\end{itemize}
+
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{OpenAI Streaming}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+
+\textbf{Streaming API call}
+
+\begin{itemize}
+  \item Same prompt structure
+  \item \texttt{stream=True}
+  \item Tokens arrive as \y{deltas}
+\end{itemize}
+
+\vspace{2mm}
+Each chunk contains new text:
+\[
+\delta_k \subset \text{response}
+\]
+
+\begin{minipage}{4cm}
+\tiny\color{red}
+There are several older OpenAI interface versions that language models may still suggest.
+Be careful: to avoid deprecated APIs, it is often necessary to explicitly provide a current code template.
+\end{minipage}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.65\textwidth}
+
+\vspace{-9mm}
+\begin{codeonly}{OpenAI streaming in Jupyter}
+stream = client.chat.completions.create(
+  model="gpt-4o-mini", messages=[...],
+  stream=True )
+
+accumulated = ""
+handle = display(
+  Markdown(""), display_id=True)
+
+for chunk in stream:
+    delta = chunk.choices[0].delta
+    if delta.content:
+        accumulated += delta.content
+        handle.update(
+          Markdown(accumulated))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 17
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Streaming with Local LLMs (Ollama)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Local execution}
+
+\begin{itemize}
+  \item Models run on \y{local hardware}
+  \item No external API calls
+  \item \y{Full data control}
+\end{itemize}
+
+\vspace{2mm}
+Streaming follows the same principle:
+\[
+(\delta_1, \delta_2, \dots)
+\]
+
+\raggedleft
+\includegraphics[width=6cm]{../../images/img07/ollama_interface.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Advantages}
+
+\begin{itemize}
+  \item \y{Privacy and compliance}
+  \item \rtext{\bf Offline usage - train or plane}
+  \item No usage-based \y{cost}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Trade-offs}
+
+\begin{itemize}
+  \item Smaller models
+  \item Hardware dependent speed
+\end{itemize}
+
+\vspace{5mm}
+{\bf List of all available models:}
+https://ollama.ai/library
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Ollama Streaming in Python}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.33\textwidth}
+
+\textbf{Ollama streaming call}
+
+\begin{itemize}
+  \item Local HTTP interface
+  \item Same message format
+  \item Streaming enabled
+\end{itemize}
+
+\vspace{2mm}
+Works with:
+\texttt{\y{llama3}}, \texttt{\y{mistral}}, \texttt{\y{mixtral}}, \texttt{\y{deepseek-r1}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Ollama streaming in Jupyter}
+stream = ollama.chat( model="llama3", 
+   messages=[...], stream=True )
+
+accumulated = ""
+handle = display(
+  Markdown(""), display_id=True)
+
+for chunk in stream:
+   if "content" in chunk["message"]:
+      accumulated += chunk["message"]\
+      ["content"] 
+      handle.update(Markdown(accumulated))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{RAG Implementation: Concrete Steps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Implemented components}
+
+\begin{itemize}
+  \item text chunking (files $\rightarrow$ chunks)
+  \item sentence embeddings
+  \item FAISS index
+  \item metadata tracking
+  \item LLM query with context
+\end{itemize}
+
+\vspace{2mm}
+Each component is explicit  
+and inspectable in code.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Execution order}
+
+\begin{enumerate}
+  \item build vector database (offline)
+  \item embed user query
+  \item retrieve top-$k$ chunks
+  \item assemble prompt context
+  \item generate answer (optional streaming)
+\end{enumerate}
+
+\vspace{2mm}
+No hidden steps, no magic.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7, Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 7 — Slide 20}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7, Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 7 — Slide 21}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7, Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 7 — Slide 22}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7, Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 7 — Slide 23}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7, Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 7 — Slide 24}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7, Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 7 — Slide 25}
+
+  % Content goes here
+
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec07.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 7}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\input{../lec_agenda.tex}
+\input{lec07_01.tex}
+\input{lec07_02.tex}
+\input{lec07_03.tex}
+\input{lec07_04.tex}
+\input{lec07_05.tex}
+\input{lec07_06.tex}
+\input{lec07_07.tex}
+\input{lec07_08.tex}
+\input{lec07_09.tex}
+\input{lec07_10.tex}
+\input{lec07_11.tex}
+\input{lec07_12.tex}
+\input{lec07_13.tex}
+\input{lec07_14.tex}
+\input{lec07_15.tex}
+\input{lec07_16.tex}
+\input{lec07_17.tex}
+\input{lec07_18.tex}
+\input{lec07_19.tex}
+\input{lec07_20.tex}
+\input{lec07_21.tex}
+\input{lec07_22.tex}
+\input{lec07_23.tex}
+\input{lec07_24.tex}
+\input{lec07_25.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

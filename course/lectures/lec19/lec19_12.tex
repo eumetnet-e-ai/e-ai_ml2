@@ -1,0 +1,59 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Neural SINDy: Results on Noisy Lorenz--63 Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Experimental setup}
+
+\begin{itemize}
+  \item Lorenz--63 system
+  \item Strong additive noise on observations
+  \item Identical SINDy library and sparsity settings
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Comparison}
+
+\begin{itemize}
+  \item Classical SINDy: finite-difference derivatives
+  \item Neural SINDy: NN-smoothed trajectory + autograd
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/neural_sindy_comparison.png}
+
+\vspace{-2mm}
+\raggedright
+\footnotesize
+Comparison of trajectories, derivatives, and predictions for
+classical vs.\ Neural SINDy on noisy data.
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\textbf{Outcome}
+
+\begin{itemize}
+  \item Neural SINDy recovers an improved equation structure
+\end{itemize}
+
+
+\end{frame}

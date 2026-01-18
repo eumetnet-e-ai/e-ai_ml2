@@ -1,0 +1,66 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 27
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Why Containers are Essential in ML Frameworks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{The core problem in ML}
+
+\begin{itemize}
+  \item ML code depends on:
+  \begin{itemize}
+    \item specific library versions
+    \item CUDA / CPU features
+    \item system-level dependencies
+  \end{itemize}
+  \item These dependencies \rtext{change over time}
+  \item Results become hard to reproduce
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf ML models are not standalone artifacts.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{What containers provide}
+
+\begin{itemize}
+  \item Encapsulation of:
+  \begin{itemize}
+    \item code
+    \item libraries
+    \item runtime environment
+  \end{itemize}
+  \item Identical execution on:
+  \begin{itemize}
+    \item laptops
+    \item CI systems
+    \item HPC clusters
+  \end{itemize}
+\end{itemize}
+
+\vspace{2mm}
+\y{\bf Containers turn models into executable artifacts.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\footnotesize
+Reproducibility, portability, and controlled execution are \rtext{non-negotiable} in ML.
+
+\end{frame}

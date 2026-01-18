@@ -1,0 +1,75 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training Loop and Outcome (loss curve)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Training loop}
+
+\vspace{0mm}
+We train on randomly sampled spatial patches:
+\begin{itemize}
+  \item each step draws a new batch: location + time
+  \item objective: MSE between predicted and true \texttt{t2m(t+1)}
+  \item optimizer: Adam
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Expected behavior}
+
+\vspace{0mm}
+\begin{itemize}
+  \item loss decreases quickly in the first iterations
+  \item later it stabilizes (noise floor of the synthetic data)
+  \item model learns local transport and correlations
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-8mm}
+Example:
+
+\vspace{0mm}
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+rng = np.random.default_rng(123)
+n_steps = 800
+batch_size = 8
+
+loss_hist = []
+
+model.train()
+for step in range(1, n_steps + 1):
+    Xt, yt = sample_patch_batch(batch_size=batch_size, rng=rng)
+    pred = model(Xt)
+    loss = loss_fn(pred, yt)
+
+    opt.zero_grad()
+    loss.backward()
+    opt.step()
+
+    loss_hist.append(float(loss.item()))
+\end{lstlisting}
+\end{minipage}
+
+\vspace{-2mm}
+\includegraphics[width=6.2cm]{../../images/img14/zarr_training_loss.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

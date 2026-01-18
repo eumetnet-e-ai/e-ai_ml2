@@ -1,0 +1,48 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{FFNN as a Mathematical Mapping}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Layer-wise computation}
+
+\begin{itemize}
+  \item Affine transformation
+  \item Nonlinear activation
+  \item Composition of functions
+\end{itemize}
+
+\vspace{3mm}
+Each layer increases \y{expressiveness}.
+
+\vspace{3mm}
+Purely \y{data-driven} mapping.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-6mm}
+\begin{eqnarray*}
+x^{(0)} &=& x \\[1mm]
+x^{(1)} &=& \sigma\!\left(W_1 x^{(0)} + b_1\right) \\[1mm]
+x^{(2)} &=& \sigma\!\left(W_2 x^{(1)} + b_2\right) \\[1mm]
+\hat{y} &=& W_3 x^{(2)} + b_3
+\end{eqnarray*}
+
+\vspace{1mm}
+\hspace{1cm}$\sigma$: ReLU, tanh, sigmoid
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

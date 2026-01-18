@@ -1,0 +1,60 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Model and Training Loop}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Model idea}
+
+\begin{itemize}
+  \item Input: scalar $x$
+  \item Output: scalar $\hat{y}$
+  \item Learn nonlinear mapping
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Training}
+
+\begin{itemize}
+  \item Compare $\hat{y}$ and \y{$y$}
+  \item Minimize prediction error
+  \item Update model parameters
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-11mm}
+\begin{codeonly}{Model and training loop}
+model = nn.Sequential(
+    nn.Linear(1,16), nn.ReLU(),
+    nn.Linear(16,16), nn.ReLU(),
+    nn.Linear(16,1)
+)
+
+loss_fn = nn.MSELoss()
+opt = torch.optim.Adam(
+      model.parameters(), lr=0.01)
+
+for x_b,y_b in loader:
+    opt.zero_grad()
+    y_p = model(x_b)
+    loss = loss_fn(y_p, y_b)
+    loss.backward()
+    opt.step()
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

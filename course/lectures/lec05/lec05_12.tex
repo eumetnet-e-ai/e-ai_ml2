@@ -1,0 +1,64 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{GNN Application Example — Advection on a Periodic Grid}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Physical setup}
+
+\begin{itemize}
+  \item Nodes arranged on a periodic ring
+  \item Each node holds a scalar field value
+  \item Goal: learn one-step time evolution
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Learning task}
+
+\begin{itemize}
+  \item Input: field at time $t$
+  \item Output: field at time $t+\Delta t$
+  \item Advection-like transport process
+\end{itemize}
+
+\vspace{1mm}
+Mathematically:
+\[
+z^{t+1} \;\approx\; f_\theta(G, z^t)
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-4mm}
+\includegraphics[width=0.9\textwidth]{../../images/img05/gnn_test_tds_1.png}
+
+\vspace{1mm}
+\centering
+Graph structure with periodic connectivity
+
+\vspace{1mm}
+\raggedright
+\textbf{Why a GNN?}
+
+\begin{itemize}
+  \item Local interactions dominate dynamics
+  \item Translation invariance on the ring
+  \item Same update rule for all nodes
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

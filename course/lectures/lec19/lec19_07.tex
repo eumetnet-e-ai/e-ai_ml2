@@ -1,0 +1,80 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 07
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Improving Representation with Fourier Features}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.49\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Motivation}
+
+Standard MLPs learn functions of $x$ that are biased toward
+\y{smooth, slowly varying behavior}.
+
+\vspace{2mm}
+Oscillatory solutions, such as
+\[
+y(x) = \sin(x),
+\]
+are therefore harder to represent and extrapolate.
+
+\vspace{2mm}
+\textbf{Fourier feature idea}
+
+Instead of learning directly from $x$, we apply a fixed
+\y{feature map}:
+\[
+x \;\mapsto\;
+\bigl(
+\sin(\omega_k x),\;
+\cos(\omega_k x)
+\bigr)_{k=1}^m.
+\]
+
+\vspace{2mm}
+The neural network then learns a function
+of these periodic features.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=6cm]{../../images/img19/pinn_sine_4.png}
+
+\vspace{0mm}
+\raggedright
+\textbf{Effect on the PINN}
+
+\begin{itemize}
+  \item Periodicity is \y{easy to represent}
+  \item Long-range extrapolation improves
+  \item Fewer parameters are needed
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Linear models become \y{Fourier series fits}
+  \item Nonlinear MLPs allow mode interactions
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf This changes the representation, not the physics.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

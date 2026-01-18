@@ -1,0 +1,63 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID System Architecture — Server and Backend}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Web and Gateway Layer}
+
+\begin{itemize}
+  \item \textbf{Web Server} (Apache / Nginx)  
+        \y{TLS termination}, static content, routing
+  \item \textbf{PHP Gateway}  
+        Sessions, uploads, request forwarding
+  \item \textbf{Security Boundary}  
+        \rtext{No direct access} to backend services
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Role}
+
+\begin{itemize}
+  \item Separates public UI from compute backend
+  \item Enforces access control and isolation
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Backend and Compute Layer}
+
+\begin{itemize}
+  \item \textbf{Python Backend (FastAPI)}  
+        Central orchestration logic
+  \item \textbf{Uvicorn Server}  
+        Async execution, streaming responses
+  \item \textbf{LLM Backends}  
+        Local and cloud-based models
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Backend owns \y{state}, \y{context}, and \y{tools}
+  \item Frontend remains stateless and simple
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

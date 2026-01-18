@@ -1,0 +1,85 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 21
+% ================================================================================
+\begin{frame}[t, fragile]
+\begin{tightmath}
+
+\mytitle{Training Loss: Fit a Gaussian-Mixture Posterior}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+
+\textbf{Posterior fitting objective}
+
+\vspace{0mm}
+Train the particle update network such that
+the \y{analysis ensemble} represents the posterior:
+\[
+q^a(x)\;\approx\; p(x\mid y)
+\]
+
+\vspace{1mm}
+\textbf{Gaussian mixture model}
+
+\vspace{-2mm}
+Particles define a mixture density:
+\[
+q(x\mid X)=\frac1N\sum_{i=1}^N\mathcal{N}(x\mid x^{(i)},\Sigma)
+\]
+
+\vspace{-1mm}
+\textbf{Loss = likelihood + KL fit}
+
+\vspace{-4mm}
+\[
+L
+=
+\underbrace{-\log\Big(\tfrac1N\sum_i p(y\mid x_i^a)\Big)}_{L_{\rm obs}}
++
+\lambda_{\rm bg}\,
+\underbrace{\mathrm{KL}\!\Big(q_{\rm target}(\cdot)\,\Vert\,q^a(\cdot)\Big)}_{L_{\rm GM}}
+\]
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+{\tiny
+\begin{verbatim}
+# evaluation points (single Kalman update)
+Z = kalman_eval_points(Xb, y)
+
+# target posterior weights on Z
+log_t = log_mix(Z|Xb) + log_like(y|Z)
+w_t = softmax(log_t)
+
+# model mixture log-density on Z
+log_m = log_mix(Z|Xa)
+
+# mixture KL term
+L_GM = sum_z w_t(z) * (log w_t(z) 
+	- log softmax(log_m(z)))
+loss = L_obs + lambda_bg * L_GM
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\y{Target uses prior mixture + obs likelihood.}
+
+\vspace{4mm}
+\centering
+\rtext{\bf Learn the posterior distribution, not only the mean.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

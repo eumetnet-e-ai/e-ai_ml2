@@ -1,0 +1,60 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Vision Embedding to Language Model Input}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{The modality gap}
+
+\begin{itemize}
+  \item Vision encoder outputs \y{visual embeddings}
+  \item Language models expect \y{text embeddings}
+  \item Both live in different representation spaces
+\end{itemize}
+
+\vspace{2mm}
+A learned projection is required to connect
+vision and language.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-2mm}
+\textbf{Vision--language bridge}
+
+\begin{codeonly}{Project vision features into language space}
+# vision features -> embedding 
+encoder_embed = bridge( vision_feat
+	).unsqueeze(1)
+
+# Pass embeddings to the T5 encoder
+outputs = t5(
+    inputs_embeds=encoder_embed,
+    labels=labels )
+\end{codeonly}
+
+\vspace{1mm}
+The language model receives embeddings,
+not tokens.
+
+\vspace{3mm}
+{\footnotesize
+$\text{CLS} \in \mathbb{R}^{768}
+\;\xrightarrow{\text{Linear projection}}\;
+\text{encoder\_embed} \in \mathbb{R}^{1 \times 1 \times 512}$
+}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

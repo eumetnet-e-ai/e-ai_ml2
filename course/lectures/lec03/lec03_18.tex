@@ -1,0 +1,66 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 18
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{{\color{red}Alternatives to GRIB} — Strengths and Limits}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.42\textwidth}
+
+\vspace{0mm}
+\textbf{NetCDF / CF}
+
+\begin{itemize}
+  \item Widely used in research
+  \item Human-readable metadata
+  \item Excellent tool support
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Zarr / Cloud-native}
+
+\begin{itemize}
+  \item Chunked, parallel access
+  \item Designed for object storage
+  \item Attractive for ML workflows
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.56\textwidth}
+
+\vspace{-1mm}
+\textbf{Why GRIB is not easily replaced}
+
+\begin{itemize}
+  \item Operational ecosystems are huge
+  \item Encoding efficiency still unmatched
+  \item Standards evolution is slow by design
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Current practice}
+
+\begin{itemize}
+  \item GRIB for production and exchange
+  \item {\color{red}NetCDF / Zarr for analysis and ML}
+  \item \y{Conversion layers in between}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key message}
+
+\begin{itemize}
+  \item Format choice reflects \y{use case}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

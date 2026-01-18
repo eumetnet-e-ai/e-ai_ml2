@@ -1,0 +1,60 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Loops in Python: Time Stepping and Accumulation}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.4\textwidth}
+
+\textbf{Typical use case}
+
+\begin{itemize}
+  \item Discrete \y{time stepping}
+  \item Running sums and averages
+  \item Diagnostics over trajectories
+  \item Core pattern in models
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mental model}
+
+\begin{itemize}
+  \item Each loop = one time step
+  \item State evolves sequentially
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.58\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{time\_loop.py}
+import numpy as np
+
+dt = 0.1; x = 0.0; traj = [] # initialization
+
+for n in range(20):
+    x = x + dt * np.sin(x)
+    traj.append(x)
+
+traj = np.array(traj)
+print("final x =", x)
+print("mean x  =", traj.mean())
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Sequential updates cannot be vectorized away}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}

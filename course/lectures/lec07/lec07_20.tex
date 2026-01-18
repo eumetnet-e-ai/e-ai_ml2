@@ -1,0 +1,59 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 20
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Top-\(k\) Retrieval: What Do We Actually Get?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{FAISS output}
+
+For a query embedding \(z_q\), FAISS returns:
+\[
+\{(i_1, d_1), (i_2, d_2), \dots, (i_k, d_k)\}
+\]
+
+\begin{itemize}
+  \item \(i_j\): index of a stored chunk
+  \item \(d_j\): distance or similarity score
+\end{itemize}
+
+\vspace{2mm}
+These indices refer to:
+\[
+z_{i_j} \;\leftrightarrow\; \text{chunk}_{i_j}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Important clarification}
+
+\begin{itemize}
+  \item FAISS returns \emph{vectors}, not text
+  \item Text is recovered via metadata lookup
+  \item Ordering is by similarity score
+\end{itemize}
+
+\vspace{2mm}
+\textbf{At this stage:}
+\begin{itemize}
+  \item \y{no LLM involved}
+  \item \y{no generation}
+  \item \y{no reasoning}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,69 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Core Idea of AI-Var}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Classical variational DA}
+
+\vspace{2mm}
+\begin{itemize}
+  \item iterative minimization of $J(x)$
+  \item requires adjoints and solvers
+  \item expensive and sequential
+\end{itemize}
+
+\vspace{3mm}
+\rtext{\bf Replace the minimization algorithm.}
+
+\vspace{2mm}
+\textbf{AI-Var}
+
+\vspace{1mm}
+\begin{itemize}
+  \item neural network approximates the minimizer
+  \item outputs analysis $x_a$ directly
+  \item trained using the \y{same cost function}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\centering
+\vspace{-8mm}
+\hspace*{-1cm}
+\begin{minipage}{9cm}
+\includegraphics[width=\textwidth]{../../images/img18/aivar1.png}
+\end{minipage}
+
+\vspace{1mm}
+\footnotesize
+Classical DA workflow (left) versus AI-based inference of the analysis (right).
+
+\vspace{5mm}
+\footnotesize
+\rtext{\bf Paradigm shift}
+
+\vspace{1mm}
+\begin{itemize}
+  \item \color{darkgreen} DA becomes \y{inference}, not optimization
+  \item milliseconds instead of iterations
+  \item same statistics, different machinery
+  \item flexible inflow of further information
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

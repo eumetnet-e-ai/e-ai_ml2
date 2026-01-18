@@ -1,0 +1,51 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Inspecting Results in the MLflow UI}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\footnotesize
+\textbf{Grouping principle}
+
+\begin{itemize}
+  \item Runs are grouped by \y{experiment}
+  \item Experiment name defines the comparison scope
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Within one experiment}
+
+\begin{itemize}
+  \item Select one or more runs
+  \item Compare metrics
+  \item Inspect parameters
+  \item Browse artifacts
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-3mm}
+\includegraphics[width=\textwidth]{../../images/img12/sine_cosine_comparison.png}
+
+\vspace{1mm}
+\footnotesize
+Comparison of two runs within one experiment
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

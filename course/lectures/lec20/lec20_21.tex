@@ -1,0 +1,64 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Sequential Rounds: With All Observations We Converge in Two Cycles}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Idea: assimilate in two rounds}
+\vspace{-1mm}
+\begin{itemize}
+  \item \y{Round 1:} observe $x_1$ only
+  
+  \vspace{-3mm}
+  \[
+    y_k^{(1)} = x_{1,k} + \epsilon_k
+  \]
+  \item \y{Round 2:} observe $x_2$ only, using
+
+  \vspace{-3mm}
+  \[
+    x_{k}^{b,(2)} := x_{k}^{a,(1)}
+  \]
+\end{itemize}
+
+\vspace{1mm}
+\textbf{If obs error is small}
+\vspace{-1mm}
+\begin{itemize}
+  \item after Round 1: $x_1$ aligns with truth
+  \item after Round 2: $x_2$ aligns with truth
+  \item \y{both components observed} $\Rightarrow$ fast convergence
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+With complete information, ORIGEN-style cycling converges quickly.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.92\textwidth]{../../images/img20/origen/origen05.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Truth vs Round 1 ($x_1$ obs) vs Round 2 ($x_2$ obs, bg=Round 1)}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}

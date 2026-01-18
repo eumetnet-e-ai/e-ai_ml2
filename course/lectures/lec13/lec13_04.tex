@@ -1,0 +1,65 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{DevOps vs MLOps: What Really Changes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{DevOps perspective}
+
+\begin{itemize}
+  \item Software behavior defined by \y{source code}
+  \item Releases are \y{explicit and controlled}
+  \item Bugs are fixed by changing code
+\end{itemize}
+
+\vspace{2mm}
+\begin{minipage}{3cm}
+\raggedright
+How do we monitor systems, and control changes, fixes, improvements?
+
+\end{minipage}
+\hspace{5mm}
+\begin{minipage}{3cm}
+\hspace{4cm}\includegraphics[height=3cm]{../../images/img13/mlops6.png}
+\end{minipage}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{MLOps perspective}
+
+\begin{itemize}
+  \item Behavior emerges from \rtext{data and training}
+  \item Models evolve through \rtext{retraining}
+  \item Performance can change \rtext{without code changes}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational impact}
+
+\begin{itemize}
+  \item Data becomes a \rtext{first-class artifact}
+  \item Validation must be \rtext{continuous}
+  \item \y{Rollback applies to \rtext{models}}, not just code
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf MLOps extends DevOps — it does not replace it.}
+
+\end{frame}

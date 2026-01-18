@@ -1,0 +1,72 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{DataLoader With Shuffling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What changes?}
+
+\begin{itemize}
+  \item Samples randomly permuted
+  \item Different batches every epoch
+  \item Decorrelated gradients
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why this helps}
+
+\begin{itemize}
+  \item More robust optimization
+  \item Better generalization
+  \item Standard practice in ML
+\end{itemize}
+
+{\tiny\begin{lstlisting}
+=== DataLoader WITHOUT shuffling ===
+Batch 1: [1, 2, 3, 4, 5, 6]
+Batch 2: [7, 8, 9, 10, 11, 12]
+Batch 3: [13, 14, 15, 16, 17, 18]
+Batch 4: [19, 20]
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-6mm}
+\begin{codeonly}{Shuffled batches}
+loader = DataLoader(
+    dataset,
+    batch_size=4,
+    shuffle=True
+)
+
+for x_b, y_b in loader:
+    print(y_b.squeeze())
+    break
+\end{codeonly}
+
+\vspace{1mm}
+First batch changes every run.
+
+{\tiny\begin{lstlisting}
+=== DataLoader WITH shuffling ===
+Batch 1: [3, 4, 15, 7, 18, 6]
+Batch 2: [11, 16, 13, 17, 9, 1]
+Batch 3: [14, 19, 12, 5, 8, 2]
+Batch 4: [20, 10]
+\end{lstlisting}}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

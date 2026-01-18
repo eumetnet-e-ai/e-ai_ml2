@@ -1,0 +1,71 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 01
+% ================================================================================
+
+\begin{frame}[t,fragile]
+
+\mytitle{Lecture 19: AI and Physics and Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Core question}
+
+Given a dynamical system, what can machine learning do?
+
+\vspace{1mm}
+\begin{itemize}
+  \item Solve known equations (ODE/PDE)
+  \item Discover unknown governing laws from observations
+  \item Emulate complex dynamics as a surrogate model
+\end{itemize}
+
+\vspace{3mm}
+\textbf{Unifying viewpoint}
+
+All methods impose (explicitly or implicitly) a constraint:
+
+\rtext{\bf state evolution must be consistent with } $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x})$.
+
+
+\vspace{3mm}
+How can different ML approaches enforce this consistency?
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Three routes in this lecture}
+
+\begin{enumerate}
+  \item \textbf{PINNs:} \y{physics drives training}
+  \item \textbf{SINDy:} \y{sparse laws from data}
+  \item \textbf{Neural RHS learning:} \y{black-box emulation}
+\end{enumerate}
+
+\vspace{2mm}
+\textbf{Key trade-offs}
+
+\begin{itemize}
+  \item Accuracy vs.\ interpretability
+  \item Data-efficiency vs.\ flexibility
+  \item Stability / extrapolation vs.\ expressiveness
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:} \\
+same goal (dynamics), different framework.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

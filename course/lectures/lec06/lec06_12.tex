@@ -1,0 +1,70 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Multi-Head Attention?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Limitation of single attention}
+
+\begin{itemize}
+  \item One attention matrix per layer
+  \item Focuses on one similarity notion
+  \item Mixes all information at once
+\end{itemize}
+
+\vspace{1mm}
+Example needs:
+\begin{itemize}
+  \item Syntax (subject–verb)
+  \item Semantics (actor–object)
+  \item Position and locality
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Multi-head idea}
+
+\begin{itemize}
+  \item Run attention \y{in parallel}
+  \item Different subspaces
+  \item Different focus patterns
+\end{itemize}
+
+\vspace{1mm}
+Each head learns:
+\[
+\text{its own } Q_i,\; K_i,\; V_i
+\]
+
+\vspace{1mm}
+\textbf{Benefit}
+
+\begin{itemize}
+  \item Richer representations
+  \item Multiple relationships at once
+  \item Improved expressiveness
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Multi-head attention lets the model attend to different aspects simultaneously.}
+}
+
+\end{frame}

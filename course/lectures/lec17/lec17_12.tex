@@ -1,0 +1,53 @@
+% ================================================================================
+% Lecture 17 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Training configuration: input and outputs}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\vspace{-1mm}
+\footnotesize
+\textbf{Input data (from config)}
+\vspace{1mm}
+
+\begin{codeonly}{text}
+ICON mesh (NetCDF):
+  <.../icon_mesh.nc>
+
+Training interval:
+  <YYYY-MM-DD HH> ... <YYYY-MM-DD HH>
+
+Data files:
+  <...>  (joined list)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key point:} a single config fixes both \y{data geometry} and \y{time range}.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\vspace{-1mm}
+\footnotesize
+\textbf{Output directories}
+\vspace{1mm}
+
+\begin{codeonly}{text}
+Checkpoints:
+  <.../checkpoints/...>
+
+Logs (incl. MLFlow):
+  <.../logs/...>
+\end{codeonly}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+config $\Rightarrow$ reproducible paths and artifacts.
+\end{column}
+
+\end{columns}
+\end{frame}

@@ -1,0 +1,75 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Demo Forecast Dataset (Europe, 5 variables)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\footnotesize
+\vspace{-3mm}
+
+\textbf{Dataset design}
+
+\vspace{0mm}
+We generate a small \y{synthetic forecast archive} over Europe:
+\begin{itemize}
+  \item grid: \texttt{lat} $\times$ \texttt{lon} (regular lat/lon)
+  \item time axis: \texttt{valid\_time} for lead times (e.g.\ 0--120h)
+  \item variables:
+  \begin{itemize}
+    \item \texttt{t2m} (2m temperature)
+    \item \texttt{u10}, \texttt{v10} (10m wind)
+    \item \texttt{mslp} (mean sea-level pressure)
+    \item \texttt{tp} (precipitation)
+  \end{itemize}
+\end{itemize}
+
+\vspace{0mm}
+We mimic the \y{access patterns} of real NWP:
+\begin{itemize}
+  \item map snapshot for one lead time
+  \item town / station time series extraction
+  \item local patches for ML training
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+\footnotesize
+\vspace{-8mm}
+
+\textbf{Notebook outputs}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Zarr store:
+  \\
+  \texttt{data/demo\_eu\_forecast.zarr}
+  \item first plots: Europe maps
+  \item metadata: coordinates + attrs
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Next}
+\begin{itemize}
+  \item generate fields with moving patterns
+  \item write to Zarr with chunking
+\end{itemize}
+
+\vspace{-2mm}
+\includegraphics[width=5cm]{../../images/img14/zarr_ex_field_000.png}
+
+\vspace{-3mm}
+Lead Time: 0h
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

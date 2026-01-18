@@ -1,0 +1,86 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{3D-Var Step: Background $\rightarrow$ Analysis (Single Observation)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{We combine background + one scalar obs}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Background state: $x_k^b\in\mathbb R^2$
+  \item Obs: $y_k\in\mathbb R$, operator $H_k\in\mathbb R^{1\times 2}$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Innovation}
+\vspace{-1mm}
+\[
+d_k = y_k - H_k x_k^b
+\]
+
+\textbf{Gain (scalar obs)}
+\vspace{-1mm}
+\[
+K_k = B H_k^\top \left(H_k B H_k^\top + R\right)^{-1}
+\]
+
+\textbf{Analysis update}
+\vspace{-1mm}
+\[
+x_k^a = x_k^b + K_k\,d_k
+\]
+
+\vspace{1mm}
+\rtext{\bf Effect:}
+update only in observed direction, but shaped by \y{$B$}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{Initial choice of covariances}
+\vspace{-1mm}
+\[
+B=
+\begin{bmatrix}
+\sigma_b^2(x_1) & 0\\
+0 & \sigma_b^2(x_2)
+\end{bmatrix},
+\qquad
+R=\sigma_o^2
+\]
+
+\vspace{2mm}
+\textbf{Cycling (persistence model)}
+\vspace{-1mm}
+\[
+x_{k+1}^b = M(x_k^a),
+\qquad
+M(x)=x
+\]
+
+\vspace{2mm}
+\begin{itemize}
+  \item This produces a full sequence:
+  \[
+  x_0^b \rightarrow x_0^a \rightarrow x_1^b \rightarrow \dots
+  \]
+  \item We visualize results next: truth vs background vs analysis
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}

@@ -1,0 +1,66 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{CNN Emulator with Exact Mass Conservation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Conservative update}
+
+The CNN predicts a residual update
+\[
+u^{n+1} = u^n + \Delta u,
+\]
+with the constraint $\sum_i \Delta u_i = 0$.
+
+\vspace{-1mm}
+\begin{itemize}
+  \item \rtext{\bf Mass conservation enforced \y{by construction}}
+  \item Same architecture and data as unconstrained CNN
+  \item No penalty tuning required
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Effect}
+
+\begin{itemize}
+  \item Slightly higher one-step loss
+  \item \y{Exact preservation of the global invariant}
+  \item Significantly improved long-term behavior
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/Advection_Periodic_CNN_Mass_Conservation_Test1.png}
+
+\vspace{1mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_4_60.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\textbf{CNN with mass conservation.}
+The global invariant is preserved exactly.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,58 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Message Passing: Minimal Code Example}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.64\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{One GNN message-passing layer (conceptual)}
+class GNNLayer(nn.Module):
+  def __init__(self, dim):
+    super().__init__()
+    self.self_lin  = nn.Linear(dim, dim)
+    self.neigh_lin = nn.Linear(dim, dim)
+
+  def forward(self, x, edge_index):
+    row, col = edge_index
+    agg = torch.zeros_like(x)
+    agg.index_add_(0, row, x[col])
+    return F.relu(
+        self.self_lin(x) +
+        self.neigh_lin(agg) )
+\end{codeonly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.34\textwidth}
+
+\vspace{-1cm}
+\textbf{What this shows}
+
+\begin{itemize}
+  \item Neighbor features are summed
+  \item Same weights used everywhere
+  \item Graph defines information flow
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key insight}
+
+\begin{itemize}
+  \item No coordinates needed
+  \item No stencil prescribed
+  \item Structure comes from edges
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,56 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Model Capacity and Trainable Parameters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{What defines model capacity?}
+
+\begin{itemize}
+  \item Number of parameters
+  \item Network depth
+  \item Width of layers
+\end{itemize}
+
+\vspace{1mm}
+Higher capacity:
+\begin{itemize}
+  \item Fits more complex functions
+  \item Risk of overfitting
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\textbf{Parameter counting}
+
+\vspace{-2mm}
+\begin{eqnarray*}
+\text{\y{Each Layer}}(n_{\text{in}}\!\rightarrow\!n_{\text{out}}): &&
+n_{\text{in}}\cdot n_{\text{out}} + n_{\text{out}} \\[1mm]
+\text{Total parameters} &=& 
+\sum_{\ell} \left(
+n_{\ell-1} n_{\ell} + n_{\ell}
+\right)
+\end{eqnarray*}
+
+\vspace{1mm}
+Example (1–16–16–1):
+\[
+(1\!\cdot\!16+16) + (16\!\cdot\!16+16) + (16\!\cdot\!1+1) = 337
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

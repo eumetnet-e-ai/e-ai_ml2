@@ -1,0 +1,76 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Attention Matrix Interpretation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Attention matrix}
+
+\vspace{-4mm}
+\[
+A = \operatorname{softmax}
+\!\left(
+\frac{QK^T}{\sqrt{d_k}}
+\right)
+\quad\in\quad \mathbb{R}^{n \times n}
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item Row $i$: attention of token $i$
+  \item Columns: which tokens are attended to
+\end{itemize}
+
+\vspace{1mm}
+\y{\bf Softmax:} Each row sums to 1: 
+\[
+\sum_j A_{ij} = 1
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-6mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Soft, learned dependency graph
+  \item Fully connected
+  \item Directional (row-wise)
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key insight}
+
+\begin{itemize}
+  \item No fixed neighborhood
+  \item No predefined structure
+  \item Recomputed at every layer
+\end{itemize}
+
+\vspace{1mm}
+\centering
+\y{Attention learns which tokens influence}
+\y{each other.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Self-attention dynamically constructs a weighted interaction graph.}
+}
+
+\end{frame}

@@ -1,0 +1,71 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI-Var in 1D: Training on Many Cases}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{From single case to ensemble training}
+
+\vspace{1mm}
+Instead of one fixed $(x_b, y)$ pair, we train on
+\y{many randomly generated cases}.
+
+\vspace{2mm}
+Each training sample contains:
+\begin{itemize}
+  \item a new truth $x_{true}$
+  \item a new background $x_b$
+  \item new observation locations and values $y$
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What stays fixed}
+
+\vspace{1mm}
+\begin{itemize}
+  \item background covariance $B$
+  \item observation error $R$
+  \item variational cost $J$
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-1mm}
+\rtext{\bf The network learns a general DA operator.}
+
+\vspace{2mm}
+\textbf{Training logic (conceptual)}
+
+\vspace{1mm}
+\begin{verbatim}
+for sample in training_set:
+    xb, y = sample
+    inp = build_input(xb, y)
+
+    delta_x = model(inp)
+    loss = J_3dvar(delta_x)
+
+    loss.backward()
+    optimizer.step()
+\end{verbatim}
+
+\vspace{2mm}
+\y{Same loss, many realizations.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

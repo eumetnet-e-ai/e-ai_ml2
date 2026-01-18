@@ -1,0 +1,54 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Lecture 12 — Slide 16
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{\y{Local} UI Mode}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item Inspect completed or running experiments
+  \item Visualize metrics and parameters
+  \item Single-user exploration
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Command}
+
+\begin{itemize}
+  \item \texttt{mlflow ui}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key property}
+
+\begin{itemize}
+  \item \y{Read-only visualization}
+  \item No training happens here
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-10mm}
+\includegraphics[width=7cm]{../../images/img12/mlflow_ui_local1.png}
+
+\vspace{2mm}
+\footnotesize
+By default, the UI reads from the locally configured tracking backend
+(e.g.\ \texttt{mlruns/} or a local SQLite database).
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

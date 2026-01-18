@@ -1,0 +1,56 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Live Experiment Tracking — Minimal Example}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Goal}
+
+\begin{itemize}
+  \item Run a simple Python script
+  \item Log values every second
+  \item \y{Observe results \emph{live} in MLflow}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item No model
+  \item No training
+  \item Just time-dependent metrics
+\end{itemize}
+
+\vspace{2mm}
+This example uses the notebook:
+\begin{itemize}
+  \item \texttt{1\_live\_tracking.ipynb}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-4mm}
+\includegraphics[width=0.95\textwidth]{../../images/img12/sine_cosine_track1.png}
+
+\vspace{1mm}
+\footnotesize
+Live metrics appearing during execution
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

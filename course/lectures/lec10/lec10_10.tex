@@ -1,0 +1,66 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Manual Coding with LLMs (\y{Human in the Loop})}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Typical workflow}
+
+\begin{itemize}
+  \item Prompt LLM for code
+  \item Inspect generated output
+  \item Edit or correct manually
+  \item Execute and test
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Why humans stay involved}
+
+\begin{itemize}
+  \item Detect logical errors
+  \item Spot missing assumptions
+  \item Judge correctness, not plausibility
+\end{itemize}
+
+\vspace{0mm}
+LLMs \y{assist}, they do not decide.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1mm}
+\textbf{Trust boundaries}
+
+\begin{itemize}
+  \item Never execute blindly
+  \item Always read generated code
+  \item Treat LLM output as a draft
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Productive collaboration}
+
+\begin{itemize}
+  \item LLM: speed, syntax, structure
+  \item Human: intent, validation, responsibility
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+\y{Responsibility stays with the human.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

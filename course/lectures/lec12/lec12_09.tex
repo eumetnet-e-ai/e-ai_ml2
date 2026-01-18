@@ -1,0 +1,75 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Minimal Logging Example}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\vspace{-2mm}
+\footnotesize
+\textbf{Essential steps}
+
+\begin{itemize}
+  \item Select an experiment
+  \item Start a run
+  \item Log parameters
+  \item Log metrics
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item One run = one execution
+  \item Everything else is optional
+\end{itemize}
+
+\vspace{2mm}
+\begin{codeonly}{Upload Artefact}
+mlflow.log_artifact("a.png")
+\end{codeonly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-8mm}
+\footnotesize
+\begin{codeonly}{Minimal MLflow code}
+import mlflow
+
+mlflow.set_experiment("Demo")
+
+with mlflow.start_run():
+    mlflow.log_param("lr", 1e-3)
+    mlflow.log_metric("loss", 0.42)
+\end{codeonly}
+
+\vspace{1mm}
+\hspace{5mm}
+\begin{minipage}{6cm}
+\footnotesize
+\textbf{What this code does}
+
+\begin{itemize}
+  \item Creates or selects the experiment \texttt{Demo}
+  \item Opens a new run with a unique ID
+  \item Stores one parameter and one metric
+  \item Makes the run visible in the MLflow UI
+\end{itemize}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

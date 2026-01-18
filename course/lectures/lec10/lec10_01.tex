@@ -1,0 +1,78 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Why Function Calling Exists}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Pure text generation is insufficient
+  \item Real systems need \y{actions}, not prose
+  \item \rtext{\bf To make the LLM productive, \\
+  it needs a link to reality!}
+  \item \y{Let it call functions!}
+\end{itemize}
+
+\textbf{Key idea}
+
+\vspace{1mm}
+\begin{quote}
+\raggedright
+The model should decide \emph{what to do},  
+the system should decide \emph{how to do it}.
+\end{quote}
+
+
+\vspace{1mm}
+\textbf{Goal:}
+\begin{itemize}
+  \item separate \y{reasoning} from \y{execution}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-13mm}
+\begin{minipage}{6cm}
+\footnotesize \color{red}
+\begin{lstlisting}
+{
+  "tool_call": {
+    "name": "<function name>",
+    "arguments": { ... }
+  }
+}
+\end{lstlisting}
+\end{minipage}
+
+\vspace{1mm}
+Typical problems:
+\begin{itemize}
+  \item fragile JSON parsing
+  \item ambiguous intent
+  \item mixed explanation and action
+\end{itemize}
+\vspace{2mm}
+Function calling introduces:
+\begin{itemize}
+  \item explicit actions
+  \item typed arguments
+  \item machine-readable decisions
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

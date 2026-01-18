@@ -1,0 +1,56 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Lecture 9 — Diffusion and Flexible Graph Networks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{From prediction to distributions}
+
+\begin{itemize}
+  \item Classical ML: predict a single output
+  \item Reality: many plausible outcomes
+  \item We need models that \emph{sample}
+\end{itemize}
+
+\vspace{2mm}
+Weather and climate are inherently:
+\begin{itemize}
+  \item stochastic
+  \item high-dimensional
+  \item uncertain
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Two complementary ideas}
+
+\begin{itemize}
+  \item \y{Diffusion models}  
+        learn how to turn noise into structure
+  \item \y{Graph neural networks}  
+        learn from \rtext{sparse, irregular observations}
+\end{itemize}
+
+\vspace{3mm}
+\textbf{Key message}
+
+\begin{itemize}
+  \item Learn \emph{distributions}, not just functions
+  \item Learn \emph{structure}, not just grids
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,71 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Cross-Entropy Loss for Language Modeling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Prediction target}
+
+\begin{itemize}
+  \item One correct token per position
+  \item Stored as an index in the vocabulary
+\end{itemize}
+
+\vspace{1mm}
+For position $t$: $y_t \in \{1,\dots,V\}$ (token index). 
+Equivalent \y{one-hot} representation: 
+\[
+e_{y_t} \in \mathbb{R}^V.
+\]
+Model prediction: $p_t = Z_{\text{pred},\,t} \in \R^{V}.$
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-3mm}
+\rtext{\textbf{Cross-entropy loss}}
+
+\vspace{-2mm}
+\[
+\mathcal{L}
+=
+- \sum_{t=1}^{n}
+\log p_t(y_t)
+\]
+
+\vspace{-2mm}
+\begin{itemize}
+  \item $p_t(y_t)$: probability assigned to the correct token
+  \item Uses index $y_t$ to select one entry
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item High confidence, correct → low loss
+  \item Wrong or uncertain → high loss
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\centering
+\y{The model is trained to maximize likelihood of the true sequence.} \\
+{\footnotesize
+Cross-entropy measures how well predicted probabilities match the true tokens.
+}
+
+\end{frame}

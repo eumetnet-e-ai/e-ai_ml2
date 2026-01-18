@@ -1,0 +1,72 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID Model Aliases and Routing}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Internal Model Aliases}
+
+\begin{itemize}
+  \item Abstract names used by the frontend
+  \item Examples:
+  \begin{itemize}
+    \item \texttt{openai-fast}, \texttt{openai-core}
+    \item \texttt{claude-pro}
+    \item \texttt{llama-fast}
+  \end{itemize}
+  \item Aliases encode \y{capability tier}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why Aliases?}
+
+\begin{itemize}
+  \item Stable interface for users
+  \item Models can change transparently
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\textbf{Backend Resolution}
+
+\begin{itemize}
+  \item Alias mapped to concrete model name
+  \item Mapping defined centrally in settings
+  \item Supplier-specific resolution
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Routing Logic}
+
+\begin{itemize}
+  \item Backend checks model ownership
+  \item Selects local or remote backend
+  \item Routes request to correct engine
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Frontend never sees real model IDs
+  \item Backend retains \y{full control}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

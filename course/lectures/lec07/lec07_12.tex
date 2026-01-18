@@ -1,0 +1,74 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Why Do We Need FAISS?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Above approach}
+
+\begin{itemize}
+  \item Loop over all embeddings
+  \item Compute similarity one by one
+  \item \y{Exact but very (!) slow}
+\end{itemize}
+
+\vspace{1mm}
+Cost of one query:
+\[
+\mathcal{O}(N \cdot d)
+\]
+
+\textbf{Problem size}
+
+\begin{itemize}
+  \item \(N\): number of stored vectors  
+        (pages, paragraphs, documents)
+  \item \(d\): embedding dimension  
+        (e.g.\ \(d = 384\))
+\end{itemize}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+Each query compares  
+against \emph{all} vectors.
+
+\vspace{2mm}
+\textbf{Scaling issue:}  
+Large \(N\) makes brute-force search infeasible.
+
+\vspace{2mm}
+\textbf{Typical RAG library sizes}
+
+\begin{itemize}
+  \item \textbf{Personal projects:}  
+        \(10^2\)–\(10^3\) documents  
+        \(\rightarrow\; N \sim 10^4\) chunks
+  \item \y{\textbf{Team / institutional data:}} 
+        \(10^4\)–\(10^5\) documents  
+        \(\rightarrow\; N \sim 10^6\)–\(10^7\) chunks
+  \item \y{\textbf{Enterprise-scale systems:}}  
+        \(10^6+\) documents  
+        \(\rightarrow\; N \gg 10^7\) chunks
+\end{itemize}
+
+\vspace{1mm}
+Chunking multiplies the number of stored vectors \(N\).
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

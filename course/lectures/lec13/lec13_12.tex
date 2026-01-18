@@ -1,0 +1,49 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-3mm}
+\includegraphics[width=0.9\textwidth]{../../images/img13/Apollo_11_Crew.jpg}
+
+\vspace{2mm}
+\footnotesize
+\textbf{Input image}
+
+\vspace{2mm}
+Raw input data, loaded via \texttt{PIL}.
+No preprocessing, no metadata,
+no assumptions beyond file availability.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-3mm}
+\includegraphics[width=0.9\textwidth]{../../images/img13/Apollo_11_Crew_out.jpg}
+
+\vspace{2mm}
+\footnotesize
+\textbf{Model output}
+
+\vspace{2mm}
+Bounding boxes produced by a
+\y{pretrained face-detection model}
+and rendered directly onto the image.
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{This is pure inference: load → detect → render.}
+
+\end{frame}

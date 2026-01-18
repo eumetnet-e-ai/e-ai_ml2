@@ -1,0 +1,61 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 02
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Toy Dynamics: Advection--Diffusion with Source and Damping}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+We simulate a tracer/heating field $\phi(x,z,t)$ on a 2D domain:
+
+\vspace{-5mm}
+\[
+(x,z)\in[0,L_x]\times[0,L_z].
+\]
+
+\textbf{Dynamics (PDE)}
+\[
+\frac{\partial\phi}{\partial t}
+=
+-u\frac{\partial\phi}{\partial x}
+-w\frac{\partial\phi}{\partial z}
++K\nabla^2\phi
++A(t)\,S(x,z)
+-\lambda\,\phi
+-\lambda_{\text{top}}(z)\,\phi.
+\]
+
+\textbf{Key design choices}
+\begin{itemize}
+  \item Mean wind: $\,(u,w)\,$ \y{right + upward} $\Rightarrow$ visible transport
+  \item Source $S(x,z)$: localized bottom-left heating region
+  \item \y{Pulsed forcing} $A(t)$ $\Rightarrow$ visible trace stripes
+  \item Damping $\lambda$ + top sponge $\lambda_{\text{top}}$ $\Rightarrow$ equilibrium
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Time stepping:} RK4.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+\centering
+\vspace{5mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_01.png}
+
+\vspace{1mm}
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_02.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

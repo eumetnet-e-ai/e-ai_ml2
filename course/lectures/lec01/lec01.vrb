@@ -1,0 +1,42 @@
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Lecture 1 — Key Takeaways}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.48\textwidth}
+
+\textbf{Technical Foundations}
+
+\begin{itemize}
+  \item Python as a portable \y{workhorse} for science
+  \item \y{Virtual environments} avoid dependency conflicts
+  \item \texttt{pip} and \texttt{requirements.txt} ensure reproducibility
+  \item NumPy arrays as the \y{core data structure}
+  \item Vectorization replaces explicit loops
+  \item Matplotlib for \y{fast diagnostic visualization}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.48\textwidth}
+
+\textbf{Conceptual Lessons}
+
+\begin{itemize}
+  \item Think in terms of \y{arrays, not scalars}
+  \item Data selection via slicing and masking
+  \item Broadcasting enables compact math expressions
+  \item Visualization supports scientific intuition
+  \item Clean code beats clever code
+  \item Python skills will transfer directly to \y{AI/ML development}
+\end{itemize}
+
+\end{column}
+
+% --- End Columns ---------------------------------------------------------------
+\end{columns}
+

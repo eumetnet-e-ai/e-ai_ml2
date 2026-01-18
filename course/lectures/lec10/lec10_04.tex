@@ -1,0 +1,61 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Streaming and Open-Source Models}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+In streaming APIs:
+\begin{itemize}
+  \item \rtext{\y{tool calls}} appear \y{inside the stream}
+  \item mixed with text tokens
+\end{itemize}
+
+\vspace{1mm}
+Open-source models (e.g.\ LLaMA):
+\begin{itemize}
+  \item emit structured patterns
+  \item still require system-side handling
+\end{itemize}
+
+\vspace{1mm}
+Common fallback:
+\begin{itemize}
+  \item detect JSON blocks
+  \item interpret intent manually
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Historical context}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Older Framework: JSON scanning
+  \item Claude UI: similar hybrid behavior
+\end{itemize}
+
+\vspace{1mm}
+Native tool calling reduces:
+\begin{itemize}
+  \item ambiguity
+  \item parsing complexity
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

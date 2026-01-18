@@ -1,0 +1,69 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Model Architecture and Training}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Model Architecture}
+
+\begin{itemize}
+  \item U-Net for semantic segmentation
+  \item Encoder--decoder with skip connections
+  \item Preserves spatial detail
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Input / Output}
+
+\begin{itemize}
+  \item Input channels: \y{6}
+  \item Output classes: \y{4}
+  \item Pixel-wise classification
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-8mm}
+\textbf{PyTorch Model Setup}
+
+{\footnotesize
+\begin{lstlisting}[language=Python]
+model = UNet(
+    in_channels=6,
+    out_channels=4,
+    init_features=64
+).to(device)
+
+loss_fn = nn.CrossEntropyLoss()
+optimizer = torch.optim.AdamW(
+    model.parameters(),
+    lr=1e-4 )
+\end{lstlisting}
+}
+
+\vspace{0mm}
+\textbf{Training Setup}
+
+\begin{itemize}
+  \item Supervised learning
+  \item Labeled frontal maps
+  \item Early stopping and validation
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

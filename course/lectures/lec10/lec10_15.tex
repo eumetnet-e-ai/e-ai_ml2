@@ -1,0 +1,61 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Prompts to Programs: \y{Abstraction Boundaries}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{0mm}
+\textbf{The core problem}
+
+\begin{itemize}
+  \item Prompts mix intent and execution
+  \item Small wording changes alter behavior
+  \item Logic is implicit and fragile
+\end{itemize}
+
+\vspace{0mm}
+This leads to \y{prompt brittleness}:
+\begin{itemize}
+  \item hard to debug
+  \item hard to reuse
+  \item hard to test
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1mm}
+\textbf{Separating responsibilities}
+
+\begin{itemize}
+  \item Prompt: \y{what} should be done
+  \item Code: \y{how} it is executed
+  \item Control flow: \y{when} to retry or stop
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design principle}
+
+\begin{itemize}
+  \item Prompts describe intent
+  \item Programs enforce structure
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+LLMs belong \y{inside} programs, not around them.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

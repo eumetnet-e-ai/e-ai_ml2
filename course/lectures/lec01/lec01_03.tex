@@ -1,0 +1,55 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Python Package Stack: How Things Build on Each Other}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{Core idea}
+
+\begin{itemize}
+  \item Python is a \y{layered ecosystem}
+  \item Packages build on top of each other
+  \item Higher layers assume lower layers exist
+  \item This structure matters for:
+    \begin{itemize}
+      \item installation
+      \item debugging
+      \item performance
+    \end{itemize}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+
+\begin{codeonly}{Conceptual Package Stack (ASCII)}
+Python
+ |
+ +-- NumPy        (arrays, numerics)
+ |
+ +-- Matplotlib   (plots, figures)
+ |
+ +-- AI / ML
+     |
+     +-- PyTorch
+     +-- scikit-learn
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Conceptual view, not an exact dependency graph}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}

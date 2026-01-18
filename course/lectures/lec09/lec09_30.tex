@@ -1,0 +1,72 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Lecture 9 — Big Picture}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What we learned}
+
+\begin{itemize}
+  \item \textbf{Sampling} instead of regression
+  \item Explicit modeling of \y{uncertainty}
+  \item Generating distributions, not point estimates
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Diffusion networks}
+
+\begin{itemize}
+  \item Noise $\rightarrow$ data via iterative refinement
+  \item Correct sampling through stochastic reverse steps
+  \item Strong theoretical foundation
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1cm}
+\textbf{Graph networks}
+
+\begin{itemize}
+  \item Flexible representation of structure
+  \item Learning from sparse, irregular data
+  \item Strong generalization across domains
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Order, structure, efficiency}
+
+\begin{itemize}
+  \item Inductive bias through graphs and locality
+  \item Separation of geometry and learning
+  \item Scalable implementations with
+    \begin{itemize}
+      \item PyTorch Lightning
+      \item PyTorch Geometric
+    \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\begin{minipage}{8cm}
+\footnotesize
+\raggedright\color{red}
+Modern ML combines \y{sampling}, \y{structure}, and \y{efficient tooling} to build flexible, generalizable models.
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+
+
+\end{frame}

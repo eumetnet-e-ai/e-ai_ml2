@@ -1,0 +1,77 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 02
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Classical Data Assimilation: The Analysis Cycle}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+
+\textbf{The classical DA cycle}
+
+\vspace{1mm}
+Operational NWP systems run a \y{repeating assimilation cycle}:
+
+\begin{enumerate}
+  \item Start from a \y{background state} $x_b$
+  \item Assimilate observations $\;y$
+  \item Compute an \y{analysis} $x_a$
+  \item Run the numerical model forward
+  \item Use the forecast as next background
+\end{enumerate}
+
+\vspace{2mm}
+This cycle is repeated every few hours as new
+observations become available.
+
+\vspace{2mm}
+\rtext{\bf The analysis step is the only place where observations enter.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Established DA methods}
+
+\vspace{1mm}
+Several algorithmic families are used in practice:
+
+\begin{itemize}
+  \item \y{\bf 3D-Var / 4D-Var}
+  \begin{itemize}
+    \item variational optimization
+    \item adjoint-based
+  \end{itemize}
+
+  \vspace{0mm}
+  \item \y{\bf Ensemble Kalman Filters (EnKF)}
+  \begin{itemize}
+    \item flow-dependent uncertainty
+    \item ensemble statistics
+  \end{itemize}
+
+  \vspace{0mm}
+  \item \y{\bf Particle Filters}
+  \begin{itemize}
+    \item fully Bayesian
+    \item now also high-dimensional!
+  \end{itemize}
+\end{itemize}
+
+\vspace{0mm}
+All methods aim at the \y{same goal}:
+a statistically optimal analysis.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,53 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Automatic Differentiation (Autograd)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Core idea}
+
+\begin{itemize}
+  \item Gradients computed automatically
+  \item No manual derivative formulas
+  \item Works for arbitrary computation graphs
+  \item Enabled by \y{dynamic graphs}
+\end{itemize}
+
+\vspace{1mm}
+\[
+\frac{\partial \mathcal{L}}{\partial \theta}
+\]
+Gradients drive parameter updates.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Learning = optimization
+  \item Backpropagation at scale
+  \item Essential for deep networks
+  \item Same mechanism on CPU and GPU
+\end{itemize}
+
+\vspace{1mm}
+\[
+\theta_{k+1} = \theta_k - \eta \nabla_\theta \mathcal{L}
+\]
+\y{Gradient-based learning step.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

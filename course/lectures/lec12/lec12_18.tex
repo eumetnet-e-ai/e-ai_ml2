@@ -1,0 +1,62 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Lecture 12 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Background and \y{Persistent Execution}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Long-running experiments
+  \item Remote machines
+  \item Logout-safe operation
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Servers must survive terminals.}
+
+\vspace{4mm}
+\footnotesize
+These mechanisms are \y{generic system tools} for running long-lived services;
+MLflow behaves like any other server process.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\begin{codeonly}{Common patterns}
+mlflow server ... &
+
+nohup mlflow server ... &
+
+screen -S mlflow
+\end{codeonly}
+
+\vspace{2mm}
+\footnotesize
+Use \texttt{screen} or \texttt{tmux} for
+interactive re-attachment and monitoring.
+
+\vspace{4mm}
+\tiny\color{darkgreen}
+\begin{lstlisting}
+tmux new -s mlflow          # start a persistent session
+mlflow server --host 0.0.0.0 --port 5000
+Ctrl+B  D                  # detach from session
+tmux attach -t mlflow      # reconnect later
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

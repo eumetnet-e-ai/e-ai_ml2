@@ -1,0 +1,59 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{What MLFlow Stores (and What It Does Not)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\textbf{Stored explicitly}
+
+\begin{itemize}
+  \item Parameters and metrics
+  \item Artifacts (plots, files, models)
+  \item Model binaries (framework-specific)
+  \item \y{Environment YAML files} \\
+        \hspace{2mm}(only when a model is logged)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{YAML handling}
+
+\begin{itemize}
+  \item Generated during \texttt{log\_model}
+  \item Stored as part of the model artifact
+  \item Enables reproducible loading
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\textbf{Not stored automatically}
+
+\begin{itemize}
+  \item Full runtime environment
+  \item OS-level dependencies
+  \item GPUs, drivers, system libraries
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Important boundary}
+
+\begin{itemize}
+  \item MLFlow does \rtext{not infer} environments
+  \item Reproducibility requires explicit logging
+\end{itemize}
+
+\vspace{2mm}
+\y{MLFlow records what you declare, not what it guesses.}
+
+\end{column}
+
+\end{columns}
+\end{frame}

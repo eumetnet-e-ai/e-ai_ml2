@@ -1,0 +1,74 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Town Forecast Extraction (nearest grid point)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Offline town database}
+
+\vspace{0mm}
+We use a small built-in town table:
+\begin{itemize}
+  \item no internet required
+  \item town $\rightarrow$ \texttt{(lat,lon)}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Point extraction}
+
+\vspace{0mm}
+From the full dataset we extract a \y{single point forecast}:
+\begin{itemize}
+  \item use nearest neighbor selection:
+  \\
+  \texttt{ds.sel(..., method="nearest")}
+  \item result: dataset with only dimension \texttt{valid\_time}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Output}
+
+\vspace{0mm}
+A compact dataset with time series for:
+\texttt{t2m, u10, v10, mslp, tp}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+Example:
+
+\vspace{0mm}
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+TOWNS = {
+ "Berlin": (52.5200, 13.4050), ... }
+
+pt = ds.sel(lat=lat0, lon=lon0, method="nearest")
+\end{lstlisting}
+\end{minipage}
+
+\vspace{-1mm}
+\includegraphics[width=5.6cm]{../../images/img14/zarr_pt_summary.png}
+
+\vspace{2mm}
+\scriptsize
+Point forecast: only dimension \texttt{valid\_time} remains.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,73 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 02
+% ================================================================================
+
+\begin{frame}[t,fragile]
+
+\mytitle{Lecture Roadmap}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Part I — Physics-Informed Neural Networks}
+
+\vspace{1mm}
+\begin{itemize}
+  \item learn \y{solutions} of known equations
+  \item training uses \y{ODE/PDE residuals} + anchor conditions
+  \item representation matters for extrapolation
+\end{itemize}
+
+\vspace{3mm}
+\textbf{Part II — Discovering equations from data}
+
+\vspace{1mm}
+\begin{itemize}
+  \item \textbf{SINDy:} sparse regression on a function library
+  \item \textbf{Neural SINDy:} smooth NN trajectory $\Rightarrow$ stable derivatives
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-9mm}
+
+\textbf{Part III — Learning the Force Term}
+
+\vspace{1mm}
+\begin{itemize}
+  \item learn the unknown RHS / forcing from data:
+  \[
+  \dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}_\theta(\mathbf{x})
+  \]
+  \item \y{hybrid modeling:} known physics + learned closure
+  \item stable rollout by integrating the learned system
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Part IV — Causal Modeling with Neural Networks}
+
+\vspace{1mm}
+\begin{itemize}
+  \item distinguish \y{correlation} vs.\ \y{cause}
+  \item learn structural relations (SCMs) as NN modules
+  \item intervene and test counterfactual predictions:
+  \[
+  do(X=x)
+  \quad\Rightarrow\quad
+  p(Y\,|\,do(X=x))
+  \]
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

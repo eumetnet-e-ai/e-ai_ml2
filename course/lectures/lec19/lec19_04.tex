@@ -1,0 +1,85 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{PINN Loss: Physics Instead of Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{ODE residual}
+
+Using automatic differentiation, we compute
+\[
+y_\theta'(x), \qquad y_\theta''(x).
+\]
+
+The differential equation is enforced by minimizing
+\[
+r(x) = y_\theta''(x) + y_\theta(x).
+\]
+
+The corresponding loss term is
+\[
+\mathcal{L}_{\text{ODE}}
+=
+\frac{1}{N}
+\sum_{i=1}^N
+\bigl( y_\theta''(x_i) + y_\theta(x_i) \bigr)^2.
+\]
+
+\vspace{2mm}
+Collocation points $x_i$ are sampled in the domain.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\textbf{Boundary conditions}
+
+Boundary (anchor) constraints enforce uniqueness:
+\[
+y_\theta(0) = 0,
+\qquad
+y_\theta'(0) = 1.
+\]
+
+This yields the boundary loss
+\[
+\mathcal{L}_{\text{BC}}
+=
+\bigl( y_\theta(0) \bigr)^2
++
+\bigl( y_\theta'(0) - 1 \bigr)^2.
+\]
+
+\vspace{2mm}
+\textbf{Total loss}
+
+The parameter $\lambda$ controls the \y{strength of the boundary conditions.}
+
+\[
+\mathcal{L}
+=
+\mathcal{L}_{\text{ODE}}
++
+\lambda\,\mathcal{L}_{\text{BC}}.
+\]
+
+
+\vspace{2mm}
+\rtext{\bf No data term appears anywhere in the loss.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

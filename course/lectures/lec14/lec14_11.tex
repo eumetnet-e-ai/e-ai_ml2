@@ -1,0 +1,66 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CI/CD Tools: Automation and Execution}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\y{\textbf{CI orchestration}}
+
+\begin{itemize}
+  \item \textbf{GitHub Actions} \\
+  {\tiny Event-driven CI system integrated into GitHub, executing workflows
+  defined in YAML on managed runners.}
+
+  \item \textbf{GitLab CI} \\
+  {\tiny Pipeline-based CI system configured via \texttt{.gitlab-ci.yml},
+  supporting self-hosted and specialized runners (e.g.\ HPC, GPU).}
+
+  \item \textbf{Jenkins} \\
+  {\tiny Standalone automation server using scripted pipelines,
+  common in legacy and enterprise environments.}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\y{\textbf{Execution environments}}
+
+\begin{itemize}
+  \item \textbf{Python virtual environments} \\
+  {\tiny Isolate Python dependencies to ensure reproducible runtime behavior.}
+
+  \item \textbf{Containers (Docker, Apptainer)} \\
+  {\tiny Package applications and dependencies into portable,
+  reproducible execution units across systems.}
+\end{itemize}
+
+\vspace{2mm}
+\y{\textbf{Artifacts}}
+
+\begin{itemize}
+  \item \textbf{CI artifacts and registries} \\
+  {\tiny Store outputs such as logs, test reports, trained models,
+  and container images produced during pipelines.}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\centering
+\footnotesize
+\rtext{\bf CI platforms enforce rules; environments make them reproducible.}
+
+\end{frame}

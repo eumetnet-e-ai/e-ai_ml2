@@ -1,0 +1,69 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 24
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Ablation: Why the Background / Posterior-Fit Term Matters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.30\textwidth}
+\footnotesize
+
+\textbf{Two trained networks}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \y{\bf net}: full AI-PF loss
+  \item \y{\bf net\_obs}: obs term only
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Metric shown}
+
+\vspace{0mm}
+Difference of first-guess error:
+\[
+\Delta
+=
+{\rm FG}_{\rm err}(\texttt{net\_obs})
+-
+{\rm FG}_{\rm err}(\texttt{net})
+\]
+
+\vspace{2mm}
+\textbf{Interpretation}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \y{$\Delta>0$ (green)}: net is better
+  \item $\Delta<0$ (red): net\_obs is better
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\centering
+\vspace{-4mm}
+\hspace*{0cm}
+\begin{minipage}{9cm}
+\includegraphics[width=\textwidth]{../../images/img18/fg_error_diff_netobs_minus_net.png}
+\end{minipage}
+
+\vspace{1mm}
+\footnotesize
+Evaluation over 10\,000 assimilation cycles after short training.
+
+\includegraphics[width=5cm]{../../images/img18/fg_error_diff_10000.png}
+
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

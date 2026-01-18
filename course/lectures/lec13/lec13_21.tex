@@ -1,0 +1,66 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 21
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Building Apptainer Containers on GitHub}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item HPC systems often \rtext{cannot build containers locally}
+  \item Docker images must be converted to \y{Apptainer (SIF)}
+  \item Conversion is \rtext{memory-intensive}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Move the \y{build step off the HPC}
+  \item Use \y{GitHub Actions} as build infrastructure
+  \item Produce ready-to-run \y{SIF artifacts}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf CI builds containers, HPC only runs them.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\textbf{What GitHub provides}
+
+\begin{itemize}
+  \item Linux build nodes with Docker
+  \item Sufficient memory for SquashFS
+  \item Integrated access to \y{ghcr.io}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Required inputs}
+
+\begin{itemize}
+  \item Docker image in a registry
+  \item Apptainer installed in CI
+  \item Authentication token (\texttt{read:packages})
+\end{itemize}
+
+\vspace{2mm}
+\y{Result:} A portable \rtext{single-file container}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

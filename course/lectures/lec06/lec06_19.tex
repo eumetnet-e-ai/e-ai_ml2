@@ -1,0 +1,69 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Autoregressive Text Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Generate one token at a time
+  \item Each new token is fed back as input
+\end{itemize}
+
+\vspace{1mm}
+At position $t$:
+\[
+p_t = P(x_t \mid x_1,\dots,x_{t-1})
+\]
+
+\vspace{1mm}
+\textbf{Training vs inference}
+
+\begin{itemize}
+  \item Training: true previous tokens known
+  \item Inference: model uses its own output
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\vspace{-8mm}
+\textbf{Generation loop}
+
+\begin{enumerate}
+  \item Start with a prompt
+  \item Compute logits
+  \item Apply softmax
+  \item Select next token
+  \item Append and repeat
+\end{enumerate}
+
+\vspace{1mm}
+\textbf{Token selection}
+
+\begin{itemize}
+  \item Argmax (greedy)
+  \item Sampling, repetition penalty
+  \item Top-$k$, top-$p$ (nucleus)
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{LLMs are trained once, then generate text step by step.}
+
+\end{frame}

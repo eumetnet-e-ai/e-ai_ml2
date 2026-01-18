@@ -1,0 +1,1457 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 1
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Large Language Models?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Traditional NLP}
+
+\begin{itemize}
+  \item Separate models for each task
+  \item Feature engineering required
+  \item Limited transfer between tasks
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Examples}
+
+\begin{itemize}
+  \item Translation
+  \item Classification
+  \item Question answering
+\end{itemize}
+
+\vspace{0mm}
+\centering
+{\footnotesize
+LLMs \y{unify} understanding, generation, and reasoning in a single sequence model.
+}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-4mm}
+\textbf{Large Language Models}
+
+\begin{itemize}
+  \item One model, many tasks
+  \item \y{Learns representations from data}
+  \item Includes Sub-Word \rtext{Tokenization}
+  \item General-purpose language intelligence
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Language as a \emph{sequence prediction problem}
+  \item Everything reduced to:
+\end{itemize}
+
+\vspace{-3mm}
+\[
+\text{tokens}_{\text{in}} \;\longrightarrow\; \text{tokens}_{\text{out}}
+\]
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\[
+\{\rtext{The},\rtext{dog},\rtext{chas},\rtext{ed},\rtext{the},\rtext{cat},\rtext{.}\}
+\;\;\longrightarrow\;\;
+\{104,\,2871,\,9123,\,214,\,201,\,4421,\,13\}
+\]
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 2
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{LLMs as Sequence-to-Sequence Machines}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Core abstraction}
+
+\begin{itemize}
+  \item Input: sequence of tokens
+  \item Output: sequence of tokens
+  \item \y{Tokens} represent words or subwords
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mathematical view}
+
+\[
+(x_1, \dots, x_n)
+\;\longrightarrow\;
+(y_1, \dots, y_m)
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item Variable-length input
+  \item Variable-length output
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Next-token prediction}
+
+\begin{itemize}
+  \item Output generated one token at a time
+  \item Each step predicts a probability distribution
+\end{itemize}
+
+\vspace{-1mm}
+\[
+p(y_t \mid x_{1:n}, y_{1:t-1})
+\]
+
+\vspace{1mm}
+\textbf{Consequences}
+
+\begin{itemize}
+  \item Same model for all tasks
+  \item Tasks differ only by input prompt
+  \item No task-specific architecture needed
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+LLMs reduce language understanding and generation to \y{probabilistic sequence modeling.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 3
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Token IDs to Embedding Vectors}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{What the model actually sees}
+
+\begin{itemize}
+  \item Tokens are integers
+  \item No words, no strings, no grammar
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\{104,\,2871,\,9123,\,214,\,201,\,4421,\,13\}
+\]
+
+\vspace{1mm}
+\textbf{Problem}
+
+\begin{itemize}
+  \item Integers have no semantic meaning
+  \item Distance between IDs is arbitrary
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Solution: embeddings}
+
+Each token ID $i$ is mapped to a vector:
+\[
+i \;\longrightarrow\; e_i \in \mathbb{R}^{d_{\text{model}}}
+\]
+
+\vspace{-2mm}
+\textbf{Embedding matrix}
+
+\vspace{-2mm}
+\[
+E \in \mathbb{R}^{V \times d_{\text{model}}}
+\]
+
+\begin{itemize}
+  \item $V$: \y{vocabulary size} (number of distinct tokens)
+  \item $d_{\text{model}}$: \y{embedding dimension}
+  \item $E_i = e_i$: embedding of token $i$
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+Meaning is not stored in tokens, but in their \y{learned vector representations.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 4
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Sequence Order Matters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Problem with embeddings alone}
+
+\begin{itemize}
+  \item Embeddings encode token meaning
+  \item But \y{ignore position in the sequence}
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\text{dog bites man}
+\quad\neq\quad
+\text{man bites dog}
+\]
+
+\vspace{1mm}
+Yet both contain the same tokens.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item Transformers process tokens \y{in parallel}
+  \item No inherent notion of order
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Consequence}
+
+\begin{itemize}
+  \item Sequence order must be added explicitly
+  \item Otherwise:
+\end{itemize}
+\[
+(x_1, x_2, x_3)
+\;\equiv\;
+(x_3, x_1, x_2)
+\]
+
+\vspace{1mm}
+\centering
+\y{Order information is not optional.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+Transformers require an \rtext{explicit mechanism to encode token positions}.
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 5
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Positional Encoding}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Goal}
+
+\begin{itemize}
+  \item Inject \y{order information} into embeddings
+  \item Keep full parallelism
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Idea}
+
+\begin{itemize}
+  \item Assign a position-dependent vector
+  \item Add it to the token embedding
+\end{itemize}
+
+\vspace{1mm}
+\[
+x_i \;=\; e_i + p_i
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Positional encoding matrix}
+
+\[
+P \in \mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\begin{itemize}
+  \item $n$: sequence length
+  \item $p_i$: encoding of position $i$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key properties}
+
+\begin{itemize}
+  \item Same dimension as embeddings
+  \item Fixed (sinusoidal) or learned
+  \item Enables attention to use order
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+Positional encodings turn a set of tokens into an ordered sequence.
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 6
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Sinusoidal Positional Encoding}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Sinusoidal construction}
+
+\begin{itemize}
+  \item Fixed, deterministic encoding
+  \item Different frequencies per dimension
+\end{itemize}
+
+For position $i$ and dimension $j$:
+
+\vspace{-4mm}
+\[
+p_{i,2j}   = \sin\!\left(\frac{i}{10000^{2j/d_{\text{model}}}}\right)
+\]
+\[
+p_{i,2j+1} = \cos\!\left(\frac{i}{10000^{2j/d_{\text{model}}}}\right)
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item Smooth variation with position
+  \item Relative distances are encoded
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Why sinusoids?}
+
+\begin{itemize}
+  \item Works for arbitrary sequence lengths
+  \item No additional parameters
+  \item Relative positions can be inferred
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why \emph{add}, not concatenate?}
+
+{\scriptsize
+\begin{itemize}
+  \item Addition keeps dimension at $d_{\text{model}}$
+  \item Attention projections expect fixed size
+  \item Concatenation doubles dimension
+  \item Would require retraining all layers
+\end{itemize}
+}
+
+\vspace{1mm}
+\y{Addition preserves efficiency} 
+\y{and model structure.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{1mm}
+\centering
+{\footnotesize
+Positional information is injected without changing model dimensionality.
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 7
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Self-Attention: Core Idea}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Key mechanism}
+
+\begin{itemize}
+  \item Each token can \y{look at all other tokens}
+  \item Importance is computed dynamically
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Contextual representation}
+
+\begin{itemize}
+  \item Token meaning depends on context
+  \item Same word, different role
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\text{``The dog chased the cat.''}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-10mm}
+\textbf{What attention does}
+
+\begin{itemize}
+  \item Builds a \y{weighted combination} of tokens
+  \item Different focus for each position
+\end{itemize}
+
+\vspace{1mm}
+For token $i$:
+\[
+x_i \;\longrightarrow\; 
+\sum_j w_{ij}\, x_j
+\]
+
+\vspace{-2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Long-range dependencies
+  \item No fixed context window
+  \item Fully parallel computation
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\centering
+{\footnotesize
+\rtext{Self-attention allows each token to decide which other tokens matter.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 8
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Queries, Keys, and Values — Intuition}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Three roles per token}
+
+Each token embedding is projected into:
+\begin{itemize}
+  \item \y{Query} ($Q$): what am I looking for?
+  \item \y{Key} ($K$): what do I offer?
+  \item \y{Value} ($V$): what information do I pass on?
+\end{itemize}
+
+\vspace{1mm}
+All three are learned linear projections.
+
+\vspace{-6mm}
+\begin{eqnarray*}
+& Q = X W^Q, K = X W^K, V = X W^V
+\end{eqnarray*}
+
+\vspace{-5mm}
+{\tiny
+\begin{eqnarray*}
+& X \in \mathbb{R}^{n \times d_{\text{model}}},  
+W^Q, W^K \in \mathbb{R}^{d_{\text{model}} \times d_k}, \\ 
+& W^V \in \mathbb{R}^{d_{\text{model}} \times d_v}, 
+Q, K \in \mathbb{R}^{n \times d_k}, V \in \mathbb{R}^{n \times d_v}
+\end{eqnarray*}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\vspace{-9mm}
+\textbf{Attention mechanism}
+
+\begin{itemize}
+  \item Compare queries with keys
+  \item Compute relevance scores
+  \item Use scores to weight values
+\end{itemize}
+
+\vspace{1mm}
+Conceptually:
+\[
+\text{\y{attention}}(i,j)
+\;\sim\;
+Q_i \cdot K_j
+\]
+
+\vspace{1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Tokens ask questions (queries)
+  \item Other tokens answer (values)
+  \item Keys decide relevance
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+\rtext{Queries select, keys match, values contribute.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 9
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Scaled Dot-Product Attention}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Attention scores}
+
+\begin{itemize}
+  \item Compare each query with all keys
+  \item Dot product measures similarity
+\end{itemize}
+
+\vspace{1mm}
+\[
+S = Q K^{T}
+\quad\in\quad \mathbb{R}^{n \times n}
+\]
+
+\vspace{1mm}
+Each row: relevance of one token to all others.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-9mm}
+\textbf{Scaling and normalization}
+
+\begin{itemize}
+  \item Scale by $\sqrt{d_k}$ for numerical stability
+  \item Apply softmax row-wise
+\end{itemize}
+
+\vspace{-2mm}
+\[
+A = \operatorname{softmax}
+\!\left(
+\frac{QK^T}{\sqrt{d_k}}
+\right)
+\]
+
+\vspace{1mm}
+\textbf{Weighted aggregation}
+
+\[
+Z = A V
+\]
+
+\begin{itemize}
+  \item $Z \in \mathbb{R}^{n \times d_v}$
+  \item Each token mixes information from others
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+Attention computes a \y{context-dependent weighted sum} of values.
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Scale by $\sqrt{d_k}$?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-1mm}
+\textbf{Problem without scaling}
+
+\begin{itemize}
+  \item Dot products grow with dimension
+  \item Large values enter softmax
+  \item Gradients become unstable
+\end{itemize}
+
+\vspace{1mm}
+For random vectors:
+\[
+Q_i \cdot K_j \sim \mathcal{O}(d_k)
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-9mm}
+\textbf{Effect of scaling}
+
+\begin{itemize}
+  \item Divide by $\sqrt{d_k}$
+  \item Keeps variance roughly constant
+\end{itemize}
+
+\vspace{1mm}
+\[
+\frac{QK^T}{\sqrt{d_k}}
+\]
+
+\vspace{1mm}
+\textbf{Result}
+
+\begin{itemize}
+  \item Softmax stays sensitive
+  \item Stable gradients during training
+  \item Faster convergence
+\end{itemize}
+
+\vspace{1mm}
+\centering
+\y{Scaling is a numerical necessity, not a heuristic.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+The scaling factor prevents softmax saturation in high dimensions.
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Attention Matrix Interpretation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Attention matrix}
+
+\vspace{-4mm}
+\[
+A = \operatorname{softmax}
+\!\left(
+\frac{QK^T}{\sqrt{d_k}}
+\right)
+\quad\in\quad \mathbb{R}^{n \times n}
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item Row $i$: attention of token $i$
+  \item Columns: which tokens are attended to
+\end{itemize}
+
+\vspace{1mm}
+\y{\bf Softmax:} Each row sums to 1: 
+\[
+\sum_j A_{ij} = 1
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-6mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Soft, learned dependency graph
+  \item Fully connected
+  \item Directional (row-wise)
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key insight}
+
+\begin{itemize}
+  \item No fixed neighborhood
+  \item No predefined structure
+  \item Recomputed at every layer
+\end{itemize}
+
+\vspace{1mm}
+\centering
+\y{Attention learns which tokens influence}
+\y{each other.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Self-attention dynamically constructs a weighted interaction graph.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Multi-Head Attention?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Limitation of single attention}
+
+\begin{itemize}
+  \item One attention matrix per layer
+  \item Focuses on one similarity notion
+  \item Mixes all information at once
+\end{itemize}
+
+\vspace{1mm}
+Example needs:
+\begin{itemize}
+  \item Syntax (subject–verb)
+  \item Semantics (actor–object)
+  \item Position and locality
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Multi-head idea}
+
+\begin{itemize}
+  \item Run attention \y{in parallel}
+  \item Different subspaces
+  \item Different focus patterns
+\end{itemize}
+
+\vspace{1mm}
+Each head learns:
+\[
+\text{its own } Q_i,\; K_i,\; V_i
+\]
+
+\vspace{1mm}
+\textbf{Benefit}
+
+\begin{itemize}
+  \item Richer representations
+  \item Multiple relationships at once
+  \item Improved expressiveness
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Multi-head attention lets the model attend to different aspects simultaneously.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Multi-Head Attention: Formulation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Per-head projections}
+
+For each head $h = 1,\dots,H$:
+\begin{eqnarray*}
+Q^{(h)} & = & X W^{Q^{(h)}}, \quad
+K^{(h)} = X W^{K^{(h)}}, \\
+V^{(h)} & = & X W^{V^{(h)}}
+\end{eqnarray*}
+
+\vspace{1mm}
+Each head applies scaled dot-product \y{attention}:
+\[
+Z^{(h)} =
+\operatorname{softmax}
+\!\left(
+\frac{Q^{(h)} K^{(h)T}}{\sqrt{d_k}}
+\right)
+V^{(h)}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Concatenation and projection}
+
+\[
+Z =
+\operatorname{Concat}
+\big(
+Z^{(1)}, \dots, Z^{(H)}
+\big)
+\]
+
+\vspace{1mm}
+Final linear projection:
+\[
+\operatorname{MultiHead}(X)
+=
+Z W^O
+\]
+
+\vspace{-2mm}
+\begin{itemize}
+  \item $H$: number of heads
+  \item $W^O$: output projection
+  \item Output in $\mathbb{R}^{n \times d_{\text{model}}}$
+\end{itemize}
+
+\vspace{1mm}
+\y{Multiple attention views are merged}
+\y{into one representation.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Multi-head attention preserves model dimension while increasing expressiveness.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Position-Wise Feedforward Network (FFN)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\begin{itemize}
+  \item Inside each Transformer block
+  \item After self-attention
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What attention does not do}
+
+\begin{itemize}
+  \item Computes weighted averages
+  \item Linear combination of values
+  \item No feature-wise nonlinearity
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why the FFN is needed}
+
+\begin{itemize}
+  \item Adds nonlinearity, Recombines features
+  \item Increases model expressiveness
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+
+\vspace{-8mm}
+\textbf{Feedforward mapping}
+
+For one token vector $x \in \mathbb{R}^{d_{\text{model}}}$:
+\[
+\operatorname{FFN}(x)
+=
+\sigma(x W_1 + b_1)\, W_2 + b_2
+\]
+
+\vspace{-2mm}
+\begin{itemize}
+  \item $\sigma(\cdot)$: ReLU or GELU
+  \item $W_1 \in \mathbb{R}^{d_{\text{model}} \times d_{\text{ff}}}$
+  \item $W_2 \in \mathbb{R}^{d_{\text{ff}} \times d_{\text{model}}}$
+\end{itemize}
+
+\vspace{1mm}
+Applied to all tokens:
+
+\vspace{-3mm}
+\[
+Z_{\text{ff}} \in \mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\vspace{-1mm}
+{\footnotesize
+Same FFN parameters are shared across all positions.
+}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{Attention mixes tokens; the FFN transforms token features.}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Residual Addition, Layer Normalization}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Output of multi-head attention}
+
+\vspace{1mm}
+Multi-head attention output (after $W^O$):
+\[
+Z_{\text{att}}
+=
+\operatorname{MultiHead}(X)
+\in
+\mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\vspace{-1mm}
+\textbf{Residual connection}
+
+\[
+\tilde X
+=
+X + Z_{\text{att}}
+\]
+
+\vspace{-1mm}
+\begin{itemize}
+  \item Preserves original information
+  \item Requires matching dimensions
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-9mm}
+\quad \textbf{Layer normalization}
+
+Applied \y{after} the residual sum, per token $i$:
+
+\vspace{-6mm}
+\begin{eqnarray*}
+\mu_i
+& = & 
+\frac{1}{d_{\text{model}}}
+\sum_{k=1}^{d_{\text{model}}}
+\tilde X_{ik}
+\\
+\sigma_i^2
+& = & 
+\frac{1}{d_{\text{model}}}
+\sum_{k=1}^{d_{\text{model}}}
+(\tilde X_{ik} - \mu_i)^2
+\\
+Z_{ik}
+& = & 
+\gamma_k
+\frac{\tilde X_{ik} - \mu_i}{\sqrt{\sigma_i^2 + \varepsilon}}
++ \beta_k
+\end{eqnarray*}
+
+\vspace{-4mm}
+\begin{itemize}
+  \item Normalization across \y{feature dimension}
+  \item $\gamma_k, \beta_k$: learned parameters
+  \item No mixing between tokens
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Residual connections preserve information; LayerNorm stabilizes the representation.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Output Projection to Vocabulary}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Final Transformer output}
+
+After all Transformer blocks:
+\[
+Z \in \mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\vspace{1mm}
+Each row corresponds to:
+\begin{itemize}
+  \item One token position
+  \item A contextualized representation
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Goal}
+
+\begin{itemize}
+  \item Predict the next token
+  \item From a fixed vocabulary
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-9mm}
+\textbf{Linear projection to logits}
+
+\[
+Z_{\text{logits}}
+=
+Z W_{\text{out}} + b_{\text{out}}
+\]
+
+\begin{itemize}
+  \item $W_{\text{out}} \in \mathbb{R}^{d_{\text{model}} \times V}$
+  \item $b_{\text{out}} \in \mathbb{R}^{V}$
+  \item $V$: \y{vocabulary size}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Softmax probabilities}
+
+\[
+Z_{\text{pred}}
+=
+\operatorname{softmax}(Z_{\text{logits}})
+\]
+
+\vspace{1mm}
+\y{Each row is a probability distribution}
+\y{over tokens.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Logits convert hidden representations into token probabilities.}
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Cross-Entropy Loss for Language Modeling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Prediction target}
+
+\begin{itemize}
+  \item One correct token per position
+  \item Stored as an index in the vocabulary
+\end{itemize}
+
+\vspace{1mm}
+For position $t$: $y_t \in \{1,\dots,V\}$ (token index). 
+Equivalent \y{one-hot} representation: 
+\[
+e_{y_t} \in \mathbb{R}^V.
+\]
+Model prediction: $p_t = Z_{\text{pred},\,t} \in \R^{V}.$
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-3mm}
+\rtext{\textbf{Cross-entropy loss}}
+
+\vspace{-2mm}
+\[
+\mathcal{L}
+=
+- \sum_{t=1}^{n}
+\log p_t(y_t)
+\]
+
+\vspace{-2mm}
+\begin{itemize}
+  \item $p_t(y_t)$: probability assigned to the correct token
+  \item Uses index $y_t$ to select one entry
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item High confidence, correct → low loss
+  \item Wrong or uncertain → high loss
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\centering
+\y{The model is trained to maximize likelihood of the true sequence.} \\
+{\footnotesize
+Cross-entropy measures how well predicted probabilities match the true tokens.
+}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training the Transformer Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Training objective}
+
+\begin{itemize}
+  \item Minimize cross-entropy loss
+  \item Over all tokens in the sequence
+\end{itemize}
+
+\vspace{-3mm}
+\[
+\mathcal{L}
+=
+- \sum_{t=1}^{n}
+\log p_t(y_t)
+\]
+
+\vspace{1mm}
+\textbf{Learnable parameters}
+
+\begin{itemize}
+  \item Embeddings
+  \item Attention projections ($W^Q, W^K, W^V, W^O$)
+  \item Feedforward weights
+  \item Output projection $W_{\text{out}}$
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Gradient-based optimization}
+
+\begin{itemize}
+  \item Compute gradients via backpropagation
+  \item Update parameters to reduce loss
+\end{itemize}
+
+\vspace{1mm}
+Generic update rule:
+
+\vspace{-4mm}
+\[
+\theta
+\;\leftarrow\;
+\theta
+-
+\eta
+\frac{\partial \mathcal{L}}{\partial \theta}
+\]
+
+\vspace{-3mm}
+\textbf{In practice}
+
+\begin{itemize}
+  \item Adam or AdamW optimizer
+  \item Mini-batch training
+  \item Many epochs over large corpora
+\end{itemize}
+
+\vspace{2mm}
+\centering
+Training adjusts all parameters to improve \y{next-token prediction.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Autoregressive Text Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Generate one token at a time
+  \item Each new token is fed back as input
+\end{itemize}
+
+\vspace{1mm}
+At position $t$:
+\[
+p_t = P(x_t \mid x_1,\dots,x_{t-1})
+\]
+
+\vspace{1mm}
+\textbf{Training vs inference}
+
+\begin{itemize}
+  \item Training: true previous tokens known
+  \item Inference: model uses its own output
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\vspace{-8mm}
+\textbf{Generation loop}
+
+\begin{enumerate}
+  \item Start with a prompt
+  \item Compute logits
+  \item Apply softmax
+  \item Select next token
+  \item Append and repeat
+\end{enumerate}
+
+\vspace{1mm}
+\textbf{Token selection}
+
+\begin{itemize}
+  \item Argmax (greedy)
+  \item Sampling, repetition penalty
+  \item Top-$k$, top-$p$ (nucleus)
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{LLMs are trained once, then generate text step by step.}
+
+\end{frame}
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6, Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 6 — Slide 19}
+
+  % Content goes here
+
+\end{frame}

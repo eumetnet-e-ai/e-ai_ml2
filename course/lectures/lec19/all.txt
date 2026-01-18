@@ -1,0 +1,1720 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 01
+% ================================================================================
+
+\begin{frame}[t,fragile]
+
+\mytitle{Lecture 19: AI and Physics and Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Core question}
+
+Given a dynamical system, what can machine learning do?
+
+\vspace{1mm}
+\begin{itemize}
+  \item Solve known equations (ODE/PDE)
+  \item Discover unknown governing laws from observations
+  \item Emulate complex dynamics as a surrogate model
+\end{itemize}
+
+\vspace{3mm}
+\textbf{Unifying viewpoint}
+
+All methods impose (explicitly or implicitly) a constraint:
+
+\rtext{\bf state evolution must be consistent with } $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x})$.
+
+
+\vspace{3mm}
+How can different ML approaches enforce this consistency?
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Three routes in this lecture}
+
+\begin{enumerate}
+  \item \textbf{PINNs:} \y{physics drives training}
+  \item \textbf{SINDy:} \y{sparse laws from data}
+  \item \textbf{Neural RHS learning:} \y{black-box emulation}
+\end{enumerate}
+
+\vspace{2mm}
+\textbf{Key trade-offs}
+
+\begin{itemize}
+  \item Accuracy vs.\ interpretability
+  \item Data-efficiency vs.\ flexibility
+  \item Stability / extrapolation vs.\ expressiveness
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:} \\
+same goal (dynamics), different framework.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 02
+% ================================================================================
+
+\begin{frame}[t,fragile]
+
+\mytitle{Lecture Roadmap}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Part I — Physics-Informed Neural Networks}
+
+\vspace{1mm}
+\begin{itemize}
+  \item learn \y{solutions} of known equations
+  \item training uses \y{ODE/PDE residuals} + anchor conditions
+  \item representation matters for extrapolation
+\end{itemize}
+
+\vspace{3mm}
+\textbf{Part II — Discovering equations from data}
+
+\vspace{1mm}
+\begin{itemize}
+  \item \textbf{SINDy:} sparse regression on a function library
+  \item \textbf{Neural SINDy:} smooth NN trajectory $\Rightarrow$ stable derivatives
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-9mm}
+
+\textbf{Part III — Learning the Force Term}
+
+\vspace{1mm}
+\begin{itemize}
+  \item learn the unknown RHS / forcing from data:
+  \[
+  \dot{\mathbf{x}} = \mathbf{f}(\mathbf{x}) + \mathbf{g}_\theta(\mathbf{x})
+  \]
+  \item \y{hybrid modeling:} known physics + learned closure
+  \item stable rollout by integrating the learned system
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Part IV — Causal Modeling with Neural Networks}
+
+\vspace{1mm}
+\begin{itemize}
+  \item distinguish \y{correlation} vs.\ \y{cause}
+  \item learn structural relations (SCMs) as NN modules
+  \item intervene and test counterfactual predictions:
+  \[
+  do(X=x)
+  \quad\Rightarrow\quad
+  p(Y\,|\,do(X=x))
+  \]
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{A Minimal Physics-Informed Neural Network (PINN)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Problem setup}
+
+We consider a simple second-order ODE:
+\[
+y''(x) + y(x) = 0
+\]
+
+with boundary conditions
+\[
+y(0) = 0, \qquad y'(0) = 1.
+\]
+
+\vspace{2mm}
+The unique solution is
+\[
+y(x) = \sin(x).
+\]
+
+\vspace{2mm}
+This example is deliberately \y{simple}, but already
+captures all essential PINN ingredients.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{PINN idea}
+
+\begin{itemize}
+  \item Approximate $y(x)$ by a neural network $y_\theta(x)$
+  \item \y{No training data} $y(x)$ are used
+  \item Training is driven by \y{physics constraints}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What is enforced}
+
+\begin{itemize}
+  \item Differential equation via automatic differentiation
+  \item Boundary conditions via penalty terms
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf The network learns the solution by minimizing violations of physics.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{PINN Loss: Physics Instead of Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{ODE residual}
+
+Using automatic differentiation, we compute
+\[
+y_\theta'(x), \qquad y_\theta''(x).
+\]
+
+The differential equation is enforced by minimizing
+\[
+r(x) = y_\theta''(x) + y_\theta(x).
+\]
+
+The corresponding loss term is
+\[
+\mathcal{L}_{\text{ODE}}
+=
+\frac{1}{N}
+\sum_{i=1}^N
+\bigl( y_\theta''(x_i) + y_\theta(x_i) \bigr)^2.
+\]
+
+\vspace{2mm}
+Collocation points $x_i$ are sampled in the domain.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\textbf{Boundary conditions}
+
+Boundary (anchor) constraints enforce uniqueness:
+\[
+y_\theta(0) = 0,
+\qquad
+y_\theta'(0) = 1.
+\]
+
+This yields the boundary loss
+\[
+\mathcal{L}_{\text{BC}}
+=
+\bigl( y_\theta(0) \bigr)^2
++
+\bigl( y_\theta'(0) - 1 \bigr)^2.
+\]
+
+\vspace{2mm}
+\textbf{Total loss}
+
+The parameter $\lambda$ controls the \y{strength of the boundary conditions.}
+
+\[
+\mathcal{L}
+=
+\mathcal{L}_{\text{ODE}}
++
+\lambda\,\mathcal{L}_{\text{BC}}.
+\]
+
+
+\vspace{2mm}
+\rtext{\bf No data term appears anywhere in the loss.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{PINN Result: Naive Training, Extended Evaluation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Training setup}
+
+\begin{itemize}
+  \item ODE residual enforced on $[0,\,2\pi]$
+  \item Boundary conditions at $x=0$
+  \item No data, no periodic constraints
+  \item Standard MLP representation
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Evaluation}
+
+\begin{itemize}
+  \item Solution evaluated on a \y{larger domain}
+  \item Outside the region where physics was enforced
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf This tests extrapolation, not interpolation.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\centering
+\vspace{-4mm}
+\includegraphics[width=5.5cm]{../../images/img19/pinn_sine_1_crop.png}
+
+\vspace{-2mm}
+
+\includegraphics[width=5.6cm]{../../images/img19/pinn_sine_2_crop.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Improving Extrapolation by Wider Residual Sampling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Key modification}
+
+The PINN formulation is unchanged, but the
+\y{ODE residual is enforced on a wider domain}.
+
+\vspace{2mm}
+\textbf{Training setup}
+
+\begin{itemize}
+  \item ODE residual sampled beyond $[0,\,2\pi]$
+  \item Boundary conditions still imposed at $x=0$
+  \item Same network architecture and loss terms
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Effect}
+
+\begin{itemize}
+  \item Physics is enforced more \y{globally}
+  \item Extrapolation becomes significantly more stable
+  \item No change in representation or constraints
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/pinn_sine_3.png}
+
+
+\vspace{2mm}
+\rtext{ This already fixes many extrapolation problems for simple ODEs.}
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 07
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Improving Representation with Fourier Features}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.49\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Motivation}
+
+Standard MLPs learn functions of $x$ that are biased toward
+\y{smooth, slowly varying behavior}.
+
+\vspace{2mm}
+Oscillatory solutions, such as
+\[
+y(x) = \sin(x),
+\]
+are therefore harder to represent and extrapolate.
+
+\vspace{2mm}
+\textbf{Fourier feature idea}
+
+Instead of learning directly from $x$, we apply a fixed
+\y{feature map}:
+\[
+x \;\mapsto\;
+\bigl(
+\sin(\omega_k x),\;
+\cos(\omega_k x)
+\bigr)_{k=1}^m.
+\]
+
+\vspace{2mm}
+The neural network then learns a function
+of these periodic features.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=6cm]{../../images/img19/pinn_sine_4.png}
+
+\vspace{0mm}
+\raggedright
+\textbf{Effect on the PINN}
+
+\begin{itemize}
+  \item Periodicity is \y{easy to represent}
+  \item Long-range extrapolation improves
+  \item Fewer parameters are needed
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Linear models become \y{Fourier series fits}
+  \item Nonlinear MLPs allow mode interactions
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf This changes the representation, not the physics.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Result: Fourier-Feature PINN for a Modulated Oscillation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{What changed compared to previous examples}
+
+\begin{itemize}
+  \item Governing ODE and anchor conditions unchanged
+  \item Same PINN loss formulation
+  \item \y{Only the input representation is modified}
+\end{itemize}
+
+\vspace{2mm}
+The network uses a Fourier feature embedding.
+
+\vspace{2mm}
+\textbf{Observed behavior}
+
+\begin{itemize}
+  \item Accurate solution on the training domain $[0,\,5\pi]$
+  \item \y{Stable extrapolation} far beyond the training region
+  \item Correct phase and amplitude over many oscillations
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/pinn_sine_cosine.png}
+
+\vspace{2mm}
+\raggedright
+\footnotesize
+Gray shading indicates the training domain.
+The solution is evaluated well beyond the region where the ODE residual
+was enforced.
+
+
+\vspace{2mm}
+\rtext{\bf Representation choice alone can control extrapolation quality.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{SINDy: Sparse Identification of Nonlinear Dynamics}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Problem setting}
+
+We observe a dynamical system
+\[
+\dot{\mathbf{x}}(t) = \mathbf{f}(\mathbf{x}(t)),
+\qquad
+\mathbf{x}(t)\in\mathbb{R}^n,
+\]
+from time series data $\mathbf{x}(t_i)$.
+
+\vspace{2mm}
+\textbf{Key assumption (sparsity)}
+
+The vector field can be written as a sparse combination of candidate functions:
+\[
+\dot{\mathbf{x}}(t)
+\;\approx\;
+\Theta(\mathbf{x}(t))\,\Xi,
+\]
+where
+\begin{itemize}
+  \item $\Theta(\mathbf{x})$ is a library of functions
+        (e.g.\ $1, x, y, z, xy, xz, yz,\dots$),
+  \item $\Xi$ is a \y{sparse coefficient matrix}.
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-2mm}
+\textbf{Identification}
+
+SINDy solves a sequence of
+\[
+\min_{\Xi}\;\|\Theta(\mathbf{x})\Xi-\dot{\mathbf{x}}\|_2^2
+\]
+with thresholding to eliminate small coefficients.
+
+
+\includegraphics[width=\textwidth]{../../images/img19/SINDy_01.png}
+
+\vspace{-3mm}
+\raggedright
+\footnotesize
+\textbf{Lorenz--63 example (noise-free).}
+
+Left: true trajectory.  
+Right: trajectory from \emph{SINDy}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 10
+% ================================================================================
+\begin{frame}[t, fragile]
+
+\mytitle{SINDy Sparse Regression of Nonlinear Dynamics: Lorenz--63 System}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{True governing equations}
+
+The Lorenz--63 system is defined by
+\[
+\begin{aligned}
+\dot{x} &= \sigma (y - x), \\
+\dot{y} &= x(\rho - z) - y, \\
+\dot{z} &= x y - \beta z,
+\end{aligned}
+\qquad
+\begin{minipage}{3cm}$
+\sigma=10, \\ 
+\rho=28, \\
+\beta=\tfrac{8}{3}.
+$
+\end{minipage}
+\]
+
+\vspace{0mm}
+\textbf{SINDy function library}
+
+SINDy assumes the dynamics can be written as a sparse linear combination of
+candidate functions:
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+Theta(x,y,z) = [  1,  x, y, z,
+                      x*y, x*z, y*z ]
+\end{lstlisting}
+
+Only a few of these terms are retained in each equation after sparse
+regression.
+
+\vspace{2mm}
+\rtext{\bf Goal:} \y{recover the correct active terms} and coefficients
+directly from time series data.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=6cm]{../../images/img19/sindy_timeseries.png}
+
+\vspace{2mm}
+\raggedright
+\footnotesize
+Time series of the Lorenz--63 state variables used as input for SINDy
+{\color{blue}(blue)}.
+Numerical derivatives are estimated and matched against the candidate
+library during sparse regression. \color{darkgreen}
+Discovered dynamics evolution in Green.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 11
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Neural SINDy: Using Neural Networks as Smooth Surrogates}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+Neural SINDy augments classical SINDy by introducing a neural network
+as a smooth surrogate for the observed trajectory:
+\[
+\mathbf{x}(t)\;\longrightarrow\;\mathbf{x}_\theta(t).
+\]
+
+The neural network is trained on noisy observations
+$\mathbf{x}_{\text{obs}}(t_i)$, \rtext{but constrained to produce a
+\emph{smooth time-continuous representation}}.
+
+\vspace{0mm}
+\textbf{Neural trajectory fitting}
+
+The network parameters $\theta$ are obtained by minimizing
+
+\vspace{-4mm}
+\[
+\min_{\theta}
+\sum_i \|\mathbf{x}_\theta(t_i)-\mathbf{x}_{\text{obs}}(t_i)\|^2
+\;+\;
+\alpha \int \Bigl\|\tfrac{d}{dt}\mathbf{x}_\theta(t)\Bigr\|^2\,dt.
+\]
+
+\vspace{-2mm}
+A \y{regularization term} penalizes rapid temporal variations and suppresses
+noise amplification.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Derivative estimation via autograd}
+
+Once trained, time derivatives are computed analytically:
+\[
+\dot{\mathbf{x}}_\theta(t)
+=
+\frac{d}{dt}\mathbf{x}_\theta(t),
+\]
+using automatic differentiation.
+
+\vspace{2mm}
+\textbf{Sparse discovery step}
+
+The smoothed trajectory and its derivatives are then passed to the
+\emph{unchanged} SINDy pipeline:
+\[
+\dot{\mathbf{x}}_\theta(t)\;\approx\;\Theta(\mathbf{x}_\theta(t))\,\Xi,
+\qquad \Xi\ \text{sparse}.
+\]
+
+\vspace{-2mm}
+\rtext{\bf Here:}
+
+Neural networks are \emph{not} used to represent the dynamics,
+but only to \y{stabilize} \y{derivative} \y{estimation} prior to sparse regression.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Neural SINDy: Results on Noisy Lorenz--63 Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Experimental setup}
+
+\begin{itemize}
+  \item Lorenz--63 system
+  \item Strong additive noise on observations
+  \item Identical SINDy library and sparsity settings
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Comparison}
+
+\begin{itemize}
+  \item Classical SINDy: finite-difference derivatives
+  \item Neural SINDy: NN-smoothed trajectory + autograd
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/neural_sindy_comparison.png}
+
+\vspace{-2mm}
+\raggedright
+\footnotesize
+Comparison of trajectories, derivatives, and predictions for
+classical vs.\ Neural SINDy on noisy data.
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\textbf{Outcome}
+
+\begin{itemize}
+  \item Neural SINDy recovers an improved equation structure
+\end{itemize}
+
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\begin{tightmath}
+
+\mytitle{Alternative: Learning the Full RHS with Neural Networks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Black-box RHS learning}
+
+Instead of discovering equations, one may directly learn the vector field
+\[
+\dot{\mathbf{x}} = \mathbf{f}_\theta(\mathbf{x}),
+\]
+where $\mathbf{f}_\theta$ is a neural network.
+
+
+\vspace{4mm}
+The network is trained to match observed time derivatives or trajectories.
+
+\begin{itemize}
+  \item Very flexible function class
+  \item \y{Can approximate complex, unknown} \y{dynamics}
+  \item Naturally handles noise with regularization
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{Neural SINDy: a different goal}
+
+Neural SINDy uses neural networks only to stabilize intermediate steps
+(denoising and differentiation), but still identifies
+\[
+\dot{\mathbf{x}} \approx \Theta(\mathbf{x})\,\Xi,
+\]
+with a sparse, explicit structure.
+
+\vspace{4mm}
+\rtext{\bf Key distinction:}
+
+\begin{itemize}
+  \item Neural RHS learning $\rightarrow$ \y{predictive black box}
+  \item Neural SINDy $\rightarrow$ \emph{interpretable equations}
+\end{itemize}
+
+\vspace{0mm}
+This distinction is critical in scientific modeling, where the goal
+is understanding, not only prediction.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 14
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Neural \y{RHS Learning}: Results on Lorenz--63}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Experimental setup}
+
+\begin{itemize}
+  \item Lorenz--63 system
+  \item Neural network trained on $(\mathbf{x},\dot{\mathbf{x}})$ pairs
+  \item No sparsity or physics constraints
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Observations}
+
+\begin{itemize}
+  \item Learned vector field ${\bf f_{\theta}}$ reproduces the chaotic attractor
+  \item Short- to medium-term trajectories remain accurate, \rtext{\bf climatology ok!}
+  \item Long-term divergence is unavoidable due to chaos
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Interpretation:}
+
+The neural network successfully emulates the dynamics,
+but the \y{governing equations remain hidden.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\centering
+
+\vspace{-8mm}
+\includegraphics[width=6cm]{../../images/img19/rhs_learning1.png}
+
+\vspace{2mm}
+
+\includegraphics[width=6cm]{../../images/img19/rhs_learning2.png}
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Neural RHS Learning in State Space}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.51\textwidth}
+
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Experimental setup}
+
+\begin{itemize}
+  \item Lorenz--63 vector field \y{sampled in state space}
+  \item Random training points covering a 3D domain
+  \item Neural network trained on $(\mathbf{x},\dot{\mathbf{x}})$ pairs
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key difference to trajectory-based learning}
+
+\begin{itemize}
+  \item Training data no longer restricted to the attractor
+  \item Vector field is constrained in a full region of state space
+  \item Dynamics are learned as a global mapping
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Outcome:}
+
+The learned neural vector field reproduces the Lorenz dynamics
+consistently from unseen initial conditions, not only along the
+original trajectory.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\centering
+\vspace{-8mm}
+
+\includegraphics[width=8cm]{../../images/img19/rhs_learning_space_sampling_crop.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 16
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Learning Dynamical Systems: Goals and Methods}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Three fundamentally different goals}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \rtext{\bf \y{Solve known equations}}
+  \begin{itemize}
+    \item Given: governing ODE/PDE
+    \item Task: compute the solution
+    \item Method: \textbf{PINNs}
+  \end{itemize}
+
+  \vspace{0mm}
+  \item \rtext{\bf \y{Discover equations from data}}
+  \begin{itemize}
+    \item Given: time series observations
+    \item Task: identify governing laws
+    \item Method: \textbf{SINDy / Neural SINDy}
+  \end{itemize}
+
+  \vspace{0mm}
+  \item \rtext{\bf \y{Emulate dynamics}}
+  \begin{itemize}
+    \item Given: state–derivative pairs
+    \item Task: reproduce system behavior
+    \item Method: \textbf{Neural RHS learning}
+  \end{itemize}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-2mm}
+
+\textbf{What is learned in each case?}
+
+\vspace{1mm}
+\begin{itemize}
+  \item \textbf{PINNs}
+  \begin{itemize}
+    \item learn the \emph{solution} $x(t)$
+    \item equations are assumed known
+  \end{itemize}
+
+  \vspace{0mm}
+  \item \textbf{SINDy / Neural SINDy}
+  \begin{itemize}
+    \item learn \emph{explicit equations}
+    \item sparse, interpretable models
+  \end{itemize}
+
+  \vspace{0mm}
+  \item \textbf{Neural RHS learning}
+  \begin{itemize}
+    \item learn a \emph{vector field}
+    \item accurate dynamics, but opaque
+  \end{itemize}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Key trade-off:}
+
+Interpretability \;\;\(\leftrightarrow\)\;\; Flexibility
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Physics-Constrained Neural Emulators: 1D Periodic Advection}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+We consider \y{1D linear advection} on a periodic domain:
+
+\vspace{-4mm}
+\[
+\partial_t u + c\,\partial_x u = 0,
+\qquad x \in [0,1], \;\; u(0)=u(1).
+\]
+
+\vspace{0mm}
+Key physical properties:
+\begin{itemize}
+  \item Pure \y{translation on a ring}
+  \item Exact \y{mass conservation}
+  \item Smooth initial conditions remain smooth
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Learning task}
+
+\begin{itemize}
+  \item Learn a one-step map \y{$u^n \mapsto u^{n+1}$}
+  \item Training data from a conservative upwind solver
+  \item Compare different neural inductive biases
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/Advection_Periodic_Truth.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\textbf{Reference solution (truth).}
+
+Gaussian bump advected periodically.
+Snapshots at $t=0,30,60$ clearly show wrap-around and mass preservation.
+
+\vspace{4mm}
+\rtext{\bf Physics is simple — but violations are immediately visible.}
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{CNN Emulator without Mass Conservation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Neural model}
+
+\begin{itemize}
+  \item Local 1D CNN with \y{circular padding}
+  \item Learns one-step map $u^n \mapsto u^{n+1}$
+  \item Trained by minimizing one-step MSE
+\end{itemize}
+
+\vspace{0mm}
+\textbf{What is \rtext{not} enforced}
+
+\begin{itemize}
+  \item No mass conservation constraint
+  \item No global invariant control
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Observed behavior}
+
+\begin{itemize}
+  \item \y{Low training loss}
+  \item Smooth short-term evolution
+  \item \rtext{Gradual drift in total mass}
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Locality alone is not enough to guarantee physical correctness.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{-4mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_3_0.png}
+
+\vspace{-2mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_3_60.png}
+
+\vspace{0mm}
+\raggedright
+\footnotesize
+\textbf{CNN without conservation.}
+Small amplitude and mass errors accumulate despite visually plausible transport.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{CNN Emulator with Exact Mass Conservation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Conservative update}
+
+The CNN predicts a residual update
+\[
+u^{n+1} = u^n + \Delta u,
+\]
+with the constraint $\sum_i \Delta u_i = 0$.
+
+\vspace{-1mm}
+\begin{itemize}
+  \item \rtext{\bf Mass conservation enforced \y{by construction}}
+  \item Same architecture and data as unconstrained CNN
+  \item No penalty tuning required
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Effect}
+
+\begin{itemize}
+  \item Slightly higher one-step loss
+  \item \y{Exact preservation of the global invariant}
+  \item Significantly improved long-term behavior
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/Advection_Periodic_CNN_Mass_Conservation_Test1.png}
+
+\vspace{1mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_4_60.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\textbf{CNN with mass conservation.}
+The global invariant is preserved exactly.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Long-Time Rollout: Accuracy vs Physical Validity}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Long-time test}
+
+\begin{itemize}
+  \item Rollout over hundreds of time steps
+  \item Same initial condition
+  \item Compare truth, CNN-free, CNN-conservative
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item CNN-free: errors accumulate steadily
+  \item CNN-conservative: structure remains coherent
+  \item Physics constraints matter most \y{far beyond training horizon}
+\end{itemize}
+
+\vspace{2mm}
+{\bf Short-term accuracy is not a proxy for long-term validity.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_Long_0.png}
+
+\vspace{-1mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_Long_600.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\rtext{\bf Only the conservative model maintains physically consistent transport.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Generalization: Advection of Unseen Shapes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{What was trained}
+
+\begin{itemize}
+  \item CNN emulator trained only on \y{Gaussian initial conditions}
+  \item Local architecture with \y{periodic padding}
+  \item Conservative variant enforces exact mass preservation
+\end{itemize}
+
+\vspace{1mm}
+\textbf{We test:} Sine waves, Top-hat functions (discontinuous), Multiple separated bumps.
+
+\vspace{1mm}
+\textbf{What we observe}
+
+\begin{itemize}
+  \item Correct \y{translation on the periodic domain}
+  \item Shapes are transported without spurious creation or loss of mass
+  \item Superpositions (multiple bumps) are handled consistently
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\centering
+\vspace{-8mm}
+
+\includegraphics[width=0.7\textwidth]{../../images/img19/Advection_Periodic_CNN_B_3_60.png}
+
+\vspace{-1mm}
+
+\includegraphics[width=0.7\textwidth]{../../images/img19/Advection_Periodic_CNN_B_2_60.png}
+
+\vspace{-1mm}
+
+\includegraphics[width=0.7\textwidth]{../../images/img19/Advection_Periodic_CNN_B_4_60.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+Examples of \y{\rtext{\bf unseen initial conditions}} advected by the CNN emulator.
+
+
+\end{column}
+
+\end{columns}
+
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Neural Causal Discovery: Pressure–Temperature Example}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Problem revisited}
+
+\begin{itemize}
+  \item Surface pressure \y{(P)} and temperature \y{(T)} are correlated
+  \item The causal direction depends on the \y{physical process}
+  \item External forcing \y{(F)} may act as a confounder
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Neural causal discovery idea}
+
+\begin{itemize}
+  \item Model each variable by a neural predictor
+  \item Separate \y{self-dynamics} from \y{cross-variable influences}
+  \item Identify statistically significant directed effects
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key capability}
+
+\begin{itemize}
+  \item Distinguishes
+  \begin{itemize}
+    \item direct causation \y{$P \rightarrow T$}
+    \item common forcing \y{$F \rightarrow P$, $F \rightarrow T$}
+  \end{itemize}
+  \item Goes beyond correlation and regression
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Causality is inferred from dynamical structure, not correlation strength.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/causal_pcmci_timeseries.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\textbf{Discovered causal graphs.}
+
+Left: Scenario 1 — true causal chain \y{$F \rightarrow P \rightarrow T$}.
+Right: Scenario 2 — common forcing \y{$F \rightarrow P$, $F \rightarrow T$}, no direct
+\y{$P \rightarrow T$} link.
+
+\vspace{1mm}
+Both scenarios exhibit similar $P$–$T$ correlations, but different causal structures.
+
+\end{column}
+
+\end{columns}
+
+\vspace{1mm}
+\rtext{\bf Neural causal discovery can recover process-dependent causality from time series.}
+
+\end{tightmath}
+\end{frame}
+% ================================================================================
+% Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+\mytitle{Two Physical Processes Behind the Same Correlation}
+
+\footnotesize
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\textbf{Scenario 1: Direct causal coupling}
+
+\begin{itemize}
+  \item Synoptic pressure systems evolve
+  \item Temperature responds via adiabatic processes
+\end{itemize}
+
+\[
+\frac{dP}{dt} = -\gamma_P(P - P_{eq}) + \beta_P F(t)
+\]
+\[
+\frac{dT}{dt} = -\gamma_T(T - T_{eq}) + \rtext{\alpha (P - P_{eq})}
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item \rtext{\bf True causal link: \(P \rightarrow T\)}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\textbf{Scenario 2: Common external forcing}
+
+\begin{itemize}
+  \item Air-mass advection drives both variables
+  \item No direct physical coupling between \(P\) and \(T\)
+\end{itemize}
+
+\[
+\frac{dP}{dt} = -\gamma_P(P - P_{eq}) + \beta_P F(t)
+\]
+\[
+\frac{dT}{dt} = -\gamma_T(T - T_{eq}) + \beta_T F(t)
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item \rtext{\bf No direct causal link between \(P\) and \(T\)}
+\end{itemize}
+
+\end{column}
+\end{columns}
+
+\vspace{2mm}
+\textbf{Important}
+
+\begin{itemize}
+  \item Both scenarios produce similar \(P\)–\(T\) correlations
+  \item Only the causal structure is different
+\end{itemize}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec19.tex
+% ================================================================================
+% Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+\mytitle{Reference Approach: Statistical Causal Analysis}
+
+\footnotesize
+\textbf{Naive statistical analysis}
+
+\begin{itemize}
+  \item Correlation analysis
+  \item Linear regression: \(T \sim P\)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Problem}
+
+\begin{itemize}
+  \item Strong correlation appears in \emph{both} scenarios
+  \item Regression suggests \(P \rightarrow T\) even when it is false
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Improvement: controlling for confounders}
+
+\begin{itemize}
+  \item Multiple regression: \(T \sim P + F\)
+  \item Removes spurious correlation due to external forcing
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Take-home message}
+
+\begin{itemize}
+  \item Statistical methods can detect causality
+  \item \y{Only if the correct confounding variables are known and included}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Limitation}
+
+\begin{itemize}
+  \item Requires strong prior assumptions about the system
+\end{itemize}
+
+\end{tightmath}
+\end{frame}
+% ================================================================================
+% Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+\mytitle{Neural Causal Discovery: Learning the Structure}
+
+\footnotesize
+\textbf{Core idea}
+
+\begin{itemize}
+  \item Learn causal influences directly from time series
+  \item Distinguish self-dynamics from cross-variable effects
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key steps}
+
+\begin{itemize}
+  \item Remove autocorrelation (self-dependence)
+  \item Learn residual dependencies across variables
+  \item Enforce sparsity to reveal dominant causal links
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What the neural model learns}
+
+\begin{itemize}
+  \item Scenario 1: \(F \rightarrow P \rightarrow T\)
+  \item Scenario 2: \(F \rightarrow P\), \(F \rightarrow T\), \rtext{no \(P \rightarrow T\)}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Goes beyond correlation
+  \item Discovers \y{process-dependent causality}
+  \item Scales to high-dimensional dynamical systems
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key message}
+
+\begin{center}
+\rtext{\bf AI can infer causal structure — not just correlations}
+\end{center}
+
+\end{tightmath}
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec19.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 19}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\input{../lec_agenda.tex}
+\input{lec19_01.tex}
+\input{lec19_02.tex}
+\input{lec19_03.tex}
+\input{lec19_04.tex}
+\input{lec19_05.tex}
+\input{lec19_06.tex}
+\input{lec19_07.tex}
+\input{lec19_08.tex}
+\input{lec19_09.tex}
+\input{lec19_10.tex}
+\input{lec19_11.tex}
+\input{lec19_12.tex}
+\input{lec19_13.tex}
+\input{lec19_14.tex}
+\input{lec19_15.tex}
+\input{lec19_16.tex}
+\input{lec19_17.tex}
+\input{lec19_18.tex}
+\input{lec19_19.tex}
+\input{lec19_20.tex}
+\input{lec19_21.tex}
+\input{lec19_22.tex}
+\input{lec19_23.tex}
+\input{lec19_24.tex}
+\input{lec19_25.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

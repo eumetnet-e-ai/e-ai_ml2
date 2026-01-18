@@ -1,0 +1,64 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Reverse Diffusion Process}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.62\textwidth}
+
+The reverse process aims to invert the forward diffusion:
+\[
+p_\theta(x_{0:T})
+= p(x_T)\prod_{t=1}^T p_\theta(x_{t-1} \mid x_t),
+\]
+with $p(x_T)=\mathcal{N}(0,I)$. 
+
+\vspace{1mm}
+Each reverse step is modeled as a Gaussian:
+\[
+p_\theta(x_{t-1} \mid x_t)
+= \mathcal{N}\!\left(
+x_{t-1};\, \mu_\theta(x_t,t),\, \Sigma_t
+\right),
+\]
+where $\mu_\theta$ is predicted by a neural network.
+
+\vspace{1mm}
+The variance $\Sigma_t$ is usually fixed or predefined.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.36\textwidth}
+
+\vspace{-1mm}
+\textbf{What is learned?}
+
+\begin{itemize}
+  \item Only the conditional mean
+  \item One network for all $t$
+  \item Local denoising steps
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+Each reverse step removes
+\y{a small amount of noise}.
+
+\vspace{1mm}
+This turns sampling into a sequence
+of simple corrections.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

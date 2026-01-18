@@ -1,0 +1,66 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Local Map Plot (OSM basemap + 100 km temperature overlay)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\footnotesize
+\vspace{-2mm}
+Visualize a local patch around the town:
+\begin{itemize}
+  \item \y{\rtext{\bf OpenStreetMap (OSM)}} background tiles
+  \item overlay \texttt{t2m} for one lead time
+  \item show only a 100 km box for clarity and speed
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key steps}
+
+\vspace{0mm}
+\begin{itemize}
+  \item select lead time index (e.g.\ 24h)
+  \item slice \texttt{t2m} in a local lon/lat window
+  \item reproject to WebMercator (EPSG:3857)
+\end{itemize}
+
+\vspace{-2mm}
+\begin{minipage}{7.2cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+t2m_local = ds["t2m"].isel(valid_time=i).sel(
+    lat=slice(latc-dlat, latc+dlat),
+    lon=slice(lonc-dlon, lonc+dlon)
+)
+
+# plot on OSM background (contextily)
+ctx.add_basemap(ax, source=ctx.providers.OpenStreetMap.Mapnik, zoom=10)
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\footnotesize
+\vspace{-3mm}
+
+\includegraphics[width=6cm]{../../images/img14/zarr_map_Berlin_crop.png}
+
+\vspace{2mm}
+\scriptsize
+\raggedleft
+Example: Berlin, t2m at lead 24h \\
+(local 100 km window).
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

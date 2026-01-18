@@ -1,0 +1,71 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 18
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{GitHub Container Registry (ghcr.io)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{What is \texttt{ghcr.io}?}
+
+\begin{itemize}
+  \item GitHub’s \y{container registry service}
+  \item Stores Docker / OCI container images
+  \item Integrated with \y{GitHub repositories and CI}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{How it works}
+
+\begin{itemize}
+  \item CI builds an image from a Dockerfile
+  \item Image is \y{pushed to ghcr.io}
+  \item Image is identified by \y{name, tag, and SHA}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Containers are artifacts, not source code.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-6mm}
+\textbf{Access and usage}
+
+\begin{itemize}
+  \item Images are \y{pulled via Docker or Apptainer}
+  \item Private images require \y{authentication}
+  \item Access control is \rtext{separate from Git}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Browser access}
+
+\begin{itemize}
+  \item Containers \y{can be inspected in the browser}
+  \item Tags, SHAs, and metadata are visible
+  \item \rtext{No direct download button}
+\end{itemize}
+
+\vspace{2mm}
+\y{Click to inspect. Pull to execute.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\centering
+\rtext{\bf ghcr.io stores images; runtimes execute them.}
+
+\end{frame}

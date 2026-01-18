@@ -1,0 +1,48 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Learning to Sample a Distribution}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\textbf{Training result}
+
+\begin{itemize}
+  \item Network maps noise to samples
+  \item Generated samples follow $p(x)$
+  \item Multimodal structure is recovered
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key point}
+
+\begin{itemize}
+  \item No regression target was used
+  \item Only a distribution loss
+\end{itemize}
+
+\vspace{2mm}
+This already enables stochastic modeling.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\includegraphics[width=\textwidth]{../../images/img09/1_sampling.png}
+
+\vspace{1mm}
+\centering
+Target distribution and generated samples
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

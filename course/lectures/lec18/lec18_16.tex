@@ -1,0 +1,97 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 16
+% ================================================================================
+\begin{frame}[t, fragile]
+\begin{tightmath}
+
+\mytitle{2D AI-Var: Explicit Spectral $B^{-1}$ in Flattened Control Space}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+
+\textbf{2D control vector}
+
+\vspace{0mm}
+The 2D field is represented as a \y{1D control vector}:
+\[
+x \in \mathbb{R}^{n},\qquad n = n_x n_z
+\]
+
+\vspace{-1mm}
+{\tiny
+\begin{verbatim}
+nz, nx = xb.shape
+n = nz * nx
+
+X_flat = X.reshape(-1)
+Z_flat = Z.reshape(-1)
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\textbf{Full Gaussian background covariance}
+
+\vspace{0mm}
+{\tiny
+\begin{verbatim}
+dx2 = (X_flat[:,None]-X_flat[None,:])**2
+dz2 = (Z_flat[:,None]-Z_flat[None,:])**2
+
+B = sigma_b**2 * np.exp(
+   -0.5*(dx2/Lx**2 + dz2/Lz**2)
+)
+B = 0.5*(B + B.T)
+\end{verbatim}
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Spectral regularization}
+
+\vspace{0mm}
+{\tiny
+\begin{verbatim}
+lam, U = np.linalg.eigh(B)
+
+lam_floor = alpha * lam.max()
+lam_reg   = np.maximum(lam, lam_floor)
+
+Breg_inv = (U * (1.0/lam_reg)) @ U.T
+Breg_inv = 0.5*(Breg_inv + Breg_inv.T)
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\textbf{Background term in the loss}
+
+\vspace{-1mm}
+\[
+J_b(\delta x)
+=
+\frac12\,\delta x^T\,B^{-1}\,\delta x
+\]
+
+\vspace{-1mm}
+{\tiny
+\begin{verbatim}
+Jb = 0.5 * dx @ Breg_inv @ dx
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\rtext{\bf Key point: $B^{-1}$ is built explicitly in this tutorial.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

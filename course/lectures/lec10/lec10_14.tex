@@ -1,0 +1,70 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{The First Coding Agent: \\ \hspace*{1cm}\y{Self-Correcting Loops}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-2mm}
+\textbf{Core idea}
+
+\begin{itemize}
+  \item LLM generates code
+  \item Code is executed
+  \item Errors are captured
+  \item LLM is prompted to fix them
+\end{itemize}
+
+\vspace{0mm}
+This creates an \y{autonomous correction loop}.
+
+\vspace{1mm}
+\textbf{Minimal success criteria}
+
+\begin{itemize}
+  \item Code executes without error
+  \item Output matches basic expectations
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.59\textwidth}
+
+\vspace{-15mm}
+\textbf{Minimal agent loop}
+
+\vspace{1mm}
+\begin{codeonly}{Self-correcting loop}
+for attempt in range(max_tries):
+  code = llm(prompt)
+  try:
+    exec(code)
+    break
+  except Exception as e:
+    prompt += traceback.format_exc()
+\end{codeonly}
+
+\vspace{1mm}
+\rtext{\bf Why this is already an agent}
+
+\begin{itemize}
+  \item autonomous retries
+  \item internal state (prompt history)
+  \item decision: retry vs stop
+\end{itemize}
+
+\vspace{1mm}
+No framework required.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

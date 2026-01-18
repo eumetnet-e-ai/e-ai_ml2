@@ -1,0 +1,70 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CI and CD in MLOps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\textbf{Continuous Integration (CI)}
+
+\vspace{1mm}
+\texttt{CI = Every change is automatically built, checked, and validated}
+
+\begin{itemize}
+  \item Triggered by \y{commits} to code or configuration
+  \item Executes \y{tests, linters, and consistency checks}
+  \item Detects problems \rtext{early and reproducibly}
+\end{itemize}
+
+\vspace{3mm}
+
+\textbf{Continuous Delivery / Deployment (CD)}
+
+\vspace{1mm}
+\texttt{CD = Validated artifacts are automatically prepared for operation}
+
+\begin{itemize}
+  \item Packages \y{software, models, and environments}
+  \item Produces \y{versioned, deployable artifacts}
+  \item Enables \y{controlled rollout or rollback}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+\footnotesize
+
+\textbf{CI/CD in MLOps}
+
+\begin{itemize}
+  \item CI validates \y{logic and structure}
+  \item CD delivers \y{operational artifacts}
+\end{itemize}
+
+\vspace{2mm}
+
+\textbf{Important distinction}
+
+\begin{itemize}
+  \item CI/CD \rtext{does not decide} when models are used
+  \item Operations retain \y{execution control}
+\end{itemize}
+
+\vspace{2mm}
+
+\rtext{\bf Automation without loss of control.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

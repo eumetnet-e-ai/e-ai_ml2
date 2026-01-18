@@ -1,0 +1,63 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Prediction: Function Classification}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+
+\textbf{Inference mode}
+
+\begin{itemize}
+  \item No gradients
+  \item Fixed trained weights
+  \item Forward pass only
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Classification}
+
+\begin{itemize}
+  \item Output: class logits
+  \item Argmax selects class
+\end{itemize}
+
+{\tiny\begin{lstlisting}
+logits  -> scores per class
+argmax  -> predicted label
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.7\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{CNN prediction}
+model.eval()
+
+with torch.no_grad():
+    logits = model(X_test.to(device))
+    preds  = torch.argmax(logits, dim=1)
+
+accuracy = (preds == y_test.to(device)).float().mean()
+print("Accuracy:", accuracy.item())
+\end{codeonly}
+
+\vspace{1mm}
+Prediction result:
+\begin{itemize}
+  \item Each function $\rightarrow$ class
+  \item Robust to moderate noise
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

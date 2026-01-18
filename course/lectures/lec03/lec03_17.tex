@@ -1,0 +1,62 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 17
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{{\color{red}Why GRIB?} — Operational Requirements}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item GRIB = \y{GRIdded Binary}
+  \item Designed for operational NWP
+  \item Optimised for:
+    \begin{itemize}
+      \item large data volumes
+      \item fast I/O
+      \item network distribution
+    \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Core design goals}
+
+\begin{itemize}
+  \item Compact encoding
+  \item Self-describing metadata
+  \item Bit-level compression
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.56\textwidth}
+
+\vspace{-1mm}
+\textbf{Why it is still used}
+
+\begin{itemize}
+  \item Global models produce \y{terabytes per day}
+  \item Multiple grids and vertical coordinates
+  \item Strict real-time constraints
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Operational reality}
+
+\begin{itemize}
+  \item WMO standard
+  \item Tooling is mature and stable
+  \item Backward compatibility matters
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

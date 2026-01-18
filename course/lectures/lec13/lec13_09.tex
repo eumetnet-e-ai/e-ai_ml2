@@ -1,0 +1,64 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Who Defines What “Good” Means?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+In MLOps, \y{quality is not a technical concept}.
+
+\vspace{2mm}
+It is defined by:
+\begin{itemize}
+  \item physical constraints,
+  \item domain knowledge,
+  \item operational requirements,
+  \item user expectations.
+\end{itemize}
+
+\vspace{2mm}
+These aspects cannot be learned from data alone.
+
+\vspace{2mm}
+\textbf{Therefore:}
+
+\begin{itemize}
+  \item \y{Domain experts define what “good” means},
+  \item ML systems optimize \emph{towards} this definition,
+  \item Operations validate it against reality.
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+
+\vspace{2mm}
+{\color{darkgreen}
+\textbf{\textit{Without a domain expertise, metrics are meaningless.}}
+}
+
+\vspace{6mm}
+\footnotesize
+\textbf{Domain Expert}
+
+\begin{itemize}
+  \item \y{Defines quality and success criteria}
+  \item Specifies relevant metrics and constraints
+  \item Interprets model behaviour in context
+  \item \rtext{Does not implement models or pipelines}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

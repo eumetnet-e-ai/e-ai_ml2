@@ -1,0 +1,64 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Neural Network Architectures — Why Structure Matters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Network structure define the \y{inductive framework}
+  \item Architecture encodes assumptions
+  \item Learning is constrained by connectivity
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Same data, different models}
+
+\begin{itemize}
+  \item Feed Forward Networks
+  \item Graph Neural Networks
+  \item Convolutional Networks
+  \item Recurrent / LSTM models
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Conceptual view}
+
+\begin{itemize}
+  \item Architecture = hypothesis space
+  \item Optimizer explores this space
+  \item Data selects a solution
+\end{itemize}
+
+\vspace{2mm}
+\[
+\mathcal{H}_{\text{model}}
+\;\xrightarrow{\text{training}}\;
+\hat{f}
+\]
+
+\vspace{-5mm}
+\begin{eqnarray*}
+\mathcal{H}_{\text{linear}} &=& \{\, f(x) = w^\top x + b \mid w,b \in \mathbb{R} \,\} \\
+\mathcal{H}_{\text{FFNN}}   &=& \{\, f_\theta(x) = W_2\,\sigma(W_1 x) \,\} \\
+\mathcal{H}_{\text{CNN}}    &=& \{\, f_\theta(x) = \sigma( K * x + b ) \,\}  \\
+\mathcal{H}_{\text{GNN}}    &=& \{\, f_\theta(G) \mid G=(V,E,X) \,\}
+\end{eqnarray*}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

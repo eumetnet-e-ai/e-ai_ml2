@@ -1,0 +1,74 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 20
+% ================================================================================
+\begin{frame}[t, fragile]
+\begin{tightmath}
+
+\mytitle{Neural Particle Update: DeepSets (Permutation Invariance)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Particle set input}
+
+\vspace{0mm}
+Forecast ensemble is an unordered set:
+\[
+X^b = \{x_i^b\}_{i=1}^N
+\]
+
+\vspace{1mm}
+Update must be \y{permutation invariant}:
+\[
+\mathcal{N}_\theta(\pi X^b,\;y)=\pi\,\mathcal{N}_\theta(X^b,\;y)
+\]
+
+\vspace{2mm}
+\textbf{DeepSets structure}
+
+\vspace{0mm}
+\[
+\phi(x_i,y)\;\rightarrow\;
+\text{mean pool}\;\rightarrow\;
+\rho(\cdot)\;\rightarrow\;
+\psi(x_i,\text{context},y)
+\]
+
+\vspace{1mm}
+\rtext{\bf Each particle sees local state + global context + obs.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+{\tiny
+\begin{verbatim}
+class ParticleUpdateNN(nn.Module):
+  def forward(self, Xb, y):
+    N = Xb.shape[0]
+    y_rep = y.expand(N, -1)
+
+    emb = phi(torch.cat([Xb, y_rep], 1))
+    pooled = emb.mean(0, keepdim=True)
+    ctx = rho(pooled).expand(N, -1)
+
+    dX = psi(torch.cat([Xb, ctx, y_rep], 1))
+    return Xb + dX
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\y{Output: updated ensemble $X^a$.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

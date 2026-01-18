@@ -1,0 +1,57 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Installing and Exploring ecCodes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-1mm}
+\textbf{What is ecCodes?}
+
+\begin{itemize}
+  \item ECMWF library for GRIB handling
+  \item Standard tool in operational NWP
+  \item Python interface available
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why we need it}
+
+\begin{itemize}
+  \item Forecast data comes as GRIB
+  \item We need access to \y{fields and metadata}
+  \item Independent of model (IFS, ICON, \ldots)
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.59\textwidth}
+
+\vspace{-1.0cm}
+\begin{codeonly}{Installation and test}
+# Linux / WSL
+sudo apt update
+sudo apt install eccodes libeccodes-tools
+
+# macOS (Homebrew)
+brew install eccodes
+
+# Python bindings
+pip install eccodes
+
+# Test installation
+grib_ls -V
+python -c "import eccodes; print(eccodes.codes_get_api_version())"
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+\end{frame}

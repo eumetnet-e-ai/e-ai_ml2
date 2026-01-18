@@ -1,0 +1,58 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI and ML — A Set of Tools}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Core ML frameworks}
+
+\begin{itemize}
+  \item \y{PyTorch}, TensorFlow
+  \item scikit-learn
+  \item Automatic differentiation
+  \item GPU acceleration
+\end{itemize}
+
+\vspace{1mm}
+\[
+\min_{\theta} \; L\!\left(y,\hat{y}(x;\theta)\right)
+\]
+
+\y{Training} = minimizing a loss function  
+by adjusting parameters $\theta$.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{AI as a service}
+
+\begin{itemize}
+  \item \y{LLM APIs} (OpenAI, Mistral, Anthropic, Google, Meta, ...)
+  \item Pre-trained foundation models
+  \item On-premise models (Llama, Mistral)
+  \item Cloud, local, or hybrid use
+\end{itemize}
+
+\vspace{1mm}
+\[
+\text{API call} \;\rightarrow\; \text{model inference}
+\]
+
+Models are used without  
+training from scratch.
+
+\hfill{\bf\color{red}What is my own role in this?}
+\end{column}
+
+\end{columns}
+
+\end{frame}

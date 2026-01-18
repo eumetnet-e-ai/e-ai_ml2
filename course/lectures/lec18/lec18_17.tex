@@ -1,0 +1,85 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 17  (reduced)
+% ================================================================================
+\begin{frame}[t, fragile]
+\begin{tightmath}
+
+\mytitle{2D AI-Var (Tutorial Code): Flattened Control + Obs Encoding + 3D-Var Loss}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Inputs: background + obs on grid + mask}
+
+\vspace{0mm}
+{\tiny
+\begin{verbatim}
+# flatten 2D -> 1D control
+nz, nx = xb.shape
+n = nz * nx
+xb_t = torch.tensor(xb.reshape(-1), dtype=dtype, device=device)
+
+# obs indices (iz-major, ix-minor)
+obs_indices = iz_idx * nx + ix_idx
+y_vec = y_field.reshape(-1)[obs_indices]
+y_t   = torch.tensor(y_vec, dtype=dtype, device=device)
+
+# obs on grid + mask (length n)
+y_grid = np.zeros(n);  mask = np.zeros(n)
+y_grid[obs_indices] = y_vec
+mask[obs_indices]   = 1.0
+
+inp_t = torch.cat([xb_t,
+       torch.tensor(y_grid, dtype=dtype, device=device),
+       torch.tensor(mask,   dtype=dtype, device=device)], dim=0)
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\rtext{\bf Input is $[x_b,\; y_{\rm grid},\; {\rm mask}]$ in control space.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Increment MLP + variational loss}
+
+\vspace{0mm}
+{\tiny
+\begin{verbatim}
+class IncrementMLP(nn.Module):
+    def __init__(self, n):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(3*n, 256), nn.Tanh(),
+            nn.Linear(256, 256), nn.Tanh(),
+            nn.Linear(256, n),
+        )
+
+def quadform(A, v): return torch.dot(v, A @ v)
+
+def J_3dvar(dx):
+    x = xb_t + dx
+    innov = y_t - (H_t @ x)
+    Jb = 0.5 * quadform(B_inv_t, dx)
+    Jo = 0.5 * quadform(R_inv_t, innov)
+    return Jb + Jo
+\end{verbatim}
+}
+
+\vspace{-1mm}
+\y{Exactly the classical 3D-Var objective,} \\
+\y{now differentiable.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,65 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Prompt Templates and Tool Integration (LangChain)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.47\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Separates instructions and variables
+  \item Enforces a fixed structure
+  \item Improves reuse and testing
+\end{itemize}
+
+\vspace{1mm}
+\begin{codeonly}{PromptTemplate example}
+from langchain.prompts import PromptTemplate
+
+prompt = PromptTemplate(
+  input_variables=["x"],
+  template=
+  "Write Python code computing f(x) "
+  "such that |f(x)| < 10." )
+\end{codeonly}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-1mm}
+\textbf{Tool integration}
+
+\vspace{1mm}
+\begin{codeonly}{Tool definition}
+from langchain.tools import tool
+
+@tool
+def square(x: float) -> float:
+    return x * x
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Critical limitations}
+
+\begin{itemize}
+  \item LLM may select wrong tool
+  \item Arguments may be malformed
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Rule:}  
+Tool calls must be \y{validated outside} the LLM.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

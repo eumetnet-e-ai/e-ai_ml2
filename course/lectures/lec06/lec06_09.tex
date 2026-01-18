@@ -1,0 +1,74 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 9
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Scaled Dot-Product Attention}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Attention scores}
+
+\begin{itemize}
+  \item Compare each query with all keys
+  \item Dot product measures similarity
+\end{itemize}
+
+\vspace{1mm}
+\[
+S = Q K^{T}
+\quad\in\quad \mathbb{R}^{n \times n}
+\]
+
+\vspace{1mm}
+Each row: relevance of one token to all others.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-9mm}
+\textbf{Scaling and normalization}
+
+\begin{itemize}
+  \item Scale by $\sqrt{d_k}$ for numerical stability
+  \item Apply softmax row-wise
+\end{itemize}
+
+\vspace{-2mm}
+\[
+A = \operatorname{softmax}
+\!\left(
+\frac{QK^T}{\sqrt{d_k}}
+\right)
+\]
+
+\vspace{1mm}
+\textbf{Weighted aggregation}
+
+\[
+Z = A V
+\]
+
+\begin{itemize}
+  \item $Z \in \mathbb{R}^{n \times d_v}$
+  \item Each token mixes information from others
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+Attention computes a \y{context-dependent weighted sum} of values.
+}
+
+\end{frame}

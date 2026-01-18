@@ -1,0 +1,82 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 8
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Queries, Keys, and Values — Intuition}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Three roles per token}
+
+Each token embedding is projected into:
+\begin{itemize}
+  \item \y{Query} ($Q$): what am I looking for?
+  \item \y{Key} ($K$): what do I offer?
+  \item \y{Value} ($V$): what information do I pass on?
+\end{itemize}
+
+\vspace{1mm}
+All three are learned linear projections.
+
+\vspace{-6mm}
+\begin{eqnarray*}
+& Q = X W^Q, K = X W^K, V = X W^V
+\end{eqnarray*}
+
+\vspace{-5mm}
+{\tiny
+\begin{eqnarray*}
+& X \in \mathbb{R}^{n \times d_{\text{model}}},  
+W^Q, W^K \in \mathbb{R}^{d_{\text{model}} \times d_k}, \\ 
+& W^V \in \mathbb{R}^{d_{\text{model}} \times d_v}, 
+Q, K \in \mathbb{R}^{n \times d_k}, V \in \mathbb{R}^{n \times d_v}
+\end{eqnarray*}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\vspace{-9mm}
+\textbf{Attention mechanism}
+
+\begin{itemize}
+  \item Compare queries with keys
+  \item Compute relevance scores
+  \item Use scores to weight values
+\end{itemize}
+
+\vspace{1mm}
+Conceptually:
+\[
+\text{\y{attention}}(i,j)
+\;\sim\;
+Q_i \cdot K_j
+\]
+
+\vspace{1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Tokens ask questions (queries)
+  \item Other tokens answer (values)
+  \item Keys decide relevance
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+\rtext{Queries select, keys match, values contribute.}
+}
+
+\end{frame}

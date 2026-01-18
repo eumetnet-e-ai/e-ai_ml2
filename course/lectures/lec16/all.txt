@@ -1,0 +1,1312 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 01
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{The AI Transformation: Communication History in 8 Steps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{From printed knowledge to mass media}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item \textbf{Book printing} \hfill \textcolor{gray}{\textbf{1450}}
+    {\tiny \newline \textcolor{gray}{(Gutenberg press, scalable knowledge)}}
+  \item \textbf{Electricity / telegraph} \hfill \textcolor{gray}{\textbf{1837}}
+    {\tiny \newline \textcolor{gray}{(Morse telegraph, instant signals)}}
+  \item \textbf{Radio} \hfill \textcolor{gray}{\textbf{1895}}
+    {\tiny \newline \textcolor{gray}{(wireless transmission, mass broadcasting)}}
+  \item \textbf{Television} \hfill \textcolor{gray}{\textbf{1927}}
+    {\tiny \newline \textcolor{gray}{(moving images, global events)}}
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\textbf{\textcolor{red}{Transformation:}}
+\quad \y{Communication turns into interaction.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{violet}{From computation to language interfaces}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item \textbf{Computers} \hfill \textcolor{gray}{\textbf{1941}}
+    {\tiny \newline \textcolor{gray}{(Konrad Zuse Z3, programmable digital computer)}}
+  \item \textbf{Internet} \hfill \textcolor{gray}{\textbf{1983}}
+    {\tiny \newline \textcolor{gray}{(TCP/IP, global connectivity)}}
+  \item \textbf{WWW} \hfill \textcolor{gray}{\textbf{1993}}
+    {\tiny \newline \textcolor{gray}{(Internet for all!)}}
+  \item \textbf{Social media} \hfill \textcolor{gray}{\textbf{2004}}
+    {\tiny \newline \textcolor{gray}{(Facebook era, interactive networks)}}
+  \item \textbf{\textcolor{violet}{LLMs \& AI systems}} \hfill \textcolor{gray}{\textbf{2022}}
+    {\tiny \newline \textcolor{gray}{(\y{language becomes an interface}, interaction at scale)}}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 02
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Why Now? The Next Step Has Arrived}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{5mm}
+
+\textbf{\textcolor{blue}{A new communication revolution}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Book printing scaled \textbf{knowledge}
+  \item Internet scaled \textbf{connectivity}
+  \item \textbf{LLMs scale interaction:}
+    \y{language becomes an interface}
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{What changes:}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item from \textbf{information access}
+  \item to \textbf{interactive assistance}
+\end{itemize}
+
+\vspace{3mm}
+{\tiny
+This affects communication, documentation, coding, workflows
+\textemdash{} across the entire organisation.
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\centering
+\vspace{0mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/comm_history_crop2.png}
+
+\vspace{5mm}
+{ \textcolor{gray}{
+\begin{minipage}{0.92\linewidth}
+\centering
+\emph{
+Progress in Communication. \\
+What does it mean? \\
+Where are we as humans?
+}
+\end{minipage}
+}}
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 03
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Why Now? Language Becomes an Interface}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{\textcolor{blue}{What changed in 2022?}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item For the first time, computers can handle \y{natural language 
+  \rtext{appropriately}}
+  \item This enables \textbf{interaction} instead of programming
+  \item Not only answers --- but \textbf{actions}:
+    {\tiny \newline (writing, summarizing, translating, coding, planning)}
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{blue}{New capability: conversational work}}
+
+\vspace{1mm}
+{
+\begin{itemize}
+  \item Ask $\rightarrow$ draft $\rightarrow$ revise $\rightarrow$ finalize
+  \item Explain $\rightarrow$ implement $\rightarrow$ test $\rightarrow$ debug
+\end{itemize}
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{\textcolor{violet}{Examples in daily work}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Draft emails, minutes, reports
+  \item Summarize long documents
+  \item Create slides from bullet points
+  \item Helpdesk: FAQ, ticket triage
+  \item Code assistance: refactor + docs
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Key message:}}
+
+\vspace{1mm}
+\y{AI affects everyone} \textemdash{}
+not only scientists or IT staff.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 04
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{\rtext{Slow Down:} 1993: The Internet Becomes Public}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{1993: a global information layer}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Web browsers make the Internet usable for everyone
+  \item Information access becomes \textbf{self-service}
+  \item Knowledge shifts from \textbf{local} to \textbf{global}
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key change:}}
+\quad \y{Search and access replace distribution.}
+
+\vspace{3mm}
+{\footnotesize
+Many workflows become web-based:
+documentation, support, collaboration, publishing.
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{-4mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/1993_computer_and_web_crop.png}
+
+\vspace{2mm}
+{\tiny \textcolor{gray}{Internet era: global connectivity and instant access}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 05
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{2004 / 2008: Social Media + Smartphones}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{From websites to interactive networks}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item 2004: social networks go mainstream
+  \item 2007/2008: smartphones put the Internet in every pocket
+  \item Everyone becomes: \textbf{consumer + producer + distributor}
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key change:}}
+\quad \y{Communication becomes continuous and interactive.}
+
+\vspace{3mm}
+{\tiny
+Attention becomes a resource; content flows in real time.
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{-4mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/smartphone_crop.jpeg}
+
+\vspace{2mm}
+{\footnotesize \textcolor{gray}{The always-on era: interaction at global scale}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 06
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{2012--2019: The ML Revolution in Vision and Translation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{Deep learning becomes practical}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item \rtext{\bf Image recognition} jumps to new accuracy levels
+  \item \rtext{\bf Machine translation} improves dramatically
+  \item Pattern learning outperforms hand-crafted rules
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key change:}}
+\quad \y{Perception tasks become learnable at scale.}
+
+\vspace{3mm}
+{\tiny
+This is the foundation for today’s multi-modal AI
+(text, images, audio).
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{2mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/images_and_translation_crop.jpeg}
+
+\vspace{2mm}
+{\footnotesize \textcolor{gray}{Modern deep learning architectures enable scaling}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 07
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{2022: The Chatbot Threshold}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{The breakthrough: language interaction}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Chatbots become useful for real work
+  \item People can \textbf{ask, refine, and iterate} in dialogue
+  \item The interface is now \y{natural language}
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key change:}}
+\quad \y{From communication to interaction.}
+
+\vspace{3mm}
+{\tiny
+LLMs + tools + knowledge access $\Rightarrow$ AI assistants and agents.
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{-8mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/chatbot2022_crop.jpeg}
+
+\vspace{2mm}
+{\tiny \textcolor{gray}{Chatbots evolve into systems: retrieval + tools + guardrails}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{LLMs in One Sentence}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{A large language model is a prediction machine}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item It reads text and predicts \textbf{the next token}
+  \item It repeats this step many times to produce an answer
+  \item Training: learn statistical structure from huge corpora
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key point:}}
+\quad It does not store facts like an encyclopedia.  
+It learns \y{patterns of language and reasoning}.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\centering
+\vspace{2mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/transformer_all.jpeg}
+
+\vspace{-4mm}
+{\tiny \textcolor{gray}{Transformer models: sequence in $\rightarrow$ sequence out}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 09
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Step 1: From Text to Tokens}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{Computers do not read words}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Text is split into \textbf{tokens}
+  \item Tokens are pieces of words, punctuation, spaces
+  \item Example:
+\end{itemize}
+
+\vspace{2mm}
+{\footnotesize
+\texttt{``forecasting is hard''}\\
+$\Rightarrow$ \texttt{[``fore'', ``casting'', `` is'', `` hard'']}\\
+\vspace{1mm}
+$\Rightarrow$ \texttt{[1523,\;9182,\;318,\;6732]} \quad {\tiny \textcolor{gray}{(token IDs)}}
+}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Why tokens matter:}}
+\quad they define what the model can represent efficiently.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-11mm}
+\includegraphics[width=0.8\linewidth]{../../images/img16/transformer_embedding.jpeg}
+
+\vspace{-2mm}
+\textbf{\textcolor{violet}{Tokens $\rightarrow$ vectors}}
+
+\vspace{0mm}
+\begin{itemize}
+  \item each token becomes a vector (\textbf{embedding})
+  \item vectors capture similarity:
+  {\tiny \newline (``rain'' closer to ``cloud'' than to ``banana'')}
+  \item position is added:
+  {\tiny \newline (word order matters)}
+\end{itemize}
+
+\vspace{0mm}
+{\tiny \textcolor{gray}{
+This is how text enters a neural network:
+as numbers in a high-dimensional space.
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 10
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Step 2: Attention --- How the Model Understands Context}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{Attention is selective reading}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item for each word, the model decides:
+  \textbf{what earlier words matter}
+  \item it forms weighted links between tokens
+  \item repeated many times in layers
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key point:}}
+\quad Attention allows \y{long-range dependencies}
+and structured reasoning.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{violet}{A simple intuition}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Like humans:
+  \textbf{scan} + \textbf{focus} + \textbf{connect}
+  \item Not one focus, but many:
+  {\tiny \newline (\textbf{multi-head attention})}
+\end{itemize}
+
+\vspace{3mm}
+{\tiny \textcolor{gray}{
+Transformer = many attention layers + feed-forward layers.
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 11
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Step 3: Training --- Next Token Prediction}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{Training objective}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item show text to the model
+  \item hide the next token
+  \item train it to predict the hidden token
+\end{itemize}
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Result:}}
+\quad the model learns grammar, style, facts, and reasoning patterns
+\y{as an emergent capability}.
+
+\vspace{3mm}
+{\tiny
+Important: training is expensive (compute + data).  
+Using a model is cheap (inference).
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{violet}{Why it can fail}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item it predicts \textbf{plausible text}
+  \item not guaranteed truth
+  \item can \textbf{hallucinate} details
+\end{itemize}
+
+\vspace{3mm}
+{\tiny \textcolor{gray}{
+Therefore: verification + grounding are crucial in professional use.
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 12
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Inference: Prompting Is Steering}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{A prompt creates the context}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item system message: role + rules
+  \item user message: task + data
+  \item the model continues from there
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key point:}}
+\quad The model is \y{not stable by itself}.  
+It is shaped by the context we provide.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{violet}{What improves results}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item clear goal + constraints
+  \item examples of desired style
+  \item provide trusted information
+  \item ask for uncertainties / checks
+\end{itemize}
+
+\vspace{3mm}
+{\tiny \textcolor{gray}{
+Good prompting is a communication skill:
+precise intent, good context, clear quality criteria.
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 13
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{From Language to Interaction: LLMs + Tools}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{LLMs become useful at work when connected}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item retrieval: trusted documents (RAG)
+  \item tools: APIs, code execution, search
+  \item memory: project context
+  \item guardrails: security + compliance
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key message:}}
+\quad Real systems are \y{LLM-based assistants}, not just chat.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{2mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/rag.png}
+
+\vspace{2mm}
+{\tiny \textcolor{gray}{Interaction: question $\rightarrow$ tools $\rightarrow$ answer $\rightarrow$ refinement}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 14}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 15}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 16}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 17}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 18}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 19}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 20}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 14
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{AI Forecasting: Learning to Predict the Next Weather State}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{\textcolor{blue}{Key idea}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item The atmosphere has a \textbf{state} (a snapshot)
+  \item \y{Forecasting means predicting a \textbf{future state}}
+  \item A neural network learns a mapping:
+\end{itemize}
+
+\vspace{2mm}
+\[
+x(t) \;\;\Rightarrow\;\; x(t+48h)
+\]
+
+\vspace{1mm}
+{\tiny
+where $x$ contains fields like temperature, wind, pressure, humidity.
+}
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Training:}}
+\quad learn from millions of examples
+(reanalysis + observations).
+
+\vspace{2mm}
+{\tiny
+After training, the model can produce forecasts extremely fast.
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\centering
+\vspace{1mm}
+\includegraphics[width=0.7\linewidth]{../../images/img16/weather_t1_t48_rain_gsp_1honly_europe_crop.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 15
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Neural Network Forecasting: One Step $\rightarrow$ Many Steps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{1mm}
+
+\textbf{\textcolor{blue}{How an AI forecast is produced}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item The model learns: \y{state now} $\rightarrow$ \y{state later}
+  \item Longer lead times come from \textbf{repeating the prediction step}
+\end{itemize}
+
+\vspace{-2mm}
+\[
+x(t) \rightarrow x(t+\Delta t) \rightarrow x(t+2\Delta t) \rightarrow \dots
+\]
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Physics detail: accumulated variables}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item precipitation is often stored as an \textbf{accumulated sum}
+  \item to get \textbf{1-hour rain} at lead $L$:
+\end{itemize}
+
+\vspace{-3mm}
+\[
+RAIN(L) - RAIN(L-1)
+\]
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{1mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/rain_gsp_1h_2x4_panels_crop.png}
+
+\vspace{1mm}
+\textcolor{gray}{
+Example: ICON-EU 1-hour precipitation for multiple lead times.
+}
+
+\vspace{3mm}
+\rtext{\bf Here: Nowcasting or NWP - depending on input, time scales and variables!}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 16
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Nowcasting and NWP: One Continuum (Observations $\rightarrow$ DA $\rightarrow$ Forecast)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{\textcolor{blue}{NWP with Data Assimilation (DA) is the full framework}}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \textbf{observations} enter continuously:
+    {\tiny \newline radar, satellite, aircraft, surface stations, etc.}
+  \item \textbf{DA} combines obs + model:
+    {\tiny \newline best estimate of the 3D atmosphere at ``now''}
+  \item then \textbf{forecast propagation} produces future weather
+\end{itemize}
+
+\vspace{0mm}
+\textbf{\textcolor{violet}{Nowcasting is the short-range regime}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item lead times: \textbf{minutes to a few hours}
+  \item very high weight of recent observations
+  \item focus on rapidly evolving phenomena:
+    {\tiny \newline convective storms, precipitation cells}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{2mm}
+
+\includegraphics[width=\textwidth]{../../images/img16/nwc-to-fcst_crop.png}
+
+\vspace{3mm}
+{\tiny \textcolor{gray}{
+AI can support different parts: observations, DA, model emulation, and products.
+}}
+
+\hspace*{-8mm}\y{There is no strict boundary: it is one continuum.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 17
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Forecasting in One Sentence}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{3mm}
+
+\textbf{\textcolor{blue}{Weather forecasting = state estimation + prediction}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item We estimate the \textbf{current atmospheric state}
+  \item Then we predict how it changes in time
+\end{itemize}
+
+\vspace{-2mm}
+\[
+\underbrace{x(t_0)}_{\text{best estimate now}}
+\quad \rightarrow \quad
+\underbrace{x(t_0+\Delta t)}_{\text{future state}}
+\]
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Why it is hard}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item the atmosphere is \textbf{chaotic}
+  \item small errors grow with time
+  \item observations are incomplete and noisy
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-5mm}
+\textbf{\textcolor{violet}{So we quantify uncertainty}}
+\begin{itemize}
+  \item ensembles: many forecasts instead of one
+\end{itemize}
+
+\centering
+\vspace{2mm}
+
+% image placeholder (you can replace)
+\includegraphics[width=\linewidth]{../../images/img16/nwp_continuum_crop.png}
+
+\vspace{1mm}
+{\tiny \textcolor{gray}{Forecasting: observation $\rightarrow$ analysis $\rightarrow$ prediction}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 18
+% ================================================================================
+\begin{frame}[t]
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=0.8\linewidth]{../../images/img16/nwp_neural.png}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 19
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{How a Neural Network Learns Forecasting: Front Template + Motion}
+
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=0.6\linewidth]{../../images/img16/nn_front_visual_argument_4panel.png}
+
+\vspace{1mm}
+{\footnotesize \textcolor{gray}{
+Visual argument: the NN learns \textbf{templates} (front patterns) and how they
+\textbf{move / evolve} over time.
+}}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 20
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{One Step, Many Steps: Templates + Transport + Accumulations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{\textcolor{blue}{Neural forecasting learns reusable building blocks}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item learn \textbf{templates} for structures:
+    {\tiny \newline fronts, rain bands, vortices, jets}
+  \item learn \textbf{how they move and change} from context
+    {\tiny \newline (e.g. wind, humidity, stability)}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{\textcolor{blue}{Then: one step $\rightarrow$ many steps}}
+
+\vspace{-2mm}
+\[
+x(t) \rightarrow x(t+\Delta t) \rightarrow x(t+2\Delta t) \rightarrow \dots
+\]
+
+\vspace{0mm}
+\textbf{\textcolor{red}{Important for users: accumulated products}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item many outputs are stored as \textbf{accumulations}
+  \item 1-hour precipitation at lead $L$ is:
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{1mm}
+\[
+RAIN(L) - RAIN(L-1)
+\]
+
+\vspace{0mm}
+\textbf{\textcolor{violet}{Take-away:}}
+\quad \y{Forecasting = detect patterns +} \\
+\hfill \y{transport them forward in time.}
+
+
+\centering
+\vspace{4mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/nn_front_template_motion.png}
+
+\vspace{1mm}
+{\tiny \textcolor{gray}{
+Templates $\rightarrow$ heatmaps $\rightarrow$ shifted patterns $\rightarrow$ next map
+(repeated for longer lead times).
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 28}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 29
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 29}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 30
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 30}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 31
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 31}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 32
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 32}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 33
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 33}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 34
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 34}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 35
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 35}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 36
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 36}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 37
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 37}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 38
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 38}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 39
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 39}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 40
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 16 — Slide 40}
+
+  % Content goes here
+
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec16.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 16}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\setagendaboxforlecture{16}
+
+\input{../lec_agenda.tex}
+\input{lec16_01.tex}
+\input{lec16_02.tex}
+\input{lec16_03.tex}
+\input{lec16_04.tex}
+\input{lec16_05.tex}
+\input{lec16_06.tex}
+\input{lec16_07.tex}
+\input{lec16_08.tex}
+\input{lec16_09.tex}
+\input{lec16_10.tex}
+\input{lec16_11.tex}
+\input{lec16_12.tex}
+\input{lec16_13.tex}
+\input{lec16_14.tex}
+\input{lec16_15.tex}
+\input{lec16_16.tex}
+\input{lec16_17.tex}
+\input{lec16_18.tex}
+\input{lec16_19.tex}
+\input{lec16_20.tex}
+\input{lec16_21.tex}
+\input{lec16_22.tex}
+\input{lec16_23.tex}
+\input{lec16_24.tex}
+\input{lec16_25.tex}
+\input{lec16_26.tex}
+\input{lec16_27.tex}
+\input{lec16_28.tex}
+\input{lec16_29.tex}
+\input{lec16_30.tex}
+\input{lec16_31.tex}
+\input{lec16_32.tex}
+\input{lec16_33.tex}
+\input{lec16_34.tex}
+\input{lec16_35.tex}
+\input{lec16_36.tex}
+\input{lec16_37.tex}
+\input{lec16_38.tex}
+\input{lec16_39.tex}
+\input{lec16_40.tex}
+
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

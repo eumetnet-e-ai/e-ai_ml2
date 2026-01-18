@@ -1,0 +1,57 @@
+% ================================================================================
+% Lecture 17 — Slide 14
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Vertical levels: selected ICON layers in the dataset}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\vspace{-1mm}
+\scriptsize
+
+\textbf{Variables on model levels}
+\vspace{1mm}
+
+\begin{tabular}{lll}
+\textbf{shortName} & \textbf{Name} & \textbf{Levels} \\
+\hline
+P  & Pressure                     & 49,57,64,70,75,79,86,...,120 \\
+QV & Specific humidity            & 49,57,64,70,75,79,86,...,120 \\
+T  & Temperature                  & 49,57,64,70,75,79,86,...,120 \\
+U  & U-component of wind          & 49,57,64,70,75,79,86,...,120 \\
+V  & V-component of wind          & 49,57,64,70,75,79,86,...,120 \\
+W  & Vertical velocity (geom.)    & 49,57,64,70,75,79,86,...,120 \\
+\hline
+\end{tabular}
+
+\vspace{4mm}
+\footnotesize
+
+\textbf{Forcings / static features (examples):}\\[2mm]
+\scriptsize
+EMIS\_RAD, FR\_LAND, FR\_LAKE, HSURF, Z0, insolation,
+SSO\_*, sin/cos(latitude, longitude, local\_time, julian\_day)
+
+\vspace{1mm}
+\footnotesize
+\textbf{Idea:} \y{multi-level state + forcings} $\Rightarrow$ complete ML input for AICON.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\vspace{-2mm}
+\raggedleft
+
+% replace with your actual image path:
+\includegraphics[width=0.8\linewidth]{../../images/img17/icon_levels.png}
+
+\vspace{-2mm}
+\footnotesize
+\textbf{ICON level structure:} full model vertical grid (selection highlighted).
+\end{column}
+
+\end{columns}
+\end{frame}

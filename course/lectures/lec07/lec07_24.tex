@@ -1,0 +1,76 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide XX
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{\rtext{Google Search} as Retrieval-Augmented Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Core idea}
+
+Retrieval-Augmented Generation (RAG)
+combines an LLM with an
+\y{external information source}.
+
+\vspace{2mm}
+In classical RAG, retrieval uses:
+\begin{itemize}
+  \item vector databases (FAISS)
+  \item local document collections
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Google-based RAG}
+
+Here, retrieval is delegated to:
+\begin{itemize}
+  \item Google Search
+  \item live web documents
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Same logical pipeline}
+
+\vspace{-4mm}
+\begin{eqnarray*}
+&& \text{Query}
+\;\rightarrow\;
+\text{Retrieve}
+\;\rightarrow\; \\
+&& \text{Context}
+\;\rightarrow\;
+\text{LLM}
+\;\rightarrow\;
+\text{Answer}
+\end{eqnarray*}
+
+\vspace{2mm}
+\textbf{Key difference}
+
+\begin{itemize}
+  \item Local RAG: curated, controlled, static
+  \item Google RAG: open, dynamic, up-to-date
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interpretation}
+
+The LLM does \emph{not} search —  
+\y{it \emph{summarizes retrieved evidence}.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

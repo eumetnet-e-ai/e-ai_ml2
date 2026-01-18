@@ -1,0 +1,64 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Hydra in Practice: Same Code, Different Outcomes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{What changes between these runs}
+
+\begin{itemize}
+  \item only the \y{Hydra configuration}
+  \item different model definitions (\texttt{mlp} vs \texttt{deep})
+  \item same training loop, same data
+\end{itemize}
+
+\vspace{2mm}
+Hydra controls:
+\begin{itemize}
+  \item which YAML files are composed
+  \item which model architecture is instantiated
+  \item which hyperparameters are active
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item shallow model converges smoothly
+  \item deeper model shows slower, less stable training
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\centering
+
+\vspace{-2mm}
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra1_mlp.png}
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra2_mlp.png}
+
+\vspace{2mm}
+
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra1_deep.png}
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra2_deep.png}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Hydra makes architectural choices explicit, comparable, and reproducible.}
+
+\end{column}
+
+\end{columns}
+
+
+
+\end{frame}

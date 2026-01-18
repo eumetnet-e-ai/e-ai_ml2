@@ -1,0 +1,73 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 4
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Sequence Order Matters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Problem with embeddings alone}
+
+\begin{itemize}
+  \item Embeddings encode token meaning
+  \item But \y{ignore position in the sequence}
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\text{dog bites man}
+\quad\neq\quad
+\text{man bites dog}
+\]
+
+\vspace{1mm}
+Yet both contain the same tokens.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item Transformers process tokens \y{in parallel}
+  \item No inherent notion of order
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Consequence}
+
+\begin{itemize}
+  \item Sequence order must be added explicitly
+  \item Otherwise:
+\end{itemize}
+\[
+(x_1, x_2, x_3)
+\;\equiv\;
+(x_3, x_1, x_2)
+\]
+
+\vspace{1mm}
+\centering
+\y{Order information is not optional.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+Transformers require an \rtext{explicit mechanism to encode token positions}.
+}
+
+\end{frame}

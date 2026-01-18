@@ -1,0 +1,66 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Anemoi?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Weather forecasting is a large-scale problem}
+
+\begin{itemize}
+  \item modern forecasts rely on \y{very large state vectors}
+  \item global and regional fields with millions of grid points
+  \item high temporal resolution and long time series
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Training data is massive}
+
+\begin{itemize}
+  \item global reanalyses such as \y{ERA5}, \y{ICON-DREAM}
+  \item convection-permitting simulations (e.g.\ Arome, ICON-Force)
+  \item multi-variable, multi-level, multi-year datasets
+\end{itemize}
+
+\vspace{2mm}
+These datasets quickly reach \rtext{terabyte scale}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{What this implies for ML}
+
+\begin{itemize}
+  \item training must be \y{parallel and distributed}
+  \item data access must be chunked and efficient
+  \item geometry and grid structure must be respected
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Role of Anemoi}
+
+\begin{itemize}
+  \item parallelizes \y{fields and samples}
+  \item integrates data, graphs, models, and training
+  \item supports the \y{full ML lifecycle} for weather models
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Anemoi is not a model — it is a framework.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

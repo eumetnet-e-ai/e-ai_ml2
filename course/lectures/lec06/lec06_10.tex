@@ -1,0 +1,70 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Scale by $\sqrt{d_k}$?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-1mm}
+\textbf{Problem without scaling}
+
+\begin{itemize}
+  \item Dot products grow with dimension
+  \item Large values enter softmax
+  \item Gradients become unstable
+\end{itemize}
+
+\vspace{1mm}
+For random vectors:
+\[
+Q_i \cdot K_j \sim \mathcal{O}(d_k)
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-9mm}
+\textbf{Effect of scaling}
+
+\begin{itemize}
+  \item Divide by $\sqrt{d_k}$
+  \item Keeps variance roughly constant
+\end{itemize}
+
+\vspace{1mm}
+\[
+\frac{QK^T}{\sqrt{d_k}}
+\]
+
+\vspace{1mm}
+\textbf{Result}
+
+\begin{itemize}
+  \item Softmax stays sensitive
+  \item Stable gradients during training
+  \item Faster convergence
+\end{itemize}
+
+\vspace{1mm}
+\centering
+\y{Scaling is a numerical necessity, not a heuristic.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+The scaling factor prevents softmax saturation in high dimensions.
+}
+
+\end{frame}

@@ -1,0 +1,79 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Position-Wise Feedforward Network (FFN)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\begin{itemize}
+  \item Inside each Transformer block
+  \item After self-attention
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What attention does not do}
+
+\begin{itemize}
+  \item Computes weighted averages
+  \item Linear combination of values
+  \item No feature-wise nonlinearity
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why the FFN is needed}
+
+\begin{itemize}
+  \item Adds nonlinearity, Recombines features
+  \item Increases model expressiveness
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+
+\vspace{-8mm}
+\textbf{Feedforward mapping}
+
+For one token vector $x \in \mathbb{R}^{d_{\text{model}}}$:
+\[
+\operatorname{FFN}(x)
+=
+\sigma(x W_1 + b_1)\, W_2 + b_2
+\]
+
+\vspace{-2mm}
+\begin{itemize}
+  \item $\sigma(\cdot)$: ReLU or GELU
+  \item $W_1 \in \mathbb{R}^{d_{\text{model}} \times d_{\text{ff}}}$
+  \item $W_2 \in \mathbb{R}^{d_{\text{ff}} \times d_{\text{model}}}$
+\end{itemize}
+
+\vspace{1mm}
+Applied to all tokens:
+
+\vspace{-3mm}
+\[
+Z_{\text{ff}} \in \mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\vspace{-1mm}
+{\footnotesize
+Same FFN parameters are shared across all positions.
+}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{Attention mixes tokens; the FFN transforms token features.}
+
+\end{frame}

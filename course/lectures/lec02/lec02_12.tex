@@ -1,0 +1,52 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{REST Essentials — \y{Tasks} as Resources / \y{Agent Framework Elements}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Resources}
+
+\begin{itemize}
+  \item A task is a \y{resource}
+  \item Identified by a URL
+  \item Has a state and metadata
+\end{itemize}
+
+\vspace{1mm}
+\begin{itemize}
+  \item \texttt{/tasks}
+  \item \texttt{/tasks/<id>}
+\end{itemize}
+
+\end{column}
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{HTTP Methods}
+
+\begin{itemize}
+  \item \texttt{POST} — create a task
+  \item \texttt{GET} — inspect task or list
+  \item \texttt{PUT} — change task state
+  \item \texttt{DELETE} — remove a task
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Status Codes (Minimum)}
+
+\begin{itemize}
+  \item \texttt{200} OK
+  \item \texttt{201} Created
+  \item \texttt{400} Bad Request
+  \item \texttt{404} Not Found
+\end{itemize}
+
+\end{column}
+\end{columns}
+\end{frame}

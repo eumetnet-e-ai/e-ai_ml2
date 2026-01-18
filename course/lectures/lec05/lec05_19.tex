@@ -1,0 +1,52 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CNN Predictions on Test Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{What is shown?}
+
+\begin{itemize}
+  \item Unseen test functions: new samples from random distribution
+  \item Higher noise than training
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Color coding}
+
+\begin{itemize}
+  \item Blue: correct classification
+  \item Red: misclassification
+\end{itemize}
+
+\vspace{1mm}
+Interpretation:
+\begin{itemize}
+  \item CNN recognizes shape
+  \item Errors near ambiguous cases
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=0.99\textwidth]{../../images/img05/cnn_test_predictions.png}
+
+\vspace{1mm}
+\centering
+Predicted vs. true function classes
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

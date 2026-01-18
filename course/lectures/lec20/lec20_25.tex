@@ -1,0 +1,65 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Adding a Covariance Update: Kalman Filter--Type Uncertainty Reduction}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Upgrade: update $B$ during cycling}
+\vspace{-1mm}
+\begin{itemize}
+  \item Until now: fixed background covariance $B$
+  \item Now: after each analysis step we also update uncertainty
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Kalman filter covariance update}
+\vspace{-1mm}
+\[
+A_k = (I - K_k H_k)\,B_k
+\qquad\Rightarrow\qquad
+B_k \leftarrow A_k
+\]
+
+\vspace{1mm}
+\textbf{Effect:}
+\vspace{-1mm}
+\begin{itemize}
+  \item uncertainty shrinks in observed directions
+  \item gain adapts across cycles
+  \item analysis trajectory converges strongly to truth
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Message:}
+\y{With adaptive $B$, iterative DA converges.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.92\textwidth]{../../images/img20/origen/origen10.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Selected cycles: trajectory converges towards the true circle}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+
+

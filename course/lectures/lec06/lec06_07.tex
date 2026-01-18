@@ -1,0 +1,75 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 7
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Self-Attention: Core Idea}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Key mechanism}
+
+\begin{itemize}
+  \item Each token can \y{look at all other tokens}
+  \item Importance is computed dynamically
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Contextual representation}
+
+\begin{itemize}
+  \item Token meaning depends on context
+  \item Same word, different role
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\text{``The dog chased the cat.''}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-10mm}
+\textbf{What attention does}
+
+\begin{itemize}
+  \item Builds a \y{weighted combination} of tokens
+  \item Different focus for each position
+\end{itemize}
+
+\vspace{1mm}
+For token $i$:
+\[
+x_i \;\longrightarrow\; 
+\sum_j w_{ij}\, x_j
+\]
+
+\vspace{-2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Long-range dependencies
+  \item No fixed context window
+  \item Fully parallel computation
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\centering
+{\footnotesize
+\rtext{Self-attention allows each token to decide which other tokens matter.}
+}
+
+\end{frame}

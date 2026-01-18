@@ -1,0 +1,59 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why One-Step Sampling Is Not Enough}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.57\textwidth}
+
+\textbf{What we did so far}
+
+\begin{itemize}
+  \item Learn a direct map: noise $\rightarrow$ data
+  \item Works well in low dimensions
+  \item Works for simple distributions
+\end{itemize}
+
+\vspace{2mm}
+\textbf{But this has limits}
+
+\begin{itemize}
+  \item \y{High-dimensional distributions are complex}
+  \item Direct mapping becomes unstable
+  \item Hard to represent fine structure
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-2mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Do not sample in one step
+  \item \y{Use many small, simple steps}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Intuition}
+
+\begin{itemize}
+  \item Large transport is hard
+  \item Small corrections are easy
+\end{itemize}
+
+\vspace{2mm}
+This leads to \y{diffusion models}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

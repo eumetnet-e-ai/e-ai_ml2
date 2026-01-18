@@ -1,0 +1,52 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Labels vs.\ Learned Classification}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Ground truth labels}
+
+\begin{itemize}
+  \item Classes defined by geometry
+  \item Two shifted, rotated ellipses
+  \item Labels fixed before learning
+\end{itemize}
+
+\vspace{-2mm}
+\includegraphics[width=0.8\textwidth]{../../images/img04/points_labled.png}
+
+\vspace{-1mm}
+Blue / red = predefined classes
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\textbf{Model prediction}
+
+\begin{itemize}
+  \item Network output $\hat{y}\in[0,1]$
+  \item Nonlinear decision boundary
+  \item Smooth transition between classes
+\end{itemize}
+
+\vspace{-1mm}
+\includegraphics[width=0.9\textwidth]{../../images/img04/points_classified_with_gradients.png}
+
+\vspace{-1mm}
+Colors = prediction, arrows = gradients
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

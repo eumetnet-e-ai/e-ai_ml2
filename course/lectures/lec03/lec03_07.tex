@@ -1,0 +1,55 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 07
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{ICON Open Data — File-Based Access}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item ICON data is published as \y{static GRIB files}
+  \item Organised by model, run, and parameter
+  \item Distributed via DWD Open Data server
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical workflow}
+
+\begin{itemize}
+  \item Query directory listing
+  \item Identify \y{latest available timestamp}
+  \item Download and decompress \texttt{.grib2.bz2}
+\end{itemize}
+
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Material provided}
+
+\begin{itemize}
+  \item Python script: \texttt{icon\_download\_t2m.py}
+  \item Jupyter notebook: ICON download \& inspection
+\end{itemize}
+
+\vspace{1mm}
+\includegraphics[width=0.75\textwidth]{../../images/img03/icon_t2m_global.png}
+
+\vspace{-1mm}
+{\footnotesize
+See code and notebooks for a robust, reusable implementation.
+}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

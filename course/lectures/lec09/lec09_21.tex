@@ -1,0 +1,73 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{What Lightning Handles for You}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.56\textwidth}
+
+\y{\textbf{Automatically}}
+
+\begin{itemize}
+  \item CPU / GPU / multi-GPU
+  \item Epoch and batch loops
+  \item Gradient handling
+  \item Logging
+\end{itemize}
+
+\tiny
+\begin{lstlisting}
+class GNNInterpolator(pl.LightningModule):
+    def __init__(self):
+        super().__init__()
+        self.gcn1 = GCNConv(2, n1)  # 2 input features
+        self.gcn2 = GCNConv(n1, n2)
+        self.out = GCNConv(n2, 1)
+
+    def forward(self, data):
+        x = data.x_feat
+        x = F.relu(self.gcn1(x, data.edge_index))
+        x = F.relu(self.gcn2(x, data.edge_index))
+        return self.out(x, data.edge_index)
+\end{lstlisting}
+
+\end{column}
+
+\begin{column}[T]{0.45\textwidth}
+
+\vspace{-7mm}
+\textbf{You still \y{control}}
+
+\begin{itemize}
+  \item Model architecture
+  \item Loss functions
+  \item Optimizers
+  \item Data handling
+\end{itemize}
+
+\vspace{2mm}
+Lightning \y{enforces structure} — not constraints.
+
+\vspace{3mm}
+\tiny
+\begin{lstlisting}
+def training_step(self, batch, batch_idx):
+   pred = self(batch)
+   mask = ~torch.isnan(batch.y_obs)
+   loss = F.mse_loss(pred[~mask], batch.y[~mask])
+   self.log("train_loss", loss)
+   return loss
+
+def configure_optimizers(self):
+   return torch.optim.Adam(self.parameters(),lr=0.01)
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

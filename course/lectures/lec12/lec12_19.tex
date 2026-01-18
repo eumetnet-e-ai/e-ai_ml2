@@ -1,0 +1,68 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Lecture 12 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Authentication and Credentials}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\textbf{Why authentication?}
+
+\begin{itemize}
+  \item Shared infrastructure
+  \item Access control
+  \item Separation of users
+\end{itemize}
+
+\vspace{2mm}
+\textbf{MLflow support}
+
+\begin{itemize}
+  \item Basic authentication
+  \item Server-side user management
+\end{itemize}
+
+
+\footnotesize
+{\bf In auth\_config.ini:}
+\color{darkgreen}
+\begin{lstlisting}
+export MLFLOW_AUTH_CONFIG_PATH=auth_config.ini
+export MLFLOW_FLASK_SERVER_SECRET_KEY='8346918649864986498'
+mlflow server --host 0.0.0.0 --port 5000 --app-name basic-auth
+\end{lstlisting}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Credential handling}
+
+\begin{itemize}
+  \item Server: auth configuration
+  \item Client: credential file
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+{\bf In auth\_config.ini:}
+\color{darkgreen}
+\begin{lstlisting}
+[mlflow]
+auth_enabled = true
+database_uri = sqlite:///mlflow_auth.db
+admin_username = admin
+admin_password = ChangeThisPassword888!
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

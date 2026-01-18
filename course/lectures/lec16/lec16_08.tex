@@ -1,0 +1,43 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{LLMs in One Sentence}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{A large language model is a prediction machine}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item It reads text and predicts \textbf{the next token}
+  \item It repeats this step many times to produce an answer
+  \item Training: learn statistical structure from huge corpora
+\end{itemize}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Key point:}}
+\quad It does not store facts like an encyclopedia.  
+It learns \y{patterns of language and reasoning}.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\centering
+\vspace{2mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/transformer_all.jpeg}
+
+\vspace{-4mm}
+{\tiny \textcolor{gray}{Transformer models: sequence in $\rightarrow$ sequence out}}
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,63 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 02
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Core Idea of Retrieval-Augmented Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Standard LLM workflow}
+
+\[
+\text{Prompt} \;\rightarrow\; \text{LLM} \;\rightarrow\; \text{Answer}
+\]
+
+\begin{itemize}
+  \item No external knowledge
+  \item No verification
+\end{itemize}
+
+\vspace{4mm}
+\begin{minipage}{7cm}
+\fontsize{9pt}{10pt}\selectfont
+Pure LLMs work well for general reasoning, language understanding, summarization, and creative text generation when the required knowledge is common and static.
+They perform poorly when accurate, up-to-date, proprietary, or highly technical domain knowledge is required, because they cannot verify facts or access external sources.
+In such cases, LLMs tend to hallucinate plausible but incorrect answers.
+\end{minipage}
+
+
+
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{RAG workflow}
+
+{\color{red}\bf\[
+\text{Query}
+\;\rightarrow\;
+\text{Retrieve}
+\;\rightarrow\;
+\text{LLM}
+\;\rightarrow\;
+\text{Answer}
+\]}
+
+\begin{itemize}
+  \item Search relevant documents
+  \item Inject context into prompt
+  \item \y{Grounded answers}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

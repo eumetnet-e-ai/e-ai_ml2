@@ -1,0 +1,66 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{What This Example Demonstrates}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+\textbf{MLflow is passive}
+
+\begin{itemize}
+  \item \rtext{Python code runs independently}
+  \item MLflow only records what it is told
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Live monitoring}
+
+\begin{itemize}
+  \item \y{Metrics appear while code is running}
+  \item UI polls the backend periodically
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key separation}
+
+\begin{itemize}
+  \item Execution $\neq$ visualization
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Mental model}
+
+\vspace{-2mm}
+{\color{darkgreen}
+\begin{eqnarray*}
+&& \text{Python code} \\
+&\rightarrow& \text{MLflow tracking backend} \\
+&\leftarrow& \text{MLflow Web UI}
+\end{eqnarray*}
+}
+
+\vspace{2mm}
+No direct coupling between:
+\begin{itemize}
+  \item execution
+  \item user interface
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

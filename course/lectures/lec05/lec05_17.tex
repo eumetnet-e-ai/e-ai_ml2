@@ -1,0 +1,63 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training the CNN}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Training step}
+
+\begin{itemize}
+  \item Forward pass
+  \item Compute classification loss
+  \item Backpropagate gradients
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Loss \& optimizer}
+
+\begin{itemize}
+  \item Cross-entropy for classes
+  \item Adam optimizer
+\end{itemize}
+
+{\tiny\begin{lstlisting}
+Loss: compares logits vs. labels
+Grad: flows through conv + FC
+Update: adjusts all weights
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.65\textwidth}
+
+\vspace{-11mm}
+\begin{codeonly}{CNN training loop}
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(
+    model.parameters(), lr=1e-3)
+
+for epoch in range(num_epochs):
+    for xb, yb in train_loader:
+        xb = xb.to(device) 
+        yb = yb.to(device)
+        
+        optimizer.zero_grad()
+        logits = model(xb)
+        loss = criterion(logits, yb)
+        loss.backward()
+        optimizer.step()
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

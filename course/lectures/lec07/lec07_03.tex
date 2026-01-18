@@ -1,0 +1,46 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 03
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{RAG Architecture Overview}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+
+\rtext{\bf RAG is more than just text search!}
+
+\vspace{5mm}
+\textbf{Main \y{components}}
+
+\begin{itemize}
+  \item Document collection
+  \item Vector database
+  \item Retriever
+  \item Language model
+\end{itemize}
+
+\vspace{2mm}
+Each component has a \emph{clear role}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=\textwidth]{../../images/img07/RAG.png}
+
+\vspace{1mm}
+\centering
+Documents provide context for generation
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

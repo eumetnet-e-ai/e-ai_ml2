@@ -1,0 +1,59 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{GPU Execution in Python — Laptop vs. HPC}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.49\textwidth}
+
+\vspace{-2mm}
+\textbf{\y{Apple GPU (Metal / MPS)}}
+
+\vspace{1mm}
+\begin{codeonly}{Apple GPU test}
+import torch, time
+
+d = torch.device("mps")
+x = torch.rand((4000,4000), device=d)
+
+t0 = time.time()
+y = torch.matmul(x, x)
+torch.mps.synchronize()
+
+print("Apple GPU time:",
+      round(time.time()-t0,3))
+\end{codeonly}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.49\textwidth}
+
+\vspace{-2mm}
+\textbf{\y{NVIDIA A100 (CUDA)}}
+
+\vspace{1mm}
+\begin{codeonly}{HPC GPU test}
+import torch, time
+
+d = torch.device("cuda")
+x = torch.rand((8000,8000), device=d)
+
+t0 = time.time()
+y = torch.matmul(x, x)
+torch.cuda.synchronize()
+
+print("A100 time:",
+      round(time.time()-t0,3))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

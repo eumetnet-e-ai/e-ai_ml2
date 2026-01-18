@@ -1,0 +1,64 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Why Diffusion Sampling Is Correct}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+Assume a scalar Gaussian data distribution:
+\[
+x_0 \sim \mathcal{N}(\mu_0,\sigma_0^2),
+\quad x_1 = x_0 + \epsilon,
+\]
+with $\epsilon \sim \mathcal{N}(0,\sigma^2)$. 
+
+\vspace{1mm}
+The optimal denoiser (MSE sense) is:
+\[
+f^*(x_1) = \mathbb{E}[x_0 \mid x_1]
+= \frac{\sigma^2 \mu_0 + \sigma_0^2 x_1}{\sigma_0^2 + \sigma^2}.
+\]
+
+This pulls the noisy sample toward $\mu_0$,
+but \emph{reduces variance}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item Denoising alone shrinks variance
+  \item Mean is biased toward $\mu_0$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Therefore}
+
+To recover the full distribution,
+we must sample:
+\[
+x_0 = f^*(x_1) + \sqrt{\sigma_{\text{post}}^2}\,\xi,
+\quad \xi \sim \mathcal{N}(0,1).
+\]
+
+\vspace{1mm}
+This is exactly what diffusion does
+at every step.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

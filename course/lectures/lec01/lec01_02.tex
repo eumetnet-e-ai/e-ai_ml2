@@ -1,0 +1,46 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Python Setup: First Check and Create Virtual Environment}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.3\textwidth}
+  \textbf{Goal of this step}
+
+  \begin{itemize}
+    \item Verify that Python is installed
+    \item Work across Linux, macOS, Windows, WSL
+    \item Create isolated environments: aipy
+    \item \y{No dependency} 
+    	\y{conflicts}
+  \end{itemize}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.68\textwidth}
+  
+\begin{codeonly}{Basic Installation}
+python --version.   # check version
+python3 --version.  # check version
+python3.12 --version   
+cd                  # go to home
+python -m venv aipy # create venv
+alias aipy="source ~/aipy/bin/activate"
+aipy                # activate aipy
+python              # interactive python
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Linux/macOS example}
+  
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

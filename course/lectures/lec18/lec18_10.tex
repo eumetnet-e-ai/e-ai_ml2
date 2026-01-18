@@ -1,0 +1,79 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI-Var in 1D: From Mathematics to Code}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Neural increment model}
+
+\vspace{1mm}
+The network predicts the \y{analysis increment}:
+\[
+\delta x_\theta = \mathcal{N}_\theta(x_b, y)
+\]
+
+\vspace{1mm}
+\textbf{PyTorch implementation (kept simple)}
+
+\tiny
+\begin{verbatim}
+class IncrementMLP(nn.Module):
+    def __init__(self, n):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(3*n, 256),
+            nn.Tanh(),
+            nn.Linear(256, 256),
+            nn.Tanh(),
+            nn.Linear(256, n))
+
+    def forward(self, inp):
+        return self.net(inp)
+\end{verbatim}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+{\bf Input vector:}
+\[
+\texttt{inp} = [x_b,\; y_{\text{grid}},\; \text{mask}]
+\]
+
+
+\textbf{Variational loss in code}
+
+\vspace{1mm}
+The 3D-Var cost is used \y{directly}:
+
+\begin{verbatim}
+def J_3dvar(delta_x):
+    x = xb + delta_x
+    innov = y - H @ x
+
+    Jb = 0.5 * (delta_x @ B_inv @ delta_x)
+    Jo = 0.5 * (innov @ R_inv @ innov)
+    return Jb + Jo
+\end{verbatim}
+
+\vspace{2mm}
+\rtext{\bf No analysis data.  
+No solver.  
+Only the variational objective.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

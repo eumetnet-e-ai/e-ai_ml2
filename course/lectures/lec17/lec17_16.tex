@@ -1,0 +1,48 @@
+% ================================================================================
+% Lecture 17 — Slide 16
+% ================================================================================
+\begin{frame}[t]
+\mytitle{AICON model: encoder -- graph processor -- decoder}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Graph-to-graph forecasting}
+\begin{itemize}
+\item input: state + forcings on ICON cells (nodes)
+\item output: next-step state (multi-var, multi-level)
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Architecture blocks}
+\begin{itemize}
+\item \textbf{Encoder:} maps raw variables to latent node/edge features
+\item \textbf{Processor:} message passing on the mesh graph (several layers)
+\item \textbf{Decoder:} projects latent features to physical output variables
+\end{itemize}
+
+\vspace{0mm}
+\color{red}\bf
+\textbf{Take-away:}
+encoder/decoder makes the network \y{variable-agnostic} in latent space.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\vspace{-2mm}
+\raggedleft
+% Use the architecture figure / screenshot from the notebook:
+\includegraphics[width=0.9\linewidth]{../../images/img17/encoder_decoder.png}
+
+\vspace{-2mm}
+\scriptsize
+Encoder maps physics variables $\rightarrow$ latent graph; decoder maps latent $\rightarrow$ output fields.
+\end{column}
+
+\end{columns}
+\end{frame}

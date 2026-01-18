@@ -1,0 +1,65 @@
+%!TEX root = lec17.tex
+% ================================================================================
+% Lecture 17 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Research and Operational AI Weather Systems}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Aurora (Microsoft)}
+
+\begin{itemize}
+  \item \y{Transformer-based foundation model}
+  \item Regular lat--lon grids
+  \item Multi-task Earth-system scope
+  \item Research-driven, not NWP-native
+\end{itemize}
+
+\textbf{AIFS (ECMWF)}
+
+\begin{itemize}
+  \item Graph Neural Network (Anemoi)
+  \item \y{ECMWF Flagship ML Model}
+  \item Trained on ECMWF reanalysis ERA
+  \item Operational global forecast system
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{BRIS (Met Norway)}
+
+\begin{itemize}
+  \item Anemoi-based national system
+  \item \y{Nested Grid Approach, high resolution}
+  \item Independent training, AIFS-aligned
+  \item Operational national usage
+\end{itemize}
+
+\textbf{AICON (DWD)}
+
+\begin{itemize}
+  \item Graph Neural Network (Anemoi)
+  \item Native ICON triangular grid
+  \item Trained on \y{ICON-DREAM reanalysis}
+  \item Operational ICON emulator
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\footnotesize
+\rtext{\bf European Meteorological Infrastructure is carrying out exciting development.}
+
+\end{frame}

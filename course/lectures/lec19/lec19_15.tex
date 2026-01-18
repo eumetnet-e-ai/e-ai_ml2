@@ -1,0 +1,55 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Neural RHS Learning in State Space}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.51\textwidth}
+
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Experimental setup}
+
+\begin{itemize}
+  \item Lorenz--63 vector field \y{sampled in state space}
+  \item Random training points covering a 3D domain
+  \item Neural network trained on $(\mathbf{x},\dot{\mathbf{x}})$ pairs
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key difference to trajectory-based learning}
+
+\begin{itemize}
+  \item Training data no longer restricted to the attractor
+  \item Vector field is constrained in a full region of state space
+  \item Dynamics are learned as a global mapping
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Outcome:}
+
+The learned neural vector field reproduces the Lorenz dynamics
+consistently from unseen initial conditions, not only along the
+original trajectory.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\centering
+\vspace{-8mm}
+
+\includegraphics[width=8cm]{../../images/img19/rhs_learning_space_sampling_crop.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

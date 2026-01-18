@@ -1,0 +1,50 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Client Side — Using \texttt{requests}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Sending Data}
+
+\begin{codeonly}{Create task}
+payload = {
+  "type": "python_exec",
+  "params": {"script": "run.py"}
+}
+
+r = requests.post(
+  "/tasks",
+  json=payload
+)
+\end{codeonly}
+
+\end{column}
+
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Reading Responses}
+
+\begin{codeonly}{Check response}
+if r.status_code == 201:
+    task = r.json()
+else:
+    print(r.status_code, r.text)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Debugging Rule}
+
+\begin{itemize}
+  \item \texttt{400} → client mistake
+  \item \texttt{404} → wrong task id
+\end{itemize}
+
+\end{column}
+\end{columns}
+\end{frame}

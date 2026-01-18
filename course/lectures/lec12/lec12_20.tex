@@ -1,0 +1,63 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Using a Trained Model from MLflow}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.47\textwidth}
+
+\vspace{-2mm}
+\footnotesize
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Trained models are stored as \y{MLflow artifacts}
+  \item A model can be loaded in \y{any notebook or script}
+  \item No access to training code is required
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Workflow}
+
+\begin{itemize}
+  \item Identify the model via its \y{run ID}
+  \item \rtext{\bf Load the model using an MLflow URI}
+  \item Apply forward inference on new data
+  \item Optionally log new artifacts back to the same run
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\vspace{-10mm}
+\begin{center}
+\includegraphics[width=0.95\textwidth]{../../images/img12/model_from_mlflow.png}
+\end{center}
+
+\vspace{-5mm}
+\footnotesize
+Loading a model directly from MLflow
+
+\vspace{4mm}
+\textbf{Reproducibility}
+
+\begin{itemize}
+  \item Architecture, weights, environment stored
+  \item Input/output signature enforced
+  \item Full traceability to the training run
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

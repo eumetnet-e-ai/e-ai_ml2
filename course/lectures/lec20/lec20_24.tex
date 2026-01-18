@@ -1,0 +1,56 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Reconstruction: Cycle Time Series with Noisy Observations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Final-cycle diagnostics}
+\vspace{-1mm}
+\begin{itemize}
+  \item Compare \y{truth} vs \y{final reconstructed trajectory}
+  \item Show observations for the last random pattern:
+  \[
+    H_k \in \{[1,0],[0,1]\}
+  \]
+  \item Observations are noisy $\Rightarrow$ analysis does \y{not overfit}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{3D-Var property}
+\vspace{-1mm}
+\begin{itemize}
+  \item analysis is a \y{weighted compromise}
+  \item controlled by $\y{B}$ and $\y{R}$
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+3D-VAR is not enough
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.96\textwidth]{../../images/img20/origen/origen09.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Final cycle: time series for $x_1$ and $x_2$ with noisy partial observations}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}

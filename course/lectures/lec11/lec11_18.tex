@@ -1,0 +1,61 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Classical Function Calling in DAWID (JSON-Based)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What “Classical” Means in DAWID}
+
+\begin{itemize}
+  \item Function calls encoded explicitly in text
+  \item Usually formatted as \y{JSON blocks}
+  \item Independent of specific LLM providers
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why DAWID Still Supports This}
+
+\begin{itemize}
+  \item Works with \y{all models} \\ (local and remote)
+  \item Robust fallback mechanism
+  \item Easy to debug and inspect
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Example: Function Proposal by the LLM}
+
+\begin{codeonly}{JSON-style function call}
+{"function_calls": [{
+      "name": "get_icon_forecast",
+      "arguments": {
+        "variable": "t2m",
+        "region": "Germany" }}]}
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{DAWID Interpretation}
+
+\begin{itemize}
+  \item JSON is \y{parsed and validated}
+  \item Function is checked against allow-list
+  \item Execution only happens in backend
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

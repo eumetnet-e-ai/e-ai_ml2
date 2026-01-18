@@ -1,0 +1,67 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Similarity Search}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\textbf{Query embedding}
+
+A query sentence is mapped to:
+\[
+z_q \in \mathbb{R}^d
+\]
+
+\vspace{3mm}
+\y{\bf Similarity} to stored sentences is
+measured using cosine similarity:
+\[
+\mathrm{sim}(z_q, z_i)
+=
+\frac{z_q \cdot z_i}
+{\|z_q\|\,\|z_i\|}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.53\textwidth}
+
+\vspace{-8mm}
+\begin{codeonly}{Similarity search (conceptual)}
+scores = cosine_similarity(
+    query_embedding,
+    embeddings )
+
+top_k = argsort(scores)[-k:]
+\end{codeonly}
+
+\vspace{3mm}
+\textbf{Result:}  
+\y{Sentences with closest meaning}  
+\y{are retrieved — no keywords needed.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\begin{minipage}{\textwidth}
+\footnotesize
+See example 1\_vector\_db\_elementary.ipynb in the \texttt{code07/} directory carrying out transforms explicitely. The command \texttt{\color{red} SentenceTransformer("all-MiniLM-L6-v2")} loads a pretrained Transformer-based
+sentence embedding model that maps each input sentence to a fixed-size vector
+\( z \in \mathbb{R}^{384} \) capturing its semantic meaning.
+The model is publicly available at
+\href{https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2}
+{\texttt{huggingface.co/sentence-transformers/all-MiniLM-L6-v2}}.
+\end{minipage}
+
+\end{tightmath}
+\end{frame}

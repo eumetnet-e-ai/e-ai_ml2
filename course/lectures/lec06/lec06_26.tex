@@ -1,0 +1,57 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 26
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Installing Ollama}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.42\textwidth}
+
+\textbf{What is Ollama?}
+
+\begin{itemize}
+  \item Local LLM runtime
+  \item Optimized inference
+  \item Simple CLI and API
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Supported platforms}
+
+\begin{itemize}
+  \item Linux
+  \item macOS
+  \item Windows (WSL)
+\end{itemize}
+
+\end{column}
+
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-6mm}
+\begin{codeonly}{Install Ollama (Linux / macOS)}
+curl -fsSL https://ollama.com/install.sh | sh
+\end{codeonly}
+
+\vspace{1mm}
+\begin{codeonly}{Verify installation}
+ollama --version
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize
+Ollama runs as a local service on \texttt{localhost}.
+}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{No Python, no GPU setup, no environment management.}
+
+\end{frame}

@@ -1,0 +1,30 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Lecture 20 — Obs-to-Obs Learning on a 2D Toy Atmosphere}
+
+\footnotesize
+
+\vspace{4mm}
+\textbf{Goal of this lecture}
+
+\begin{itemize}
+  \item Build a simple 2D dynamical system $\phi(x,z,t)$ with \y{transport + diffusion + source}
+  \item Generate two observation types
+  \begin{itemize}
+    \item \textbf{Radiosondes (RS):} sparse vertical profiles at a few columns
+    \item \textbf{Satellite (SAT):} \y{integrated} vertical weighted observations for every column
+  \end{itemize}
+  \item Train a neural network to predict \y{next-step observations}
+  \[
+  (y^{sat}_t,\;y^{rs}_t) \;\mapsto\; (y^{sat}_{t+1},\;y^{rs}_{t+1})
+  \]
+  \item Reconstruct the full field at $t+1$ by querying RS predictions everywhere
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Key message:} learn a \y{forecast step} in observation space, and still recover a \y{state-like} field.
+
+\end{frame}

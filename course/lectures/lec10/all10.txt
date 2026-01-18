@@ -1,0 +1,2086 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Why Function Calling Exists}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Pure text generation is insufficient
+  \item Real systems need \y{actions}, not prose
+  \item \rtext{\bf To make the LLM productive, \\
+  it needs a link to reality!}
+  \item \y{Let it call functions!}
+\end{itemize}
+
+\textbf{Key idea}
+
+\vspace{1mm}
+\begin{quote}
+\raggedright
+The model should decide \emph{what to do},  
+the system should decide \emph{how to do it}.
+\end{quote}
+
+
+\vspace{1mm}
+\textbf{Goal:}
+\begin{itemize}
+  \item separate \y{reasoning} from \y{execution}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-13mm}
+\begin{minipage}{6cm}
+\footnotesize \color{red}
+\begin{lstlisting}
+{
+  "tool_call": {
+    "name": "<function name>",
+    "arguments": { ... }
+  }
+}
+\end{lstlisting}
+\end{minipage}
+
+\vspace{1mm}
+Typical problems:
+\begin{itemize}
+  \item fragile JSON parsing
+  \item ambiguous intent
+  \item mixed explanation and action
+\end{itemize}
+\vspace{2mm}
+Function calling introduces:
+\begin{itemize}
+  \item explicit actions
+  \item typed arguments
+  \item machine-readable decisions
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Tool Contracts and Schemas}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+A tool is defined by:
+\begin{itemize}
+  \item name
+  \item description
+  \item input schema
+\end{itemize}
+
+\vspace{1mm}
+Schemas specify:
+\begin{itemize}
+  \item required arguments
+  \item data types
+  \item allowed structure
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Important:}
+\begin{itemize}
+  \item tools are defined by the \y{system}
+  \item never invented by the model
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Example (conceptual)}
+
+\vspace{-10mm}
+\begin{codeonly}{Tool schema}
+name: get_temperature
+arguments:
+  location: string
+  leadtime: integer
+\end{codeonly}
+
+\vspace{1mm}
+The model learns:
+\begin{itemize}
+  \item when this tool applies
+  \item how to fill arguments
+\end{itemize}
+
+\footnotesize\color{red}
+\begin{lstlisting}
+{
+  "tool_call": {
+    "name": "<function name>",
+    "arguments": { ... }
+  }
+}
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Tool Calls in Model Output}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+Modern LLMs can output:
+\begin{itemize}
+  \item normal assistant text
+  \item \y{structured tool calls}
+\end{itemize}
+
+\vspace{1mm}
+A tool call contains:
+\begin{itemize}
+  \item tool name
+  \item arguments
+  \item no natural language
+\end{itemize}
+
+\vspace{1mm}
+This decision is:
+\begin{itemize}
+  \item made by the model
+  \item enforced by the API
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Conceptual output}
+
+\vspace{-10mm}
+\begin{codeonly}{LLM output}
+tool_call:
+  name: get_temperature
+  arguments:
+    location: "Berlin"
+    leadtime: 24
+\end{codeonly}
+
+\vspace{1mm}
+No parsing of prose required.
+
+\hspace*{-2.8cm}
+\begin{minipage}{6cm}
+\footnotesize\color{red}
+\begin{lstlisting}
+try:
+    tool_call = json.loads(raw_output)["tool_call"]
+    print("Parsed tool call:")
+    print("Tool name:", tool_call["name"])
+    print("Arguments:", tool_call["arguments"])
+except Exception as e:
+    print("Failed to parse JSON output")
+    print("Error:", e)
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Streaming and Open-Source Models}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+In streaming APIs:
+\begin{itemize}
+  \item \rtext{\y{tool calls}} appear \y{inside the stream}
+  \item mixed with text tokens
+\end{itemize}
+
+\vspace{1mm}
+Open-source models (e.g.\ LLaMA):
+\begin{itemize}
+  \item emit structured patterns
+  \item still require system-side handling
+\end{itemize}
+
+\vspace{1mm}
+Common fallback:
+\begin{itemize}
+  \item detect JSON blocks
+  \item interpret intent manually
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Historical context}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Older Framework: JSON scanning
+  \item Claude UI: similar hybrid behavior
+\end{itemize}
+
+\vspace{1mm}
+Native tool calling reduces:
+\begin{itemize}
+  \item ambiguity
+  \item parsing complexity
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{From JSON Parsing to \rtext{\y{Native Tool Calling}}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+Old approach:
+\begin{itemize}
+  \item prompt for JSON
+  \item parse model output
+  \item recover from errors
+\end{itemize}
+
+\vspace{1mm}
+Modern approach:
+\begin{itemize}
+  \item tools defined explicitly
+  \item model selects tool
+  \item system executes tool
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key shift:}
+\begin{itemize}
+  \item from text parsing to \y{action selection}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Architectural consequence}
+
+\vspace{1mm}
+\begin{itemize}
+  \item cleaner agent design
+  \item safer execution
+  \item better testability
+\end{itemize}
+
+\vspace{1mm}
+This enables:
+\begin{itemize}
+  \item LangChain tools
+  \item LangGraph nodes
+  \item reliable agents
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Scripts to Agents: Why AI Agents Exist}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Classical scripts and pipelines}
+
+\begin{itemize}
+  \item Deterministic execution
+  \item Fixed control flow
+  \item Explicit inputs and outputs
+\end{itemize}
+
+\vspace{0mm}
+They work well if:
+\begin{itemize}
+  \item tasks are fully specified
+  \item all cases are known in advance
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Limitations}
+
+\begin{itemize}
+  \item No interpretation of intent
+  \item Poor handling of ambiguity
+  \item Fragile when requirements change
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{1mm}
+\textbf{Where this moves today}
+
+\begin{itemize}
+  \item Natural-language problem descriptions
+  \item Large, evolving code bases
+  \item Underspecified or incomplete tasks
+\end{itemize}
+
+\vspace{3mm}
+\centering
+\includegraphics[width=0.75\textwidth]{../../images/img10/scripts_vs_agents.png}
+
+\vspace{1mm}
+\centering
+From rigid pipelines to \rtext{\y{\bf adaptive systems}}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{What Is an AI Agent? — Core Mental Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Agent as a closed loop}
+
+\vspace{-4mm}
+\begin{eqnarray*}
+&& \text{perception} \\
+&\rightarrow& \text{reasoning (LLM)} \\
+&\rightarrow& \text{action} \\
+&\rightarrow& \text{environment / state}
+\end{eqnarray*}
+
+\vspace{2mm}
+Key ingredients:
+\begin{itemize}
+  \item internal \y{state}
+  \item access to \y{tools}
+  \item explicit \y{control flow}
+\end{itemize}
+
+\vspace{2mm}
+An agent is \emph{active}, not passive.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\textbf{LLM vs tool vs agent}
+
+\begin{itemize}
+  \item \textbf{LLM:} maps text to text
+  \item \textbf{Tool:} executes a fixed function
+  \item \textbf{Agent:} decides \emph{what to do next}
+\end{itemize}
+
+\vspace{0mm}
+\begin{minipage}{5cm}
+\includegraphics[width=4cm]{../../images/img10/agent_loop_crop.png}
+\end{minipage}
+\begin{minipage}{2cm}
+\raggedright
+Decision-making loop with state and actions
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{LLM Capabilities and Limits in Practice}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What LLMs are good at}
+
+\begin{itemize}
+  \item Understanding natural language
+  \item Generating plausible code and text
+  \item Pattern completion and refactoring
+  \item Explaining existing code
+\end{itemize}
+
+\vspace{2mm}
+LLMs approximate
+\begin{eqnarray*}
+&& p(\text{next token} \mid \text{context})
+\end{eqnarray*}
+from large training corpora.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Systematic limitations}
+
+\begin{itemize}
+  \item No ground truth or verification
+  \item Hallucinated but plausible outputs
+  \item Overconfidence in incorrect answers
+  \item Sensitivity to prompt phrasing
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Sampling matters}
+
+\begin{eqnarray*}
+&& \text{temperature } T \uparrow
+\;\Rightarrow\;
+\text{variance of outputs } \uparrow
+\end{eqnarray*}
+
+\vspace{1mm}
+Low \(T\): reproducible but rigid \\
+High \(T\): creative but unstable
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Prompting for Code Generation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Unambiguous task description
+  \item Explicit constraints
+  \item Predictable output format
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Critical constraints}
+
+\begin{itemize}
+  \item Code-only output
+  \item No explanations or markdown
+  \item Explicit library choices
+\end{itemize}
+
+\vspace{0mm}
+Poor prompts lead to:
+\begin{itemize}
+  \item mixed prose and code
+  \item missing imports
+  \item implicit assumptions
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1cm}
+\textbf{Example: strict \y{system prompt}}
+
+\vspace{1mm}
+\begin{codeonly}{System message}
+You are an AI coder.
+Output ONLY valid Python code.
+No markdown. No explanations.
+Assume Python 3.10.
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{\y{User prompt} pattern}
+
+\vspace{1mm}
+\begin{codeonly}{User message}
+Write a Python function f(x)
+using numpy that returns a
+polynomial with |f(x)| < 10
+for x in [-10, 10].
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key point:}  
+Prompting is part of the program.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Manual Coding with LLMs (\y{Human in the Loop})}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Typical workflow}
+
+\begin{itemize}
+  \item Prompt LLM for code
+  \item Inspect generated output
+  \item Edit or correct manually
+  \item Execute and test
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Why humans stay involved}
+
+\begin{itemize}
+  \item Detect logical errors
+  \item Spot missing assumptions
+  \item Judge correctness, not plausibility
+\end{itemize}
+
+\vspace{0mm}
+LLMs \y{assist}, they do not decide.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1mm}
+\textbf{Trust boundaries}
+
+\begin{itemize}
+  \item Never execute blindly
+  \item Always read generated code
+  \item Treat LLM output as a draft
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Productive collaboration}
+
+\begin{itemize}
+  \item LLM: speed, syntax, structure
+  \item Human: intent, validation, responsibility
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+\y{Responsibility stays with the human.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Manual Coding with LLMs — Example UI Interaction}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.3\textwidth}
+
+\vspace{-2mm}
+\textbf{Human in the loop}
+
+\begin{itemize}
+  \item Natural-language prompt
+  \item Code suggestion by LLM
+  \item Human inspection
+  \item Manual correction
+\end{itemize}
+
+\vspace{2mm}
+This is the \y{baseline} mode of working with LLMs.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.65\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=\textwidth]{../../images/img10/claude_ui.png}
+
+\vspace{1mm}
+\footnotesize
+Typical web-based LLM interface used for interactive coding
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Executing Generated Code Safely}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Execution options}
+
+\begin{itemize}
+  \item \texttt{exec} inside current process
+  \item Separate process via \texttt{subprocess}
+  \item File-based execution
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Trade-offs}
+
+\begin{itemize}
+  \item \texttt{exec}: fast, \y{unsafe}
+  \item \texttt{subprocess}: isolated, slower
+  \item Files: traceable, debuggable
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Rule of thumb}
+
+Never execute LLM code  
+\y{without isolation or inspection}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1cm}
+\textbf{Minimal example}
+
+\vspace{1mm}
+\begin{codeonly}{File-based execution}
+with open("gen.py","w") as f:
+    f.write(code)
+
+import subprocess
+subprocess.run(
+  ["python", "gen.py"],
+  check=True)
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Security risks}
+
+\begin{itemize}
+  \item File system access
+  \item Network calls
+  \item Infinite loops
+\end{itemize}
+
+\vspace{1mm}
+Mitigation requires \y{process isolation}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Error Handling and Feedback Loops}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Why errors are central}
+
+\begin{itemize}
+  \item LLM-generated code is often incomplete
+  \item Small syntax or logic errors are common
+  \item First attempt rarely works
+\end{itemize}
+
+\vspace{0mm}
+Errors provide \y{structured feedback}:
+\begin{itemize}
+  \item missing imports
+  \item wrong assumptions
+  \item invalid API usage
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1cm}
+\textbf{Typical feedback loop}
+
+\vspace{1mm}
+\begin{codeonly}{Error capture and retry}
+try:
+    exec(code)
+    success = True
+except Exception as e:
+    error = traceback.format_exc()
+    success = False
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Key design choices}
+
+\begin{itemize}
+  \item feed back full traceback
+  \item limit number of retries
+  \item detect repeating failures
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+Errors drive \y{self-correction}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{The First Coding Agent: \\ \hspace*{1cm}\y{Self-Correcting Loops}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-2mm}
+\textbf{Core idea}
+
+\begin{itemize}
+  \item LLM generates code
+  \item Code is executed
+  \item Errors are captured
+  \item LLM is prompted to fix them
+\end{itemize}
+
+\vspace{0mm}
+This creates an \y{autonomous correction loop}.
+
+\vspace{1mm}
+\textbf{Minimal success criteria}
+
+\begin{itemize}
+  \item Code executes without error
+  \item Output matches basic expectations
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.59\textwidth}
+
+\vspace{-15mm}
+\textbf{Minimal agent loop}
+
+\vspace{1mm}
+\begin{codeonly}{Self-correcting loop}
+for attempt in range(max_tries):
+  code = llm(prompt)
+  try:
+    exec(code)
+    break
+  except Exception as e:
+    prompt += traceback.format_exc()
+\end{codeonly}
+
+\vspace{1mm}
+\rtext{\bf Why this is already an agent}
+
+\begin{itemize}
+  \item autonomous retries
+  \item internal state (prompt history)
+  \item decision: retry vs stop
+\end{itemize}
+
+\vspace{1mm}
+No framework required.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Prompts to Programs: \y{Abstraction Boundaries}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{0mm}
+\textbf{The core problem}
+
+\begin{itemize}
+  \item Prompts mix intent and execution
+  \item Small wording changes alter behavior
+  \item Logic is implicit and fragile
+\end{itemize}
+
+\vspace{0mm}
+This leads to \y{prompt brittleness}:
+\begin{itemize}
+  \item hard to debug
+  \item hard to reuse
+  \item hard to test
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1mm}
+\textbf{Separating responsibilities}
+
+\begin{itemize}
+  \item Prompt: \y{what} should be done
+  \item Code: \y{how} it is executed
+  \item Control flow: \y{when} to retry or stop
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design principle}
+
+\begin{itemize}
+  \item Prompts describe intent
+  \item Programs enforce structure
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+LLMs belong \y{inside} programs, not around them.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Agent Frameworks Exist}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{0mm}
+\textbf{Scaling problems of ad-hoc agents}
+
+\begin{itemize}
+  \item Prompts grow uncontrollably
+  \item Control logic becomes implicit
+  \item Error handling is duplicated
+\end{itemize}
+
+\vspace{0mm}
+As systems grow:
+\begin{itemize}
+  \item code becomes unstructured
+  \item behavior is hard to reproduce
+  \item debugging is expensive
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-8mm}
+\textbf{What frameworks provide}
+
+\begin{itemize}
+  \item Explicit control flow
+  \item Reusable abstractions
+  \item Tool and memory interfaces
+  \item Observability and logging
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What they do \emph{not} provide}
+
+\begin{itemize}
+  \item Correct reasoning
+  \item Ground truth
+  \item Guaranteed success
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+Frameworks add \y{structure}, not intelligence.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Survey of Agent Frameworks (\y{Critical View})}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{2mm}
+\textbf{Why so many frameworks?}
+
+\begin{itemize}
+  \item \rtext{\bf No standard agent abstraction}
+  \item \rtext{Rapidly evolving LLM APIs}
+  \item Different design philosophies
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Main categories}
+
+\begin{itemize}
+  \item Loop-based agents
+  \item Chain-based frameworks
+  \item Graph-based workflows
+  \item Multi-agent orchestration
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-1mm}
+\textbf{Typical examples}
+
+\begin{itemize}
+  \item \y{LangChain}: chaining + tools
+  \item \y{LangGraph}: explicit control flow
+  \item \y{CrewAI}: role-based agents
+  \item AutoGPT-style: autonomous loops
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Practical assessment}
+
+\begin{itemize}
+  \item Most are \y{experimental}
+  \item APIs change quickly
+  \item Production use needs caution
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Rule:}  
+Use frameworks to \y{clarify}, not to hide logic.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{LangChain: Motivation and Architecture}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{2mm}
+\textbf{What LangChain targets}
+
+\begin{itemize}
+  \item Reusable prompt templates
+  \item Standardized tool access
+  \item Simple memory abstractions
+\end{itemize}
+
+\vspace{0mm}
+LangChain focuses on:
+\begin{itemize}
+  \item \y{composition}
+  \item \y{integration}
+  \item rapid prototyping
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-3mm}
+\textbf{Core building blocks}
+
+\begin{itemize}
+  \item LLM interface
+  \item PromptTemplate
+  \item Chain
+  \item Tool
+  \item Memory
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Limitation}
+
+\begin{itemize}
+  \item Linear execution model
+  \item Limited explicit control flow
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+LangChain \y{glues components}, it does not control logic.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Prompt Templates and Tool Integration (LangChain)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.47\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Separates instructions and variables
+  \item Enforces a fixed structure
+  \item Improves reuse and testing
+\end{itemize}
+
+\vspace{1mm}
+\begin{codeonly}{PromptTemplate example}
+from langchain.prompts import PromptTemplate
+
+prompt = PromptTemplate(
+  input_variables=["x"],
+  template=
+  "Write Python code computing f(x) "
+  "such that |f(x)| < 10." )
+\end{codeonly}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-1mm}
+\textbf{Tool integration}
+
+\vspace{1mm}
+\begin{codeonly}{Tool definition}
+from langchain.tools import tool
+
+@tool
+def square(x: float) -> float:
+    return x * x
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Critical limitations}
+
+\begin{itemize}
+  \item LLM may select wrong tool
+  \item Arguments may be malformed
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Rule:}  
+Tool calls must be \y{validated outside} the LLM.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Autonomous Coding Agent — Self-Correcting Loop}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\vspace{-2mm}
+\textbf{Agent task}
+
+\begin{itemize}
+  \item Natural-language goal
+  \item LLM generates full script
+  \item Script is executed
+  \item Errors are fed back automatically
+\end{itemize}
+
+\vspace{1mm}
+This is already a \y{true agent}:
+\begin{itemize}
+  \item autonomous retries
+  \item internal state (prompt history)
+  \item stop criterion
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Autonomous code agent (excerpt)}
+def autonomous_code_agent(task):
+  for attempt in range(5):
+    code = llm.invoke(task).content
+    try:
+      exec(code)
+      return True
+    except Exception as e:
+      task += traceback.format_exc()
+  return False
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key point:}  
+No framework required —  
+this is \y{pure control logic} around an LLM.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Autonomous Agent Output — 3D Polynomial Visualization}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.450\textwidth}
+
+\vspace{-2mm}
+\textbf{Task executed}
+
+\begin{itemize}
+  \item Generate 2D polynomial
+  \item Evaluate on grid
+  \item Create 3D visualization
+  \item Save result as image
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Important}
+
+\begin{itemize}
+  \item Code was \y{generated}
+  \item Code was \y{executed}
+  \item Output was \y{validated}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=0.8\textwidth]{../../images/img10/my2d_crop.png}
+
+\vspace{1mm}
+\centering
+3D surface plot generated by an autonomous LLM coding agent
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Memory and Context Management in Agents}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{2mm}
+\textbf{Why agents need memory}
+
+\begin{itemize}
+  \item Remember past attempts
+  \item Accumulate errors and feedback
+  \item \rtext{\bf Maintain task continuity}
+\end{itemize}
+
+\vspace{0mm}
+Without memory:
+\begin{itemize}
+  \item repeated failures
+  \item no learning across steps
+  \item brittle behavior
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1mm}
+\textbf{Types of memory}
+
+\begin{itemize}
+  \item Prompt memory  
+        (growing instruction and error history)
+  \item File-based memory  
+        (saved code, plots, logs)
+  \item Explicit state  
+        (variables passed between steps)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key distinction}
+
+\begin{itemize}
+  \item Chat history != agent state
+  \item State must be \y{explicit and inspectable}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Memory Management in LangGraph}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item No hidden chat history
+  \item No implicit conversation memory
+  \item No prompt accumulation
+\end{itemize}
+
+\vspace{0mm}
+Instead:
+\begin{itemize}
+  \item All memory lives in a \y{typed state object}
+  \item Each node reads and updates this state
+  \item State is passed explicitly between nodes
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Consequence:}
+\begin{itemize}
+  \item Deterministic execution
+  \item Fully inspectable memory
+  \item Reproducible agent behavior
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\textbf{Example: Agent state schema}
+
+\vspace{-14mm}
+\begin{codeonly}{LangGraph state}
+class MyState(TypedDict):
+  query: str
+  fc_datetime: str
+  fc_reference_datetime: str
+  fc_leadtime: str
+  fc_location_of_interest: str
+  fc_variable: str
+  temperature_data: Any
+  output: str
+\end{codeonly}
+
+\vspace{0mm}
+In LangGraph, chat history, tool memory, and agent scratchpads are replaced by a single typed state object. Memory is \y{explicit data}, not implicit text.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Control Flow in LangGraph}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item No hidden agent loops
+  \item No implicit retries
+  \item No LLM-driven control decisions
+\end{itemize}
+
+\vspace{0mm}
+Instead:
+\begin{itemize}
+  \item Execution follows a \y{directed graph}
+  \item Nodes are pure Python functions
+  \item Edges define allowed transitions
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\textbf{Example: Execution graph}
+
+\vspace{-14mm}
+\begin{codeonly}{LangGraph control flow}
+builder.set_entry_point("extract_forecast_datetime")
+builder.add_edge(
+  "extract_forecast_datetime",
+  "get_latest_forecast_reference_time")
+builder.add_edge(
+  "get_latest_forecast_reference_time",
+  "calculate_lead_time" )
+[...]
+builder.set_finish_point("plot_temperature")
+\end{codeonly}
+
+\vspace{0mm}
+The graph itself defines \y{what happens next}.  
+There is no hidden agent controller.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{LLMs as Nodes in LangGraph}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item LLMs do \emph{not} control execution
+  \item LLMs do \emph{not} manage memory
+  \item LLMs do \emph{not} decide termination
+\end{itemize}
+
+\vspace{0mm}
+Instead:
+\begin{itemize}
+  \item LLMs are used for \y{local reasoning tasks}
+  \item Each call has a well-defined input
+  \item Each call produces a bounded output
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.59\textwidth}
+
+\vspace{-8mm}
+\hspace{1cm}\begin{minipage}{5cm}
+\textbf{Typical LLM roles:}
+\begin{itemize}
+  \item information extraction
+  \item classification
+  \item summarization
+\end{itemize}
+\end{minipage}
+
+\vspace{2mm}
+\begin{codeonly}{LangGraph node}
+def extr_loc_node(state: MyState) -> MyState:
+  location = extr_loc(state["query"])
+  state["fc_location"] = location
+  return state
+\end{codeonly}
+
+\vspace{0mm}
+The LLM acts as a \y{pure transformation}  
+from input fields to output fields.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 26
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{LangGraph Weather Forecast Assistant}
+
+\vspace{-2mm}
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{../../images/img10/langgraph_weather_forecast.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+\small
+End-to-end agent pipeline: natural language → structured state → tools → visualization
+\end{center}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 27
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Failure Handling and Robustness}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.36\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item LLM extraction errors
+  \item Missing or delayed data
+  \item Tool execution failures
+  \item Invalid intermediate state
+\end{itemize}
+
+\vspace{0mm}
+\footnotesize
+{\bf LangGraph strategy} \\
+Each node handles \y{local failure} \\
+State records partial results \\
+Graph execution remains controlled
+
+\normalsize
+\vspace{2mm}
+\textbf{Key principle}
+\begin{itemize}
+  \item \rtext{Failures are \y{data}, not crashes}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\textbf{Example: guarded node}
+
+\vspace{-6mm}
+\begin{codeonly}{Failure-aware node}
+def plot_temperature_node(state: MyState) -> MyState:
+  if state.get("temperature_data") is None:
+    state["output"] = "No data available"
+    return state
+
+  plot_t2m_EU(state["temperature_data"], save_plot=True)
+  state["output"] = "Plot created"
+  return state
+\end{codeonly}
+
+\vspace{2mm}
+Failures do not break the agent.  
+They update the state and allow the graph to terminate safely.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 28
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Why This Scales: From Prototype to System}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\textbf{Problems with classic agent loops}
+\begin{itemize}
+  \item hidden prompt growth
+  \item non-reproducible behavior
+  \item difficult debugging
+  \item unclear failure causes
+\end{itemize}
+
+\vspace{0mm}
+\textbf{LangGraph advantages}
+\begin{itemize}
+  \item explicit state evolution
+  \item deterministic control flow
+  \item inspectable intermediate results
+  \item testable nodes
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{0mm}
+\textbf{Engineering outcome}
+\begin{itemize}
+  \item agents become \y{systems}
+  \item not demos or experiments
+\end{itemize}
+
+\vspace{0mm}
+\textbf{What becomes possible}
+
+\vspace{0mm}
+\begin{itemize}
+  \item unit tests per node
+  \item regression tests on state
+  \item logging and metrics
+  \item CI/CD integration
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key insight}
+
+\vspace{1mm}
+\begin{quote}
+Agents scale when they obey  
+the same rules as software.
+\end{quote}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 29
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{When Multi-Agent Systems Make Sense}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\textbf{One agent is sufficient when}
+\begin{itemize}
+  \item tasks are sequential
+  \item state is compact
+  \item logic is well-defined
+  \item tools dominate execution
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Multiple agents are useful when}
+\begin{itemize}
+  \item \y{responsibilities} are clearly separable
+  \item different reasoning styles are needed
+  \item tasks can proceed independently
+  \item \y{software components} can be done independently
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-5mm}
+\textbf{Key warning}
+\begin{itemize}
+  \item multi-agent systems are \y{not} better by default
+\end{itemize}
+
+\textbf{Typical multi-agent roles}
+
+\vspace{0mm}
+\begin{itemize}
+  \item planner / coordinator
+  \item \rtext{\bf domain expert}
+  \item \rtext{\y{\bf tool executor}}
+  \item verifier or critic
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Design principle}
+
+\vspace{1mm}
+\begin{quote}
+Add agents only when  
+you can explain their responsibility.
+\end{quote}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 30
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{CrewAI: Role-Based Agent Collaboration}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\textbf{What CrewAI provides}
+\begin{itemize}
+  \item explicit agent roles
+  \item task delegation
+  \item simple coordination logic
+  \item readable high-level structure
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Typical use cases}
+\begin{itemize}
+  \item document analysis
+  \item research workflows
+  \item report generation
+  \item exploratory automation
+\end{itemize}
+
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{0mm}
+\textbf{Strength}
+\begin{itemize}
+  \item fast prototyping of multi-agent ideas
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Limitations}
+\begin{itemize}
+  \item implicit memory handling
+  \item limited state visibility
+  \item weak failure control
+  \item hard to test systematically
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key takeaway}
+
+\vspace{1mm}
+\begin{quote}
+\raggedright
+CrewAI is useful for \y{coordination demos},  
+not for operating critical systems.
+\end{quote}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 31
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{CrewAI Demo: Internal Achievements Report}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-2mm}
+\textbf{Scenario}
+
+\begin{itemize}
+  \item 3--4 months of AI-related achievements
+  \item Research and software development
+  \item Target: internal newsletter or ministry
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Agent roles}
+
+\begin{itemize}
+  \item Planner: report structure
+  \item Scientific writer: technical accuracy
+  \item Impact translator: non-expert framing
+  \item Editor: clarity and consistency
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Notebook flow}
+
+\vspace{1mm}
+\begin{itemize}
+  \item raw bullet-point inputs
+  \item sequential task execution
+  \item agent-to-agent refinement
+  \item final Markdown output
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What this demonstrates}
+
+\begin{itemize}
+  \item realistic knowledge work
+  \item role separation
+  \item human-facing automation
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 32
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{AI Agent Landscape — January 2026}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-2mm}
+\textbf{What has stabilized}
+
+\begin{itemize}
+  \item \rtext{\bf LLMs as reasoning engines}
+  \item \y{Tool calling} as standard interface
+  \item Explicit \y{state and control flow}
+  \item Strong separation of roles
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What is fading}
+
+\begin{itemize}
+  \item prompt-only agents
+  \item hidden scratchpads
+  \item uncontrolled self-loops
+  \item purely conversational systems
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Dominant design patterns}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Graph-based agents (LangGraph)
+  \item \y{Tool-driven execution}
+  \item \rtext{\bf Typed, inspectable state}
+  \item Human-in-the-loop checkpoints
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Reality check}
+
+\begin{itemize}
+  \item Agents are \y{software systems}
+  \item Not autonomous intelligence
+  \item Require engineering discipline
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec10.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 10}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\setagendaboxforlecture{10}
+
+\input{../lec_agenda.tex}
+\input{lec10_01.tex}
+\input{lec10_02.tex}
+\input{lec10_03.tex}
+\input{lec10_04.tex}
+\input{lec10_05.tex}
+\input{lec10_06.tex}
+\input{lec10_07.tex}
+\input{lec10_08.tex}
+\input{lec10_09.tex}
+\input{lec10_10.tex}
+\input{lec10_11.tex}
+\input{lec10_12.tex}
+\input{lec10_13.tex}
+\input{lec10_14.tex}
+\input{lec10_15.tex}
+\input{lec10_16.tex}
+\input{lec10_17.tex}
+\input{lec10_18.tex}
+\input{lec10_19.tex}
+\input{lec10_20.tex}
+\input{lec10_21.tex}
+\input{lec10_22.tex}
+\input{lec10_23.tex}
+\input{lec10_24.tex}
+\input{lec10_25.tex}
+\input{lec10_26.tex}
+\input{lec10_27.tex}
+\input{lec10_28.tex}
+\input{lec10_29.tex}
+\input{lec10_30.tex}
+\input{lec10_31.tex}
+\input{lec10_32.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

@@ -1,0 +1,72 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CI Workflow: Docker Image to Apptainer SIF}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Automated workflow}
+
+\begin{itemize}
+  \item Triggered after successful Docker build
+  \item Runs on GitHub Linux runner
+  \item Converts image to \y{SIF format}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Main steps within the Github environment}
+
+\begin{enumerate}
+  \item Install Apptainer
+  \item Authenticate to \texttt{ghcr.io}
+  \item Pull Docker image
+  \item Convert to \y{SIF}
+  \item Upload as artifact
+\end{enumerate}
+
+\vspace{2mm}
+\rtext{\bf This is CI/CD for runtime environments.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.53\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\begin{codeonly}{Core CI command on GitHub}
+apptainer pull \
+  docker-plot-03.sif \
+  docker://ghcr.io/ORG/IMAGE:TAG
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Distribution}
+
+\begin{itemize}
+  \item SIF stored as CI artifact
+  \item Downloadable via browser
+  \item Transfer to HPC via \texttt{scp}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{On the cluster}
+
+\begin{itemize}
+  \item \y{No build step}
+  \item No Docker required
+  \item Immediate execution
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

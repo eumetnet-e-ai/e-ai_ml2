@@ -1,0 +1,77 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI-Var in 1D: Training Loop with Background \& Observations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Neural input construction}
+
+\vspace{1mm}
+The network receives \y{both} background and observations:
+
+\begin{verbatim}
+# observations mapped to grid
+y_grid = torch.zeros(n)
+mask   = torch.zeros(n)
+
+y_grid[obs_idx] = y
+mask[obs_idx]   = 1.0
+
+# NN input
+inp = torch.cat([xb_t, y_grid, mask])
+\end{verbatim}
+
+\vspace{-4mm}
+\[
+\delta x_\theta
+=
+\mathcal{N}_\theta(x_b,\; y)
+\]
+
+\vspace{0mm}
+\hspace*{2cm}\rtext{\bf The solver is replaced by learning.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Training loop}
+
+\vspace{-2mm}
+\begin{verbatim}
+for ep in range(n_epochs):
+    optimizer.zero_grad()
+
+    delta_x = model(inp)
+
+    loss, Jb, Jo = J_3dvar(delta_x)
+
+    loss.backward()
+    optimizer.step()
+\end{verbatim}
+
+\vspace{0mm}
+\textbf{Key points}
+
+\vspace{1mm}
+\begin{itemize}
+  \item loss = classical 3D-Var functional
+  \item no analysis targets
+  \item gradients pass through $B^{-1}$ and $H$
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

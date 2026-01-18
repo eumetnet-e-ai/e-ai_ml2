@@ -1,0 +1,51 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Ollama Streaming in Python}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.33\textwidth}
+
+\textbf{Ollama streaming call}
+
+\begin{itemize}
+  \item Local HTTP interface
+  \item Same message format
+  \item Streaming enabled
+\end{itemize}
+
+\vspace{2mm}
+Works with:
+\texttt{\y{llama3}}, \texttt{\y{mistral}}, \texttt{\y{mixtral}}, \texttt{\y{deepseek-r1}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Ollama streaming in Jupyter}
+stream = ollama.chat( model="llama3", 
+   messages=[...], stream=True )
+
+accumulated = ""
+handle = display(
+  Markdown(""), display_id=True)
+
+for chunk in stream:
+   if "content" in chunk["message"]:
+      accumulated += chunk["message"]\
+      ["content"] 
+      handle.update(Markdown(accumulated))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

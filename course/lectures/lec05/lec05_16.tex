@@ -1,0 +1,57 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CNN Structure for Function Classification}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.3\textwidth}
+
+\textbf{Network structure}
+
+\begin{itemize}
+  \item 1D convolutions for local patterns
+  \item Nonlinear feature extraction
+  \item Fully connected classifier
+\end{itemize}
+
+{\footnotesize\begin{lstlisting}
+Input:   (B, 1, 50)
+Conv1:   (B, 16, 50)
+Conv2:   (B, 32, 50)
+Flatten: (B, 1600)
+FC:      (B, 4)
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.75\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{CNN model definition}
+class FunctionClassifierCNN(nn.Module):
+  def __init__(self):
+     super().__init__()
+     self.conv1 = nn.Conv1d(1, 16,5, padding=2)
+     self.conv2 = nn.Conv1d(16,32,5, padding=2)
+     self.fc1   = nn.Linear(32*50, 128)
+     self.fc2   = nn.Linear(128, 4)
+
+  def forward(self, x):
+     x = torch.relu(self.conv1(x))
+     x = torch.relu(self.conv2(x))
+     x = x.view(x.size(0), -1)
+     x = torch.relu(self.fc1(x))
+     return self.fc2(x)
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

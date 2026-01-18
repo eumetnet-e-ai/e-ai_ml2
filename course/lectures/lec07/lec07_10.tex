@@ -1,0 +1,57 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Semantic Search inside a PDF}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.30\textwidth}
+
+\textbf{Query embedding}
+
+A user query is mapped to:
+\[
+z_q \in \mathbb{R}^d
+\]
+
+\y{Similarity} to \y{page embeddings} is computed via:
+\[
+\mathrm{sim}(z_q, z_i)
+=
+\frac{z_q \cdot z_i}
+{\|z_q\|\,\|z_i\|}
+\]
+
+\vspace{1mm}
+Top-\(k\) most relevant pages are retrieved.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.73\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Semantic page search}
+def search_pdf(query, model, pages, embeddings, page_ids, top_k=3):
+   q_emb = model.encode(
+      query, convert_to_numpy=True)
+   scores = []
+   for i, emb in enumerate(embeddings):
+      score = cosine_similarity(q_emb, emb)
+      scores.append((page_ids[i], score, pages[i]))
+
+   scores.sort(key=lambda x: x[1], reverse=True)
+   return scores[:top_k]
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

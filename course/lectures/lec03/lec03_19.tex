@@ -1,0 +1,65 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{GPU Access in Practice — Why It Depends on the Platform}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.53\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Most laptops \emph{do have a GPU}
+  \item But GPU \y{type and backend} differ strongly
+  \item Python code must match the backend
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Common GPU types}
+
+\begin{itemize}
+  \item \y{NVIDIA} — typical for HPC clusters
+  \item \y{Apple GPU} — Apple Silicon 
+  \item \y{AMD / Radeon} — some laptops, workstations
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key message}
+
+\begin{itemize}
+  \item The \y{software interface} matters
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{GPU backends used in Python}
+
+\vspace{1mm}
+\begin{itemize}
+  \item \texttt{CUDA} — NVIDIA GPUs (Linux, HPC)
+  \item \texttt{MPS / Metal} — Apple GPUs (macOS)
+  \item \texttt{CPU fallback} — always available
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Implication for ML workflows}
+
+\begin{itemize}
+  \item Development often on laptops
+  \item Training often on HPC systems
+  \item Code must be \y{portable across backends}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

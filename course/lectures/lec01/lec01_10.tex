@@ -1,0 +1,49 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Visualizing 2D Data with Matplotlib}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item 2D arrays represent spatial fields
+  \item Colors encode values
+  \item Typical for weather and climate data
+\end{itemize}
+
+\vspace{1mm}
+\hfill\includegraphics[width=4cm]{../../images/img01/plot-2d-field.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Simple 2D field}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 4, 120)
+y = np.linspace(0, 3, 90)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) * np.cos(Y)
+
+plt.imshow(Z, origin="lower",
+     extent=[0,4,0,3], cmap="viridis")
+plt.colorbar(); plt.title("2d Field"); 
+plt.savefig("plot-2d-field.png"); 
+plt.close()
+\end{codeonly}
+
+\end{column}
+\end{columns}
+\end{frame}

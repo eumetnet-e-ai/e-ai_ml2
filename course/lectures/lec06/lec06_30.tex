@@ -1,0 +1,62 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 30
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Streaming from Ollama using Python}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.33\textwidth}
+
+\textbf{Why Python streaming?}
+
+\begin{itemize}
+  \item Interactive applications
+  \item Live UIs 
+  \item Custom text processing
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mechanism}
+
+\begin{itemize}
+  \item HTTP response stream
+  \item Incremental JSON decoding
+  \item Append text chunks
+\end{itemize}
+
+\end{column}
+
+\begin{column}[T]{0.72\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Streaming response (Python)}
+import requests, json
+url = "http://localhost:11434/api/generate"
+data = {
+  "model": "mistral",
+  "prompt": "Explain self-attention.",
+  "stream": True }
+r = requests.post(url, json=data, stream=True)
+for line in r.iter_lines():
+    if line:
+        msg = json.loads(line)
+        print(msg["response"], end="")
+\end{codeonly}
+
+\vspace{0mm}
+{\footnotesize
+Text is printed as soon as tokens arrive.
+}
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\centering
+\y{Streaming enables responsive, real-time LLM applications.}
+
+\end{frame}

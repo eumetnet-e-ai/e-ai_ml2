@@ -1,0 +1,34 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Saved Dataset: Truth + Two Observation Types}
+
+\footnotesize
+\vspace{4mm}
+
+We store everything into \texttt{dyn\_truth\_obs.npz}:
+
+\begin{itemize}
+  \item \textbf{Truth fields}
+  \[
+  xtrue \in \mathbb{R}^{T_{snap}\times n_z\times n_x}
+  \]
+  \item \textbf{Radiosondes}
+  \[
+  yrs \in \mathbb{R}^{T_{snap}\times n_{rs}\times n_{vert}}
+  \]
+  \item \textbf{Satellite}
+  \[
+  ysat \in \mathbb{R}^{T_{snap}\times n_{sat}\times n_x}
+  \]
+  \item Snapshot times: \texttt{t\_snap}
+  \item Geometry: \texttt{rs\_ix}, \texttt{rs\_iz}
+  \item SAT vertical weights: \texttt{sat\_w}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This allows a clean separation:} Notebook 1 = generate dataset, Notebook 2 = learn transitions.
+
+\end{frame}

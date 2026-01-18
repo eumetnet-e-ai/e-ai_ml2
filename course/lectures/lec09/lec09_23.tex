@@ -1,0 +1,42 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Graphs in PyTorch Geometric}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.6\textwidth}
+
+\begin{codeonly}{Basic PyG data object}
+from torch_geometric.data import Data
+
+data = Data(
+    x = node_features,
+    edge_index = edge_index,
+    y = targets
+)
+\end{codeonly}
+
+\end{column}
+
+\begin{column}[T]{0.35\textwidth}
+
+\textbf{Key concept}
+
+\begin{itemize}
+  \item Nodes = rows of \texttt{x}
+  \item Edges define message flow
+  \item Graph size is flexible
+\end{itemize}
+
+\vspace{2mm}
+No grid assumptions required.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,45 @@
+\begin{tightmath}
+\mytitle{Neural Causal Discovery: Learning the Structure}
+
+\footnotesize
+\textbf{Core idea}
+
+\begin{itemize}
+  \item Learn causal influences directly from time series
+  \item Distinguish self-dynamics from cross-variable effects
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key steps}
+
+\begin{itemize}
+  \item Remove autocorrelation (self-dependence)
+  \item Learn residual dependencies across variables
+  \item Enforce sparsity to reveal dominant causal links
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What the neural model learns}
+
+\begin{itemize}
+  \item Scenario 1: \(F \rightarrow P \rightarrow T\)
+  \item Scenario 2: \(F \rightarrow P\), \(F \rightarrow T\), \rtext{no \(P \rightarrow T\)}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Goes beyond correlation
+  \item Discovers \y{process-dependent causality}
+  \item Scales to high-dimensional dynamical systems
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key message}
+
+\begin{center}
+\rtext{\bf AI can infer causal structure — not just correlations}
+\end{center}
+
+\end{tightmath}

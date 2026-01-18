@@ -1,0 +1,51 @@
+% ================================================================================
+% Lecture 17 — Slide 10
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Training diagnostics: loss curve and experiment logger}
+
+\begin{columns}[T,totalwidth=\textwidth]
+% ------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{What we monitor}
+\begin{itemize}
+\item training loss vs epoch/step
+\item validation loss (generalization)
+\item learning rate schedule
+\item walltime + throughput
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why it matters}
+\begin{itemize}
+\item early detection of instability
+\item reproducible experiments
+\item compare model variants
+\end{itemize}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+training is \y{observable} and \y{traceable}.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+
+
+\vspace{-5mm}
+\begin{center}
+% Replace with your actual images from the notebook / export
+\includegraphics[width=0.6\linewidth]{../../images/img17/aicon_loss_curve.png}
+
+\vspace{1mm}
+\includegraphics[width=0.85\linewidth]{../../images/img17/aicon_logger.png}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}

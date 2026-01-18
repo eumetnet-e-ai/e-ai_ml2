@@ -1,0 +1,91 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training a CNN: field(t) -> field(t+1)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Learning task}
+
+\vspace{0mm}
+We train a CNN to predict next-step temperature:
+\begin{itemize}
+  \item input at time \texttt{t}: \texttt{t2m, u10, v10, mslp}
+  \item target: \texttt{t2m(t+1)}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Patch training}
+
+\vspace{0mm}
+Instead of full fields, we train on random patches:
+\begin{itemize}
+  \item sample \texttt{64x64} patches from random positions
+  \item efficient mini-batches on laptop/GPU
+  \item same idea as Zarr chunks: local spatial tiles
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Normalization}
+
+\vspace{0mm}
+Channel-wise mean/std over time and space:
+\begin{itemize}
+  \item stabilize training
+  \item same scaling for training and evaluation
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+Example:
+
+\vspace{0mm}
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+# inputs and target in RAM
+t2m  = ds["t2m"].astype("float32").values
+u10  = ds["u10"].astype("float32").values
+v10  = ds["v10"].astype("float32").values
+mslp = ds["mslp"].astype("float32").values
+
+# normalization
+Xin = np.stack([t2m, u10, v10, mslp], axis=1)
+X_mean = Xin.mean(axis=(0,2,3), keepdims=True)
+X_std  = Xin.std(axis=(0,2,3), keepdims=True) + 1e-6
+
+y_mean = t2m.mean()
+y_std  = t2m.std() + 1e-6
+\end{lstlisting}
+\end{minipage}
+
+\vspace{1mm}
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+# patch sampler: X(t) -> y(t+1)
+Xt, yt = sample_patch_batch(batch_size=8, patch=64)
+
+# small CNN: 4ch -> 1ch
+model = SmallCNN(in_ch=4, out_ch=1, hidden=32)
+loss_fn = nn.MSELoss()
+opt = optim.Adam(model.parameters(), lr=2e-3)
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

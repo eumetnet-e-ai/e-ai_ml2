@@ -1,0 +1,60 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Why Graphs in Weather Machine Learning?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Weather data is not Cartesian}
+
+\begin{itemize}
+  \item global models use spherical geometry
+  \item grids are often \y{non-uniform and unstructured}
+  \item classical CNN assumptions break down
+\end{itemize}
+
+\vspace{2mm}
+Examples:
+\begin{itemize}
+  \item ICON triangular grid
+  \item reduced Gaussian grids
+  \item observation networks
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Why graphs are a natural abstraction}
+
+\begin{itemize}
+  \item nodes represent spatial locations
+  \item edges represent physical neighbourhoods
+  \item locality is explicit, not implicit
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item move from \y{array indices} to \y{connectivity}
+  \item geometry becomes part of the model
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Graphs decouple geometry from resolution.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

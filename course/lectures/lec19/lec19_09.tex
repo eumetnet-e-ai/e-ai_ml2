@@ -1,0 +1,71 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{SINDy: Sparse Identification of Nonlinear Dynamics}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Problem setting}
+
+We observe a dynamical system
+\[
+\dot{\mathbf{x}}(t) = \mathbf{f}(\mathbf{x}(t)),
+\qquad
+\mathbf{x}(t)\in\mathbb{R}^n,
+\]
+from time series data $\mathbf{x}(t_i)$.
+
+\vspace{2mm}
+\textbf{Key assumption (sparsity)}
+
+The vector field can be written as a sparse combination of candidate functions:
+\[
+\dot{\mathbf{x}}(t)
+\;\approx\;
+\Theta(\mathbf{x}(t))\,\Xi,
+\]
+where
+\begin{itemize}
+  \item $\Theta(\mathbf{x})$ is a library of functions
+        (e.g.\ $1, x, y, z, xy, xz, yz,\dots$),
+  \item $\Xi$ is a \y{sparse coefficient matrix}.
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-2mm}
+\textbf{Identification}
+
+SINDy solves a sequence of
+\[
+\min_{\Xi}\;\|\Theta(\mathbf{x})\Xi-\dot{\mathbf{x}}\|_2^2
+\]
+with thresholding to eliminate small coefficients.
+
+
+\includegraphics[width=\textwidth]{../../images/img19/SINDy_01.png}
+
+\vspace{-3mm}
+\raggedright
+\footnotesize
+\textbf{Lorenz--63 example (noise-free).}
+
+Left: true trajectory.  
+Right: trajectory from \emph{SINDy}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

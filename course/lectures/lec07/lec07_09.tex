@@ -1,0 +1,80 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 09
+% ================================================================================
+\begin{frame}[t, fragile]
+\begin{tightmath}
+
+\mytitle{From PDF Pages to Vectors}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.37\textwidth}
+
+\textbf{Decomposition}
+
+The \y{PDF is split into pages:}
+\[
+\{\text{page}_1, \dots, \text{page}_N\}
+\]
+
+\y{Each page is embedded} as:
+\[
+z_i = f_{\theta}(\text{page}_i)
+\in \mathbb{R}^d
+\]
+
+\vspace{1mm}
+In our example:
+\[
+d = 384
+\]
+
+\textbf{Embedding matrix}
+
+All pages form:
+\[
+Z \in \mathbb{R}^{N \times d}
+\]
+
+\vspace{1mm}
+\begin{minipage}{6cm}
+\tiny
+Each row corresponds to  
+one PDF page.
+
+\textbf{Key point:}  
+Documents are represented as  
+collections of vectors.
+\end{minipage}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Extract text from PDF pages}
+for i, page in enumerate(reader.pages):
+    text = page.extract_text()
+    if text and len(text.strip()) > 50:
+        pages.append(text.strip())
+        page_ids.append(i + 1)
+\end{codeonly}
+
+\vspace{2mm}
+\begin{codeonly}{Embedding}
+page_embeddings = model.encode(
+    pages,
+    convert_to_numpy=True,
+    show_progress_bar=False)
+\end{codeonly}
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

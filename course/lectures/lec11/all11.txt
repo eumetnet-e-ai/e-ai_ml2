@@ -1,0 +1,1535 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{DAWID in Action}
+
+\vspace{-2mm}
+\begin{center}
+  \includegraphics[width=0.6\textwidth]{../../images/img11/dawid_in_action.png}
+\end{center}
+
+\vspace{-4mm}
+\begin{center}
+\small
+Interactive DAWID assistant session with live streaming responses and tool integration
+\end{center}
+
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI Centre Client–Server Architecture}
+
+\vspace{-2mm}
+\begin{center}
+  \includegraphics[width=0.7\textwidth]{../../images/img11/AI_Centre_Client_Server_Architecture.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+\small
+Frontend UI, backend orchestration, language models, tools, and data sources
+\end{center}
+
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID System Architecture — Frontend Stack}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-3mm}
+\textbf{User Interface Layer}
+
+\begin{itemize}
+  \item \textbf{HTML5}  
+        Page structure, forms, UI elements
+  \item \textbf{CSS}  
+        Layout, styling, responsive design
+  \item \textbf{JavaScript}  
+        Interaction logic and event handling
+  \item \textbf{Fetch API}  
+        Asynchronous requests and streaming
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Dynamic Content}
+
+\begin{itemize}
+  \item \textbf{Markdown rendering}  
+        \rtext{Incremental formatting of streamed output}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Browser Capabilities}
+
+\begin{itemize}
+  \item \y{Audio} recording via Web APIs
+  \item Clipboard access
+  \item Local UI state and session handling
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item No heavy frontend frameworks
+  \item No client-side AI logic
+  \item Frontend as thin interaction layer
+  \item Works on \y{Laptop}, Workstation, \y{Mobile Device}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID System Architecture — Server and Backend}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Web and Gateway Layer}
+
+\begin{itemize}
+  \item \textbf{Web Server} (Apache / Nginx)  
+        \y{TLS termination}, static content, routing
+  \item \textbf{PHP Gateway}  
+        Sessions, uploads, request forwarding
+  \item \textbf{Security Boundary}  
+        \rtext{No direct access} to backend services
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Role}
+
+\begin{itemize}
+  \item Separates public UI from compute backend
+  \item Enforces access control and isolation
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Backend and Compute Layer}
+
+\begin{itemize}
+  \item \textbf{Python Backend (FastAPI)}  
+        Central orchestration logic
+  \item \textbf{Uvicorn Server}  
+        Async execution, streaming responses
+  \item \textbf{LLM Backends}  
+        Local and cloud-based models
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Backend owns \y{state}, \y{context}, and \y{tools}
+  \item Frontend remains stateless and simple
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{File Upload Workflow in the DAWID Frontend}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{User Interaction}
+
+\begin{itemize}
+  \item File selected via HTML form
+  \item \y{Automatic submission} on selection
+  \item No explicit upload button required
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Frontend Logic}
+
+\begin{itemize}
+  \item JavaScript listens to file change events
+  \item Uses \textbf{Fetch API} for upload
+  \item Asynchronous, non-blocking UI
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\textbf{Gateway Interaction}
+
+\begin{itemize}
+  \item Upload sent to PHP gateway
+  \item File stored in session-specific folder
+  \item Backend notified of new resource
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Minimal JavaScript Logic}
+
+\begin{codeonly}{Automatic upload on file selection}
+fileInput.addEventListener("change", () => {
+    uploadForm.requestSubmit();
+});
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Streaming LLM Responses in the Browser}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why Streaming?}
+
+\begin{itemize}
+  \item Immediate user feedback
+  \item Reduced perceived latency
+  \item Long answers remain usable
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Frontend Mechanism}
+
+\begin{itemize}
+  \item \textbf{Fetch API} with streamed response
+  \item \textbf{ReadableStream} reader
+  \item Chunk-by-chunk text processing
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key UX Effect}
+
+\begin{itemize}
+  \item User sees \y{partial results} instantly
+  \item No blocking on full completion
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Incremental Rendering}
+
+\begin{itemize}
+  \item Accumulate streamed text
+  \item Re-render on each new chunk
+  \item Markdown parsed continuously
+\end{itemize}
+
+\vspace{2mm}
+\begin{minipage}{7cm}
+\tiny
+\begin{lstlisting}
+const reader = response.body.getReader();
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  partial += decoder.decode(value);
+  responseDiv.innerHTML = marked.parse(partial);
+}
+\end{lstlisting}
+\end{minipage}
+
+\vspace{2mm}
+\textbf{Design Choice}
+
+\begin{itemize}
+  \item Simple, robust rendering
+  \item \rtext{No WebSockets required}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Frontend Capabilities: Math Rendering and Sessions}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Streaming Mathematical Content}
+
+\vspace{1mm}
+\begin{center}
+  \includegraphics[width=0.95\textwidth]{../../images/img11/dawid_maths.png}
+\end{center}
+
+\vspace{1mm}
+\small
+Mathematical expressions rendered live during streamed responses using
+\y{Markdown} and \y{MathJax}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Session Display and Management}
+
+\vspace{1mm}
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{../../images/img11/dawid_session_choice.png}
+\end{center}
+
+\vspace{1mm}
+\small
+Multiple interaction sessions with selectable history and clear
+\y{context separation} at the frontend level.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID Backend: Central Uvicorn Server}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Role of the Backend Server}
+
+\begin{itemize}
+  \item Single \y{central entry point} for all requests
+  \item Receives queries from the frontend gateway
+  \item Handles sessions and user context
+  \item Streams responses back to the client
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Responsibilities}
+
+\begin{itemize}
+  \item Model selection and routing
+  \item Context assembly (history, RAG)
+  \item Tool and workflow execution
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{FastAPI + Uvicorn}
+
+\begin{itemize}
+  \item \textbf{FastAPI}: API definition and validation
+  \item \textbf{Uvicorn}: async, high-performance server
+  \item Multi-worker capable deployment
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Backend owns \y{state}, \y{logic}, and \y{control}
+  \item LLMs are \rtext{subsystems}, not the system
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Backend Route Overview}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Main Route Categories}
+
+\begin{itemize}
+  \item \textbf{LLM Routes}  
+        Prompt handling, streaming responses
+  \item \textbf{Upload Routes}  
+        File transfer, storage, metadata
+  \item \textbf{Audio Routes}  
+        Speech upload and transcription
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Supporting Routes}
+
+\begin{itemize}
+  \item Dataspace and document access
+  \item Session and user management
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{API Routes}
+
+\begin{itemize}
+  \item OpenAI-compatible chat API
+  \item Streaming and non-streaming endpoints
+  \item Programmatic access for external tools
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principles}
+
+\begin{itemize}
+  \item Clear \y{separation of concerns}
+  \item Explicit routing and ownership
+  \item Routes reflect system capabilities
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{LLM Streaming Routes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Purpose of LLM Routes}
+
+\begin{itemize}
+  \item Accept user queries from the gateway
+  \item Build prompts from session history
+  \item Integrate retrieved context (RAG)
+  \item Return responses as \y{streams}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Streaming Logic}
+
+\begin{itemize}
+  \item Token-wise or chunk-wise output
+  \item Immediate forwarding to frontend
+  \item Non-blocking async execution
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Unified Interface}
+
+\begin{itemize}
+  \item Same route for local and cloud models
+  \item OpenAI, Claude, Gemini, LLaMA, etc.
+  \item Model chosen at runtime
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interception Points}
+
+\begin{itemize}
+  \item Function call detection
+  \item Tool execution triggers
+  \item Session state updates
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Insight}
+
+\begin{itemize}
+  \item LLM output is \rtext{not final}
+  \item It is an intermediate signal
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Upload and File Management Routes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Purpose of Upload Routes}
+
+\begin{itemize}
+  \item Receive files from the frontend gateway
+  \item Store data in \y{session- or user-specific} folders
+  \item Register files for later access by tools
+\end{itemize}
+
+\vspace{2mm}
+\textbf{File Types}
+
+\begin{itemize}
+  \item Documents (PDF, text, Markdown)
+  \item Data files (NetCDF, images)
+  \item Audio recordings
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\textbf{Backend Handling}
+
+\begin{itemize}
+  \item Controlled directory structure
+  \item Metadata stored with session context
+  \item Optional indexing for retrieval
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Integration Points}
+
+\begin{itemize}
+  \item Retrieval-Augmented Generation (RAG)
+  \item Tool execution (plots, analysis)
+  \item Download and reuse in workflows
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Uploaded files become \y{first-class resources}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Audio Routes: Speech-to-Text}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item Natural user interaction via speech
+  \item Hands-free input for complex queries
+  \item Multimodal access without UI complexity
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Frontend Interaction}
+
+\begin{itemize}
+  \item Audio recorded in the browser
+  \item File uploaded via gateway
+  \item Treated like any other uploaded resource
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-5mm}
+\textbf{Backend Processing}
+
+\begin{itemize}
+  \item Local or remote speech-to-text engine
+  \item Conversion to plain text
+  \item Injected into standard LLM pipeline
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Audio is a \y{preprocessing step}
+  \item All downstream logic remains text-based
+  \item No special cases for speech afterwards
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{User Management and Dataspaces}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{User and Session Model}
+
+\begin{itemize}
+  \item Each interaction tied to a \y{session ID}
+  \item Optional persistent user identity
+  \item Separation of short-term and long-term context
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Access Control}
+
+\begin{itemize}
+  \item User-specific private areas
+  \item Controlled access to shared resources
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Dataspaces}
+
+\begin{itemize}
+  \item Private document folders per user
+  \item Group-shared knowledge spaces
+  \item Clear ownership and responsibility
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Purpose}
+
+\begin{itemize}
+  \item Organize documents and data
+  \item Provide \y{structured context} to the LLM
+  \item Enable collaborative workflows
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Retrieval-Augmented Generation (RAG)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item LLMs do not know user-specific documents
+  \item Uploaded data must influence responses
+  \item Context must be \y{selected}, not dumped
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Local Retrieval}
+
+\begin{itemize}
+  \item Document chunks embedded locally
+  \item Similarity search via \textbf{FAISS}
+  \item No external data transfer
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Context Assembly}
+
+\begin{itemize}
+  \item Detect when documents are relevant
+  \item Retrieve top-matching chunks
+  \item Inject into prompt before generation
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item RAG augments \y{knowledge}, not reasoning
+  \item The LLM remains the decision engine
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Available LLM Models and Capability Tiers}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Capability Tiers}
+
+\begin{itemize}
+  \item \textbf{FAST}  
+        Lightweight, fast, cost-efficient
+  \item \textbf{CORE}  
+        Strong general-purpose models
+  \item \textbf{PRO}  
+        Heavy reasoning, coding, long context
+  \item \textbf{ULTRA}  
+        Highest available model capability
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Choice}
+
+\begin{itemize}
+  \item One \y{best model} per tier and supplier
+  \item No artificial or redundant model options
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\vspace{-5mm}
+\textbf{Supported Model Families}
+
+\begin{itemize}
+  \item OpenAI {\tiny (Gpt5.2, GPT5.1, GPT-4o, GPT-5-mini)}
+  \item Claude (Anthropic)
+  \item Gemini (Google)
+  \item LLaMA (local and remote)
+  \item Mistral / Mixtral
+  \item GPT-OSS
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Users select \y{capability}, not internals
+  \item Backend resolves tier to concrete model
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID Model Aliases and Routing}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Internal Model Aliases}
+
+\begin{itemize}
+  \item Abstract names used by the frontend
+  \item Examples:
+  \begin{itemize}
+    \item \texttt{openai-fast}, \texttt{openai-core}
+    \item \texttt{claude-pro}
+    \item \texttt{llama-fast}
+  \end{itemize}
+  \item Aliases encode \y{capability tier}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why Aliases?}
+
+\begin{itemize}
+  \item Stable interface for users
+  \item Models can change transparently
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\textbf{Backend Resolution}
+
+\begin{itemize}
+  \item Alias mapped to concrete model name
+  \item Mapping defined centrally in settings
+  \item Supplier-specific resolution
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Routing Logic}
+
+\begin{itemize}
+  \item Backend checks model ownership
+  \item Selects local or remote backend
+  \item Routes request to correct engine
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Frontend never sees real model IDs
+  \item Backend retains \y{full control}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Function Calling in DAWID: \rtext{Weather Service Productivity}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{DAWID as a Productivity Platform}
+
+\begin{itemize}
+  \item DAWID supports \y{internal and external} weather services
+  \item Focus on operational and scientific workflows
+  \item Integration of data, models, and tools
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical Weather-Service Tasks}
+
+\begin{itemize}
+  \item Access and process NWP data
+  \item Generate plots, maps, and diagnostics
+  \item Perform domain-specific analyses
+  \item Support decision-making and reporting
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\textbf{Role of Function Calling}
+
+\begin{itemize}
+  \item LLM suggests \y{domain-relevant actions}
+  \item DAWID executes approved functions
+  \item Actions are embedded in workflows
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item Function calls increase \y{efficiency}, not autonomy
+  \item \rtext{DAWID {\bf augments expert work}, it does not replace it}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Classical Function Calling in DAWID (JSON-Based)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What “Classical” Means in DAWID}
+
+\begin{itemize}
+  \item Function calls encoded explicitly in text
+  \item Usually formatted as \y{JSON blocks}
+  \item Independent of specific LLM providers
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why DAWID Still Supports This}
+
+\begin{itemize}
+  \item Works with \y{all models} \\ (local and remote)
+  \item Robust fallback mechanism
+  \item Easy to debug and inspect
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Example: Function Proposal by the LLM}
+
+\begin{codeonly}{JSON-style function call}
+{"function_calls": [{
+      "name": "get_icon_forecast",
+      "arguments": {
+        "variable": "t2m",
+        "region": "Germany" }}]}
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{DAWID Interpretation}
+
+\begin{itemize}
+  \item JSON is \y{parsed and validated}
+  \item Function is checked against allow-list
+  \item Execution only happens in backend
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Native Function Calling in DAWID}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What “Native” Means}
+
+\begin{itemize}
+  \item Functions declared via explicit schemas
+  \item Typed arguments and clear signatures
+  \item Direct support by modern LLM APIs
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Advantages in DAWID}
+
+\begin{itemize}
+  \item \y{No JSON parsing} from free text
+  \item Fewer hallucinated calls
+  \item Safer execution path
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-5mm}
+\textbf{DAWID Integration}
+
+\begin{itemize}
+  \item Functions registered centrally
+  \item Only allowed tools are exposed
+  \item Backend controls execution order
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical Use Cases}
+
+\begin{itemize}
+  \item Plot generation
+  \item Data download and extraction
+  \item Model-based diagnostics
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Native calls are \y{preferred}
+  \item Classical calls remain a fallback
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Function Calling inside DAWID: Execution Paths}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.47\textwidth}
+
+\textbf{Internal Execution: LangGraph}
+
+\begin{itemize}
+  \item Functions organized as \y{LangGraph nodes}
+  \item Explicit shared state passed between nodes
+  \item Deterministic execution order
+  \item Suitable for multi-step workflows
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical Internal Tasks}
+
+\begin{itemize}
+  \item Data preprocessing and analysis
+  \item Plot and image generation
+  \item Chained scientific workflows
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-3mm}
+\textbf{External Execution: HTTP Endpoints}
+
+\begin{itemize}
+  \item Functions exposed via REST endpoints
+  \item Called from DAWID via HTTP requests
+  \item External services remain isolated
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Typical External Tasks}
+
+\begin{itemize}
+  \item Access to targeted data services
+  \item Specialized model inference
+  \item \rtext{\bf enables modular service development}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key Principle}
+
+\begin{itemize}
+  \item \y{function can run on various computers}
+  \item Execution remains controlled and auditable, 
+  flexible, cloud ready
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{External Function Calls inside DAWID}
+
+
+\begin{center}
+  \includegraphics[width=0.8\textwidth]{../../images/img11/dawid_external_functions.png}
+\end{center}
+
+\vspace{1mm}
+\small
+Integration of \y{external function calls} within the DAWID backend through REQUESTS.
+
+
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI-Based Feature Detection: Weather Fronts}
+
+\vspace{-3mm}
+\begin{center}
+\begin{tabular}{ccc}
+  \includegraphics[width=0.30\textwidth]{../../images/img11/plot_000.png} &
+  \includegraphics[width=0.30\textwidth]{../../images/img11/plot_001.png} &
+  \includegraphics[width=0.30\textwidth]{../../images/img11/plot_002.png} \\
+  \includegraphics[width=0.30\textwidth]{../../images/img11/plot_003.png} &
+  \includegraphics[width=0.30\textwidth]{../../images/img11/plot_004.png} &
+  \includegraphics[width=0.30\textwidth]{../../images/img11/plot_005.png}
+\end{tabular}
+\end{center}
+
+\vspace{-4.5cm}
+\footnotesize
+AI-detected weather fronts applied to ICON forecast fields at successive lead times.
+\y{Warm fronts (red)}, \y{cold fronts (blue)}, and \y{occluded fronts (violet)} are overlaid with
+mean sea-level pressure contours.
+
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Input Data and Preprocessing}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Meteorological Input Fields}
+
+\begin{itemize}
+  \item Mean sea-level pressure (\textbf{PMSL})
+  \item 2\,m temperature (\textbf{T2M})
+  \item 2\,m relative humidity (\textbf{RH2M})
+  \item 10\,m wind components (\textbf{U10M}, \textbf{V10M})
+  \item Land--sea mask (\textbf{FRLAND})
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Data Source}
+
+\begin{itemize}
+  \item ICON analysis and forecast fields
+  \item Regular latitude--longitude grid
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Preprocessing Steps}
+
+\begin{itemize}
+  \item Channel-wise normalization
+  \item Scaling to comparable numerical ranges
+  \item Binary encoding of land--sea mask
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Resulting Tensor}
+
+\begin{itemize}
+  \item Shape: \y{[6, lat, lon]}
+  \item Stored in NetCDF format
+  \item One file per analysis or forecast time
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Preserve physical meaning
+  \item Avoid unnecessary feature engineering
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Model Architecture and Training}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Model Architecture}
+
+\begin{itemize}
+  \item U-Net for semantic segmentation
+  \item Encoder--decoder with skip connections
+  \item Preserves spatial detail
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Input / Output}
+
+\begin{itemize}
+  \item Input channels: \y{6}
+  \item Output classes: \y{4}
+  \item Pixel-wise classification
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-8mm}
+\textbf{PyTorch Model Setup}
+
+{\footnotesize
+\begin{lstlisting}[language=Python]
+model = UNet(
+    in_channels=6,
+    out_channels=4,
+    init_features=64
+).to(device)
+
+loss_fn = nn.CrossEntropyLoss()
+optimizer = torch.optim.AdamW(
+    model.parameters(),
+    lr=1e-4 )
+\end{lstlisting}
+}
+
+\vspace{0mm}
+\textbf{Training Setup}
+
+\begin{itemize}
+  \item Supervised learning
+  \item Labeled frontal maps
+  \item Early stopping and validation
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Operational Front Detection in Forecast Practice}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\textbf{From Research to Operations}
+
+\begin{itemize}
+  \item AI-based front detection is \y{operationally deployed}
+  \item Integrated into \y{NinJo service stations}
+  \item Available directly in the forecasters’ workflow
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational Value}
+
+\begin{itemize}
+  \item Fast, consistent front analysis
+  \item Supports situational awareness
+  \item Reduces manual drawing effort
+\end{itemize}
+
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+\textbf{User Acceptance}
+
+\begin{itemize}
+  \item Widely used by weather forecasters
+  \item Particularly helpful in complex synoptic situations
+  \item Acts as \y{decision support}, not automation
+\end{itemize}
+
+\vspace{-1mm}
+\begin{center}
+  \includegraphics[width=0.5\textwidth]{../../images/img11/plot_000.png}
+\end{center}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Summary
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Lecture 11 — Summary}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\textbf{DAWID Platform}
+
+\begin{itemize}
+  \item \rtext{\bf Productivity platform} for NHMS 
+  \item Supports \y{internal and external} users
+  \item Lightweight web frontend
+  \item Streaming interaction and session management
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Backend Architecture}
+
+\begin{itemize}
+  \item Modular FastAPI backend
+  \item Unified access to \y{multiple LLM families}
+  \item \y{Controlled function} execution
+  \item Local and external services integrated
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{AI Integration}
+
+\begin{itemize}
+  \item \y{Function calling} via LangGraph workflows
+  \item \y{External tools} accessed through validated APIs
+  \item Retrieval-Augmented Generation \y{RAG using FAISS}
+\end{itemize}
+
+\vspace{4mm}
+\color{darkgreen}
+\textbf{Operational Feature Detection}
+
+\begin{itemize}
+  \item \color{darkgreen}AI-based feature detection in operations
+  \item Front detection integrated into \y{NinJo}
+  \item High acceptance among forecasters
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec11.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 11}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\setagendaboxforlecture{11}
+
+\input{../lec_agenda.tex}
+\input{lec11_01.tex}
+\input{lec11_02.tex}
+\input{lec11_03.tex}
+\input{lec11_04.tex}
+\input{lec11_05.tex}
+\input{lec11_06.tex}
+\input{lec11_07.tex}
+\input{lec11_08.tex}
+\input{lec11_09.tex}
+\input{lec11_10.tex}
+\input{lec11_11.tex}
+\input{lec11_12.tex}
+\input{lec11_13.tex}
+\input{lec11_14.tex}
+\input{lec11_15.tex}
+\input{lec11_16.tex}
+\input{lec11_17.tex}
+\input{lec11_18.tex}
+\input{lec11_19.tex}
+\input{lec11_20.tex}
+\input{lec11_21.tex}
+\input{lec11_22.tex}
+\input{lec11_23.tex}
+\input{lec11_24.tex}
+\input{lec11_25.tex}
+\input{lec11_26.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

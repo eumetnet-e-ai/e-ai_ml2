@@ -1,0 +1,65 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{OmegaConf: From YAML to Runtime Objects}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{The problem}
+
+\begin{itemize}
+  \item YAML files are static text
+  \item training code needs structured objects
+  \item configuration must be inspectable at runtime
+\end{itemize}
+
+\vspace{2mm}
+\textbf{OmegaConf solves this}
+
+\begin{itemize}
+  \item represents configuration as Python objects
+  \item preserves hierarchy and structure
+  \item supports interpolation and defaults
+\end{itemize}
+
+\vspace{2mm}
+The result is a \y{\texttt{DictConfig}} object.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Properties of \texttt{DictConfig}}
+
+\begin{itemize}
+  \item hierarchical (mirrors YAML structure)
+  \item accessed via attributes or keys
+  \item supports type checking
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item training code stays generic
+  \item behaviour is fully configuration-driven
+  \item experiments become reproducible by construction
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Configuration becomes part of the program state.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

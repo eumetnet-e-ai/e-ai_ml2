@@ -1,0 +1,63 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 17
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Forecasting in One Sentence}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{3mm}
+
+\textbf{\textcolor{blue}{Weather forecasting = state estimation + prediction}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item We estimate the \textbf{current atmospheric state}
+  \item Then we predict how it changes in time
+\end{itemize}
+
+\vspace{-2mm}
+\[
+\underbrace{x(t_0)}_{\text{best estimate now}}
+\quad \rightarrow \quad
+\underbrace{x(t_0+\Delta t)}_{\text{future state}}
+\]
+
+\vspace{3mm}
+\textbf{\textcolor{red}{Why it is hard}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item the atmosphere is \textbf{chaotic}
+  \item small errors grow with time
+  \item observations are incomplete and noisy
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-5mm}
+\textbf{\textcolor{violet}{So we quantify uncertainty}}
+\begin{itemize}
+  \item ensembles: many forecasts instead of one
+\end{itemize}
+
+\centering
+\vspace{2mm}
+
+% image placeholder (you can replace)
+\includegraphics[width=\linewidth]{../../images/img16/nwp_continuum_crop.png}
+
+\vspace{1mm}
+{\tiny \textcolor{gray}{Forecasting: observation $\rightarrow$ analysis $\rightarrow$ prediction}}
+\end{column}
+
+\end{columns}
+
+\end{frame}

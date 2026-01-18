@@ -1,0 +1,41 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{RK4 Implementation (Core Loop)}
+
+\footnotesize
+\vspace{-1mm}
+
+\textbf{Right-hand side}
+\[
+\mathrm{RHS}(\phi,t)
+=
+-u\,\partial_x\phi
+-w\,\partial_z\phi
++K\nabla^2\phi
++A(t)S(x,z)
+-(\lambda+\lambda_{\text{top}})\phi.
+\]
+
+\textbf{One RK4 step (schematic)}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+k1 = rhs(phi, t)
+k2 = rhs(phi + 0.5*dt*k1, t + 0.5*dt)
+k3 = rhs(phi + 0.5*dt*k2, t + 0.5*dt)
+k4 = rhs(phi + dt*k3,     t + dt)
+phi_next = phi + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)
+\end{lstlisting}
+
+\vspace{1mm}
+\textbf{Snapshot logic}
+\begin{itemize}
+  \item Choose $n_{vis}$ time indices between $0$ and $nsteps$
+  \item Save numbered PNGs: \texttt{1\_dyn\_XX.png}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This gives clean training snapshots + nice lecture figures.}
+
+\end{frame}

@@ -1,0 +1,65 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 27
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Failure Handling and Robustness}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.36\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item LLM extraction errors
+  \item Missing or delayed data
+  \item Tool execution failures
+  \item Invalid intermediate state
+\end{itemize}
+
+\vspace{0mm}
+\footnotesize
+{\bf LangGraph strategy} \\
+Each node handles \y{local failure} \\
+State records partial results \\
+Graph execution remains controlled
+
+\normalsize
+\vspace{2mm}
+\textbf{Key principle}
+\begin{itemize}
+  \item \rtext{Failures are \y{data}, not crashes}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\textbf{Example: guarded node}
+
+\vspace{-6mm}
+\begin{codeonly}{Failure-aware node}
+def plot_temperature_node(state: MyState) -> MyState:
+  if state.get("temperature_data") is None:
+    state["output"] = "No data available"
+    return state
+
+  plot_t2m_EU(state["temperature_data"], save_plot=True)
+  state["output"] = "Plot created"
+  return state
+\end{codeonly}
+
+\vspace{2mm}
+Failures do not break the agent.  
+They update the state and allow the graph to terminate safely.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

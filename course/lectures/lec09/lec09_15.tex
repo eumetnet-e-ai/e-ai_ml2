@@ -1,0 +1,47 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Graph Example: Reconstructing a Function from Sparse Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\textbf{Setup}
+
+\begin{itemize}
+  \item 1D spatial domain discretized into nodes
+  \item True function $f(x)$ defined on all nodes
+  \item Observations available only at few locations
+\end{itemize}
+
+\vspace{2mm}
+Each node carries:
+\begin{itemize}
+  \item observed value (or zero if missing)
+  \item a binary observation mask
+\end{itemize}
+
+\vspace{2mm}
+The task is to reconstruct $f(x)$ at \emph{all} nodes.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\includegraphics[width=\textwidth]{../../images/img09/gnn_obs_naive_j1_jj1_0.png}
+
+\vspace{1mm}
+\centering
+Sparse observations and GNN reconstruction
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

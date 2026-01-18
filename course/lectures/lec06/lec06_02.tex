@@ -1,0 +1,75 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 2
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{LLMs as Sequence-to-Sequence Machines}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Core abstraction}
+
+\begin{itemize}
+  \item Input: sequence of tokens
+  \item Output: sequence of tokens
+  \item \y{Tokens} represent words or subwords
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mathematical view}
+
+\[
+(x_1, \dots, x_n)
+\;\longrightarrow\;
+(y_1, \dots, y_m)
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item Variable-length input
+  \item Variable-length output
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Next-token prediction}
+
+\begin{itemize}
+  \item Output generated one token at a time
+  \item Each step predicts a probability distribution
+\end{itemize}
+
+\vspace{-1mm}
+\[
+p(y_t \mid x_{1:n}, y_{1:t-1})
+\]
+
+\vspace{1mm}
+\textbf{Consequences}
+
+\begin{itemize}
+  \item Same model for all tasks
+  \item Tasks differ only by input prompt
+  \item No task-specific architecture needed
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+LLMs reduce language understanding and generation to \y{probabilistic sequence modeling.}
+}
+
+\end{frame}

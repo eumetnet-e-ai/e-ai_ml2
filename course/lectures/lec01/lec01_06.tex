@@ -1,0 +1,53 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{NumPy Arrays: 1D, 2D, and 3D Data - \y{Standard Programming Skills}}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.34\textwidth}
+
+\textbf{Core idea}
+
+\begin{itemize}
+  \item One data structure for science
+  \item Same logic for 1D, 2D, 3D data
+  \item Used for time series, maps, fields
+  \item Basis for ML tensors
+  \item \y{Learn the basics}
+  \y{yourself, its easy.}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.64\textwidth}
+
+\begin{codeonly}{NumPy array dimensions}
+import numpy as np
+
+x = np.array([1, 2, 4])          # 1D
+A = np.array([[1, 2], [3, 4]])   # 2D
+B = np.zeros((10, 50, 100))      # 3D
+
+print(x.shape, A.shape, B.shape)
+# prints (3,) (2, 2) (10, 50, 100)
+
+print(x)
+# prints [1 2 4]
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Dimensions encode structure, not meaning}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}

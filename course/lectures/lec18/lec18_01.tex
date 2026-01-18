@@ -1,0 +1,78 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 01
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{AI Data Assimilation — Why Does It Matter?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Numerical Weather Prediction (NWP)}
+
+\vspace{1mm}
+Weather forecasts are produced by integrating
+\y{high-dimensional dynamical models} forward in time.
+
+\vspace{0mm}
+However:
+
+\begin{itemize}
+  \item The atmosphere is \y{chaotic}
+  \item Small initial errors grow rapidly
+  \item Forecast skill is \rtext{\bf dominated by initial conditions}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Core problem}
+
+\vspace{1mm}
+At any analysis time, we have:
+\begin{itemize}
+  \item an \y{imperfect model forecast} (background)
+  \item \y{sparse, noisy observations}
+\end{itemize}
+
+\vspace{1mm}
+These must be combined optimally.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Data assimilation}
+
+\vspace{1mm}
+Data assimilation provides a \y{statistically consistent framework}
+to merge:
+\[
+\text{model information}
+\quad + \quad
+\text{observations}
+\]
+
+\vspace{2mm}
+The result is the \y{analysis state}:
+\begin{itemize}
+  \item best estimate of the atmospheric state
+  \item starting point for forecasts
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Data assimilation is the information bottleneck of NWP.}
+
+\vspace{1mm}
+Everything that follows — forecasts, warnings, applications —
+depends on it.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

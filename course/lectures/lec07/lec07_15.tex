@@ -1,0 +1,66 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Streaming LLM Responses}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Standard LLM interaction}
+
+\[
+\text{prompt}
+\;\longrightarrow\;
+\text{full response}
+\]
+
+User waits until generation is finished.
+
+\vspace{2mm}
+\textbf{\y{Streaming} interaction}
+
+\[
+\text{prompt}
+\;\longrightarrow\;
+(\delta_1, \delta_2, \dots)
+\]
+
+Partial tokens are delivered incrementally.
+
+\vspace{3mm}
+\rtext{Recall that \y{\bf LLMs generate tokens incrementally!}}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-7mm}
+\textbf{What streaming changes}
+
+\begin{itemize}
+  \item Faster perceived response
+  \item Progressive rendering
+  \item Interactive user experience
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What streaming does not change}
+
+\begin{itemize}
+  \item Model architecture
+  \item Reasoning capability
+  \item Final content
+\end{itemize}
+
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,63 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{From Variational Data Assimilation to AI-Var}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Variational DA: main Idea}
+
+\vspace{3mm}
+The analysis is obtained by minimizing:
+\[
+J(x)
+=
+\frac{1}{2}(x-x_b)^T B^{-1}(x-x_b)
++
+\frac{1}{2}(y-H(x))^T R^{-1}(y-H(x))
+\]
+
+\vspace{2mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item first term: \y{background constraint}
+  \item second term: \y{observation constraint}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Classical DA = iterative \\numerical minimization.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\centering
+AI-VAR is the \y{AI verion} of \rtext{\bf 3D-Var, 4D-Var or En-VAR} depending on 
+how exactly the minimizer is formulated. 
+
+\vspace{3mm}
+\hspace*{-1.3cm}
+\begin{minipage}{9cm}
+\includegraphics[width=\textwidth]{../../images/img18/aivar2.png}
+\end{minipage}
+
+\vspace{1mm}
+\footnotesize
+AI-Var sits inside the \y{variational DA family},
+alongside 3D-Var, 4D-Var, and EnVar.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

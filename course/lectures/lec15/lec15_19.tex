@@ -1,0 +1,62 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{ERA Data Stored in Zarr}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{What these images show}
+
+\begin{itemize}
+  \item ERA reanalysis data after Zarr conversion
+  \item accessed chunk-wise, not as monolithic files
+  \item identical physical content, different storage logic
+\end{itemize}
+
+\vspace{2mm}
+Zarr enables:
+\begin{itemize}
+  \item parallel access to spatial subdomains
+  \item efficient mini-batching for ML
+  \item scalable training on HPC systems
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Zarr is an ML-optimized view \\
+of reanalysis data.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+
+\vspace{-10mm}
+\includegraphics[width=0.95\textwidth]{../../images/img15/era_t2m_2025_01_01_00_crop.png}
+
+\vspace{-2mm}
+
+\includegraphics[
+  width=0.8\textwidth,
+  trim=0 6cm 0 0,
+  clip
+]{../../images/img15/era_zarr_1_0_crop.png}
+
+
+\vspace{1mm}
+\footnotesize
+Top: Global ERA5 2\,m temperature field.\\
+Bottom: Spatial chunk extracted from Zarr archive.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

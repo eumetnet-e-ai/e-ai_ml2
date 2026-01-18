@@ -1,0 +1,62 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Model Registry: What Is Stored}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\textbf{Core concept}
+
+\begin{itemize}
+  \item A registered model version references exactly \y{one run}
+  \item Model versions are immutable
+  \item Full traceability to data and code
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Stored per model version}
+
+\begin{itemize}
+  \item Trained parameters (weights)
+  \item Model architecture
+  \item MLFlow flavor metadata
+  \item Environment specification
+  \item Optional input/output signature
+\end{itemize}
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\vspace{-8mm}
+
+\footnotesize
+\textbf{How the architecture is stored}
+
+\begin{itemize}
+  \item Serialized via the \y{MLFlow flavor}
+  \item For PyTorch:
+    \begin{itemize}
+      \item Python class structure
+      \item State dictionary (parameter tensors)
+      \item Loader reference (\texttt{mlflow.pytorch})
+    \end{itemize}
+  \item Architecture is reconstructed at load time
+\end{itemize}
+
+\vspace{4mm}
+\rtext{
+When a model is logged from PyTorch, MLFlow stores all information needed to
+reconstruct the complete neural network at the PyTorch level, including the
+network structure, trained parameters, and the code required to load the model.
+}
+
+\end{column}
+
+\end{columns}
+\end{frame}

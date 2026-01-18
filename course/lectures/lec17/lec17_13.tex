@@ -1,0 +1,44 @@
+% ================================================================================
+% Lecture 17 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Training dataset (Zarr) inspected as Xarray}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.36\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Key idea}
+\begin{itemize}
+\item dataset is a \y{4D tensor}:
+\newline
+(time, variable, ensemble, cell)
+\item efficient I/O via \y{chunking} (Dask)
+\item includes metadata:
+\begin{itemize}
+\item latitudes / longitudes
+\item variable-wise statistics
+(mean, std, min/max)
+\end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\color{red}\bf
+\textbf{Take-away:}
+this is \y{ML-ready} data with rich metadata.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.64\textwidth}
+\vspace{-2mm}
+\begin{center}
+\includegraphics[width=\linewidth]{../../images/img17/dataset_xarray.png}
+\end{center}
+\end{column}
+
+\end{columns}
+\end{frame}

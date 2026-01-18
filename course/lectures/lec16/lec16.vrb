@@ -1,0 +1,69 @@
+\mytitle{Tools can be Functions \emph{or} Agents}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Next step beyond tool calling}
+
+\vspace{0mm}
+With function calling, a ``tool'' does not need to be a single function.
+It can also be an \y{agent} --- a specialist that performs multi-step actions.
+
+\vspace{0mm}
+\textbf{Example specialist agents}
+\begin{itemize}
+  \item \textbf{Search agent:} finds reliable sources
+  \item \textbf{Data agent:} downloads + preprocesses datasets
+  \item \textbf{Code agent:} runs scripts and produces figures
+  \item \textbf{Report agent:} writes a structured summary
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key idea:}
+the LLM becomes a \y{coordinator} that delegates tasks
+and combines results into one coherent answer.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-7mm}
+{\scriptsize\textbf{Example: delegate to a specialist agent}}
+\vspace{1mm}
+
+\begin{lstlisting}
+{
+  "tool_name": "search_agent",
+  "arguments": {
+    "task": "Find the latest DWD warnings for Berlin",
+    "sources": "official",
+    "return_format": "short_summary + links"
+  }
+}
+\end{lstlisting}
+
+\vspace{1mm}
+Delivers as return:
+
+\begin{lstlisting}
+{
+  "agent_result": {
+    "summary": "...",
+    "sources": ["...","..."]
+  }
+}
+\end{lstlisting}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize \textit{A tool call can trigger a workflow --- not just one function.}}
+\end{center}
+
+\end{column}
+
+\end{columns}

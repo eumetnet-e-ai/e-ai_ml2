@@ -1,0 +1,65 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Anemoi: A Modular ML Framework for Weather}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Design philosophy}
+
+\begin{itemize}
+  \item separate concerns cleanly
+  \item make each component replaceable
+  \item scale from experiments to operations
+\end{itemize}
+
+\vspace{2mm}
+Anemoi is not a single package, but a \y{coordinated ecosystem}.
+
+\vspace{2mm}
+Each package addresses one layer:
+\begin{itemize}
+  \item data handling
+  \item graph construction
+  \item model definition
+  \item training orchestration
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Core Anemoi packages}
+
+\begin{itemize}
+  \item \texttt{anemoi-datasets}
+  \item \texttt{anemoi-graphs} {\color{blue}in anemoi-core repo}
+  \item \texttt{anemoi-models} {\color{blue}in anemoi-core repo}
+  \item \texttt{anemoi-training} {\color{blue}in anemoi-core repo}
+\end{itemize}
+
+\vspace{2mm}
+All packages:
+\begin{itemize}
+  \item use YAML + Hydra + OmegaConf
+  \item integrate via clearly defined interfaces
+  \item are developed in a shared monorepo
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Graphs connect geometry; packages connect workflows.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,79 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 20
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{A Tiny Language Dataset}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left -------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Vocabulary}
+
+\begin{itemize}
+  \item Small, fixed word set
+  \item Each word mapped to an ID
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\text{``I am hungry''}
+\;\longrightarrow\;
+[1,\,2,\,43]
+\]
+
+\vspace{1mm}
+\textbf{Padding}
+
+\begin{itemize}
+  \item Fixed sequence length
+  \item Padding token = 0
+\end{itemize}
+
+\end{column}
+
+% --- Right ------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-9mm}
+\textbf{Training sentences}
+
+{\footnotesize
+\begin{itemize}
+  \item I am hungry
+  \item you are tired
+  \item we are happy
+  \item they are sad
+  \item the weather is nice
+\end{itemize}
+}
+
+\vspace{1mm}
+\textbf{Training pairs}
+
+\vspace{-3mm}
+\[
+\text{Input: } (x_1,\dots,x_{n-1})
+\quad\rightarrow\quad
+\text{Target: } (x_1,\dots,x_n)
+\]
+
+\vspace{1mm}
+\centering
+{\footnotesize
+Teacher forcing: true previous tokens are known.
+}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{The model learns language from very simple sequences.}
+
+\end{frame}

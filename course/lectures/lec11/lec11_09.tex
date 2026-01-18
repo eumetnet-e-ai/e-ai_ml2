@@ -1,0 +1,61 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Backend Route Overview}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Main Route Categories}
+
+\begin{itemize}
+  \item \textbf{LLM Routes}  
+        Prompt handling, streaming responses
+  \item \textbf{Upload Routes}  
+        File transfer, storage, metadata
+  \item \textbf{Audio Routes}  
+        Speech upload and transcription
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Supporting Routes}
+
+\begin{itemize}
+  \item Dataspace and document access
+  \item Session and user management
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{API Routes}
+
+\begin{itemize}
+  \item OpenAI-compatible chat API
+  \item Streaming and non-streaming endpoints
+  \item Programmatic access for external tools
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principles}
+
+\begin{itemize}
+  \item Clear \y{separation of concerns}
+  \item Explicit routing and ownership
+  \item Routes reflect system capabilities
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

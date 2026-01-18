@@ -1,0 +1,66 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{APIs as a Scaling Principle}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Core Idea}
+
+\begin{itemize}
+  \item APIs defines a contract on \y{how} functionality is accessed
+  \item Clear \y{separation} of interface and implementation
+  \item Same principle from notebooks to services
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why This Matters}
+
+\begin{itemize}
+  \item Logic becomes reusable and testable
+  \item Notebooks stay thin and readable
+  \item Systems can grow without rewrites
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1cm}
+\textbf{Example 1: Local API (project code)}
+
+\begin{codeonly}{Function API usage}
+from model import forecast
+y = forecast(x, params)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Example 2: Web API (service)}
+
+\begin{codeonly}{HTTP request}
+response = requests.get(
+  "/weather",
+  params={"city": "Berlin", "date": "2025-01-20"})
+data = response.json()
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key Insight}
+
+\begin{itemize}
+  \item APIs shift complexity behind a \y{stable boundary}
+\end{itemize}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

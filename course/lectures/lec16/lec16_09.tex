@@ -1,0 +1,65 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 09
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Step 1: From Text to Tokens}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{\textcolor{blue}{Computers do not read words}}
+
+\vspace{2mm}
+\begin{itemize}
+  \item Text is split into \textbf{tokens}
+  \item Tokens are pieces of words, punctuation, spaces
+  \item Example:
+\end{itemize}
+
+\vspace{2mm}
+{\footnotesize
+\texttt{``forecasting is hard''}\\
+$\Rightarrow$ \texttt{[``fore'', ``casting'', `` is'', `` hard'']}\\
+\vspace{1mm}
+$\Rightarrow$ \texttt{[1523,\;9182,\;318,\;6732]} \quad {\tiny \textcolor{gray}{(token IDs)}}
+}
+
+\vspace{4mm}
+\textbf{\textcolor{red}{Why tokens matter:}}
+\quad they define what the model can represent efficiently.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-11mm}
+\includegraphics[width=0.8\linewidth]{../../images/img16/transformer_embedding.jpeg}
+
+\vspace{-2mm}
+\textbf{\textcolor{violet}{Tokens $\rightarrow$ vectors}}
+
+\vspace{0mm}
+\begin{itemize}
+  \item each token becomes a vector (\textbf{embedding})
+  \item vectors capture similarity:
+  {\tiny \newline (``rain'' closer to ``cloud'' than to ``banana'')}
+  \item position is added:
+  {\tiny \newline (word order matters)}
+\end{itemize}
+
+\vspace{0mm}
+{\tiny \textcolor{gray}{
+This is how text enters a neural network:
+as numbers in a high-dimensional space.
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}

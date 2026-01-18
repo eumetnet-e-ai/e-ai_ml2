@@ -1,0 +1,57 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 16
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{Nowcasting and NWP: One Continuum (Observations $\rightarrow$ DA $\rightarrow$ Forecast)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{\textcolor{blue}{NWP with Data Assimilation (DA) is the full framework}}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \textbf{observations} enter continuously:
+    {\tiny \newline radar, satellite, aircraft, surface stations, etc.}
+  \item \textbf{DA} combines obs + model:
+    {\tiny \newline best estimate of the 3D atmosphere at ``now''}
+  \item then \textbf{forecast propagation} produces future weather
+\end{itemize}
+
+\vspace{0mm}
+\textbf{\textcolor{violet}{Nowcasting is the short-range regime}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item lead times: \textbf{minutes to a few hours}
+  \item very high weight of recent observations
+  \item focus on rapidly evolving phenomena:
+    {\tiny \newline convective storms, precipitation cells}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{2mm}
+
+\includegraphics[width=\textwidth]{../../images/img16/nwc-to-fcst_crop.png}
+
+\vspace{3mm}
+{\tiny \textcolor{gray}{
+AI can support different parts: observations, DA, model emulation, and products.
+}}
+
+\hspace*{-8mm}\y{There is no strict boundary: it is one continuum.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

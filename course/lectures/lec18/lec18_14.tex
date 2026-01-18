@@ -1,0 +1,58 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 14
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{1D Generalization: Many Unseen Test Cases}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+\footnotesize
+
+\textbf{Test phase}
+
+\vspace{1mm}
+The trained AI-Var network is applied to
+\y{previously unseen} cases.
+
+\vspace{2mm}
+For each case:
+\begin{itemize}
+  \item different truth
+  \item different background
+  \item different observations
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Observation}
+
+\vspace{1mm}
+\begin{itemize}
+  \item consistent increments
+  \item smooth, physical updates
+  \item no retraining required
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf One network, many analyses.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=\textwidth]{../../images/img18/1d_multiple_01_crop.png}
+\includegraphics[width=\textwidth]{../../images/img18/1d_multiple_02_crop.png}
+\includegraphics[width=\textwidth]{../../images/img18/1d_multiple_05_crop.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

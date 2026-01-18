@@ -1,0 +1,57 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Reproducibility in Jupyter Notebooks}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why Reproducibility Matters}
+
+\begin{itemize}
+  \item Results must be repeatable
+  \item Experiments must be explainable
+  \item Others (and you later) must trust them
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical Problems}
+
+\begin{itemize}
+  \item Hidden kernel state
+  \item Cells executed out of order
+  \item Undocumented dependencies
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Four Simple Rules}
+
+\begin{itemize}
+  \item Restart kernel and \y{Run All}
+  \item Clear, explicit import and parameter cells
+  \item Save outputs (plots, files, artefacts)
+  \item Document dependencies and environment
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Message}
+
+\begin{itemize}
+  \item A notebook is an \y{executable document}
+\end{itemize}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

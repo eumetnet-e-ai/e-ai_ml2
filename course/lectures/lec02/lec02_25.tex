@@ -1,0 +1,64 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide 
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Remote Jupyter — Firewalls \& Troubleshooting}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Typical Problems}
+
+\begin{itemize}
+  \item Local port already in use
+  \item Remote port 8888 blocked by firewall
+  \item Unstable SSH connection
+  \item Multi-hop access (Jump / Bastion host)
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Important Note}
+
+\begin{itemize}
+  \item A blocked \texttt{8888} is \y{not an error}
+  \item SSH tunnels do not require open inbound ports
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Best Practices}
+
+\begin{itemize}
+  \item Remote:
+  \begin{itemize}
+    \item \texttt{--ip=127.0.0.1}
+    \item no public binding
+  \end{itemize}
+  \item Local:
+  \begin{itemize}
+    \item choose a free port (9001, 9002, \ldots)
+  \end{itemize}
+  \item Infrastructure:
+  \begin{itemize}
+    \item Bastion / jump host via \texttt{-J}
+  \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Recommendation}
+
+\begin{itemize}
+  \item \y{Never} expose Jupyter notebook ports publicly
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}

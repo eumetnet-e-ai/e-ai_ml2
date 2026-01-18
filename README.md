@@ -70,7 +70,8 @@ Large datasets are generally **not stored in Git**. See `data/` notes if present
 ### Participants
 - Follow the course schedule (Day 1 → Day 5).
 - Use the lecture PDFs as orientation and run the associated notebooks.
-- Exercises are designed to be runnable on standard laptops.
+- Use the manuscript PDF for further details!
+- Exercises are designed to be runnable on standard laptops. Eccodes will need LINUX or MAC. 
 
 ### Trainers / Instructors
 - Slides are built via LaTeX.

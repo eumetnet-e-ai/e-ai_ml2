@@ -1,0 +1,65 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Radar as Image Modality}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\vspace{-2mm}
+\textbf{Why visualization matters}
+
+\begin{itemize}
+  \item Radar fields are spatial data
+  \item Interpretation relies on patterns
+  \item Humans read radar as images
+\end{itemize}
+
+\vspace{0mm}
+For multimodal AI, the radar field is therefore
+converted into a \y{\textbf{visual representation}}:
+
+\begin{itemize}
+  \item color encodes intensity (dBZ)
+  \item white indicates missing / no signal
+  \item borders provide spatial context
+\end{itemize}
+
+\vspace{0mm}
+The \y{image} becomes the\\ 
+\hspace{2cm} \y{AI input modality.}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-10mm}
+\begin{codeonly}{Render radar reflectivity map}
+masked = np.ma.masked_invalid(data)
+plt.figure(figsize=(12, 10))
+ax = plt.axes(projection=ccrs.PlateCarree())
+ax.set_extent([3, 17, 44, 56])
+im = ax.imshow(
+    masked, origin="lower",
+    cmap=cmap, vmin=0, vmax=40,
+    transform=ccrs.PlateCarree() )
+
+ax.add_feature(cfeature.BORDERS)
+ax.coastlines(resolution="10m")
+plt.colorbar(im, ax=ax, label="Reflectivity (dBZ)")
+plt.savefig("radar_map_germany.png", dpi=150)
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

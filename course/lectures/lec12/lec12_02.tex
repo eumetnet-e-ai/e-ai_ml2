@@ -1,0 +1,57 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{What Is Logged — And What Is Not}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+\textbf{Logged quantities}
+
+\begin{itemize}
+  \item Time step (logical step index)
+  \item $\sin(t) \cdot \cos(t/10)$
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Not logged}
+
+\begin{itemize}
+  \item No loss
+  \item No gradients
+  \item No model parameters
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item MLflow tracks \emph{numbers over time}
+  \item \y{The meaning is entirely user-defined}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\vspace{-9mm}
+\includegraphics[width=0.95\textwidth]{../../images/img12/sine_cosine_track2.png}
+
+\vspace{1mm}
+\footnotesize
+Two metrics, same run, shared step axis
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

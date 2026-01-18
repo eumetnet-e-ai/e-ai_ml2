@@ -1,0 +1,50 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Composing the Retrieval Context}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Context construction}
+
+Retrieved chunks are:
+\begin{itemize}
+  \item ordered by similarity
+  \item concatenated into one context block
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+Typical structure:
+\begin{itemize}
+  \item file reference
+  \item optional score
+  \item text snippet
+\end{itemize}
+
+\vspace{2mm}
+Context size is \y{explicitly limited}.
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\begin{codeonly}{Context assembly (ICON example)}
+context = ""
+for r in retrieved_chunks:
+  context += (
+    f"[{r.file}, lines {r.start}-{r.end}]\n"
+    + r.text + "\n\n" )
+\end{codeonly}
+
+\end{frame}

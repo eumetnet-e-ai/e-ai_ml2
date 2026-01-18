@@ -1,0 +1,47 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Persisting Results: Artifacts and Models}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\footnotesize
+\textbf{Artifacts}
+
+\begin{itemize}
+  \item Loss curves
+  \item Diagnostic plots
+  \item Configuration snapshots
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Models}
+
+\begin{itemize}
+  \item Serialized network weights
+  \item Input–output signature
+  \item Reusable for later deployment
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\includegraphics[width=4.5cm]{../../images/img12/windchill_loss.png}
+\includegraphics[width=5cm]{../../images/img12/windchill_prediction_surface.png}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

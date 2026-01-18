@@ -1,0 +1,88 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Architecture: CNN on SAT + Set Encoder for RS + Query Head}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Why a CNN?}
+
+\vspace{3mm}
+SAT is a \y{curtain} $y^{sat}(c,x)$ along $x$. \\
+Spatial patterns advect $\Rightarrow$ translation-like structure.
+
+\vspace{3mm}
+\textbf{Components}
+\begin{itemize}
+  \item \textbf{SAT encoder:} 1D-CNN
+  \begin{itemize}
+    \item extracts local features along $x$
+  \end{itemize}
+  \item \textbf{RS encoder:} DeepSets / pooling
+  \begin{itemize}
+    \item handles variable-size RS point sets
+  \end{itemize}
+  \item \textbf{Query decoder:} predicts $y^{rs}_{t+1}(x_q,z_q)$
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf This enforces coupling:} RS inference is \\
+\centering
+\y{driven by SAT structure}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{Query-style output}
+\[
+\hat y^{rs}_{t+1}(x_q,z_q)
+=
+g_\theta\big( \mathrm{CNN}(y^{sat}_t),\;
+\mathrm{Set}(y^{rs}_t),\;
+x_q,z_q \big).
+\]
+
+\textbf{Practical win}
+\begin{itemize}
+  \item RS can be placed anywhere
+  \item same model predicts:
+  \begin{itemize}
+    \item sparse profiles
+    \item full fields (query everywhere)
+  \end{itemize}
+\end{itemize}
+
+\hspace*{-8mm}
+\begin{minipage}{7cm}
+\tiny\color{darkgreen}
+\textbf{DeepSets / pooling: why order does not matter}
+
+RS inputs form a \emph{set} $\mathcal S=\{(x_m,z_m,y_m)\}_{m=1}^{N}$.
+A set has no order, so the encoding must satisfy
+$F(\mathcal S)=F(\pi(\mathcal S))$ for any permutation $\pi$.
+
+We enforce this with a permutation-invariant encoder:
+\begin{equation*}
+e_m=\psi_\theta(x_m,z_m,y_m),\qquad
+E=\mathrm{pool}(e_1,\dots,e_N)
+\end{equation*}
+where pooling is sum/mean/max (commutative $\Rightarrow$ order-invariant).
+Locations matter via $(x_m,z_m)$ inside $\psi_\theta$.
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

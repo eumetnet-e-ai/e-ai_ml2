@@ -1,0 +1,58 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{LSTM Autoencoder for Anomaly Detection}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+
+\textbf{Autoencoder principle}
+
+\begin{itemize}
+  \item Encode normal behaviour
+  \item Reconstruct input sequence
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Anomaly criterion}
+
+\begin{itemize}
+  \item Large reconstruction error
+  \item Rare under normal dynamics
+\end{itemize}
+
+\vspace{1mm}
+Key assumption:
+\[
+\text{normal} \Rightarrow \text{low error}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=0.95\textwidth]{../../images/img05/lstm_sensor_data_samples.png}
+
+\vspace{1mm}
+\centering
+Normal vs. anomalous sensor sequences
+
+\vspace{3mm}
+\raggedright
+Model learns:
+\begin{itemize}
+  \item \y{Typical temporal patterns}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

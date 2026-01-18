@@ -1,0 +1,68 @@
+% ================================================================================
+% Slide 22 — FRAIM ecosystem graphic (Library + Apps + DAWID)
+% ================================================================================
+\begin{frame}[t, fragile]
+\mytitle{FRAIM Ecosystem: Central Library, FRAIM-Apps, and DAWID Platform}
+
+\centering
+\vspace{0mm}
+
+% requires:
+% \usepackage{tikz}
+% \usetikzlibrary{positioning,arrows.meta}
+
+\begin{tikzpicture}[
+  scale=0.7, transform shape,
+  font=\footnotesize,
+  >=Latex,
+  node distance=12mm,
+  box/.style={rounded corners=2mm, draw=black!60, thick, align=center, inner sep=2mm},
+  app/.style={box, minimum width=28mm, minimum height=10mm, fill=blue!4},
+  lib/.style={box, minimum width=44mm, minimum height=16mm, fill=blue!10},
+  daw/.style={box, minimum width=44mm, minimum height=16mm, fill=green!8},
+  arrow/.style={->, thick, draw=black!70}
+]
+
+% ------------------------------------------------------------
+% Center: FRAIM library
+% ------------------------------------------------------------
+\node[lib] (lib) {\textbf{FRAIM Library}\\[-0.5mm]
+\scriptsize reusable modules + standards};
+
+% ------------------------------------------------------------
+% FRAIM-Apps around (examples)
+% ------------------------------------------------------------
+\node[app, above left=18mm and 38mm of lib]  (app1) {\textbf{FRAIM-App}\\QC / Monitoring};
+\node[app, above=26mm of lib]                (app2) {\textbf{FRAIM-App}\\CBCF Aviation};
+\node[app, above right=18mm and 38mm of lib] (app3) {\textbf{FRAIM-App}\\Downsampling};
+\node[app, right=52mm of lib]                (app4) {\textbf{FRAIM-App}\\Text Generation};
+\node[app, below=26mm of lib]                (app6) {\textbf{FRAIM-App}\\Road Weather};
+\node[app, below left=18mm and 38mm of lib]  (app7) {\textbf{FRAIM-App}\\Nowcasting};
+\node[app, left=52mm of lib]                 (app8) {\textbf{FRAIM-App}\\Obs Processing};
+
+% arrows from apps to library (reuse)
+\draw[arrow] (app1) -- (lib);
+\draw[arrow] (app2) -- (lib);
+\draw[arrow] (app3) -- (lib);
+\draw[arrow] (app4) -- (lib);
+\draw[arrow] (app6) -- (lib);
+\draw[arrow] (app7) -- (lib);
+\draw[arrow] (app8) -- (lib);
+
+% ------------------------------------------------------------
+% DAWID Platform (placed bottom-right)
+% ------------------------------------------------------------
+\node[daw, below right=24mm and 34mm of lib] (dawid)
+{\textbf{DAWID Platform}\\[-0.5mm]
+\scriptsize UI + LLMs + Function calling};
+
+% DAWID-API link to library
+\draw[arrow] (dawid.west) to[bend left=15]
+  node[midway, above, sloped, font=\scriptsize]{\textbf{DAWID-API}} (lib.south east);
+
+% DAWID link to Postprocessing (rerouted to avoid Nowcasting area)
+\draw[arrow] (dawid.north) -- (app4.south);
+
+\end{tikzpicture}
+
+\end{frame}

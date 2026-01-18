@@ -1,0 +1,66 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Task API — Server Endpoints}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-1mm}
+\textbf{Purpose}
+
+\begin{itemize}
+  \item Expose tasks via REST
+  \item Read-only inspection
+  \item Server owns all state
+\end{itemize}
+
+\vspace{1mm}
+\textbf{\y{Server Resource Endpoints}}
+
+\begin{itemize}
+  \item \texttt{/tasks} — task collection
+  \item \texttt{/tasks/<id>} — single task
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Semantics}
+
+\begin{itemize}
+  \item Stateless client
+  \item Explicit URLs
+  \item JSON responses
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-1.1cm}
+\begin{codeonly}{task\_endpoints.py}
+from flask import Flask, jsonify, abort
+app = Flask(__name__)
+tasks = {}
+
+@app.get("/tasks")
+def list_tasks():
+    return jsonify(list(tasks.values()))
+
+@app.get("/tasks/<int:i>")
+def get_task(i):
+    return jsonify(tasks[i]) if i in tasks else abort(404)
+
+app.run()
+\end{codeonly}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+\end{frame}

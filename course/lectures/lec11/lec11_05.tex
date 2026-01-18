@@ -1,0 +1,59 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{File Upload Workflow in the DAWID Frontend}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{User Interaction}
+
+\begin{itemize}
+  \item File selected via HTML form
+  \item \y{Automatic submission} on selection
+  \item No explicit upload button required
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Frontend Logic}
+
+\begin{itemize}
+  \item JavaScript listens to file change events
+  \item Uses \textbf{Fetch API} for upload
+  \item Asynchronous, non-blocking UI
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\textbf{Gateway Interaction}
+
+\begin{itemize}
+  \item Upload sent to PHP gateway
+  \item File stored in session-specific folder
+  \item Backend notified of new resource
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Minimal JavaScript Logic}
+
+\begin{codeonly}{Automatic upload on file selection}
+fileInput.addEventListener("change", () => {
+    uploadForm.requestSubmit();
+});
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,63 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Formatting vs Behavior: Two Different Checks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Code formatting (Black)}
+
+\begin{itemize}
+  \item Enforces a consistent style
+  \item Removes whitespace and layout differences
+  \item Does \rtext{not} change program logic
+\end{itemize}
+
+\vspace{2mm}
+Example:
+\begin{codeonly}{black reformats code}
+def add( a ,b ):
+  return a+b
+\end{codeonly}
+
+becomes:
+\begin{codeonly}{}
+def add(a, b):
+    return a + b
+\end{codeonly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Behavior testing (pytest)}
+
+\begin{itemize}
+  \item Checks whether code does the \y{right thing}
+  \item Executes functions and validates results
+  \item Fails if behavior changes unexpectedly
+\end{itemize}
+
+\vspace{2mm}
+Formatting makes code readable.  
+Testing makes code \rtext{\bf correct}.
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Style and correctness are independent concerns.}
+
+\end{frame}

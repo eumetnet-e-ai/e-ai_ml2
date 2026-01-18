@@ -1,0 +1,68 @@
+%!TEX root = lec17.tex
+% ================================================================================
+% Lecture 17 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AICON Walkthrough: Environment Setup}
+
+\vspace{-1mm}
+\centering
+{\color{blue}\bf Thanks to {\sl Florian Prill} for a great Notebook!}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Core ML stack}
+
+\begin{itemize}
+  \item Python $\ge$ 3.10
+  \item PyTorch (CPU or CUDA)
+  \item PyTorch Lightning
+  \item PyTorch Geometric (PyG)
+\end{itemize}
+
+\textbf{Anemoi framework}
+
+\begin{itemize}
+  \item \texttt{anemoi-core} (graphs, models, training)
+  \item \texttt{anemoi-datasets} (Zarr + YAML I/O)
+  \item \texttt{anemoi-inference} (generic inference)
+  \item Supporting packages (e.g. transforms)
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Data and configuration}
+
+\begin{itemize}
+  \item Zarr (chunked training data)
+  \item Xarray (inspection and analysis)
+  \item eccodes + earthkit (GRIB2 handling)
+  \item Hydra / OmegaConf (YAML configuration)
+\end{itemize}
+
+\textbf{Recommended setup}
+
+\begin{itemize}
+  \item Pinned \texttt{requirements.txt}
+  \item Virtual environment or container
+  \item Consistent library versions
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\footnotesize
+\rtext{\bf Reproducibility depends on a stable, fully controlled software environment.}
+
+\end{frame}

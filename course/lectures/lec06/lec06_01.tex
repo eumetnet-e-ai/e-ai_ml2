@@ -1,0 +1,77 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 1
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Large Language Models?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Traditional NLP}
+
+\begin{itemize}
+  \item Separate models for each task
+  \item Feature engineering required
+  \item Limited transfer between tasks
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Examples}
+
+\begin{itemize}
+  \item Translation
+  \item Classification
+  \item Question answering
+\end{itemize}
+
+\vspace{0mm}
+\centering
+{\footnotesize
+LLMs \y{unify} understanding, generation, and reasoning in a single sequence model.
+}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-4mm}
+\textbf{Large Language Models}
+
+\begin{itemize}
+  \item One model, many tasks
+  \item \y{Learns representations from data}
+  \item Includes Sub-Word \rtext{Tokenization}
+  \item General-purpose language intelligence
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Language as a \emph{sequence prediction problem}
+  \item Everything reduced to:
+\end{itemize}
+
+\vspace{-3mm}
+\[
+\text{tokens}_{\text{in}} \;\longrightarrow\; \text{tokens}_{\text{out}}
+\]
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\[
+\{\rtext{The},\rtext{dog},\rtext{chas},\rtext{ed},\rtext{the},\rtext{cat},\rtext{.}\}
+\;\;\longrightarrow\;\;
+\{104,\,2871,\,9123,\,214,\,201,\,4421,\,13\}
+\]
+
+\end{frame}

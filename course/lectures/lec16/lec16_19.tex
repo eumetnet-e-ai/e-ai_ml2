@@ -1,0 +1,59 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+\mytitle{The Race for Function \& Agent Standards}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{OpenAI — Tool Calling + JSON Schema}
+\begin{itemize}
+  \item tools defined via \y{JSON Schema}
+  \item \y{Structured Outputs / strict schema} for reliable calls
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Anthropic — MCP (Model Context Protocol)}
+\begin{itemize}
+  \item open connector: \y{model $\leftrightarrow$ MCP server $\leftrightarrow$ tools/data}
+  \item goal: universal plug-in interface for enterprise tools
+\end{itemize}
+
+\vspace{2mm}
+\includegraphics[width=0.45\linewidth]{../../images/img16/race01.png}
+\includegraphics[width=0.45\linewidth]{../../images/img16/race02.png}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Google — Gemini Function Calling}
+\begin{itemize}
+  \item built-in function calling in the Gemini API ecosystem
+  \item tight integration with the Google stack
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Linux Foundation / AAIF — Interoperability}
+\begin{itemize}
+  \item push for neutral/open \y{agent tool interfaces}
+  \item avoid vendor lock-in and ``tool Babel''
+\end{itemize}
+
+\vspace{2mm}
+\includegraphics[width=0.45\linewidth]{../../images/img16/race03.png}
+\includegraphics[width=0.45\linewidth]{../../images/img16/race04.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}

@@ -1,0 +1,55 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 26
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Zarr Chunk Decomposition (patch-only visualization)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Goal}
+
+\vspace{0mm}
+\y{Visualize the Zarr chunk structure}:
+\begin{itemize}
+  \item each chunk corresponds to a spatial patch (60x60)
+  \item plot patch values only (no full-field replot)
+  \item use one global color scale (vmin/vmax of full field)
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Procedure}
+
+\vspace{0mm}
+\begin{itemize}
+  \item load full field once (for vmin/vmax)
+  \item loop over patch indices (py,px)
+  \item save one image per patch
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+
+\includegraphics[width=\textwidth]{../../images/img14/zarr_patches_grid.png}
+
+\vspace{1mm}
+\scriptsize
+Patch-only plots: py=0..2, px=0..3 (Europe extent, global color scale).
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

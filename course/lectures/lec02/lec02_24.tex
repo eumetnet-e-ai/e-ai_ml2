@@ -1,0 +1,63 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide 
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Remote Jupyter — Port Forwarding Recipe}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\textbf{Step 1: Start Jupyter Remotely}
+
+\vspace{1mm}
+\begin{codeonly}{Remote (Linux)}
+jupyter notebook \
+  --no-browser \
+  --port=8888
+\end{codeonly}
+
+\vspace{1mm}
+
+\begin{itemize}
+  \item Access token appears in the terminal
+  \item Port is \y{local only} on the remote server
+\end{itemize}
+
+{\tiny\begin{lstlisting}
+To access the server, open this file in a browser:
+  file:///hpc/uhome/rpotthas/.local/share/jupyter/runtime/jpserver-1662241-open.html
+Or copy and paste one of these URLs:
+  http://localhost:8888/tree?token=369b469c83e8eaa369ee02ea443d994865ca93e4185bb385
+  http://127.0.0.1:8888/tree?token=369b469c83e8eaa369ee02ea443d994865ca93e4185bb385
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Step 2: Create SSH Tunnel}
+
+\vspace{1mm}
+\begin{codeonly}{Local (Bash / PowerShell)}
+ssh -N -L 9001:localhost:8888 \
+    user@remote-host
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Step 3: Open in Browser}
+
+\begin{itemize}
+  \item \texttt{http://localhost:9001}
+  \item Use token from the remote log
+  \item \y{Adjust port} if needed
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}

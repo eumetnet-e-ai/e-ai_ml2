@@ -1,0 +1,57 @@
+%!TEX root = lec17.tex
+% ================================================================================
+% Lecture 17 — Slide 01
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Why Emulators in Numerical Weather Prediction?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=6cm]{../../images/img17/nwp.png}
+
+\footnotesize
+\begin{itemize}
+  \item High-resolution NWP is \\ \y{computationally expensive}
+  \item Many applications do not require \\ full physical fidelity
+  \item Fast forecasts enable \y{new applications} \\ and scale
+\end{itemize}
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Emulator concept}
+
+\begin{itemize}
+  \item Learns the forecast step: state $\rightarrow$ state
+  \item Operates within an existing NWP ecosystem
+  \item Preserves grids, variables, and semantics
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Goal of this lecture}
+
+\begin{itemize}
+  \item Understand emulator-based AI systems
+  \item Compare AIFS and AICON
+  \item Walk through AICON step by step
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Emulators complement numerical models — they do not replace physical understanding.}
+
+\end{column}
+
+\end{columns}
+
+
+
+\end{frame}

@@ -1,0 +1,48 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Prediction to Understanding}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Prediction is not enough}
+
+\begin{itemize}
+  \item Low error $\neq$ understanding
+  \item Correct output may hide fragile behavior
+  \item Especially risky outside training range
+\end{itemize}
+
+\vspace{1mm}
+Models can be accurate yet \y{misleading}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why gradients matter}
+
+\begin{itemize}
+  \item Sensitivity of output to input
+  \item Reveal decision boundaries
+  \item Identify unstable regions
+\end{itemize}
+
+\vspace{1mm}
+\[
+\nabla_x f(x)
+\]
+Measures how predictions change locally.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

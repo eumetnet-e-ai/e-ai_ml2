@@ -1,0 +1,72 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 20
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{One Step, Many Steps: Templates + Transport + Accumulations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{\textcolor{blue}{Neural forecasting learns reusable building blocks}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item learn \textbf{templates} for structures:
+    {\tiny \newline fronts, rain bands, vortices, jets}
+  \item learn \textbf{how they move and change} from context
+    {\tiny \newline (e.g. wind, humidity, stability)}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{\textcolor{blue}{Then: one step $\rightarrow$ many steps}}
+
+\vspace{-2mm}
+\[
+x(t) \rightarrow x(t+\Delta t) \rightarrow x(t+2\Delta t) \rightarrow \dots
+\]
+
+\vspace{0mm}
+\textbf{\textcolor{red}{Important for users: accumulated products}}
+
+\vspace{1mm}
+\begin{itemize}
+  \item many outputs are stored as \textbf{accumulations}
+  \item 1-hour precipitation at lead $L$ is:
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{1mm}
+\[
+RAIN(L) - RAIN(L-1)
+\]
+
+\vspace{0mm}
+\textbf{\textcolor{violet}{Take-away:}}
+\quad \y{Forecasting = detect patterns +} \\
+\hfill \y{transport them forward in time.}
+
+
+\centering
+\vspace{4mm}
+
+\includegraphics[width=\linewidth]{../../images/img16/nn_front_template_motion.png}
+
+\vspace{1mm}
+{\tiny \textcolor{gray}{
+Templates $\rightarrow$ heatmaps $\rightarrow$ shifted patterns $\rightarrow$ next map
+(repeated for longer lead times).
+}}
+\end{column}
+
+\end{columns}
+
+\end{frame}

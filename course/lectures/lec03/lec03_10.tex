@@ -1,0 +1,67 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{SYNOP Data — Reading Raw Observations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item SYNOP stored in \y{NetCDF}
+  \item One record per station
+  \item Variables include:
+    \begin{itemize}
+      \item latitude, longitude
+      \item observed temperature
+    \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Minimal requirement}
+
+\begin{itemize}
+  \item Read coordinates
+  \item Read physical quantity
+  \item Preserve missing values
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-1mm}
+\textbf{Python tools}
+
+\begin{itemize}
+  \item \texttt{netCDF4.Dataset}
+  \item \texttt{numpy}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Variables used}
+
+\begin{itemize}
+  \item \texttt{MLAH} — latitude
+  \item \texttt{MLOH} — longitude
+  \item \texttt{MTDBT} — temperature
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Implementation}
+
+\begin{itemize}
+  \item See function: \texttt{read\_synop\_data()}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

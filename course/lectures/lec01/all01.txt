@@ -1,0 +1,1029 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Lecture 1: Python Setup and Basics}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Goal of Lecture}
+
+\begin{itemize}
+  \item Setup Python
+  \item \y{Synchronize} with your knowledge of programming
+  \item Become aware of the importance of proper \y{package management}
+  \item Numpy and Matplotlib
+  \item Get simple plots working
+  \item write and import functions
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\begin{itemize}
+  \item Flow Control
+  \item File management
+  \item \y{Dictionaries}
+  \item \y{Json} Data Handling
+  \item Classes and Dynamics
+\end{itemize}
+
+\vspace{1mm}
+\slideimage[height=2.5cm]{../../images/img01/json_wiki.png}
+
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}
+
+
+
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Python Setup: First Check and Create Virtual Environment}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.3\textwidth}
+  \textbf{Goal of this step}
+
+  \begin{itemize}
+    \item Verify that Python is installed
+    \item Work across Linux, macOS, Windows, WSL
+    \item Create isolated environments: aipy
+    \item \y{No dependency} 
+    	\y{conflicts}
+  \end{itemize}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.68\textwidth}
+  
+\begin{codeonly}{Basic Installation}
+python --version.   # check version
+python3 --version.  # check version
+python3.12 --version   
+cd                  # go to home
+python -m venv aipy # create venv
+alias aipy="source ~/aipy/bin/activate"
+aipy                # activate aipy
+python              # interactive python
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Linux/macOS example}
+  
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Python Package Stack: How Things Build on Each Other}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{Core idea}
+
+\begin{itemize}
+  \item Python is a \y{layered ecosystem}
+  \item Packages build on top of each other
+  \item Higher layers assume lower layers exist
+  \item This structure matters for:
+    \begin{itemize}
+      \item installation
+      \item debugging
+      \item performance
+    \end{itemize}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+
+\begin{codeonly}{Conceptual Package Stack (ASCII)}
+Python
+ |
+ +-- NumPy        (arrays, numerics)
+ |
+ +-- Matplotlib   (plots, figures)
+ |
+ +-- AI / ML
+     |
+     +-- PyTorch
+     +-- scikit-learn
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Conceptual view, not an exact dependency graph}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Installing Core Scientific Packages}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{What we need first}
+
+\begin{itemize}
+  \item \y{NumPy} for numerical arrays
+  \item \y{Matplotlib} for visualization
+  \item Foundation for most scientific libraries
+  \item Same tools across weather, climate, AI
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{Install basic packages}
+# activate virtual environment 
+aipy
+
+# install core scientific packages
+pip install numpy
+pip install matplotlib
+
+# verify installation
+python -c "import numpy, matplotlib; print('OK')"
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize These packages will be reused throughout the course}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Installing Python Packages with \texttt{pip}}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.35\textwidth}
+
+\textbf{Why package management matters}
+
+\begin{itemize}
+  \item Python itself is \y{minimal}
+  \item Most functionality comes from packages
+  \item Packages define your \y{working environment}
+  \item Reproducibility depends on exact versions
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea:}
+\begin{itemize}
+  \item One project $\Rightarrow$ one environment
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.63\textwidth}
+
+\begin{codeonly}{Basic pip workflow}
+# activate aipy, list installed 
+aipy
+pip list
+
+# install core packages
+pip install numpy
+pip install matplotlib
+
+# verify installation
+python -c "import numpy, matplotlib; print('ok')"
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Always install packages \y{inside} an activated virtual environment}
+
+\end{column}
+
+% --- End Frame -----------------------------------------------------------------
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{NumPy Arrays: 1D, 2D, and 3D Data - \y{Standard Programming Skills}}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.34\textwidth}
+
+\textbf{Core idea}
+
+\begin{itemize}
+  \item One data structure for science
+  \item Same logic for 1D, 2D, 3D data
+  \item Used for time series, maps, fields
+  \item Basis for ML tensors
+  \item \y{Learn the basics}
+  \y{yourself, its easy.}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.64\textwidth}
+
+\begin{codeonly}{NumPy array dimensions}
+import numpy as np
+
+x = np.array([1, 2, 4])          # 1D
+A = np.array([[1, 2], [3, 4]])   # 2D
+B = np.zeros((10, 50, 100))      # 3D
+
+print(x.shape, A.shape, B.shape)
+# prints (3,) (2, 2) (10, 50, 100)
+
+print(x)
+# prints [1 2 4]
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Dimensions encode structure, not meaning}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Vectors, Matrices, and Broadcasting}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.34\textwidth}
+
+\textbf{Core concepts}
+
+\begin{itemize}
+  \item Vectors (1D)
+  \item Matrices (2D)
+  \item Matrix--vector product
+  \item Matrix--matrix product
+  \item Broadcasting
+\end{itemize}
+
+\vspace{5mm}
+\y{Carry out MATLAB like}
+\y{Linear Algebra}
+
+\vspace{5mm}
+\y{\color{red}\bf Loops only Top Level!}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.64\textwidth}
+
+\begin{codeonly}{Linear algebra in NumPy}
+import numpy as np
+
+x = np.array([1., 2.])
+A = np.array([[1., 2.], [3., 4.]])
+
+b = A @ x        # matrix-vector
+B = A @ A        # matrix-matrix
+C = A + 1.0      # broadcasting
+
+print(f"b={b},\nB={B},\nC={C}")
+\end{codeonly}
+
+{\footnotesize Operations follow array shapes}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Indexing, Slicing, and Masks - \y{Think Efficiency!}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.34\textwidth}
+
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Access elements efficiently
+  \item Select subdomains in space or time
+  \item Apply conditions to data
+  \item Basis of filtering and diagnostics
+\end{itemize}
+
+\vspace{5mm}
+\y{Make sure you use an}
+\y{{\red\bf efficient coding} approach!}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.64\textwidth}
+
+\begin{codeonly}{Selecting array data}
+import numpy as np
+
+A = np.array([[1., 2.], [3., 4.]])
+
+B = A[0, 1]          # single element
+C = A[:, 0]          # first column
+D = A>2              # boolean mask
+E = A[A > 2]         # select elements
+
+print("A=", A, "\nB=", B, "\nC=", C, "\nD=", D, "\nE=", E)
+\end{codeonly}
+
+{\footnotesize Masks are vectorized and fast}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Visualization Engines: A Sine Wave Example}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{What happens here}
+
+\begin{itemize}
+  \item Generate numerical data with \y{NumPy}
+  \item Compute a math function
+  \item \y{Visualize} data using Matplotlib
+  \item \y{Save} plots for later use
+\end{itemize}
+
+\vspace{-3mm}
+\hfill\includegraphics[width=3cm]{../../images/img01/plot-sine-wave.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{plot-sine-wave.py}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.figure(figsize=(4,3))
+plt.plot(x, y)
+plt.xlabel("x"); plt.ylabel("sin(x)")
+plt.title('Sine Wave'); plt.tight_layout()                                                                  
+plt.savefig("plot-sine-wave.png")
+plt.close()
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize A minimal but complete scientific plotting workflow}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Visualizing 2D Data with Matplotlib}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item 2D arrays represent spatial fields
+  \item Colors encode values
+  \item Typical for weather and climate data
+\end{itemize}
+
+\vspace{1mm}
+\hfill\includegraphics[width=4cm]{../../images/img01/plot-2d-field.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Simple 2D field}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 4, 120)
+y = np.linspace(0, 3, 90)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) * np.cos(Y)
+
+plt.imshow(Z, origin="lower",
+     extent=[0,4,0,3], cmap="viridis")
+plt.colorbar(); plt.title("2d Field"); 
+plt.savefig("plot-2d-field.png"); 
+plt.close()
+\end{codeonly}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{3D Data: Fields and Surfaces}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{Why 3D matters}
+
+\begin{itemize}
+  \item Many geophysical fields are \y{spatial}
+  \item Height, depth, or phase space
+  \item Visualization helps intuition
+\end{itemize}
+
+\vspace{-12mm}
+\hspace*{-8mm}\includegraphics[width=6cm]{../../images/img01/plot-3d.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{plot-3d.py}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 4, 80)
+y = np.linspace(0, 3, 60)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) * np.cos(Y)
+
+fig = plt.figure(figsize=(4,3))
+ax = fig.add_subplot(projection="3d")
+ax.plot_surface(X, Y, Z, cmap="viridis")
+plt.savefig("plot-3d.png"); plt.close()
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Example of a smooth 3D field defined on a 2D grid}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Functions: Turn {\red Ideas} into Reusable Tools}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{Why functions matter}
+
+\begin{itemize}
+  \item Turn a workflow step into a \y{reusable tool}
+  \item Make intent explicit: inputs $\rightarrow$ output
+  \item Easier testing, debugging, and collaboration
+  \item Foundation for \y{pipelines} and \y{ML training loops}
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{Mini tool: normalize a signal}
+import numpy as np
+
+def normalize(x):
+    x = np.asarray(x)
+    return (x - x.mean()) / x.std()
+
+x = np.array([2., 3., 5., 9.])
+print("x =", x)
+print("z =", normalize(x))
+\end{codeonly}
+
+{\footnotesize A pattern you will reuse everywhere: prepare data in one function}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Control Flow: Quality Checks and Simple Automation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.28\textwidth}
+
+\textbf{Control flow in practice}
+
+\begin{itemize}
+  \item Decision making: \y{reject bad inputs} early
+  \item Works on full arrays, makes it \y{fast}
+  \item Clearly essential for \y{robust scripts} and experiments
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.7\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Filter missing values}
+import numpy as np
+x = np.array([1.2, 2.0, 1e30, 4.9])
+thr = 1e20
+# removing values outside of range: 
+x2 = x[x < thr]; dn = len(x)-len(x2)
+
+fmt = "{:10.3g}"   # width=10, 3 digits
+print("".join(fmt.format(v) for v in x))
+print("".join(fmt.format(v) for v in x2))
+print("mean=", f"{x2.mean():.3f}")
+\end{codeonly}
+
+{\footnotesize Quality control on observations or model fields}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Dictionaries and JSON: Configs You Can Share}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{Why this is exciting}
+
+\begin{itemize}
+  \item Store model and experiment settings cleanly
+  \item Pass configs through \y{APIs} and workflows
+  \item {\red\bf Reproducibility}: one file describes the run
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{Config for an experiment}
+import json
+
+cfg = {"dt": 0.5, "n": 20, "model": "toy"}
+s = json.dumps(cfg, indent=2)
+print(s)
+
+cfg2 = json.loads(s)
+print("dt =", cfg2["dt"])
+\end{codeonly}
+
+{\footnotesize This is the bridge to automation + deployment later}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Loops in Python: Time Stepping and Accumulation}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.4\textwidth}
+
+\textbf{Typical use case}
+
+\begin{itemize}
+  \item Discrete \y{time stepping}
+  \item Running sums and averages
+  \item Diagnostics over trajectories
+  \item Core pattern in models
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mental model}
+
+\begin{itemize}
+  \item Each loop = one time step
+  \item State evolves sequentially
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.58\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{time\_loop.py}
+import numpy as np
+
+dt = 0.1; x = 0.0; traj = [] # initialization
+
+for n in range(20):
+    x = x + dt * np.sin(x)
+    traj.append(x)
+
+traj = np.array(traj)
+print("final x =", x)
+print("mean x  =", traj.mean())
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Sequential updates cannot be vectorized away}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Files: Log Results, \y{help yourself, Scientist!}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{File I/O patterns}
+
+\begin{itemize}
+  \item Save key results after every run
+  \item Keep a simple \y{experiment log}
+  \item The \texttt{with} pattern avoids subtle bugs
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\vspace{0mm}
+\begin{codeonly}{Write a tiny log file}
+from datetime import datetime
+
+myerr = 0.23 # example 
+msg = f"{datetime.now()}  rmse={myerr}\n"
+with open("log-run.log", "a") as f:
+    f.write(msg) # a is for append
+
+with open("log-run.log") as f:
+    last_line = f.readlines()[-1]
+    print(last_line.strip())
+\end{codeonly}
+
+{\footnotesize Minimal logging already gives you \y{insight} and \y{transparency}}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Classes I: Encapsulate State (A Tiny Model Component)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{Why classes appear everywhere}
+
+\begin{itemize}
+  \item Components have a \y{state} (e.g., temperature)
+  \item Methods update that state consistently
+  \item Same structure in NWP, ESMs, and ML modules
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{A relaxating temperature}
+class RelaxTemp:
+    def __init__(self, T):
+        self.T = T
+    def step(self, dt, target):
+        self.T += 0.1*dt*(target - self.T)
+
+atm = RelaxTemp(288.0)
+atm.step(1.0, 290.0)
+print("T =", atm.T)
+\end{codeonly}
+
+{\footnotesize A tiny but real modeling pattern: relaxation toward forcing}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Classes II: Coupling Two Components (Mini Earth-System Pattern)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{The exciting part}
+
+\begin{itemize}
+  \item Two components, each with its own state
+  \item A controller coordinates \y{information exchange}
+  \item This is the conceptual core of coupled models
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Coupling in 10 lines}
+class Box: 
+    def __init__(s,x): s.x=x
+    def step(s,dt,t): s.x+=0.2*dt*(t-s.x)
+
+atm, ocn = Box(288.), Box(290.)
+ocn.step(1., atm.x); atm.step(1., ocn.x)
+print("atm=", atm.x, "ocn=", ocn.x)
+\end{codeonly}
+
+{\footnotesize Same coupling idea, later: many variables + grids + physics}
+
+\end{column}
+\end{columns}
+\end{frame}
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Lecture 1 — Key Takeaways}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.48\textwidth}
+
+\textbf{Technical Foundations}
+
+\begin{itemize}
+  \item Python as a portable \y{workhorse} for science
+  \item \y{Virtual environments} avoid dependency conflicts
+  \item \texttt{pip} and \texttt{requirements.txt} ensure reproducibility
+  \item NumPy arrays as the \y{core data structure}
+  \item Vectorization replaces explicit loops
+  \item Matplotlib for \y{fast diagnostic visualization}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.48\textwidth}
+
+\textbf{Conceptual Lessons}
+
+\begin{itemize}
+  \item Think in terms of \y{arrays, not scalars}
+  \item Data selection via slicing and masking
+  \item Broadcasting enables compact math expressions
+  \item Visualization supports scientific intuition
+  \item Clean code beats clever code
+  \item Python skills will transfer directly to \y{AI/ML development}
+\end{itemize}
+
+\end{column}
+
+% --- End Columns ---------------------------------------------------------------
+\end{columns}
+
+\end{frame}
+%!TEX root = lec1.tex
+% ================================================================================
+% Lecture 1, Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 1 — Slide 20}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec1.tex
+% ================================================================================
+% Lecture 1, Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 1 — Slide 21}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec1.tex
+% ================================================================================
+% Lecture 1, Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 1 — Slide 22}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec1.tex
+% ================================================================================
+% Lecture 1, Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 1 — Slide 23}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec1.tex
+% ================================================================================
+% Lecture 1, Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 1 — Slide 24}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec1.tex
+% ================================================================================
+% Lecture 1, Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 1 — Slide 25}
+
+  % Content goes here
+
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec01.tex
+% 
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 1}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\setagendaboxforlecture{1}
+
+\input{../lec_agenda.tex}
+\input{lec01_01.tex}
+\input{lec01_02.tex}
+\input{lec01_03.tex}
+\input{lec01_04.tex}
+\input{lec01_05.tex}
+\input{lec01_06.tex}
+\input{lec01_07.tex}
+\input{lec01_08.tex}
+\input{lec01_09.tex}
+\input{lec01_10.tex}
+\input{lec01_11.tex}
+\input{lec01_12.tex}
+\input{lec01_13.tex}
+\input{lec01_14.tex}
+\input{lec01_15.tex}
+\input{lec01_16.tex}
+\input{lec01_17.tex}
+\input{lec01_18.tex}
+\input{lec01_19.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

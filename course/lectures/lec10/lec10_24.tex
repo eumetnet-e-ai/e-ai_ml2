@@ -1,0 +1,59 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Control Flow in LangGraph}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item No hidden agent loops
+  \item No implicit retries
+  \item No LLM-driven control decisions
+\end{itemize}
+
+\vspace{0mm}
+Instead:
+\begin{itemize}
+  \item Execution follows a \y{directed graph}
+  \item Nodes are pure Python functions
+  \item Edges define allowed transitions
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\textbf{Example: Execution graph}
+
+\vspace{-14mm}
+\begin{codeonly}{LangGraph control flow}
+builder.set_entry_point("extract_forecast_datetime")
+builder.add_edge(
+  "extract_forecast_datetime",
+  "get_latest_forecast_reference_time")
+builder.add_edge(
+  "get_latest_forecast_reference_time",
+  "calculate_lead_time" )
+[...]
+builder.set_finish_point("plot_temperature")
+\end{codeonly}
+
+\vspace{0mm}
+The graph itself defines \y{what happens next}.  
+There is no hidden agent controller.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

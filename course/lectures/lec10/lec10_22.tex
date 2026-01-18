@@ -1,0 +1,60 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Memory and Context Management in Agents}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{2mm}
+\textbf{Why agents need memory}
+
+\begin{itemize}
+  \item Remember past attempts
+  \item Accumulate errors and feedback
+  \item \rtext{\bf Maintain task continuity}
+\end{itemize}
+
+\vspace{0mm}
+Without memory:
+\begin{itemize}
+  \item repeated failures
+  \item no learning across steps
+  \item brittle behavior
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1mm}
+\textbf{Types of memory}
+
+\begin{itemize}
+  \item Prompt memory  
+        (growing instruction and error history)
+  \item File-based memory  
+        (saved code, plots, logs)
+  \item Explicit state  
+        (variables passed between steps)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key distinction}
+
+\begin{itemize}
+  \item Chat history != agent state
+  \item State must be \y{explicit and inspectable}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

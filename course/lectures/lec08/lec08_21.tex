@@ -1,0 +1,59 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Accessing Cloud Top Height (CTH) Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+
+\textbf{Operational satellite product}
+
+\begin{itemize}
+  \item Provided by DWD Open Data
+  \item Derived from geostationary satellites
+  \item Updated at regular intervals
+\end{itemize}
+
+\vspace{0mm}
+CTH data is distributed as:
+\begin{itemize}
+  \item compressed NetCDF files (\texttt{.nc.bz2})
+  \item regular latitude--longitude grids
+  \item physical units: meters
+\end{itemize}
+
+\vspace{0mm}
+\footnotesize
+The latest available file is selected automatically.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.61\textwidth}
+
+\vspace{-5mm}
+\begin{codeonly}{Download latest CTH product}
+base_url = (
+  "https://opendata.dwd.de/weather/"
+  "satellite/clouds/CTH/")
+response = requests.get(base_url)
+soup = BeautifulSoup(response.text, "html.parser")
+cth_files = sorted([ link.get("href")
+  for link in soup.find_all("a")
+  if link.get("href", "").endswith(".nc.bz2") ])
+my_f = cth_files[-1]
+url = urljoin(base_url,my_f)
+with open("cth.nc.bz2", "wb") as f:
+    f.write(requests.get(url).content)
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

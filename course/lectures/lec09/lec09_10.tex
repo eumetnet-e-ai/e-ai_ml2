@@ -1,0 +1,69 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Forward Diffusion Process}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.62\textwidth}
+
+Let $x_0 \sim p_{\text{data}}(x)$ be a data sample.
+
+\vspace{1mm}
+The \y{forward diffusion} process is a Markov chain:
+\[
+q(x_{1:T} \mid x_0)
+= \prod_{t=1}^T q(x_t \mid x_{t-1})
+\]
+
+with Gaussian transitions
+\[
+q(x_t \mid x_{t-1})
+= \mathcal{N}\!\left(
+x_t;\, \sqrt{1-\beta_t}\,x_{t-1},\, \beta_t I
+\right),
+\]
+with $\beta_t \in (0,1)$. 
+
+\vspace{1mm}
+Equivalently, each step can be written as
+{\color{red}
+\[
+x_t = \sqrt{1-\beta_t}\,x_{t-1} + \sqrt{\beta_t}\,\epsilon_t,
+\quad \epsilon_t \sim \mathcal{N}(0,I).
+\]
+}
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.36\textwidth}
+
+\vspace{-1mm}
+\textbf{Consequences}
+
+\begin{itemize}
+  \item Mean is damped at each step
+  \item Variance increases monotonically
+  \item Signal-to-noise ratio decreases
+\end{itemize}
+
+\vspace{1mm}
+After many steps:
+\[
+x_T \;\approx\; \mathcal{N}(0,I)
+\]
+
+\vspace{1mm}
+This \y{connects data} to \y{pure noise}.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

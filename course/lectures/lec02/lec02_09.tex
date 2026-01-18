@@ -1,0 +1,74 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+%\mytitle{Visualization Packages: Matplotlib vs Seaborn vs Plotly}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Matplotlib}
+
+\begin{itemize}
+  \item Low-level, explicit control
+  \item Publication-ready figures
+  \item Default for scientific Python
+\end{itemize}
+
+\vspace{1mm}
+\begin{codeonly}{Matplotlib (static)}
+plt.plot(x, y)
+plt.xlabel("x"); 
+plt.ylabel("y")
+plt.savefig("plot.png")
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{When to use}
+
+\begin{itemize}
+  \item Final figures
+  \item Full control over layout
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-4mm}
+\textbf{Seaborn}
+
+\begin{itemize}
+  \item Built on Matplotlib
+  \item Statistical defaults
+  \item Fast insight into distributions
+\end{itemize}
+
+\begin{codeonly}{Seaborn (statistical)}
+sns.kdeplot(x=data)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Plotly}
+
+\begin{itemize}
+  \item Interactive plots
+  \item Zoom, hover, selection
+\end{itemize}
+
+\begin{codeonly}{Plotly (interactive)}
+fig = px.scatter(df, x="x", 
+	y="y"); fig.show()
+\end{codeonly}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

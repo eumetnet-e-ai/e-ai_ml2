@@ -1,0 +1,68 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Starting Locally: A Concrete Git Hook Example}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+{\bf Black} is an \y{automatic code formatter} for Python.
+
+{\sl 
+It rewrites Python source code into a single, consistent style, without asking questions.
+}
+
+\vspace{2mm}
+\textbf{Minimal pre-commit hook}
+
+\begin{codeonly}{.git/hooks/pre-commit}
+#!/bin/sh
+pytest || exit 1
+black .
+\end{codeonly}
+
+\vspace{1mm}
+This hook is executed automatically when running:
+\begin{itemize}
+  \item \texttt{git commit}
+\end{itemize}
+
+If tests fail, the commit is \rtext{blocked}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{What this enforces locally}
+
+\begin{itemize}
+  \item Code must be \y{syntactically correct}
+  \item Tests must \y{pass}
+  \item Code formatting is \y{consistent}
+\end{itemize}
+
+\vspace{2mm}
+Key properties:
+\begin{itemize}
+  \item Runs \rtext{before} code leaves the laptop
+  \item No CI server involved
+  \item Immediate feedback to the developer
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Git hooks enforce local discipline — not global policy.}
+
+\end{frame}

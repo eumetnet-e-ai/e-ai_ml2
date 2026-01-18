@@ -1,0 +1,71 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 5
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Positional Encoding}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Goal}
+
+\begin{itemize}
+  \item Inject \y{order information} into embeddings
+  \item Keep full parallelism
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Idea}
+
+\begin{itemize}
+  \item Assign a position-dependent vector
+  \item Add it to the token embedding
+\end{itemize}
+
+\vspace{1mm}
+\[
+x_i \;=\; e_i + p_i
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Positional encoding matrix}
+
+\[
+P \in \mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\begin{itemize}
+  \item $n$: sequence length
+  \item $p_i$: encoding of position $i$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key properties}
+
+\begin{itemize}
+  \item Same dimension as embeddings
+  \item Fixed (sinusoidal) or learned
+  \item Enables attention to use order
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+Positional encodings turn a set of tokens into an ordered sequence.
+}
+
+\end{frame}

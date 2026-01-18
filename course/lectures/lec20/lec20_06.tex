@@ -1,0 +1,47 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Observations: Radiosondes (Sparse Vertical Profiles)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{Radiosonde observation operator}
+
+At station column $x_{s}$ and selected heights $z_k$:
+\[
+y^{rs}_t(s,k)=\phi(x_s,z_k,t)+\epsilon.
+\]
+
+\textbf{Geometry is discrete}
+\begin{itemize}
+  \item $n_{rs}$ station columns: \texttt{rs\_ix}
+  \item $n_{vert}$ vertical levels: \texttt{rs\_iz}
+  \item output array: \texttt{yrs[time, station, vert]}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf RS gives a sparse but physically intuitive reference view.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/images_obs_rs/1_x_yrs_00.png}
+
+\vspace{1mm}
+\includegraphics[width=\textwidth]{../../images/img20/images_obs_rs/1_x_yrs_05.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}

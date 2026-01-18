@@ -1,0 +1,62 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Applying the Classifier to Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Training the classifier}
+
+\begin{itemize}
+  \item Input: feature vectors $(x_1,x_2)$
+  \item Output: class probability $\hat{y}$
+  \item Supervised binary classification
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Goal}
+
+\begin{itemize}
+  \item Separate two classes
+  \item Learn a decision boundary
+  \item Minimize classification error
+\end{itemize}
+
+{\tiny\begin{lstlisting}
+grid_points = torch.stack([xx.flatten(), yy.flatten()], dim=1)  
+grid_points.requires_grad = True
+grid_grads = grid_points.grad.detach().numpy()
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-6mm}
+\begin{codeonly}{Training loop}
+loss_fn = nn.BCELoss()
+opt = optim.Adam(model.parameters(), lr=0.01)
+
+for epoch in range(epochs):
+    opt.zero_grad()
+    y_p = model(X)
+    loss = loss_fn(y_p, y_true)
+    loss.backward()
+    opt.step()
+\end{codeonly}
+
+\vspace{1mm}
+Prediction $\hat{y}\in[0,1]$ interpreted as probability.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

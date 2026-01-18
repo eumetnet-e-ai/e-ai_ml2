@@ -1,0 +1,66 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Error Handling and Feedback Loops}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Why errors are central}
+
+\begin{itemize}
+  \item LLM-generated code is often incomplete
+  \item Small syntax or logic errors are common
+  \item First attempt rarely works
+\end{itemize}
+
+\vspace{0mm}
+Errors provide \y{structured feedback}:
+\begin{itemize}
+  \item missing imports
+  \item wrong assumptions
+  \item invalid API usage
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1cm}
+\textbf{Typical feedback loop}
+
+\vspace{1mm}
+\begin{codeonly}{Error capture and retry}
+try:
+    exec(code)
+    success = True
+except Exception as e:
+    error = traceback.format_exc()
+    success = False
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Key design choices}
+
+\begin{itemize}
+  \item feed back full traceback
+  \item limit number of retries
+  \item detect repeating failures
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+Errors drive \y{self-correction}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

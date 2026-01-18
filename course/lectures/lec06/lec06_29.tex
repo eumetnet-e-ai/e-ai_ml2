@@ -1,0 +1,67 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 29
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Streaming from Ollama using curl}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.3\textwidth}
+
+\textbf{Ollama REST API}
+
+\begin{itemize}
+  \item Local HTTP service
+  \item JSON-based requests
+  \item Supports streaming
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key option}
+
+\vspace{-5mm}
+\[
+\texttt{"stream": true}
+\]
+
+\end{column}
+
+\begin{column}[T]{0.69\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Streaming request with curl}
+curl -X POST http://localhost:11434/api/generate \
+-H "Content-Type: application/json" \
+-d '{
+  "model": "mistral",
+  "prompt": "Explain self-attention.",
+  "stream": true }'
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize
+The response arrives as a sequence of JSON objects.
+}
+
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{Each chunk corresponds to newly generated tokens.}
+
+\hspace*{1cm}{\tiny\begin{lstlisting}
+{"model":"mistral","created_at":"2025-12-29T13:38:01.545932Z","response":" Self","done":false}
+{"model":"mistral","created_at":"2025-12-29T13:38:01.570159Z","response":"-","done":false}
+{"model":"mistral","created_at":"2025-12-29T13:38:01.592394Z","response":"att","done":false}
+{"model":"mistral","created_at":"2025-12-29T13:38:01.614036Z","response":"ention","done":false}
+{"model":"mistral","created_at":"2025-12-29T13:38:01.635585Z","response":",","done":false}
+\end{lstlisting}}
+
+
+
+\end{frame}

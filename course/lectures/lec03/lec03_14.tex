@@ -1,0 +1,61 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Feedback Files — Structure and Indexing}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.35\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Stored as structured \y{NetCDF} files
+  \item Separate layers for:
+    \begin{itemize}
+      \item report metadata
+      \item individual observations
+    \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item One report may contain many observations
+  \item Explicit indexing links both layers
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.63\textwidth}
+
+\vspace{-1mm}
+\textbf{Core variables (excerpt)}
+
+\begin{verbatim}
+i_body    (nreport)     start index of report
+l_body    (nreport)     number in report
+
+obs       (nobs)        observation
+veri_data (nmodel,nobs) model equivalent H(x)
+\end{verbatim}
+
+\vspace{1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item \texttt{i\_body:l\_body} maps reports → obs
+  \item \texttt{obs} and \texttt{veri\_data} are aligned
+  \item Enables direct O–B, O–A diagnostics
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

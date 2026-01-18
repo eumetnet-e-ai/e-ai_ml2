@@ -1,0 +1,63 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Agent Frameworks Exist}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{0mm}
+\textbf{Scaling problems of ad-hoc agents}
+
+\begin{itemize}
+  \item Prompts grow uncontrollably
+  \item Control logic becomes implicit
+  \item Error handling is duplicated
+\end{itemize}
+
+\vspace{0mm}
+As systems grow:
+\begin{itemize}
+  \item code becomes unstructured
+  \item behavior is hard to reproduce
+  \item debugging is expensive
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-8mm}
+\textbf{What frameworks provide}
+
+\begin{itemize}
+  \item Explicit control flow
+  \item Reusable abstractions
+  \item Tool and memory interfaces
+  \item Observability and logging
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What they do \emph{not} provide}
+
+\begin{itemize}
+  \item Correct reasoning
+  \item Ground truth
+  \item Guaranteed success
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key point:}  
+Frameworks add \y{structure}, not intelligence.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

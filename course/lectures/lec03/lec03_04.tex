@@ -1,0 +1,55 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{IFS Open Data — Access via Client Library}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item IFS data is not exposed as simple directories
+  \item Access is service-based and load-controlled
+  \item \y{Small subsets} can be retrieved efficiently
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Use ECMWF’s official open-data client
+  \item Request fields by \y{parameter, step, level}
+  \item Result is a standard GRIB2 file
+\end{itemize}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-0.3cm}
+\begin{codeonly}{Downloading IFS fields with ecmwf-opendata}
+from ecmwf.opendata import Client
+
+client = Client(
+    source="ecmwf",
+    model="ifs",
+)
+
+client.retrieve(
+    time=0,
+    type="fc",
+    step=24,
+    param=["2t", "msl"],
+    target="ifs_2t.grib2")
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

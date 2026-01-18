@@ -1,0 +1,48 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Diffusion in Action: Example Result}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-4mm}
+\includegraphics[width=\textwidth]{../../images/img09/2_diffusion_final.png}
+
+\vspace{-2mm}
+\includegraphics[width=\textwidth]{../../images/img09/2_diffusion_steps.png}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{What we see}
+
+\begin{itemize}
+  \item Start from pure noise
+  \item Apply learned denoising steps
+  \item End up with valid samples
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item Samples follow the target distribution
+  \item Stochastic but structured
+\end{itemize}
+
+\vspace{2mm}
+This is \y{sampling by refinement}, not regression.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

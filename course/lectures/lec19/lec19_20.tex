@@ -1,0 +1,61 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Long-Time Rollout: Accuracy vs Physical Validity}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Long-time test}
+
+\begin{itemize}
+  \item Rollout over hundreds of time steps
+  \item Same initial condition
+  \item Compare truth, CNN-free, CNN-conservative
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item CNN-free: errors accumulate steadily
+  \item CNN-conservative: structure remains coherent
+  \item Physics constraints matter most \y{far beyond training horizon}
+\end{itemize}
+
+\vspace{2mm}
+{\bf Short-term accuracy is not a proxy for long-term validity.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+\vspace{-3mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_Long_0.png}
+
+\vspace{-1mm}
+
+\includegraphics[width=0.9\textwidth]{../../images/img19/Advection_Periodic_CNN_Long_600.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\rtext{\bf Only the conservative model maintains physically consistent transport.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{tightmath}
+\end{frame}

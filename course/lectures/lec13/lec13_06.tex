@@ -1,0 +1,59 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{How Automation Is Achieved in MLOps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Automation principles}
+
+\begin{itemize}
+  \item Each step is \y{explicitly defined} and scripted
+  \item Execution is \y{trigger-based}, not manual
+  \item Results are \y{logged and versioned} automatically
+\end{itemize}
+
+\vspace{2mm}
+Automation replaces informal procedures by
+\rtext{repeatable execution rules}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\textbf{Technical mechanisms}
+
+\begin{itemize}
+  \item \y{CI/CD pipelines} trigger builds and checks
+  \item \y{Version control} tracks code, configs, and metadata
+  \item \y{Registries} store models and runtime artifacts
+  \item \y{Containers} freeze execution environments
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key effect}
+
+\begin{itemize}
+  \item Humans decide \y{what should happen}
+  \item Systems enforce \rtext{how it happens}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Automation makes MLOps scalable, auditable, and safe.}
+
+\end{frame}

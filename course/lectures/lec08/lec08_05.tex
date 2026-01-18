@@ -1,0 +1,56 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Text Generation from Symbolic Descriptors}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{LLM input}
+
+\begin{itemize}
+  \item Short symbolic prompt
+  \item Encodes physical properties
+  \item Passed directly to the language model
+\end{itemize}
+
+\vspace{1mm}
+{\footnotesize
+\begin{lstlisting}
+Mean wind speed: 15.2 m/s
+Dominant direction: northwesterly
+Region: North Sea
+\end{lstlisting}
+}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{LLM output}
+
+\begin{itemize}
+  \item Natural-language forecast text
+  \item Generated solely from symbolic input
+\end{itemize}
+
+\vspace{1mm}
+{\footnotesize
+\begin{lstlisting}
+Strong northwesterly winds with
+speeds around 15 m/s over the
+North Sea.
+\end{lstlisting}
+}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

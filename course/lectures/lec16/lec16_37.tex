@@ -1,0 +1,73 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16 — Slide 37
+% ================================================================================
+\begin{frame}[t]
+\mytitle{What LLMs Do Today --- and What ``World Models'' Add Next}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{LLMs today (what they actually do)}
+\begin{itemize}
+  \item generate text/code by \y{next-token prediction}
+  \item strong at language tasks: explain, summarize, draft, transform
+  \item can \y{appear} to reason, but truth not guaranteed
+  \item without grounding: can be \rtext{confidently wrong}
+\end{itemize}
+
+\vspace{2mm}
+\tiny
+\textbf{World-model approaches (the next step)}
+\begin{itemize}
+  \item learn explicit \y{state} representations of a system (world state)
+  \item learn \y{dynamics}: state$(t)$ + action $\rightarrow$ state$(t{+}1)$
+  \item enable planning, long-horizon consistency, and controllable actions
+  \item usually needs \y{grounding} (data, sensors, simulators, tools)
+\end{itemize}
+
+\vspace{0mm}
+\footnotesize
+\rtext{\textbf{Message:}}
+LLMs are powerful interfaces --- world models aim at \y{reliable dynamics}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{LLMs for knowledge work}
+
+\tiny
+\vspace{0mm}\color{red}
+\textbf{Be careful:}
+\begin{itemize}\color{darkgreen}
+  \item verify facts, numbers, and operational details
+  \item demand sources or reproduce with scripts
+  \item watch for missing assumptions and edge cases
+\end{itemize}
+
+\footnotesize
+\vspace{0mm}
+\textbf{Take full advantage:}
+\begin{itemize}
+  \item accelerate understanding and documentation
+  \item structure tasks into steps, checklists, and options
+  \item generate first drafts and improve clarity
+  \item connect to tools/agents for \y{grounded actions}
+\end{itemize}
+
+\vspace{-1mm}
+\rtext{\textbf{Fast thinking + human validation \\
+= real productivity.}}
+
+\end{column}
+
+\end{columns}
+\end{frame}

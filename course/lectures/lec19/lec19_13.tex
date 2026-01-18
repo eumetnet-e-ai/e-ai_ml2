@@ -1,0 +1,70 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\begin{tightmath}
+
+\mytitle{Alternative: Learning the Full RHS with Neural Networks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Black-box RHS learning}
+
+Instead of discovering equations, one may directly learn the vector field
+\[
+\dot{\mathbf{x}} = \mathbf{f}_\theta(\mathbf{x}),
+\]
+where $\mathbf{f}_\theta$ is a neural network.
+
+
+\vspace{4mm}
+The network is trained to match observed time derivatives or trajectories.
+
+\begin{itemize}
+  \item Very flexible function class
+  \item \y{Can approximate complex, unknown} \y{dynamics}
+  \item Naturally handles noise with regularization
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{Neural SINDy: a different goal}
+
+Neural SINDy uses neural networks only to stabilize intermediate steps
+(denoising and differentiation), but still identifies
+\[
+\dot{\mathbf{x}} \approx \Theta(\mathbf{x})\,\Xi,
+\]
+with a sparse, explicit structure.
+
+\vspace{4mm}
+\rtext{\bf Key distinction:}
+
+\begin{itemize}
+  \item Neural RHS learning $\rightarrow$ \y{predictive black box}
+  \item Neural SINDy $\rightarrow$ \emph{interpretable equations}
+\end{itemize}
+
+\vspace{0mm}
+This distinction is critical in scientific modeling, where the goal
+is understanding, not only prediction.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+
+\end{frame}

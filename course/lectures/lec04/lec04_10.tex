@@ -1,0 +1,62 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Defining a Simple Neural Network}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Neural network idea}
+
+\begin{itemize}
+  \item Learn a mapping $f_\theta : x \rightarrow \hat{y}$
+  \item \y{Parameters} $\theta$ are trainable
+  \item Composition of simple operations
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Basic building blocks}
+
+\begin{itemize}
+  \item \y{Linear transformation}
+  \item \y{Nonlinear activation}
+  \item Output layer
+\end{itemize}
+
+\vspace{-2mm}
+\[
+\hat{y} = f_\theta(x)
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-5mm}
+\begin{codeonly}{Minimal PyTorch model}
+import torch.nn as nn
+
+class SimpleNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.fc1 = nn.Linear(1,16)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(16,1)
+
+    def forward(self,x):
+        x = self.fc1(x)
+        x = self.relu(x)
+        return self.fc2(x)
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

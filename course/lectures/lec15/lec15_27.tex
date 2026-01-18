@@ -1,0 +1,55 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 27
+% ================================================================================
+\begin{frame}[t]
+\mytitle{CBCF Results: Predicted vs Target Fields (Selected Outputs)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+% Left column: cbcf_results_4.png
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{0mm}
+\centering
+
+\includegraphics[
+  width=\textwidth,
+  keepaspectratio
+]{../../images/img15/cbcf_results_4.png}
+
+\vspace{2mm}
+\scriptsize
+\textbf{Fields shown (left = prediction, right = target):}
+\begin{itemize}
+  \item \texttt{CBCF}: main warning mask/product
+  \item \texttt{CBCF\_likeliness}: continuous likelihood / confidence field
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+% Right column: cbcf_results_5.png
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{0mm}
+\centering
+
+\includegraphics[
+  width=\textwidth,
+  keepaspectratio
+]{../../images/img15/cbcf_results_5.png}
+
+\vspace{2mm}
+\scriptsize
+\textbf{Fields shown (left = prediction, right = target):}
+\begin{itemize}
+  \item \texttt{CBCF\_top}: top-level / dominant CBCF intensity field
+  \item \texttt{CLST}: additional label channel (sparser warning type)
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}

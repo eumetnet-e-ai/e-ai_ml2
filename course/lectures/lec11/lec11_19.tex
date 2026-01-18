@@ -1,0 +1,68 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Native Function Calling in DAWID}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What “Native” Means}
+
+\begin{itemize}
+  \item Functions declared via explicit schemas
+  \item Typed arguments and clear signatures
+  \item Direct support by modern LLM APIs
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Advantages in DAWID}
+
+\begin{itemize}
+  \item \y{No JSON parsing} from free text
+  \item Fewer hallucinated calls
+  \item Safer execution path
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-5mm}
+\textbf{DAWID Integration}
+
+\begin{itemize}
+  \item Functions registered centrally
+  \item Only allowed tools are exposed
+  \item Backend controls execution order
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical Use Cases}
+
+\begin{itemize}
+  \item Plot generation
+  \item Data download and extraction
+  \item Model-based diagnostics
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Native calls are \y{preferred}
+  \item Classical calls remain a fallback
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,53 @@
+% ================================================================================
+% Lecture 17 — Slide 18
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Graph Transformer attention: which neighbors matter?}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Graph Transformer vs.\ plain message passing}
+\begin{itemize}
+\item classic GNN: neighbors contribute via fixed averaging / sum
+\item GraphTransformer: each edge gets a learned \y{attention weight}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interpretation}
+\begin{itemize}
+\item for one receiver node $i$, all incoming edges $(j \rightarrow i)$
+\item attention weights $\alpha_{i,j}$ sum to 1 (per head)
+\item thick edges $\Rightarrow$ \y{high influence} of neighbor $j$
+\end{itemize}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+the model learns \y{where to look} on the graph depending on flow regime and structure.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\vspace{-2mm}
+\raggedleft
+
+\includegraphics[width=0.86\linewidth]{../../images/img17/aicon_attention_graph.png}
+
+\vspace{-1mm}
+\includegraphics[width=0.86\linewidth]{../../images/img17/aicon_attention_graph2.png}
+
+\vspace{-2mm}
+\scriptsize
+\textbf{Example:}
+(top) ICON multi-mesh graph (coarse + fine connections);
+(bottom) attention setup
+\end{column}
+
+\end{columns}
+\end{frame}

@@ -1,0 +1,66 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Validating and Inspecting Zarr Datasets}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+
+\textbf{Why validation matters}
+
+\begin{itemize}
+  \item training assumes consistent metadata
+  \item missing values or shapes cause silent errors
+  \item errors should be caught \y{before} training
+\end{itemize}
+
+\vspace{2mm}
+Anemoi provides built-in tools to:
+\begin{itemize}
+  \item verify temporal coverage
+  \item check spatial resolution and shapes
+  \item ensure statistics are present
+\end{itemize}
+
+\vspace{2mm}
+Validation is part of the dataset lifecycle,
+not an afterthought.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+\footnotesize
+
+\begin{codeonly}{Inspecting a dataset}
+anemoi-datasets inspect era5.zarr
+\end{codeonly}
+
+\vspace{2mm}
+Typical output includes:
+\begin{itemize}
+  \item time range and frequency
+  \item variables and dimensions
+  \item min / max / mean / std
+  \item total size and chunking
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Only validated datasets enter training.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+     {\texttt{Docs: anemoi-datasets}}
+
+\end{frame}

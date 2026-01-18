@@ -1,0 +1,40 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Classes II: Coupling Two Components (Mini Earth-System Pattern)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{The exciting part}
+
+\begin{itemize}
+  \item Two components, each with its own state
+  \item A controller coordinates \y{information exchange}
+  \item This is the conceptual core of coupled models
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Coupling in 10 lines}
+class Box: 
+    def __init__(s,x): s.x=x
+    def step(s,dt,t): s.x+=0.2*dt*(t-s.x)
+
+atm, ocn = Box(288.), Box(290.)
+ocn.step(1., atm.x); atm.step(1., ocn.x)
+print("atm=", atm.x, "ocn=", ocn.x)
+\end{codeonly}
+
+{\footnotesize Same coupling idea, later: many variables + grids + physics}
+
+\end{column}
+\end{columns}
+\end{frame}

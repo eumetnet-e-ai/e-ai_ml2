@@ -1,0 +1,55 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Radar Product to AI-Readable Image}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+
+\textbf{Operational radar data}
+
+\begin{itemize}
+  \item Provided as HDF5 files
+  \item Contains data and metadata
+  \item Scaling and masking required
+\end{itemize}
+
+\vspace{2mm}
+Physical decoding:
+\begin{itemize}
+  \item apply gain and offset
+  \item mask undetectable values
+  \item remove non-physical signals
+\end{itemize}
+
+\vspace{2mm}
+Result: a georeferenced reflectivity field.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\begin{codeonly}{Decode radar reflectivity}
+raw = f["dataset1/data1/data"][:]
+
+gain   = what.attrs["gain"]
+offset = what.attrs["offset"]
+
+data = raw.astype(np.float32) * gain + offset
+data[(raw == 0) | (raw == 65535) | (data < 0)] = np.nan
+\end{codeonly}
+
+\vspace{2mm}
+This step preserves physical meaning before visualization.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

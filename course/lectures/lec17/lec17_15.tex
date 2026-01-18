@@ -1,0 +1,50 @@
+% ================================================================================
+% Lecture 17 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+\mytitle{ICON multimesh: the hidden graph behind AICON}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Key idea}
+\begin{itemize}
+\item AICON does not run on a regular lat--lon grid
+\item it uses ICON's \y{hierarchical triangular mesh}
+\item the GNN operates on a \y{hidden multi-mesh}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Multi-mesh principle}
+\begin{itemize}
+\item union of coarse-to-fine subgraphs \\
+\quad R$n$B0 $\cup$ R$n$B1 $\cup$ ... $\cup$ R$n$Bk
+\item mixes \y{short-range} + \y{long-range} edges
+\item similar spirit as GraphCast multi-mesh
+\end{itemize}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+the multi-mesh gives the GNN both \y{local physics} and \y{global context}.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\vspace{-2mm}
+\raggedleft
+% Use the level-wise multimesh plot from the notebook:
+\includegraphics[width=0.95\linewidth]{../../images/img17/grid_visual.png}
+
+\vspace{4mm}
+\scriptsize
+Hidden mesh edges shown level-wise: coarse levels enable long-range interaction.
+\end{column}
+
+\end{columns}
+\end{frame}

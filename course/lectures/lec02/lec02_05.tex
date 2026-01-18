@@ -1,0 +1,57 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Installing Packages in Jupyter Notebooks}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Recommended Workflow}
+
+\begin{itemize}
+  \item Install packages either outside in the right virtual environment or 
+  \y{directly in the notebook}
+  \item Use \texttt{pip install} or \texttt{!pip install}
+  \item Packages are installed into the \y{running kernel}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why This Works}
+
+\begin{itemize}
+  \item Jupyter uses the kernel's Python environment
+  \item \texttt{pip} is typically bound to this Python
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Good Practice: Check Once}
+
+\vspace{3mm}
+\begin{codeonly}{Check active environment}
+import sys
+print(f"Python executable: {sys.executable}")
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key Message}
+
+\begin{itemize}
+  \item Use \texttt{pip} where you run your code
+  \item Verify the environment if something looks wrong
+\end{itemize}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

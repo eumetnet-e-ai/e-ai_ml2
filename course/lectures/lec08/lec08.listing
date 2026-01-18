@@ -1,0 +1,9 @@
+query = "This is a satellite-derived Cloud Top Height image  [...]"
+response = client.chat.completions.create(
+  model="gpt-4-turbo",
+  messages=[{"role": "user",
+   "content": [
+    {"type": "text", "text": query},
+    {"type": "image_url", "image_url":{
+    "url": f"data:image/png;base64,{encoded}" }} ] }],
+    max_tokens=800,)

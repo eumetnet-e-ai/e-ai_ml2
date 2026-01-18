@@ -1,0 +1,61 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{The Adam Optimizer — Adaptive Gradient Descent}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why optimizers matter}
+
+\begin{itemize}
+  \item Loss defines \y{what} to minimize
+  \item Optimizer defines \y{how}
+  \item Controls stability and speed
+\end{itemize}
+
+\vspace{1mm}
+Goal: update parameters
+to reduce loss \y{efficiently}.
+
+\vspace{1mm}
+Adam combines momentum and scaling:
+\[
+\delta \theta \;\propto\; 
+- \frac{\text{average current gradient}}{\text{typical gradient size}}
+\]
+
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Adam in a nutshell}
+
+\begin{itemize}
+  \item Uses \y{gradients}
+  \item Tracks first moment (mean)
+  \item Tracks second moment (variance)
+  \item Adaptive step size per parameter
+\end{itemize}
+
+\vspace{1mm}
+Parameter update (conceptually):
+\[
+\theta_{t+1}
+=
+\theta_t - \eta \,
+\frac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

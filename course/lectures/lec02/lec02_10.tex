@@ -1,0 +1,66 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{What Is an API — and What Is Not}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What an API Is}
+
+\begin{itemize}
+  \item A \y{defined interface} to call functionality
+  \item Clear inputs, outputs and behavior
+  \item Stable contract between components
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical API Examples}
+
+\begin{itemize}
+  \item Python functions and classes
+  \item Library interfaces (e.g.\ NumPy)
+  \item Web endpoints (HTTP/REST)
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-3mm}
+\textbf{What an API Is \emph{Not}}
+
+\begin{itemize}
+  \item Just installable code
+  \item A script without defined entry points
+  \item A collection of loosely coupled functions
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Important Distinction}
+
+\begin{itemize}
+  \item Installation is \y{distribution}
+  \item An API is \y{how you call the code}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Message}
+
+\begin{itemize}
+  \item Packages may \y{expose} APIs
+  \item Installation alone does not define one
+\end{itemize}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

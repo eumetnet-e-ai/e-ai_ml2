@@ -1,0 +1,60 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Data Formats Matter in AI/ML}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Characteristics of training data}
+
+\begin{itemize}
+  \item Very large (GB–TB scale)
+  \item Multi-dimensional (time, space, channels)
+  \item Often produced continuously
+\end{itemize}
+
+\vspace{2mm}
+In contrast to classical workflows:
+\begin{itemize}
+  \item Data rarely fits into memory
+  \item Full sequential reads are uncommon
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Typical ML access patterns}
+
+\begin{itemize}
+  \item Repeated sampling of small subsets
+  \item Random or structured access
+  \item Parallel reading by many workers
+\end{itemize}
+
+\vspace{2mm}
+As a result, the \y{data format} directly affects:
+\begin{itemize}
+  \item I/O performance
+  \item Scalability of training
+  \item Feasibility of distributed ML
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Data formats are part of the ML infrastructure, not just storage.}
+
+\end{frame}

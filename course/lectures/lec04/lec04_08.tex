@@ -1,0 +1,53 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Data Handling in PyTorch: Dataset and DataLoader}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why data loaders exist}
+
+\begin{itemize}
+  \item Datasets often too large for memory
+  \item Training uses \y{mini-batches}
+  \item Data order matters for optimization
+  \item Separation of data and model logic
+\end{itemize}
+
+\vspace{1mm}
+\[
+(x_i, y_i) \;\rightarrow\; (X_B, Y_B)
+\]
+Samples are grouped into batches.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What DataLoader provides}
+
+\begin{itemize}
+  \item Batching
+  \item Optional shuffling
+  \item Parallel loading (CPU workers)
+  \item Consistent interface for training loops
+\end{itemize}
+
+\vspace{1mm}
+\[
+(X_B, Y_B) \;\rightarrow\; \mathcal{L}(f_\theta(X_B), Y_B)
+\]
+Each batch produces one loss value.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

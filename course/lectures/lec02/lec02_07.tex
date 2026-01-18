@@ -1,0 +1,57 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Magic Commands and Shell Access}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why Magic Commands}
+
+\begin{itemize}
+  \item Speed up interactive work
+  \item Reduce boilerplate code
+  \item Support exploration and debugging
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Line vs Cell Magics}
+
+\begin{itemize}
+  \item \texttt{\%} for single-line commands
+  \item \texttt{\%\%} for whole cells
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{The Few You Really Need}
+
+\begin{itemize}
+  \item \texttt{\%timeit} \,(runtime)
+  \item \texttt{\%\%writefile} \,(save code)
+  \item \texttt{\%\%bash} \,(run shell)
+  \item \texttt{!pip} \,(install packages)
+  \item \texttt{!ls} \,(files)
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Message}
+
+\begin{itemize}
+  \item Use magic and shell commands \y{sparingly}
+\end{itemize}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

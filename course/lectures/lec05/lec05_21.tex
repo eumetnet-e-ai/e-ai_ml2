@@ -1,0 +1,67 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{LSTM Cell: Gated Memory Equations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+
+\textbf{State variables}
+
+\begin{itemize}
+  \item \y{Cell state} $c_t$: long-term memory
+  \item \y{Hidden state} $h_t$: exposed state
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Gate intuition}
+
+\begin{itemize}
+  \item Forget: scale past memory
+  \item Input: add new information
+  \item Output: control exposure
+\end{itemize}
+
+\vspace{1mm}
+Key property:
+\begin{itemize}
+  \item Additive update of $c_t$
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-12mm}
+\begin{eqnarray*}
+f_t &=& \sigma(W_f x_t + U_f h_{t-1} + b_f) \\[-1mm]
+i_t &=& \sigma(W_i x_t + U_i h_{t-1} + b_i) \\[-1mm]
+\tilde c_t &=& \tanh(W_c x_t + U_c h_{t-1} + b_c) \\[-1mm]
+c_t &=& f_t \odot c_{t-1} + i_t \odot \tilde c_t \\[-1mm]
+o_t &=& \sigma(W_o x_t + U_o h_{t-1} + b_o) \\[-1mm]
+h_t &=& o_t \odot \tanh(c_t)
+\end{eqnarray*}
+
+\vspace{-2mm}
+{\footnotesize
+\begin{itemize}
+  \item $x_t \in \mathbb{R}^m$ : temporal input at time $t$
+  \item $h_t \in \mathbb{R}^n$ : hidden state
+  \item $c_t \in \mathbb{R}^n$ : cell state
+  \item $f_t, i_t, o_t$ : gates
+  \item $\tilde c_t$ : candidate cell update
+  \item $W_\ast, U_\ast, b_\ast$ : \y{learnable parameters}
+\end{itemize}
+}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

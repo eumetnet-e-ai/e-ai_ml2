@@ -1,0 +1,60 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{From Tracking to Operations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\textbf{What MLFlow enables}
+
+\begin{itemize}
+  \item Versioned model artifacts
+  \item Stable model identifiers
+  \item Promotion via registry stages
+  \item Rollback to known-good models
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational contract}
+
+\begin{itemize}
+  \item Training produces runs
+  \item Registry exposes deployable models
+  \item Inference consumes model URIs
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\textbf{What MLFlow is not}
+
+\begin{itemize}
+  \item \color{red}Not a deployment platform
+  \item Not a monitoring system
+  \item Not a CI/CD engine
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical integration}
+
+\begin{itemize}
+  \item MLFlow for model lifecycle
+  \item External systems for serving
+  \item External monitoring and alerts
+\end{itemize}
+
+\vspace{2mm}
+\y{MLFlow provides the training state of a model,}
+\y{not its operational execution.}
+
+\end{column}
+
+\end{columns}
+\end{frame}

@@ -1,0 +1,80 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Streaming LLM Responses in the Browser}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why Streaming?}
+
+\begin{itemize}
+  \item Immediate user feedback
+  \item Reduced perceived latency
+  \item Long answers remain usable
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Frontend Mechanism}
+
+\begin{itemize}
+  \item \textbf{Fetch API} with streamed response
+  \item \textbf{ReadableStream} reader
+  \item Chunk-by-chunk text processing
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key UX Effect}
+
+\begin{itemize}
+  \item User sees \y{partial results} instantly
+  \item No blocking on full completion
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Incremental Rendering}
+
+\begin{itemize}
+  \item Accumulate streamed text
+  \item Re-render on each new chunk
+  \item Markdown parsed continuously
+\end{itemize}
+
+\vspace{2mm}
+\begin{minipage}{7cm}
+\tiny
+\begin{lstlisting}
+const reader = response.body.getReader();
+while (true) {
+  const { done, value } = await reader.read();
+  if (done) break;
+  partial += decoder.decode(value);
+  responseDiv.innerHTML = marked.parse(partial);
+}
+\end{lstlisting}
+\end{minipage}
+
+\vspace{2mm}
+\textbf{Design Choice}
+
+\begin{itemize}
+  \item Simple, robust rendering
+  \item \rtext{No WebSockets required}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,48 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 27
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Lorenz-63: ORIGEN Reconstruction \& Learned Forecast Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{-1mm}
+\textbf{ORIGEN loop (concept)}
+\begin{enumerate}
+  \item Assimilate random observed subsets ($x$, $y$, $z$, $xy$, $xz$, $yz$)
+  \item Update background $\mathbf{x}^b \leftarrow \mathbf{x}^a$
+  \item Update covariance $B \leftarrow P^a$ (Kalman-style)
+\end{enumerate}
+
+\vspace{1mm}
+\textbf{Model learning}
+\begin{itemize}
+  \item Train NN to learn one-step map
+  \[
+    \mathbf{x}^a(k)\ \mapsto\ \mathbf{x}^a(k+1)
+  \]
+  \item \y{\rtext{\bf Fine-Tuning with Rollout}}
+\end{itemize}
+
+Rollout: many subsequent short forecasts
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{-2mm}
+\centering
+\includegraphics[width=0.9\textwidth]{../../images/img20/L63_6_ML_model_fc_test_2.png}
+
+\vspace{1mm}
+\scriptsize
+Forecast rollouts (blue) starting from analysis states (red dots), compared to the
+reconstructed reference trajectory (black dashed).
+\end{column}
+
+\end{columns}
+\end{frame}

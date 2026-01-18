@@ -1,0 +1,73 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Executing Generated Code Safely}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\textbf{Execution options}
+
+\begin{itemize}
+  \item \texttt{exec} inside current process
+  \item Separate process via \texttt{subprocess}
+  \item File-based execution
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Trade-offs}
+
+\begin{itemize}
+  \item \texttt{exec}: fast, \y{unsafe}
+  \item \texttt{subprocess}: isolated, slower
+  \item Files: traceable, debuggable
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Rule of thumb}
+
+Never execute LLM code  
+\y{without isolation or inspection}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-1cm}
+\textbf{Minimal example}
+
+\vspace{1mm}
+\begin{codeonly}{File-based execution}
+with open("gen.py","w") as f:
+    f.write(code)
+
+import subprocess
+subprocess.run(
+  ["python", "gen.py"],
+  check=True)
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Security risks}
+
+\begin{itemize}
+  \item File system access
+  \item Network calls
+  \item Infinite loops
+\end{itemize}
+
+\vspace{1mm}
+Mitigation requires \y{process isolation}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

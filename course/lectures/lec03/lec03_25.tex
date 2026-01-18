@@ -1,0 +1,58 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Mixed Precision Computing — Why FP16 Matters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+
+\textbf{Why reduced precision?}
+
+\begin{itemize}
+  \item Modern GPUs are optimized for \y{FP16 / BF16}
+  \item Higher throughput, lower memory traffic
+  \item Essential for large ML models
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical ML pattern}
+
+\begin{itemize}
+  \item Dense linear layers
+  \item Nonlinear activation
+  \item Large batch sizes
+\end{itemize}
+
+\vspace{2mm}
+Transformers, Diffusion, Weather
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.62\textwidth}
+
+\vspace{-2mm}
+\begin{codeonly}{FP16 neural-network-style workload}
+import torch, time
+torch.set_default_dtype(torch.float16)
+d = torch.device("cuda")
+x = torch.randn((20000,1024), device=d)
+W1 = torch.randn((1024,4096), device=d)
+W2 = torch.randn((4096,1024), device=d)
+t0 = time.time()
+y = torch.nn.functional.gelu(x @ W1)
+z = y @ W2
+torch.cuda.synchronize()
+print("FP16 time:", round(time.time()-t0,3))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

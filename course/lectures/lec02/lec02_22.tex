@@ -1,0 +1,59 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Calling C++ from Python with \texttt{ctypes}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.32\textwidth}
+
+\vspace{-1mm}
+\textbf{Role of Python}
+
+\begin{itemize}
+  \item Python loads the shared library
+  \item Defines the \y{binary interface}
+  \item Controls execution and visualization
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Important Detail}
+
+\begin{itemize}
+  \item C++ function uses \y{C ABI}
+  \item Arguments passed \y{by value}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.68\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Minimal Python Interface}
+import ctypes
+
+lib = ctypes.CDLL("./cpp_interface.so")
+lib.f_cpp.argtypes = [ctypes.c_double]
+lib.f_cpp.restype  = ctypes.c_double
+
+x = 1.0
+y = lib.f_cpp(x)
+\end{codeonly}
+
+\vspace{-1mm}
+\begin{itemize}
+  \item Native C++ computation
+  \item Explicit ABI contract
+  \item Minimal Python overhead
+\end{itemize}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+\end{frame}

@@ -1,0 +1,70 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Synthetic Forecast Generation (moving patterns)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Idea}
+
+\vspace{0mm}
+We generate physically plausible \y{spatio-temporal structure}:
+\begin{itemize}
+  \item coherent ``weather patterns'' move eastward with time
+  \item correlated variables:
+  \begin{itemize}
+    \item pressure wave $\rightarrow$ wind via spatial gradients
+    \item temperature advected + noise
+    \item precipitation linked to fronts (thresholded patterns)
+  \end{itemize}
+\end{itemize}
+
+\vspace{-1mm}
+\begin{minipage}{6cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+# grid (Europe)
+lon2d, lat2d = np.meshgrid(lon, lat)
+# moving phase (eastward shift with lead time)
+phase = kx * lon2d + ky * lat2d - omega * lead_hours[t]
+
+# temperature: advected pattern
+t2m[t] = 10.0 + 6.0*np.cos(phase + 0.7) + 0.8*rng.normal(size=lon2d.shape)
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Result}
+
+\vspace{1mm}
+Fields are realistic enough to demonstrate:
+\begin{itemize}
+  \item map snapshots
+  \item point extraction
+  \item patch-based ML sampling
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Example snapshot}
+
+\vspace{1mm}
+\includegraphics[width=5cm]{../../images/img14/zarr_ex_field_120.png}
+Lead Time: 120h
+\end{column}
+
+\end{columns}
+
+\end{frame}

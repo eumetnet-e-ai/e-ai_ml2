@@ -1,0 +1,82 @@
+% ================================================================================
+% Lecture 17 — Slide 19
+% ================================================================================
+\begin{frame}[t, fragile]
+\mytitle{Transfer learning: reuse weights on a finer hidden mesh}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Motivation}
+\begin{itemize}
+\item training on the finest multi-mesh is expensive
+\item idea: \y{train on coarse mesh} and transfer to finer mesh
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What transfers well?}
+\begin{itemize}
+\item most encoder/processor/decoder weights
+\item learned graph attention patterns are largely mesh-agnostic
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What must be adapted?}
+\begin{itemize}
+\item graph-dependent parameters:
+\begin{itemize}
+\item hidden node coordinates / embeddings
+\item extra trainable node/edge attributes
+\end{itemize}
+\item these are re-initialized and fine-tuned on the new mesh
+\end{itemize}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+efficient training strategy: \y{pretrain coarse} $\rightarrow$ \y{fine-tune fine}.
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Example (AICON walkthrough)}
+\begin{itemize}
+\item change hidden mesh resolution:
+\begin{itemize}
+\item \texttt{max\_level\_multimesh: 3 $\rightarrow$ 4}
+\end{itemize}
+\item load weights only + enable transfer learning
+\end{itemize}
+
+\vspace{1mm}
+\scriptsize
+\begin{block}{Config idea (YAML)}
+\begin{verbatim}
+training:
+  load_weights_only: true
+  transfer_learning: true
+  run_id: <pretrained_run_id>
+
+graph:
+  nodes:
+    icon_mesh:
+      node_builder:
+        max_level_multimesh: 4
+\end{verbatim}
+\end{block}
+
+\vspace{-1mm}
+\footnotesize
+This enables \y{cost-efficient scaling} to higher resolution.
+\end{column}
+
+\end{columns}
+\end{frame}

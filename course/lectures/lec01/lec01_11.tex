@@ -1,0 +1,55 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{3D Data: Fields and Surfaces}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{Why 3D matters}
+
+\begin{itemize}
+  \item Many geophysical fields are \y{spatial}
+  \item Height, depth, or phase space
+  \item Visualization helps intuition
+\end{itemize}
+
+\vspace{-12mm}
+\hspace*{-8mm}\includegraphics[width=6cm]{../../images/img01/plot-3d.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{plot-3d.py}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 4, 80)
+y = np.linspace(0, 3, 60)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) * np.cos(Y)
+
+fig = plt.figure(figsize=(4,3))
+ax = fig.add_subplot(projection="3d")
+ax.plot_surface(X, Y, Z, cmap="viridis")
+plt.savefig("plot-3d.png"); plt.close()
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Example of a smooth 3D field defined on a 2D grid}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}

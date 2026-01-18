@@ -1,0 +1,57 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{What the Model Actually Represents}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Model as a function}
+
+\begin{itemize}
+  \item Neural network defines a parametric function
+  \item Parameters = weights and biases
+  \item Training adjusts these parameters
+\end{itemize}
+
+\vspace{1mm}
+\[
+\hat{y} = W_2 \,\sigma(W_1 x + b_1) + b_2
+\]
+
+\vspace{1mm}
+Nonlinearity $\sigma$ enables complex mappings.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Trainable parameters}
+
+\begin{itemize}
+  \item Layer 1: $1 \rightarrow 16$
+  \item Layer 2: $16 \rightarrow 1$
+\end{itemize}
+
+\vspace{1mm}
+\[
+\begin{aligned}
+\text{fc1: } &16 \text{ weights} + 16 \text{ biases} = 32 \\
+\text{fc2: } &16 \text{ weights} + 1 \text{ bias} = 17
+\end{aligned}
+\]
+
+\vspace{1mm}
+\textbf{Total:} $\;32 + 17 = \y{49}$ parameters
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

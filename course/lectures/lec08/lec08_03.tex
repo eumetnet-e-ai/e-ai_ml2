@@ -1,0 +1,46 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Example A: Symbolic Multimodality}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Basic idea}
+
+\begin{itemize}
+  \item Start from a physical wind field
+  \item Extract a small set of \textbf{symbolic descriptors}
+  \item Use a language model to generate text
+\end{itemize}
+
+\vspace{2mm}
+The model does \emph{not} see images or full fields.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Representation pipeline}
+
+\begin{itemize}
+  \item Numerical wind field
+  \item $\rightarrow$ symbolic spatial summary
+  \item $\rightarrow$ text prompt
+  \item $\rightarrow$ language model
+\end{itemize}
+
+\vspace{2mm}
+Multimodality is achieved through \textbf{representation design}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,70 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Two Physical Processes Behind the Same Correlation}
+
+\footnotesize
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{2mm}
+
+\textbf{Scenario 1: direct causal coupling}
+
+\begin{itemize}
+  \item Pressure evolves under synoptic forcing
+  \item Temperature responds via adiabatic processes
+\end{itemize}
+
+\vspace{1mm}
+\[
+\frac{dP}{dt} = -\gamma_P(P - P_{eq}) + \beta_P F(t)
+\]
+\vspace{-1mm}
+\[
+\frac{dT}{dt} = -\gamma_T(T - T_{eq}) + \rtext{\alpha(P-P_{eq})}
+\]
+
+\vspace{1mm}
+\rtext{\bf True causal link:} \y{$P \rightarrow T$}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{2mm}
+
+\textbf{Scenario 2: common external forcing}
+
+\begin{itemize}
+  \item Air-mass advection drives both variables
+  \item No direct physical coupling between $P$ and $T$
+\end{itemize}
+
+\vspace{1mm}
+\[
+\frac{dP}{dt} = -\gamma_P(P - P_{eq}) + \beta_P F(t)
+\]
+\vspace{-1mm}
+\[
+\frac{dT}{dt} = -\gamma_T(T - T_{eq}) + \beta_T F(t)
+\]
+
+\vspace{1mm}
+\rtext{\bf No direct causal link:} \y{$P \not\rightarrow T$}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\rtext{\bf Both scenarios can show similar $P$--$T$ correlation — but they are physically different.}
+
+\end{tightmath}
+\end{frame}

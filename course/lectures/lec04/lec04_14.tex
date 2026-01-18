@@ -1,0 +1,53 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{End-to-End Example — Learning a Sine Function}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Goal of the example}
+
+\begin{itemize}
+  \item Approximate a known function: \y{$\sin(x)$}
+  \item Learn from sampled input–output pairs
+  \item Demonstrate full ML workflow
+\end{itemize}
+
+\vspace{1mm}
+Target mapping:
+\[
+x \;\mapsto\; \sin(x)
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Components involved}
+
+\begin{itemize}
+  \item Synthetic dataset $(x, y)$
+  \item Neural network model
+  \item Loss function (error measure)
+  \item Optimizer updating parameters
+\end{itemize}
+
+\vspace{1mm}
+Training objective:
+\[
+\min_\theta \; \sum_i
+\bigl\lVert f_\theta(x_i) - y_i \bigr\rVert^2
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

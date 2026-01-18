@@ -1,0 +1,64 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 26
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Neural Causal Discovery: Scaling Ideas to Complex Systems}
+
+\footnotesize
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\vspace{-2mm}
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item Earth-system variables are high-dimensional
+  \item dependencies are nonlinear and state-dependent
+  \item autocorrelation dominates raw signals
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Neural causal discovery idea}
+
+\begin{itemize}
+  \item first remove \y{self-dependence} (autocorrelation)
+  \item learn cross-effects from \y{innovations}
+  \item enforce sparsity $\Rightarrow$ interpretable directed links
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Innovation form:} $x(t) - a\,x(t-1)$
+
+\vspace{0mm}
+\rtext{\bf Key message:}
+AI helps to \y{extend classical causal ideas}
+to nonlinear, high-dimensional dynamics.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{-2mm}
+\centering
+
+\includegraphics[width=0.75\textwidth]{../../images/img19/neural_causal_discovery.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\textbf{Example result.}
+After removing autocorrelation, sparse learning recovers directed links:
+Scenario 1: \y{$F\rightarrow P\rightarrow T$}, Scenario 2: \y{$F\rightarrow P$, $F\rightarrow T$}.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

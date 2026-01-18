@@ -1,0 +1,63 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{LLM Capabilities and Limits in Practice}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What LLMs are good at}
+
+\begin{itemize}
+  \item Understanding natural language
+  \item Generating plausible code and text
+  \item Pattern completion and refactoring
+  \item Explaining existing code
+\end{itemize}
+
+\vspace{2mm}
+LLMs approximate
+\begin{eqnarray*}
+&& p(\text{next token} \mid \text{context})
+\end{eqnarray*}
+from large training corpora.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Systematic limitations}
+
+\begin{itemize}
+  \item No ground truth or verification
+  \item Hallucinated but plausible outputs
+  \item Overconfidence in incorrect answers
+  \item Sensitivity to prompt phrasing
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Sampling matters}
+
+\begin{eqnarray*}
+&& \text{temperature } T \uparrow
+\;\Rightarrow\;
+\text{variance of outputs } \uparrow
+\end{eqnarray*}
+
+\vspace{1mm}
+Low \(T\): reproducible but rigid \\
+High \(T\): creative but unstable
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

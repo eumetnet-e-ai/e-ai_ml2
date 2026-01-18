@@ -1,0 +1,54 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Elementary Vector Database — Setup}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.33\textwidth}
+
+\textbf{Toy example}
+
+\begin{itemize}
+  \item Small set of short sentences
+  \item Different semantic topics
+  \item Some paraphrases, some unrelated
+\end{itemize}
+
+\vspace{1mm}
+We use this to build intuition  
+before scaling to real documents.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.65\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Example sentences }
+sentences = [
+  "The sun is shining brightly today.",
+  "Heavy rain is falling over the city.",
+  "Neural networks can learn patterns.",
+  "Transformers use self-attention."
+]
+\end{codeonly}
+
+\vspace{1mm}
+Each sentence will become  
+one vector in a shared space.
+
+\vspace{3mm}
+\begin{center}
+\rtext{\bf Sentence $\rightarrow {\bf z} \in \R^{d}$}
+\end{center}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

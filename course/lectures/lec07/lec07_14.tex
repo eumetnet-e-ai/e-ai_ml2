@@ -1,0 +1,66 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{FAISS in Practice}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+
+\textbf{Index construction}
+
+\begin{itemize}
+  \item Choose distance metric
+  \item Add all embeddings
+  \item Index lives in memory or on disk
+\end{itemize} 
+Common choice: IndexFlatL2
+
+\vspace{4mm}
+\textbf{Step 2: Query routing}
+
+For a query vector \(z_q\), FAISS finds the closest centroids:
+\[
+\mathcal{C}_q
+=
+\operatorname*{arg\,top}_{L}
+\; \| z_q - c_j \|_2 ,
+\quad L \ll M .
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\vspace{-9mm}
+\begin{codeonly}{Build and query FAISS index}
+import faiss
+d = page_embeddings.shape[1]
+index = faiss.IndexFlatL2(d)
+
+index.add(page_embeddings)
+
+distances, indices = index.search(
+    query_embedding, k)
+\end{codeonly}
+
+
+\vspace{3mm}
+\textbf{Step 3: Local search}
+
+Exact distances are computed only for vectors
+stored in the selected regions:
+\[
+z_i \;\text{with}\; c(z_i) \in \mathcal{C}_q .
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

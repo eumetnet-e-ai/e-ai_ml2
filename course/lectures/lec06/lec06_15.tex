@@ -1,0 +1,90 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Residual Addition, Layer Normalization}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Output of multi-head attention}
+
+\vspace{1mm}
+Multi-head attention output (after $W^O$):
+\[
+Z_{\text{att}}
+=
+\operatorname{MultiHead}(X)
+\in
+\mathbb{R}^{n \times d_{\text{model}}}
+\]
+
+\vspace{-1mm}
+\textbf{Residual connection}
+
+\[
+\tilde X
+=
+X + Z_{\text{att}}
+\]
+
+\vspace{-1mm}
+\begin{itemize}
+  \item Preserves original information
+  \item Requires matching dimensions
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-9mm}
+\quad \textbf{Layer normalization}
+
+Applied \y{after} the residual sum, per token $i$:
+
+\vspace{-6mm}
+\begin{eqnarray*}
+\mu_i
+& = & 
+\frac{1}{d_{\text{model}}}
+\sum_{k=1}^{d_{\text{model}}}
+\tilde X_{ik}
+\\
+\sigma_i^2
+& = & 
+\frac{1}{d_{\text{model}}}
+\sum_{k=1}^{d_{\text{model}}}
+(\tilde X_{ik} - \mu_i)^2
+\\
+Z_{ik}
+& = & 
+\gamma_k
+\frac{\tilde X_{ik} - \mu_i}{\sqrt{\sigma_i^2 + \varepsilon}}
++ \beta_k
+\end{eqnarray*}
+
+\vspace{-4mm}
+\begin{itemize}
+  \item Normalization across \y{feature dimension}
+  \item $\gamma_k, \beta_k$: learned parameters
+  \item No mixing between tokens
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Residual connections preserve information; LayerNorm stabilizes the representation.}
+}
+
+\end{frame}

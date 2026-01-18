@@ -1,0 +1,63 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{What Is an AI Agent? — Core Mental Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Agent as a closed loop}
+
+\vspace{-4mm}
+\begin{eqnarray*}
+&& \text{perception} \\
+&\rightarrow& \text{reasoning (LLM)} \\
+&\rightarrow& \text{action} \\
+&\rightarrow& \text{environment / state}
+\end{eqnarray*}
+
+\vspace{2mm}
+Key ingredients:
+\begin{itemize}
+  \item internal \y{state}
+  \item access to \y{tools}
+  \item explicit \y{control flow}
+\end{itemize}
+
+\vspace{2mm}
+An agent is \emph{active}, not passive.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+
+\textbf{LLM vs tool vs agent}
+
+\begin{itemize}
+  \item \textbf{LLM:} maps text to text
+  \item \textbf{Tool:} executes a fixed function
+  \item \textbf{Agent:} decides \emph{what to do next}
+\end{itemize}
+
+\vspace{0mm}
+\begin{minipage}{5cm}
+\includegraphics[width=4cm]{../../images/img10/agent_loop_crop.png}
+\end{minipage}
+\begin{minipage}{2cm}
+\raggedright
+Decision-making loop with state and actions
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

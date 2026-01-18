@@ -1,0 +1,58 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16 — Slide 30
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Inside the CNN: Many Feature Variables}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+The CNN transforms the input into many internal variables:
+
+\vspace{2mm}
+\begin{center}
+{\Large $1 \rightarrow 32 \rightarrow 32 \rightarrow 32 \rightarrow 1$}
+\end{center}
+
+\vspace{2mm}
+\begin{itemize}
+  \item input: one function $f(t,x)$
+  \item hidden layers: 32 feature channels each
+  \item output: predicted function $\hat f(t+\Delta,x)$
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interpretation:}
+each channel is a learned detector for local shapes
+(edges, slopes, curvature, \dots).
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-8mm}
+\begin{center}
+\includegraphics[width=\linewidth]{../../images/img16/cnn_translation_features_h1.png}
+
+\vspace{1mm}
+{\scriptsize \textit{Example: 6 of 32 feature channels in layer $h1$.}}
+\end{center}
+
+\hspace{-12mm}
+\begin{minipage}{7.5cm}
+\footnotesize
+The variables $h_1,h_2,h_3$ are \y{hidden feature maps} inside the CNN.
+They form a \y{latent feature space}: not observed, not physical, but learned.
+Each layer contains many channels (e.g.\ 32), extracting different local aspects of the signal.
+The forecast emerges by transforming $f(t,\cdot)\rightarrow h_1\rightarrow h_2\rightarrow h_3\rightarrow \hat f(t+\Delta,\cdot)$.
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+\end{frame}

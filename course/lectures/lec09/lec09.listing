@@ -1,0 +1,2 @@
+self.out = nn.Linear(h, 1)
+y_hat = self.out(h).squeeze(-1)

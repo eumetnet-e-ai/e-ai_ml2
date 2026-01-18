@@ -1,0 +1,51 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{ORIGEN on a Minimal Example: Simple Oscillator}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Minimal testbed (2D circle)}
+\begin{itemize}
+  \item \y{Truth trajectory} $x_k=(x_{1,k},x_{2,k})$ on a circle
+  \[
+  x_k=
+  \begin{bmatrix}
+  \cos\theta_k\\ \sin\theta_k
+  \end{bmatrix},
+  \qquad
+  \theta_k=\frac{2\pi k}{n}
+  \]
+  \item Observations are \y{scalar} and \y{partial}:
+  \[
+  y_k = H_k x_k + \epsilon_k,
+  \qquad
+  H_k\in\{[1,0],[0,1]\}
+  \]
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf Aim:}
+Explain ORIGEN mechanics without complex dynamics.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\footnotesize
+\vspace{-2mm}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../../images/img20/origen/origen01.png}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}

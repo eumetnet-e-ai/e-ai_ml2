@@ -1,0 +1,62 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Strengths and Limits of Git Hooks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Strengths}
+
+\begin{itemize}
+  \item \y{Extremely fast feedback}. Helps you!!
+  \item No external infrastructure required
+  \item Works offline
+  \item Integrated directly into Git commands
+\end{itemize}
+
+\vspace{2mm}
+Git hooks are ideal for:
+\begin{itemize}
+  \item formatting checks
+  \item unit tests
+  \item catching trivial mistakes early
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Limitations}
+
+\begin{itemize}
+  \item Run only on the developer machine
+  \item Not enforced across a team
+  \item Can be bypassed or disabled
+  \item No neutral execution environment
+\end{itemize}
+
+\vspace{2mm}
+As a consequence:
+\begin{itemize}
+  \item Hooks improve discipline
+  \item But they do \rtext{not guarantee quality}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{4mm}
+\footnotesize
+\rtext{\bf Git hooks accelerate development — CI platforms enforce standards.}
+
+\end{frame}

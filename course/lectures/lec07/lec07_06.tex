@@ -1,0 +1,63 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Text to Vector Space}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Sentence \y{embedding}}
+
+\vspace{3mm}
+A sentence $s_{i}$ is mapped to a vector
+\[
+z_i \in \mathbb{R}^d
+\]
+
+using a pretrained Transformer:
+\[
+z_i = f_{\theta}(s_i)
+\]
+
+\vspace{1mm}
+In our example:
+\[
+d = 384
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\y{\textbf{Embedding matrix}}
+
+\vspace{2mm}
+For \(N\) sentences, we obtain:
+\[
+Z =
+\begin{bmatrix}
+z_1^\top \\
+z_2^\top \\
+\vdots \\
+z_N^\top
+\end{bmatrix}
+\in \mathbb{R}^{N \times d}
+\]
+
+\vspace{3mm}
+Each row corresponds to  
+\emph{one sentence}.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

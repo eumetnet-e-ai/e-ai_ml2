@@ -1,0 +1,57 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why PyTorch Lightning?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}[T]{0.55\textwidth}
+
+\textbf{Problem with raw PyTorch}
+
+\begin{itemize}
+  \item Training loops get long and repetitive
+  \item Device handling (CPU/GPU) is manual
+  \item Logging and checkpoints are ad hoc
+\end{itemize}
+
+\vspace{2mm}
+Code quickly becomes hard to read and maintain.
+
+\tiny
+\begin{lstlisting}
+from torch_geometric.loader import DataLoader
+
+# Create dataset
+dataset = [generate_sample_graph(n_nodes=64, dn=8, k=3) for _ in range(200)]
+loader = DataLoader(dataset, batch_size=16, shuffle=True)
+
+# Train
+model = GNNInterpolator()
+trainer = pl.Trainer(max_epochs=200, logger=False, enable_checkpointing=False)
+trainer.fit(model, loader)
+\end{lstlisting}
+
+\end{column}
+
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Lightning idea}
+
+\begin{itemize}
+  \item Separate \emph{what} from \emph{how}
+  \item Model logic vs. training mechanics
+  \item Convention over configuration
+\end{itemize}
+
+\vspace{2mm}
+Lightning is \emph{PyTorch}, not a replacement.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

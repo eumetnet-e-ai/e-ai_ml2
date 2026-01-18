@@ -1,0 +1,39 @@
+% ================================================================================
+% Slide — Anemoi vs. FRAIM (2/3)
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Pipeline view: where does each framework sit?}
+
+\footnotesize
+\vspace{-1mm}
+
+\textbf{Anemoi:} lifecycle of an ML forecast model \\
+\vspace{1mm}
+\begin{center}
+\begin{tabular}{c c c c c}
+\textbf{Data} & $\rightarrow$ & \textbf{Training} & $\rightarrow$ & \textbf{Inference/Deploy} \\
+(anemoi-datasets) & & (anemoi-training) & & (operational tooling) \\
+\end{tabular}
+\end{center}
+
+\vspace{3mm}
+\textbf{FRAIM:} system / toolbox view across multiple AI components \\
+\vspace{1mm}
+\begin{center}
+\begin{tabular}{c c c c c}
+\textbf{Use case} & $\rightarrow$ & \textbf{Modules} & $\rightarrow$ & \textbf{Integration/Operations} \\
+Forecast / Nowcast / QC / \\
+DA / Postproc
+& &
+training, surrogates, \\
+QA, LLM, etc.
+& &
+platform + standards \\
+\end{tabular}
+\end{center}
+
+\vspace{2mm}
+\textbf{Take-away:}
+\newline
+Anemoi is \y{forecast-model-centric}, FRAIM is \y{architecture- \& reuse-centric}.
+\end{frame}

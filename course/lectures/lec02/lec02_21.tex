@@ -1,0 +1,57 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Exposing a C++ Function via the C ABI}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\vspace{-1mm}
+\textbf{Role of C++}
+
+\begin{itemize}
+  \item Implements numerical logic
+  \item Compiled into a shared library
+  \item Exposes a \y{stable C ABI}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Requirement}
+
+\begin{itemize}
+  \item Use \texttt{extern "C"}
+  \item Avoid C++ name mangling
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-1mm}
+\begin{codeonly}{Minimal C++ Interface}
+#include <cmath>
+
+extern "C" double f_cpp(double x)
+{
+    return std::sin(x) / (1.0 + x*x);
+}
+\end{codeonly}
+
+\vspace{0mm}
+\begin{itemize}
+  \item Plain C-compatible symbol
+  \item No templates, no classes
+  \item ABI-safe function signature
+\end{itemize}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+\end{frame}

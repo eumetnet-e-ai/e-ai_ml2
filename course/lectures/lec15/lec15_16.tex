@@ -1,0 +1,64 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 16
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-training: Orchestrating Experiments}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item orchestrate the full training lifecycle
+  \item integrate data, graphs, and models
+  \item scale to HPC environments
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key elements}
+
+\begin{itemize}
+  \item \texttt{AnemoiTrainer} as central controller
+  \item PyTorch Lightning backend
+  \item distributed and multi-node training
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{Experiment control}
+
+\begin{itemize}
+  \item driven entirely by configuration
+  \item automatic logging and checkpointing
+  \item reproducible, restartable runs
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Training becomes declarative and scalable.}
+
+\vspace{0mm}
+\hspace*{-1cm}
+\includegraphics[width=6cm]{../../images/img15/aicon_training.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/training/en/latest/}
+\texttt{Docs: https://anemoi.readthedocs.io/projects/training/en/latest/}
+
+\end{frame}

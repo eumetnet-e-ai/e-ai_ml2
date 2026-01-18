@@ -1,0 +1,64 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{From JSON Parsing to \rtext{\y{Native Tool Calling}}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+Old approach:
+\begin{itemize}
+  \item prompt for JSON
+  \item parse model output
+  \item recover from errors
+\end{itemize}
+
+\vspace{1mm}
+Modern approach:
+\begin{itemize}
+  \item tools defined explicitly
+  \item model selects tool
+  \item system executes tool
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key shift:}
+\begin{itemize}
+  \item from text parsing to \y{action selection}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Architectural consequence}
+
+\vspace{1mm}
+\begin{itemize}
+  \item cleaner agent design
+  \item safer execution
+  \item better testability
+\end{itemize}
+
+\vspace{1mm}
+This enables:
+\begin{itemize}
+  \item LangChain tools
+  \item LangGraph nodes
+  \item reliable agents
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

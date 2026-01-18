@@ -1,0 +1,71 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{GNN Architecture Principle}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Nodes exchange information
+  \item Messages flow along edges
+  \item Features are updated iteratively
+\end{itemize}
+
+\vspace{1mm}
+\textbf{One GNN layer}
+
+\begin{itemize}
+  \item Collect neighbor features
+  \item Aggregate (sum / mean / max)
+  \item Apply learnable transform
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-8mm}
+\textbf{Generic update rule}
+\begin{eqnarray*}
+h_i^{(k+1)}
+&=&
+\sigma\!\left(
+W^{(k)} \;
+\sum_{j \in \mathcal{N}(i)}
+h_j^{(k)}
+\right)
+\end{eqnarray*}
+
+\vspace{-2mm}
+\raggedright
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item $h_i^{(k)} \in \R^{d_{k}}$ : feature vector, node $i$ at layer $k$
+  \item $W^{(k)} \in \R^{d_{k+1}\times d_{k}}$: matrix
+  \item $\mathcal{N}(i)$ : neighbors of node $i$
+  \item $\sigma$ : nonlinearity
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Consequence}
+
+\begin{itemize}
+  \item \y{Local interactions} build global structure
+  \item Depth = range of information propagation
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

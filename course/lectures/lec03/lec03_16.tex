@@ -1,0 +1,54 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 16
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{AIREP Feedback — Horizontal Sampling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item AIREP sampling follows \y{air traffic routes}
+  \item Highly inhomogeneous horizontal coverage
+  \item Strong land–sea and regional contrasts
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key implications}
+
+\begin{itemize}
+  \item Data density reflects logistics, not physics
+  \item Large unsampled regions persist
+  \item Bias risk if learning ignores sampling
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.56\textwidth}
+
+\vspace{-2mm}
+\centering
+\includegraphics[width=0.95\textwidth]{../../images/img03/airep_global_density.png}
+
+\vspace{-2mm}
+{\footnotesize Global horizontal density of AIREP observations}
+
+\vspace{3mm}
+\textbf{Operational relevance}
+
+\begin{itemize}
+  \item Affects verification statistics
+  \item Affects DA weighting
+  \item Critical for ML generalisation
+\end{itemize}
+\end{column}
+
+\end{columns}
+
+\end{frame}

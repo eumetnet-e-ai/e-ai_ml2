@@ -1,0 +1,71 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Tool Awareness: How the Model Knows What It Can Do}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{2mm}
+
+\textbf{The key idea}
+
+\vspace{2mm}
+The LLM cannot ``invent'' actions.
+It can only call tools that we \rtext{explicitly provide}.
+
+\vspace{2mm}
+\textbf{Why this matters}
+\begin{itemize}
+  \item clear capabilities: \y{what is possible}
+  \item safety boundary: \y{what is not allowed}
+  \item reproducible results: same tool $\Rightarrow$ same behavior
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\textbf{Think of it as a menu:}
+the model chooses an item, the system cooks it.}
+
+\vspace{0mm}
+\begin{center}
+{\scriptsize \textit{The tool list becomes the model’s action space.}}
+\end{center}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\vspace{-2mm}
+
+{\scriptsize\textbf{\y{Tool registry} (provided to the model)}}
+
+\vspace{-3mm}
+\tiny
+\begin{lstlisting}
+TOOLS = [
+  {
+    "name": "get_weather_forecast",
+    "description": "Retrieve ICON-EU forecast values.",
+    "inputs": {
+      "location": "string",
+      "variable": "t2m|wind|precip",
+      "lead_time_h": "integer"
+    }
+  },
+  {
+    "name": "google_search",
+    "description": "Search the web for up-to-date information and sources.",
+    "inputs": { "query": "string" }
+  }
+]
+\end{lstlisting}
+
+
+\end{column}
+
+\end{columns}
+\end{frame}

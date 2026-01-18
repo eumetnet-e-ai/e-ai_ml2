@@ -1,0 +1,57 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 8
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Graph Neural Networks?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{When FFNNs are not enough}
+
+\begin{itemize}
+  \item Data points are not independent
+  \item Relations between entities matter
+  \item Ordering is not fixed or meaningful
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical examples}
+
+\begin{itemize}
+  \item Physical grids and meshes
+  \item Sensor networks
+  \item Molecules, social networks
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-6mm}
+\includegraphics[width=0.99\textwidth]{../../images/img05/gnn_graph.png}
+
+\vspace{1mm}
+\centering
+Graph structure with nodes and edges
+
+\vspace{1mm}
+\raggedright
+\textbf{Core idea}
+
+\begin{itemize}
+  \item Nodes exchange information
+  \item Learning respects graph structure
+  \item Inductive bias for relational data
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

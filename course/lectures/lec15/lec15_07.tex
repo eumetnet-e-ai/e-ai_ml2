@@ -1,0 +1,77 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Hydra: Managing Variants of the Same Experiment}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item same training code
+  \item same task (e.g.\ learning $\sin(x)$)
+  \item different model architectures
+\end{itemize}
+
+\vspace{0mm}
+Hydra allows:
+\begin{itemize}
+  \item selecting model variants via YAML
+  \item switching architectures without code changes
+  \item keeping experiments comparable
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Base configuration}
+
+\begin{itemize}
+  \item defines which components are active
+  \item serves as the experiment entry point
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf The experiment is composed, not rewritten.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\begin{codeonly}{config.yaml}
+defaults:
+  - model: mlp
+  - training: simple
+  - _self_
+\end{codeonly}
+
+\vspace{0mm}
+\begin{codeonly}{model/mlp.yaml}
+layer_sizes: [1, 64, 1]
+activation: relu
+\end{codeonly}
+
+\vspace{0mm}
+\begin{codeonly}{model/deep.yaml}
+layer_sizes: [1, 128, 64, 32, 1]
+activation: tanh
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}
+
+
+

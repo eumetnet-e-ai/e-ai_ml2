@@ -1,0 +1,13 @@
+urls = search_google(query)
+texts = [ scrape_website(url),
+  for url in urls ]
+
+prompt = f"""
+Answer the question using
+the sources below.
+Question: {query}
+Sources: {texts}
+"""
+
+response = client.chat.completions.create( model="gpt-4o-mini",
+  messages=[{"role":"user", "content":prompt}] )

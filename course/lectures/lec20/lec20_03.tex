@@ -1,0 +1,49 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 03
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Boundary Conditions: Wrap-Around Transport (Periodic in $x$)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+We want a flow where structures move out to the right and re-enter from the left.
+
+\vspace{2mm}
+\textbf{Boundary conditions}
+\begin{itemize}
+  \item \y{Periodic in $x$:} outflow wraps around
+  \item Reflective/top treatment in $z$ (plus sponge)
+\end{itemize}
+
+\textbf{Effect}
+\begin{itemize}
+  \item A persistent tracer train forms
+  \item The system reaches a \y{statistical steady state}
+  \item Ideal for learning \y{time transitions}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This creates a clean, cyclic “atmosphere” for ML demos.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\centering
+\vspace{4mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_03.png}
+
+\vspace{1mm}
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_04.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}

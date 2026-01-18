@@ -1,0 +1,66 @@
+%!TEX root = lec17.tex
+% ================================================================================
+% Lecture 17 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AICON Walkthrough: Manual Setup (Packages and ecCodes)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Install required Python packages}
+
+\begin{codeonly}{Pinned Python environment}
+# Install all required packages (version!)
+%pip install --no-cache-dir -U -r ../requirements.txt
+
+# Inspect installed versions
+!pip freeze
+\end{codeonly}
+
+\vspace{1mm}
+Exact package versions are critical for
+PyTorch, PyG, Lightning, and Anemoi compatibility.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Configure ecCodes definitions}
+
+\begin{minipage}{6cm}
+\begin{lstlisting}
+import os
+from pathlib import Path
+
+# Path to ICON/DWD ecCodes definitions
+# (provided with the repo)
+edzw_defs = Path("eccodes/definitions.edzw").resolve()
+
+# Standard ecCodes definitions (system install)
+std_defs = "/path/to/eccodes/definitions"
+
+os.environ["ECCODES_DEFINITION_PATH"] = \
+    f"{edzw_defs}:{std_defs}"
+\end{lstlisting}
+\end{minipage}
+
+\vspace{1mm}
+\color{darkgreen}
+ICON GRIB decoding requires extended
+definition tables beyond standard ecCodes.
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

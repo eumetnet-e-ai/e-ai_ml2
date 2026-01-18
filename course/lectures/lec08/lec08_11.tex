@@ -1,0 +1,37 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Example B: Results on Unseen Wind Fields}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\textbf{Model input}
+
+\begin{itemize}
+  \item Wind field rendered as an image
+  \item \y{No symbolic or numerical input}
+  \item Image only, unseen during training
+\end{itemize}
+
+\vspace{2mm}
+\rtext{The model infers direction and strength
+{\bf from visual structure alone.}}
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=8cm]{../../images/img08/wind05_test_ViT.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

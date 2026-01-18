@@ -1,0 +1,59 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{DAWID Backend: Central Uvicorn Server}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Role of the Backend Server}
+
+\begin{itemize}
+  \item Single \y{central entry point} for all requests
+  \item Receives queries from the frontend gateway
+  \item Handles sessions and user context
+  \item Streams responses back to the client
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key Responsibilities}
+
+\begin{itemize}
+  \item Model selection and routing
+  \item Context assembly (history, RAG)
+  \item Tool and workflow execution
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{FastAPI + Uvicorn}
+
+\begin{itemize}
+  \item \textbf{FastAPI}: API definition and validation
+  \item \textbf{Uvicorn}: async, high-performance server
+  \item Multi-worker capable deployment
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Backend owns \y{state}, \y{logic}, and \y{control}
+  \item LLMs are \rtext{subsystems}, not the system
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

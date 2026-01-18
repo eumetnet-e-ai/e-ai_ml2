@@ -1,0 +1,48 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Example: AI-Generated Radar Interpretation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Input to the model}
+
+\begin{itemize}
+  \item Radar reflectivity image (dBZ)
+  \item Geographical context (Germany)
+  \item Task-oriented meteorological prompt
+\end{itemize}
+
+\vspace{2mm}
+The AI has no direct access to:
+\begin{itemize}
+  \item numerical radar grids
+  \item timestamps or motion
+  \item physical radar equations
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.53\textwidth}
+
+\begin{minipage}{7cm}
+\footnotesize\sl
+This radar reflectivity image shows precipitation distribution and intensity across Germany and parts of its neighboring countries, indicated by different colors reflecting different reflectivity values measured in dBZ (decibels of Z). Here's a detailed analysis:
+
+\vspace{2mm}
+[...]
+Stratiform Rainfall: The majority of the precipitation patterns, especially the widespread areas with uniform green shades in the northern and southwestern parts, suggest stratiform precipitation structures. These are typically smooth and consistent patterns associated with frontal systems or broad-scale upward motions that produce persistent and uniform rainfall.
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

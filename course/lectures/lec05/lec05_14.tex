@@ -1,0 +1,69 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Convolutional Neural Networks?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Exploit \y{local structure}
+  \item Same operation everywhere
+  \item Strong inductive bias
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical data}
+
+\begin{itemize}
+  \item Images (2D grids)
+  \item Time series (1D signals)
+  \item Physical fields on grids
+\end{itemize}
+
+\vspace{1mm}
+CNNs assume:
+\[
+\text{locality} + \text{translation invariance}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-2mm}
+\textbf{Convolution instead of full connectivity}
+
+\begin{itemize}
+  \item Small kernel slides over input
+  \item Shared weights across positions
+  \item Far fewer parameters than FFNNs
+\end{itemize}
+
+\vspace{-1mm}
+Mathematically (1D):
+\begin{eqnarray*}
+y_i &=& \sum_{k=-K}^{K} w_k \, x_{i+k}
+\end{eqnarray*}
+
+\vspace{-2mm}
+Interpretation:
+\begin{itemize}
+  \item Learn local patterns
+  \item \y{Detect edges, waves, peaks}
+  \item Build hierarchy via depth
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

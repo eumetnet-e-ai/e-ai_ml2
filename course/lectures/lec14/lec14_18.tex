@@ -1,0 +1,72 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Open Zarr Archive and Inspect Dataset}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Open archive}
+
+\vspace{0mm}
+We open the Zarr store as an \texttt{xarray.Dataset}:
+\begin{itemize}
+  \item lazy loading via \texttt{dask.array}
+  \item chunk layout is preserved:
+  \\
+  \texttt{(valid\_time, lat, lon) = (1,60,60)}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Dataset structure}
+
+\vspace{0mm}
+\begin{itemize}
+  \item dimensions: \texttt{valid\_time=41}, \texttt{lat=121}, \texttt{lon=181}
+  \item variables: \texttt{t2m, u10, v10, mslp, tp}
+  \item coordinate: \texttt{lead\_time} as timedelta
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key observation}
+
+\vspace{0mm}
+Even though the archive is chunked, xarray provides a
+\y{single logical dataset} interface.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+Example:
+
+\begin{minipage}{7cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+ZARR_PATH = "data/demo_eu_forecast.zarr"
+ds = xr.open_zarr(ZARR_PATH, consolidated=True)
+ds
+\end{lstlisting}
+\end{minipage}
+
+\vspace{1mm}
+\includegraphics[width=5.6cm]{../../images/img14/zarr_ds_summary.png}
+
+\vspace{-2mm}
+\scriptsize
+Dataset preview: dimensions, coords, variables, and Dask chunks.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

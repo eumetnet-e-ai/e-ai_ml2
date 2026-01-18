@@ -1,0 +1,60 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Native Code Integration: Fortran and C++ in Python \& ML}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Why Native Code Matters}
+
+\begin{itemize}
+  \item Decades of validated \y{Fortran} in NWP
+  \item High-performance kernels in \y{C++}
+  \item Tight control over memory and execution
+  \item Reuse of trusted implementations
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical Use Cases}
+
+\begin{itemize}
+  \item Physical parameterizations
+  \item Linear operators, solvers, kernels
+  \item Observation operators
+  \item Legacy model components
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Python as the Orchestration Layer}
+
+\begin{itemize}
+  \item Python controls the \y{workflow}
+  \item Native code provides \y{compute kernels}
+  \item Clean separation via \y{APIs}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Integration Options (Overview)}
+
+\begin{itemize}
+  \item \texttt{ctypes} – explicit C-compatible interfaces
+  \item \texttt{f2py} – automatic Fortran bindings
+  \item \texttt{pybind11} – modern C++ bindings
+  \item Shared libraries: \texttt{.so} / \texttt{.dylib}
+\end{itemize}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+\end{frame}

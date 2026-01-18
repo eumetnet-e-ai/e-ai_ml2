@@ -1,0 +1,74 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Demo Slide (before Slide 06)
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Comparing Parallel Runs}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\vspace{-2mm}
+\textbf{Setup}
+
+\begin{itemize}
+  \item One experiment
+  \item Two independent runs
+  \item Same metric, same step axis
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Difference between runs}
+
+\begin{itemize}
+  \item Single parameter: \y{phase}
+  \item Everything else identical
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item MLflow overlays both curves automatically
+  \item No plotting code required
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-10mm}
+\includegraphics[width=7cm]{../../images/img12/sine_cosine_comparison.png}
+
+\hspace{-1.3cm}\begin{minipage}{5cm}
+\tiny
+\begin{lstlisting}
+def run_sine(phase, name):
+  mlflow.set_tracking_uri("http://localhost:5000")
+  mlflow.set_experiment("Parallel Sine Comparison")
+
+  with mlflow.start_run(run_name=name):
+    mlflow.log_param("phase", phase)
+    for step in range(240):
+      t = step * 0.1
+      value = math.sin(t + phase)*math.cos((t+phase)/10)
+      mlflow.log_metric("sine", value, step=step)
+      time.sleep(1)
+
+if __name__ == "__main__":
+  Process(target=run_sine, args=(0.0, "phase_0")).start()
+  Process(target=run_sine, args=(math.pi/4, "phase_pi_over_4")).start()
+\end{lstlisting}
+\end{minipage}
+        
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

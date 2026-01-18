@@ -1,0 +1,79 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Depth Matters}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Shallow networks}
+
+\begin{itemize}
+  \item Few layers, many neurons
+  \item Can approximate any function
+  \item Often inefficient
+\end{itemize}
+
+\vspace{1mm}
+Universal Approximation:
+\begin{itemize}
+  \item Existence result
+  \item Not a statement about efficiency
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-6mm}
+\textbf{\y{Deep networks}}
+
+\begin{itemize}
+  \item Hierarchical feature extraction
+  \item Reuse of intermediate representations
+  \item Fewer parameters for same accuracy
+\end{itemize}
+
+\vspace{1mm}
+Compositional structure:
+\begin{eqnarray*}
+f(x)
+&=& f_L\!\left(
+      f_{L-1}\!\left(
+      \dots f_1(x)
+      \right)\right)
+\end{eqnarray*}
+
+\vspace{-2mm}
+\begin{minipage}{5cm}
+{\tiny\begin{lstlisting}
+class Deep(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(1, N1),
+            nn.Tanh(),
+            nn.Linear(N1, N1),
+            nn.Tanh(),
+            nn.Linear(N1, N1),
+            nn.Tanh(),
+            nn.Linear(N1, 1)
+        )
+\end{lstlisting}}
+\end{minipage}
+\begin{minipage}[b]{3cm}
+\raggedright
+Depth encodes \y{structure}, not just \y{capacity}.
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

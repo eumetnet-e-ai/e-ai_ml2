@@ -1,0 +1,55 @@
+% ================================================================================
+% Slide — Anemoi vs. FRAIM (3/3)
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Concrete differences and a good integration story}
+
+\begin{columns}[T,totalwidth=\textwidth]
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{0mm}
+\footnotesize
+\textbf{Differences (short \& concrete)}
+\begin{itemize}
+\item \textbf{Scope:}
+Anemoi = end-to-end ML forecasting \\
+FRAIM = modular AI toolbox for many meteorological products
+\item \textbf{Core artifacts:}
+\begin{itemize}
+\item \textbf{Anemoi:} datasets, graphs, model weights, training pipelines
+\item \textbf{FRAIM:} central library + reusable modules + standards
+\end{itemize}
+\item \textbf{Organization principle:}
+\begin{itemize}
+\item Anemoi: one coherent forecasting stack
+\item FRAIM: many \y{use-case driven FRAIM-Apps} (each in its own repo)
+\end{itemize}
+\end{itemize}
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\vspace{-1mm}
+\footnotesize
+\textbf{How does this combine well?}
+\begin{itemize}
+\item FRAIM can \y{integrate} mfai or Anemoi as a forecasting or processing engine
+\item FRAIM then provides:
+\begin{itemize}
+\item product-specific pipelines (QC, DA, verification, monitoring, etc.)
+\item deployment patterns and operational standards
+\end{itemize}
+\end{itemize}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{One-liner:}
+\newline
+Anemoi = \emph{forecast-model factory}; \\
+FRAIM = \emph{modular product ecosystem}.
+\end{column}
+\end{columns}
+\end{frame}

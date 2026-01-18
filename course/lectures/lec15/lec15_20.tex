@@ -1,0 +1,51 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 20
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Application Example: Learning CBCF Warning Polygons from Forecast Fields}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+Learn an AI model that predicts \y{operational warning regions}
+(CBCF polygons) from model forecast fields.
+
+\vspace{0mm}
+\textbf{Training data}
+
+\begin{itemize}
+  \item multi-year archive of forecast fields (e.g.\ wind/gust)
+  \item forecaster-issued \y{warning polygons} 
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Core idea}
+
+\begin{itemize}
+  \item polygons are a \y{human product representation}
+  \item neural nets learn on \y{grids / tensors}
+  \item therefore we convert polygons $\rightarrow$ \y{mask labels}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf We train on masks --- and recover polygons afterwards.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-4mm}
+\centering
+\includegraphics[width=\textwidth]{../../images/img15/cbcf_d0_20240501_12utc.png}
+
+\vspace{1mm}
+\scriptsize Example CBCF polygons (likelihood categories).
+\end{column}
+
+\end{columns}
+\end{frame}

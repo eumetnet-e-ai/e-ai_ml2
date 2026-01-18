@@ -1,0 +1,63 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Testing the Task REST API}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{What We Test}
+
+\begin{itemize}
+  \item Send JSON to the server (\texttt{POST /tasks})
+  \item Server creates a new task
+  \item Server assigns \y{ID} and initial \y{state}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Expected Result}
+
+\begin{itemize}
+  \item HTTP status \texttt{201 Created}
+  \item JSON response with:
+  \begin{itemize}
+    \item task id
+    \item state = \texttt{created}
+    \item echoed input data
+  \end{itemize}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-1.1cm}
+\begin{codeonly}{Test via \texttt{curl}}
+curl -X POST http://127.0.0.1:5000/tasks  -H "Content-Type: application/json" -d '{"type":"demo","params":{"x":1}}' 
+\end{codeonly}
+
+\begin{codeonly}{Minimal Python Task Creation}
+import requests
+r = requests.post(
+  "http://127.0.0.1:5000/tasks",
+  json={"type":"demo","params":{"x":1}})
+print(r.status_code); print(r.json())
+\end{codeonly}
+
+\vspace{-1mm}
+\begin{lstlisting}
+{'id': 1, 'state': 'created',
+ 'data': {'type': 'demo',
+          'params': {'x': 1}}}
+\end{lstlisting}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

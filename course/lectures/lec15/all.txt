@@ -1,0 +1,1326 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Anemoi?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Weather forecasting is a large-scale problem}
+
+\begin{itemize}
+  \item modern forecasts rely on \y{very large state vectors}
+  \item global and regional fields with millions of grid points
+  \item high temporal resolution and long time series
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Training data is massive}
+
+\begin{itemize}
+  \item global reanalyses such as \y{ERA5}, \y{ICON-DREAM}
+  \item convection-permitting simulations (e.g.\ Arome, ICON-Force)
+  \item multi-variable, multi-level, multi-year datasets
+\end{itemize}
+
+\vspace{2mm}
+These datasets quickly reach \rtext{terabyte scale}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{What this implies for ML}
+
+\begin{itemize}
+  \item training must be \y{parallel and distributed}
+  \item data access must be chunked and efficient
+  \item geometry and grid structure must be respected
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Role of Anemoi}
+
+\begin{itemize}
+  \item parallelizes \y{fields and samples}
+  \item integrates data, graphs, models, and training
+  \item supports the \y{full ML lifecycle} for weather models
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Anemoi is not a model — it is a framework.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Design Philosophy of Anemoi}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Core principles}
+
+\begin{itemize}
+  \item \y{configuration over hard-coded logic}
+  \item clear separation of responsibilities
+  \item scalable by construction
+\end{itemize}
+
+\vspace{2mm}
+Anemoi is designed such that:
+\begin{itemize}
+  \item data handling,
+  \item graph construction,
+  \item model definition,
+  \item training orchestration
+\end{itemize}
+are \rtext{independent but composable} components.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-6mm}
+\textbf{Declarative workflows}
+
+\begin{itemize}
+  \item experiments are defined in \y{YAML}
+  \item components are selected, not programmed
+  \item changes are traceable and reproducible
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational mindset}
+
+\begin{itemize}
+  \item same setup works on laptop, HPC, and cloud
+  \item parallelism is explicit, not accidental
+  \item full provenance of data and models
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Anemoi treats ML experiments as engineering systems.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{YAML: The Configuration Backbone}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Why configuration matters at scale}
+
+\begin{itemize}
+  \item experiments involve many interacting components
+  \item parameters change more often than code
+  \item reproducibility depends on \y{explicit configuration}
+\end{itemize}
+
+\vspace{2mm}
+In Anemoi, \y{YAML files define}:
+\begin{itemize}
+  \item datasets and preprocessing
+  \item model architectures and hyperparameters
+  \item training strategies and resources
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Why YAML?}
+
+\begin{itemize}
+  \item human-readable and versionable
+  \item hierarchical and structured
+  \item easy to override and compose
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design choice}
+
+\begin{itemize}
+  \item no Python code for experiment logic
+  \item no hidden defaults in scripts
+  \item configuration becomes a \rtext{first-class artifact}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf In Anemoi, changing the experiment means changing YAML.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{YAML in Practice: Declaring an Experiment}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{A single YAML file describes an experiment}
+
+\begin{itemize}
+  \item what data is used
+  \item which model is trained
+  \item how training is executed
+\end{itemize}
+
+\vspace{2mm}
+No experiment logic is hidden in Python code.
+The configuration is the experiment.
+
+
+\vspace{5mm}
+\footnotesize
+\rtext{\bf This YAML file fully specifies one training run.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\begin{codeonly}{Example: training configuration (simplified)}
+dataset:
+  name: era5
+  variables: [t2m, u10, v10]
+  resolution: 0.25
+
+model:
+  name: graph_transformer
+  hidden_dim: 256
+  num_layers: 6
+
+training:
+  batch_size: 4
+  max_epochs: 50
+  accelerator: gpu
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{OmegaConf: From YAML to Runtime Objects}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{The problem}
+
+\begin{itemize}
+  \item YAML files are static text
+  \item training code needs structured objects
+  \item configuration must be inspectable at runtime
+\end{itemize}
+
+\vspace{2mm}
+\textbf{OmegaConf solves this}
+
+\begin{itemize}
+  \item represents configuration as Python objects
+  \item preserves hierarchy and structure
+  \item supports interpolation and defaults
+\end{itemize}
+
+\vspace{2mm}
+The result is a \y{\texttt{DictConfig}} object.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Properties of \texttt{DictConfig}}
+
+\begin{itemize}
+  \item hierarchical (mirrors YAML structure)
+  \item accessed via attributes or keys
+  \item supports type checking
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item training code stays generic
+  \item behaviour is fully configuration-driven
+  \item experiments become reproducible by construction
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Configuration becomes part of the program state.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{OmegaConf in Practice and in Anemoi}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Using OmegaConf in Python}
+
+\begin{itemize}
+  \item configuration is passed into the training code
+  \item parameters are accessed programmatically
+  \item no hard-coded values are needed
+\end{itemize}
+
+\vspace{2mm}
+\begin{codeonly}{Accessing the configuration}
+# cfg provided by Hydra
+print(cfg.model.layer_sizes)
+print(cfg.training.max_epochs)
+\end{codeonly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\begin{codeonly}{Resolving and converting}
+from omegaconf import OmegaConf
+
+OmegaConf.resolve(cfg)
+cfg_dict = OmegaConf.to_object(cfg)
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Role in Anemoi}
+
+\begin{itemize}
+  \item schemas validate configs before training
+  \item resolved configs are logged with results
+  \item the full configuration defines the experiment
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf OmegaConf links configuration and execution.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Hydra: Managing Variants of the Same Experiment}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item same training code
+  \item same task (e.g.\ learning $\sin(x)$)
+  \item different model architectures
+\end{itemize}
+
+\vspace{0mm}
+Hydra allows:
+\begin{itemize}
+  \item selecting model variants via YAML
+  \item switching architectures without code changes
+  \item keeping experiments comparable
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Base configuration}
+
+\begin{itemize}
+  \item defines which components are active
+  \item serves as the experiment entry point
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf The experiment is composed, not rewritten.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\begin{codeonly}{config.yaml}
+defaults:
+  - model: mlp
+  - training: simple
+  - _self_
+\end{codeonly}
+
+\vspace{0mm}
+\begin{codeonly}{model/mlp.yaml}
+layer_sizes: [1, 64, 1]
+activation: relu
+\end{codeonly}
+
+\vspace{0mm}
+\begin{codeonly}{model/deep.yaml}
+layer_sizes: [1, 128, 64, 32, 1]
+activation: tanh
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}
+
+
+
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Hydra in Practice: Same Code, Different Outcomes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{What changes between these runs}
+
+\begin{itemize}
+  \item only the \y{Hydra configuration}
+  \item different model definitions (\texttt{mlp} vs \texttt{deep})
+  \item same training loop, same data
+\end{itemize}
+
+\vspace{2mm}
+Hydra controls:
+\begin{itemize}
+  \item which YAML files are composed
+  \item which model architecture is instantiated
+  \item which hyperparameters are active
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key observation}
+
+\begin{itemize}
+  \item shallow model converges smoothly
+  \item deeper model shows slower, less stable training
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\centering
+
+\vspace{-2mm}
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra1_mlp.png}
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra2_mlp.png}
+
+\vspace{2mm}
+
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra1_deep.png}
+\includegraphics[width=0.48\textwidth]{../../images/img15/hydra2_deep.png}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Hydra makes architectural choices explicit, comparable, and reproducible.}
+
+\end{column}
+
+\end{columns}
+
+
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Why Graphs in Weather Machine Learning?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Weather data is not Cartesian}
+
+\begin{itemize}
+  \item global models use spherical geometry
+  \item grids are often \y{non-uniform and unstructured}
+  \item classical CNN assumptions break down
+\end{itemize}
+
+\vspace{2mm}
+Examples:
+\begin{itemize}
+  \item ICON triangular grid
+  \item reduced Gaussian grids
+  \item observation networks
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Why graphs are a natural abstraction}
+
+\begin{itemize}
+  \item nodes represent spatial locations
+  \item edges represent physical neighbourhoods
+  \item locality is explicit, not implicit
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item move from \y{array indices} to \y{connectivity}
+  \item geometry becomes part of the model
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Graphs decouple geometry from resolution.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 10
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Icosahedral and Geodesic Graphs}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{ICON as a guiding principle}
+
+\begin{itemize}
+  \item refined icosahedral grids
+  \item nearly uniform cell areas
+  \item no singularities at the poles
+\end{itemize}
+
+\vspace{2mm}
+Anemoi adopts the same idea:
+\begin{itemize}
+  \item nodes placed on a refined icosahedron
+  \item spherical geometry is explicit
+  \item resolution controlled by refinement level
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key trade-off}
+
+\begin{itemize}
+  \item higher resolution $\Rightarrow$ more nodes
+  \item increased cost, but better spatial fidelity
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\centering
+\vspace{-10mm}
+
+\includegraphics[width=0.95\textwidth]{../../images/img15/anemoi_graph_2.png}
+
+\vspace{-1mm}
+\footnotesize
+Icosahedral graph on the sphere (orthographic projection).
+Edges follow great-circle distances.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 11
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Edges, Neighbours, and Graph Topology}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Defining neighbourhoods}
+
+\begin{itemize}
+  \item edges encode spatial interaction
+  \item most common choice: \y{k-nearest neighbours (kNN)}
+  \item distance measured on the sphere
+\end{itemize}
+
+\vspace{0mm}
+Each node exchanges information only with its neighbours:
+\begin{itemize}
+  \item local interactions
+  \item scalable message passing
+\end{itemize}
+
+\textbf{Edge index representation}
+
+\begin{itemize}
+  \item graph stored as \texttt{edge\_index}
+  \item integer pairs $(i,j)$ define connections
+  \item independent of data values
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{Reuse across experiments}
+
+\begin{itemize}
+  \item graph built once
+  \item reused for training, validation, inference
+  \item ensures geometric consistency
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Topology is fixed; data changes.}
+
+\includegraphics[width=0.95\textwidth]{../../images/img15/Graph_connectivity.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Anemoi: A Modular ML Framework for Weather}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Design philosophy}
+
+\begin{itemize}
+  \item separate concerns cleanly
+  \item make each component replaceable
+  \item scale from experiments to operations
+\end{itemize}
+
+\vspace{2mm}
+Anemoi is not a single package, but a \y{coordinated ecosystem}.
+
+\vspace{2mm}
+Each package addresses one layer:
+\begin{itemize}
+  \item data handling
+  \item graph construction
+  \item model definition
+  \item training orchestration
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Core Anemoi packages}
+
+\begin{itemize}
+  \item \texttt{anemoi-datasets}
+  \item \texttt{anemoi-graphs} {\color{blue}in anemoi-core repo}
+  \item \texttt{anemoi-models} {\color{blue}in anemoi-core repo}
+  \item \texttt{anemoi-training} {\color{blue}in anemoi-core repo}
+\end{itemize}
+
+\vspace{2mm}
+All packages:
+\begin{itemize}
+  \item use YAML + Hydra + OmegaConf
+  \item integrate via clearly defined interfaces
+  \item are developed in a shared monorepo
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Graphs connect geometry; packages connect workflows.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-datasets: Data and Metadata}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item prepare large meteorological datasets for ML
+  \item unify metadata, statistics, and structure
+  \item decouple raw data formats from training
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key features}
+
+\begin{itemize}
+  \item \y{ingestion} from GRIB / NetCDF
+  \item conversion to \y{Zarr}
+  \item automatic statistics (mean, std, min, max)
+  \item validation and consistency checks
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item scalable I/O for HPC and cloud
+  \item reproducible data pipelines
+  \item identical datasets across experiments
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Data becomes a first-class, validated object.}
+
+\vspace{2mm}
+\includegraphics[width=6cm]{../../images/img15/anemoi_datasets.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+{\texttt https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 14
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-graphs: Geometry and Connectivity}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item represent \y{spatial geometry} explicitly
+  \item construct reusable graph topologies
+  \item support \y{non-Cartesian grids}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key components}
+
+\begin{itemize}
+  \item \texttt{TriNodes} from refined icosahedra
+  \item neighbour definitions via kNN
+  \item edge construction on the sphere
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Design principle}
+
+\begin{itemize}
+  \item graph built once
+  \item reused for training and inference
+  \item geometry independent of data values
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Topology is fixed; learning happens on it.}
+
+
+\vspace{2mm}
+\hspace*{-1cm}
+\includegraphics[width=7cm]{../../images/img15/aicon_graphs.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/graphs/en/latest/}
+\texttt{Docs: https://anemoi.readthedocs.io/projects/graphs/en/latest/}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-models: Neural Architectures}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item define \y{ML models} for weather prediction
+  \item separate architecture from training logic
+  \item support graph-based learning
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Model families}
+
+\begin{itemize}
+  \item \y{graph} neural networks
+  \item \y{transformer-based} architectures
+  \item hybrid models for spatio-temporal data
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{Interfaces}
+
+\begin{itemize}
+  \item standardized input/output conventions
+  \item integration with PyTorch Lightning
+  \item instantiated via Hydra configs
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Models are components, not scripts.}
+
+\vspace{0mm}
+\hspace*{-1cm}
+\includegraphics[width=6cm]{../../images/img15/anemoi_graph_3.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/models/en/latest/}
+\texttt{Docs: https://anemoi.readthedocs.io/projects/models/en/latest/}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 16
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-training: Orchestrating Experiments}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item orchestrate the full training lifecycle
+  \item integrate data, graphs, and models
+  \item scale to HPC environments
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key elements}
+
+\begin{itemize}
+  \item \texttt{AnemoiTrainer} as central controller
+  \item PyTorch Lightning backend
+  \item distributed and multi-node training
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{Experiment control}
+
+\begin{itemize}
+  \item driven entirely by configuration
+  \item automatic logging and checkpointing
+  \item reproducible, restartable runs
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Training becomes declarative and scalable.}
+
+\vspace{0mm}
+\hspace*{-1cm}
+\includegraphics[width=6cm]{../../images/img15/aicon_training.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/training/en/latest/}
+\texttt{Docs: https://anemoi.readthedocs.io/projects/training/en/latest/}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Creating Zarr Datasets with anemoi-datasets}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.53\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\begin{itemize}
+  \item convert raw meteorological data into ML-ready format
+  \item standardize structure, metadata, and statistics
+  \item enable scalable training and validation
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item dataset creation is fully \y{configuration-driven}
+  \item no preprocessing logic is hard-coded
+  \item every dataset is reproducible
+\end{itemize}
+
+\vspace{0mm}
+Typical processing steps:
+\begin{itemize}
+  \item read GRIB or NetCDF input
+  \item reshape and flatten grids if required
+  \item compute global statistics
+  \item write chunked Zarr archive
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\begin{codeonly}{Command-line workflow}
+anemoi-datasets create \
+  dataset.yaml \
+  era5.zarr
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Result}
+
+\begin{itemize}
+  \item validated Zarr dataset
+  \item embedded metadata and statistics
+  \item directly usable by Anemoi training
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Data preparation becomes a reproducible pipeline.}
+
+\vspace{5mm}
+\footnotesize
+\hspace*{-2.5cm}\href{https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+     {\texttt{https://anemoi.readthedocs.io/projects/datasets/en/latest/}}
+
+\end{column}
+
+\end{columns}
+
+
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Validating and Inspecting Zarr Datasets}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+
+\textbf{Why validation matters}
+
+\begin{itemize}
+  \item training assumes consistent metadata
+  \item missing values or shapes cause silent errors
+  \item errors should be caught \y{before} training
+\end{itemize}
+
+\vspace{2mm}
+Anemoi provides built-in tools to:
+\begin{itemize}
+  \item verify temporal coverage
+  \item check spatial resolution and shapes
+  \item ensure statistics are present
+\end{itemize}
+
+\vspace{2mm}
+Validation is part of the dataset lifecycle,
+not an afterthought.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+\footnotesize
+
+\begin{codeonly}{Inspecting a dataset}
+anemoi-datasets inspect era5.zarr
+\end{codeonly}
+
+\vspace{2mm}
+Typical output includes:
+\begin{itemize}
+  \item time range and frequency
+  \item variables and dimensions
+  \item min / max / mean / std
+  \item total size and chunking
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Only validated datasets enter training.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+     {\texttt{Docs: anemoi-datasets}}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{ERA Data Stored in Zarr}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{What these images show}
+
+\begin{itemize}
+  \item ERA reanalysis data after Zarr conversion
+  \item accessed chunk-wise, not as monolithic files
+  \item identical physical content, different storage logic
+\end{itemize}
+
+\vspace{2mm}
+Zarr enables:
+\begin{itemize}
+  \item parallel access to spatial subdomains
+  \item efficient mini-batching for ML
+  \item scalable training on HPC systems
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Zarr is an ML-optimized view \\
+of reanalysis data.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\centering
+
+\vspace{-10mm}
+\includegraphics[width=0.95\textwidth]{../../images/img15/era_t2m_2025_01_01_00_crop.png}
+
+\vspace{-2mm}
+
+\includegraphics[
+  width=0.8\textwidth,
+  trim=0 6cm 0 0,
+  clip
+]{../../images/img15/era_zarr_1_0_crop.png}
+
+
+\vspace{1mm}
+\footnotesize
+Top: Global ERA5 2\,m temperature field.\\
+Bottom: Spatial chunk extracted from Zarr archive.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15, Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 15 — Slide 20}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15, Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 15 — Slide 21}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15, Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 15 — Slide 22}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15, Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 15 — Slide 23}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15, Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 15 — Slide 24}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15, Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 15 — Slide 25}
+
+  % Content goes here
+
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec15.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 15}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\input{../lec_agenda.tex}
+\input{lec15_01.tex}
+\input{lec15_02.tex}
+\input{lec15_03.tex}
+\input{lec15_04.tex}
+\input{lec15_05.tex}
+\input{lec15_06.tex}
+\input{lec15_07.tex}
+\input{lec15_08.tex}
+\input{lec15_09.tex}
+\input{lec15_10.tex}
+\input{lec15_11.tex}
+\input{lec15_12.tex}
+\input{lec15_13.tex}
+\input{lec15_14.tex}
+\input{lec15_15.tex}
+\input{lec15_16.tex}
+\input{lec15_17.tex}
+\input{lec15_18.tex}
+\input{lec15_19.tex}
+\input{lec15_20.tex}
+\input{lec15_21.tex}
+\input{lec15_22.tex}
+\input{lec15_23.tex}
+\input{lec15_24.tex}
+\input{lec15_25.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

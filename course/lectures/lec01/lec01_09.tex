@@ -1,0 +1,56 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Visualization Engines: A Sine Wave Example}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.32\textwidth}
+
+\textbf{What happens here}
+
+\begin{itemize}
+  \item Generate numerical data with \y{NumPy}
+  \item Compute a math function
+  \item \y{Visualize} data using Matplotlib
+  \item \y{Save} plots for later use
+\end{itemize}
+
+\vspace{-3mm}
+\hfill\includegraphics[width=3cm]{../../images/img01/plot-sine-wave.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.66\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{plot-sine-wave.py}
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.figure(figsize=(4,3))
+plt.plot(x, y)
+plt.xlabel("x"); plt.ylabel("sin(x)")
+plt.title('Sine Wave'); plt.tight_layout()                                                                  
+plt.savefig("plot-sine-wave.png")
+plt.close()
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize A minimal but complete scientific plotting workflow}
+
+% --- End Columns ---------------------------------------------------------------
+\end{column}
+\end{columns}
+
+\end{frame}

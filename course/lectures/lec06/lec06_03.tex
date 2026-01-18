@@ -1,0 +1,73 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 3
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{From Token IDs to Embedding Vectors}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{What the model actually sees}
+
+\begin{itemize}
+  \item Tokens are integers
+  \item No words, no strings, no grammar
+\end{itemize}
+
+\vspace{1mm}
+Example:
+\[
+\{104,\,2871,\,9123,\,214,\,201,\,4421,\,13\}
+\]
+
+\vspace{1mm}
+\textbf{Problem}
+
+\begin{itemize}
+  \item Integers have no semantic meaning
+  \item Distance between IDs is arbitrary
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Solution: embeddings}
+
+Each token ID $i$ is mapped to a vector:
+\[
+i \;\longrightarrow\; e_i \in \mathbb{R}^{d_{\text{model}}}
+\]
+
+\vspace{-2mm}
+\textbf{Embedding matrix}
+
+\vspace{-2mm}
+\[
+E \in \mathbb{R}^{V \times d_{\text{model}}}
+\]
+
+\begin{itemize}
+  \item $V$: \y{vocabulary size} (number of distinct tokens)
+  \item $d_{\text{model}}$: \y{embedding dimension}
+  \item $E_i = e_i$: embedding of token $i$
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{3mm}
+\centering
+{\footnotesize
+Meaning is not stored in tokens, but in their \y{learned vector representations.}
+}
+
+\end{frame}

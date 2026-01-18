@@ -1,0 +1,62 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why CI/CD Is Not Optional for AI/ML}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{What continuously changes in AI/ML}
+
+\begin{itemize}
+  \item Model parameters through retraining
+  \item Training and validation data
+  \item Feature engineering and preprocessing
+  \item Hyperparameters and runtime configuration
+\end{itemize}
+
+\vspace{2mm}
+As a consequence:
+\begin{itemize}
+  \item System behavior is \rtext{not fixed}
+  \item Outputs depend on \y{code, data, and environment}
+  \item Small changes can have \rtext{large effects}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Why manual workflows break down}
+
+\begin{itemize}
+  \item Experiments cannot be reproduced reliably
+  \item Results depend on undocumented environments or training data
+  \item Errors surface \rtext{late or not at all}
+  \item Deployment decisions become guesswork
+\end{itemize}
+
+\vspace{2mm}
+Without automation:
+\begin{itemize}
+  \item Models cannot be trusted operationally
+  \item Debugging becomes \rtext{forensic work}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf CI/CD is the mechanism that makes AI/ML systems controllable and trustworthy.}
+
+\end{frame}

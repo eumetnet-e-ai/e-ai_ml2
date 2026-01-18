@@ -1,0 +1,55 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Loss Functions — Measuring Error}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What is a loss?}
+
+\begin{itemize}
+  \item Quantifies model \y{error}
+  \item Single \y{scalar} value
+  \item Compares prediction vs label
+\end{itemize}
+
+\vspace{1mm}
+The loss defines the objective
+that learning tries to \y{minimize}.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Example: Mean Squared Error}
+
+\vspace{1mm}
+\[
+\mathcal{L}
+= \frac{1}{N}
+\sum_{i=1}^{N}
+\bigl(y_i - \hat{y}_i\bigr)^2
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item $y$: true \y{label}
+  \item $\hat{y}$: model prediction
+  \item $N$: number of samples
+\end{itemize}
+
+\vspace{1mm}
+Lower loss $\Rightarrow$ \y{better fit}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

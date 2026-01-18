@@ -1,0 +1,60 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Fortran with C Bindings: A Stable Interface}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.37\textwidth}
+
+\vspace{-2mm}
+\textbf{Why C Bindings?}
+
+\begin{itemize}
+  \item Fortran and Python do \y{not} talk directly
+  \item The common denominator is the \y{C ABI}
+  \item Stable, explicit, language-independent
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Concept}
+
+\begin{itemize}
+  \item Fortran exposes functions as \y{C-compatible symbols}
+  \item No name mangling
+  \item Well-defined data types
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.62\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Minimal Fortran Example}
+function f_sin_cos(x) result(f) bind(C)
+  use iso_c_binding
+  real(c_double), intent(in) :: x
+  real(c_double) :: f
+  f = sin(x) * cos(x)
+end function
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{What This Ensures}
+
+\begin{itemize}
+  \item Symbol name is predictable
+  \item Argument layout follows C rules
+  \item Callable from Python, C, C++
+\end{itemize}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+\end{frame}

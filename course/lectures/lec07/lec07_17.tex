@@ -1,0 +1,59 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 17
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Streaming with Local LLMs (Ollama)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Local execution}
+
+\begin{itemize}
+  \item Models run on \y{local hardware}
+  \item No external API calls
+  \item \y{Full data control}
+\end{itemize}
+
+\vspace{2mm}
+Streaming follows the same principle:
+\[
+(\delta_1, \delta_2, \dots)
+\]
+
+\raggedleft
+\includegraphics[width=6cm]{../../images/img07/ollama_interface.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Advantages}
+
+\begin{itemize}
+  \item \y{Privacy and compliance}
+  \item \rtext{\bf Offline usage - train or plane}
+  \item No usage-based \y{cost}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Trade-offs}
+
+\begin{itemize}
+  \item Smaller models
+  \item Hardware dependent speed
+\end{itemize}
+
+\vspace{5mm}
+{\bf List of all available models:}
+https://ollama.ai/library
+\end{column}
+
+\end{columns}
+
+\end{frame}

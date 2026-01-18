@@ -1,0 +1,68 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 03
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Two AI Paths for Using Observations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Path 1: AI-based forecasting}
+
+\vspace{1mm}
+Observations are used \y{directly inside neural networks}
+that produce forecasts.
+
+\vspace{1mm}
+Typical characteristics:
+
+\begin{itemize}
+  \item observations as additional inputs
+  \item sometimes \y{no explicit model state}
+  \item learning focuses on \rtext{\bf prediction skill}
+\end{itemize}
+
+\vspace{2mm}
+This approach bypasses the classical analysis concept.
+
+\vspace{1mm}
+\rtext{\bf Observations $\rightarrow$ forecast directly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Path 2: AI-based data assimilation}
+
+\vspace{1mm}
+Observations are used to compute an \y{analysis state},
+not a forecast.
+
+\vspace{1mm}
+Key properties:
+
+\begin{itemize}
+  \item preserves the \y{analysis–forecast separation}
+  \item consistent with Bayesian DA theory
+  \item AI replaces the \y{analysis algorithm}, not the model
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Observations $\rightarrow$ analysis $\rightarrow$ forecast}
+
+\vspace{1mm}
+This is the conceptual space of \y{\bf AI-Var}.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

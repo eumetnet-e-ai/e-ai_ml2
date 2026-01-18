@@ -1,0 +1,59 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training without Targets: Distribution Matching}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\textbf{Key problem}
+
+There is no correct output $x$ \\
+for a given noise input $z$.
+
+\vspace{2mm}
+\textbf{Solution: \y{compare distributions}}
+
+\vspace{2mm}
+\begin{codeonly}{Differentiable distribution loss (1D Wasserstein)}
+def wasserstein_1d(x_gen, x_data):
+  xg, _ = torch.sort(x_gen.view(-1))
+  xd, _ = torch.sort(x_data.view(-1))
+  return torch.mean((xg - xd)**2)
+\end{codeonly}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\vspace{-2mm}
+\textbf{What happens here?}
+
+\begin{itemize}
+  \item Draw samples from both distributions
+  \item Sort them by value
+  \item Compare \emph{quantiles}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item We do not match samples
+  \item We match \y{ranks / transport}
+\end{itemize}
+
+\vspace{2mm}
+This turns sampling into a learnable problem.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

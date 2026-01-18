@@ -1,0 +1,54 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI and ML — A Problem-Solving Perspective}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Classical approach}
+
+\begin{itemize}
+  \item Explicit equations
+  \item Physical \y{laws and dynamics}
+  \item Expert-designed structure
+  \item Limited by model assumptions
+\end{itemize}
+
+\vspace{1mm}
+\[
+\partial_t x = F(x,\theta)
+\]
+The temporal change of $x$ is calculated based on $x$ and parameters $\theta$.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{AI / ML approach}
+
+\begin{itemize}
+  \item Learn mappings $x \rightarrow y$ from data
+  \item High-dimensional, nonlinear relations
+  \item Neural nets as \y{universal approximators}
+  \item Used in natural sciences as well as language
+\end{itemize}
+
+\vspace{1mm}
+\[
+\hat{z} = f_\theta(x)
+\]
+Some quantity $z$ is estimated \\
+from input $x$
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

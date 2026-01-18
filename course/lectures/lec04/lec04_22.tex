@@ -1,0 +1,55 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Improving the Classifier — Nonlinear Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Why improve the model?}
+
+\begin{itemize}
+  \item Linear boundary often insufficient
+  \item Real data is nonlinear
+  \item Need higher expressive power
+\end{itemize}
+
+\vspace{1mm}
+\[
+\hat{y} = \sigma\bigl(W_2\,\phi(W_1 x)\bigr)
+\]
+Hidden layer enables nonlinear separation.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Better classifier model}
+class BetterClassifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2,32),
+            nn.ReLU(),
+            nn.Linear(32,1),
+            nn.Sigmoid()
+        )
+    def forward(self,x):
+        return self.net(x)
+\end{codeonly}
+
+\vspace{1mm}
+Nonlinear decision boundary.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

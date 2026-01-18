@@ -1,0 +1,55 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Sine Example — Training Outcome}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What happened during training?}
+
+\begin{itemize}
+  \item Loss decreases over epochs
+  \item Network parameters adapt
+  \item Mapping $x \rightarrow \hat{y}$ improves
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Model learned a smooth function
+  \item No explicit sine formula given
+  \item Learning via \y{gradient descent}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-11mm}
+\begin{minipage}[T]{1.5cm}
+\textbf{Loss\\during\\training}
+\end{minipage}
+\begin{minipage}[T]{4cm}
+\includegraphics[height=3.5cm]{../../images/img04/sine_training_loss.png}
+\end{minipage}
+
+\vspace{0mm}
+\includegraphics[height=3cm]{../../images/img04/sine_approximation.png}
+
+\vspace{-2mm}
+\centering
+Actual sine (solid) vs.\ model prediction (dashed)
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

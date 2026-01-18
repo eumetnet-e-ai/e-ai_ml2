@@ -1,0 +1,64 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{When Are Git Hooks Executed?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Git commands trigger hooks}
+
+Git automatically executes hooks at
+\y{well-defined points} in its workflow.
+
+\vspace{2mm}
+Common examples:
+\begin{itemize}
+  \item \texttt{pre-commit} — before a commit is created
+  \item \texttt{commit-msg} — to validate commit messages
+  \item \texttt{pre-push} — before pushing to a remote
+\end{itemize}
+
+\vspace{2mm}
+Hooks run \rtext{before} Git completes the command.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\textbf{Effect on the workflow}
+
+\begin{itemize}
+  \item Hook succeeds $\rightarrow$ Git continues
+  \item Hook fails $\rightarrow$ Git aborts the command
+\end{itemize}
+
+\vspace{2mm}
+This means:
+\begin{itemize}
+  \item Invalid code never enters the repository
+  \item Errors are caught \y{immediately}
+  \item No manual checks are required
+\end{itemize}
+
+\vspace{2mm}
+Hooks are \rtext{deterministic}:
+same input $\rightarrow$ same outcome.
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Hooks turn Git commands into enforced quality gates.}
+
+\end{frame}

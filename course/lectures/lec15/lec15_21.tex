@@ -1,0 +1,62 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 21
+% ================================================================================
+\begin{frame}[t]
+\mytitle{From Polygons to Masks: Training Labels on the Model Grid}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Why convert polygons to masks?}
+
+\vspace{0mm}
+\begin{itemize}
+  \item operational warnings are defined as \y{polygons}
+  \item neural nets require \y{grid-aligned targets}
+  \item rasterization yields a binary/soft \y{mask} $m(x)\in[0,1]$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Two-way conversion}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \textbf{Polygon $\rightarrow$ mask:} rasterize onto model grid
+  \item \textbf{Mask $\rightarrow$ polygon:} contour / region extraction
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Quality control}
+
+\vspace{0mm}
+\begin{itemize}
+  \item check \y{mask(polygons)} against reference labels
+  \item difference highlights discretization artefacts
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-2mm}
+\begin{itemize}
+  \item predictors: \y{wind} + \y{gust} fields
+  \item target: warning mask derived from polygons
+\end{itemize}
+
+
+\centering
+\includegraphics[width=\textwidth]{../../images/img15/polygon_to_mask.png}
+
+\vspace{1mm}
+\scriptsize Polygon-to-mask conversion and consistency check.
+\end{column}
+
+\end{columns}
+\end{frame}

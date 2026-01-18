@@ -1,0 +1,63 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Coding the LSTM Autoencoder}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.25\textwidth}
+
+\textbf{Model structure}
+
+\begin{itemize}
+  \item Encoder LSTM
+  \item Decoder LSTM
+  \item Linear reconstruction
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Data flow:}
+\begin{itemize}
+  \item Sequence $\rightarrow$ hidden state
+  \item Hidden state $\rightarrow$ sequence
+\end{itemize}
+
+\vspace{-1mm}
+{\tiny\begin{lstlisting}
+Input:  (B, T, 1)
+Hidden: (L, B, H)
+Output: (B, T, 1)
+\end{lstlisting}}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.75\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{LSTM autoencoder (PyTorch)}
+class LSTMAutoencoder(nn.Module):
+  def __init__(self, hidden_dim=32, layers=2):
+    super().__init__()
+    self.encoder = nn.LSTM(
+      1, hidden_dim, layers, batch_first=True)
+    self.decoder = nn.LSTM(
+      1, hidden_dim, layers, batch_first=True)
+    self.out = nn.Linear(hidden_dim, 1)
+
+  def forward(self, x):
+    _, (h, c) = self.encoder(x)
+    z = torch.zeros_like(x)
+    y, _ = self.decoder(z, (h, c))
+    return self.out(y)
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

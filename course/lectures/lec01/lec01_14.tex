@@ -1,0 +1,40 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Dictionaries and JSON: Configs You Can Share}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{Why this is exciting}
+
+\begin{itemize}
+  \item Store model and experiment settings cleanly
+  \item Pass configs through \y{APIs} and workflows
+  \item {\red\bf Reproducibility}: one file describes the run
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{Config for an experiment}
+import json
+
+cfg = {"dt": 0.5, "n": 20, "model": "toy"}
+s = json.dumps(cfg, indent=2)
+print(s)
+
+cfg2 = json.loads(s)
+print("dt =", cfg2["dt"])
+\end{codeonly}
+
+{\footnotesize This is the bridge to automation + deployment later}
+
+\end{column}
+\end{columns}
+\end{frame}

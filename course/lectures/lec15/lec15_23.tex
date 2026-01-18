@@ -1,0 +1,70 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Real Demo: CBCF Training with Anemoi (Repository Setup)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+We ran the CBCF demo using an \y{Anemoi-based training stack}.
+
+\vspace{1mm}
+\textbf{Local repo structure}
+
+\vspace{0mm}
+\begin{itemize}
+  \item \texttt{anemoi-datasets}  (data handling, zarr)
+  \item \texttt{anemoi-transform} (preprocessing)
+  \item \texttt{anemoi-core} (graphs, models, training)
+  \item \texttt{training\_config/} (yaml configs)
+  \item \texttt{batch\_train.sh} (run script)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key point}
+
+\vspace{0mm}
+\begin{itemize}
+  \item this is not a standalone notebook hack
+  \item it is a \y{reproducible training workflow} (configs + checkpoints)
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+\vspace{-2mm}
+\footnotesize
+\textbf{Dependencies (uv workspace)}
+
+\vspace{-1mm}
+\begin{itemize}
+  \item \texttt{anemoi-training, anemoi-models, anemoi-graphs, ...}
+  \item \texttt{aicon-catalog[create]}
+\end{itemize}
+
+\textbf{Commands (as executed)}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+cd cbcf
+git pull
+ls training_config
+# run: batch_train.sh
+\end{lstlisting}
+
+\vspace{2mm}
+\textbf{Outcome}
+\begin{itemize}
+  \item trained checkpoints
+  \item inference + plots
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}

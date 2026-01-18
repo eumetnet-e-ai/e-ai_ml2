@@ -1,0 +1,63 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{GNN Results — Learning Advection Dynamics}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Training behaviour}
+
+\begin{itemize}
+  \item Loss decreases steadily
+  \item Stable convergence for train and test
+  \item No explicit physics encoded
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What is learned?}
+
+\begin{itemize}
+  \item Local transport along edges
+  \item Approximate shift of the field
+  \item Graph-based discretization of dynamics
+\end{itemize}
+
+\vspace{1mm}
+Interpretation:
+\[
+\text{message passing} \;\approx\; \text{numerical stencil}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=0.99\textwidth]{../../images/img05/gnn_loss_curve.png}
+
+\vspace{1mm}
+\centering
+Training and test loss over epochs
+
+\vspace{1mm}
+\raggedright
+\textbf{Limitations}
+
+\begin{itemize}
+  \item Short-term prediction only
+  \item Error accumulation over time
+  \item Stability not guaranteed
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,1320 @@
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{MLOps: From Machine Learning to Operations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Why this lecture}
+
+\begin{itemize}
+  \item Machine learning models are \rtext{\bf no longer research prototypes}
+  \item AI systems increasingly enter \y{operational} environments
+  \item Reliability, reproducibility and traceability become critical
+\end{itemize}
+
+\vspace{2mm}
+Traditional ML focuses on \emph{training}.\\
+Operations focus on \emph{stability}.\\[1mm]
+
+\textbf{MLOps connects both worlds.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Key question}
+
+\begin{itemize}
+  \item How do we turn ML code into an operational system?
+\end{itemize}
+
+\vspace{2mm}
+\textbf{This includes}
+
+\begin{itemize}
+  \item controlled software environments
+  \item automated build and deployment
+  \item clear separation of roles and responsibilities
+  \item safe execution on HPC and production systems
+\end{itemize}
+
+\vspace{2mm}
+This lecture focuses on \emph{processes}, not algorithms.
+But also lots of \y{continuous integration} (CI).
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why Machine Learning Needs Operations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Classical software assumptions}
+
+\begin{itemize}
+  \item \y{Code fully defines behavior}
+  \item Same input $\rightarrow$ same output
+  \item Changes are \y{explicit and infrequent}
+\end{itemize}
+
+\vspace{2mm}
+Once deployed, behavior is largely predictable and stable.
+
+\includegraphics[height=2cm]{../../images/img13/mlops1.png}
+\includegraphics[height=2cm]{../../images/img13/mlops2.png}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+\footnotesize
+
+\textbf{Machine learning reality}
+
+\begin{itemize}
+  \item Behavior emerges from \rtext{data}
+  \item Outputs are \rtext{statistical, not deterministic}
+  \item Models \rtext{degrade as data distributions change}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational consequences}
+
+\begin{itemize}
+  \item \y{Retraining becomes part of operations}
+  \item Monitoring must include \rtext{model performance}
+  \item Reproducibility extends {\bf beyond source code}
+\end{itemize}
+
+\includegraphics[height=1.3cm]{../../images/img13/mlops3.png}
+\includegraphics[height=1.3cm]{../../images/img13/mlops4.png}
+\includegraphics[height=1.3cm]{../../images/img13/mlops5.png}
+
+
+\end{column}
+
+\end{columns}
+
+\vspace{0mm}
+\footnotesize
+\rtext{\bf Machine learning systems require operational control from the very beginning.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{What Is MLOps?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Basic idea}
+
+\begin{itemize}
+  \item MLOps extends \y{DevOps principles} to machine learning
+  \item Focus shifts from code alone to \y{data and models}
+  \item The full \y{model lifecycle} becomes operational
+\end{itemize}
+
+\vspace{2mm}
+MLOps treats ML systems as \emph{long-lived services}, not one-off experiments.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\textbf{What MLOps manages}
+
+\begin{itemize}
+  \item \y{Data pipelines} and preprocessing
+  \item \y{Training and validation} workflows
+  \item \y{Model versions} and metadata
+  \item Deployment, monitoring and rollback
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Why this is necessary}
+
+\begin{itemize}
+  \item ML behavior changes even when code does not
+  \item Manual processes \rtext{do not scale}
+  \item Missing control leads to \rtext{silent failures}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf MLOps is not a tool — it is an engineering discipline.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{DevOps vs MLOps: What Really Changes}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{DevOps perspective}
+
+\begin{itemize}
+  \item Software behavior defined by \y{source code}
+  \item Releases are \y{explicit and controlled}
+  \item Bugs are fixed by changing code
+\end{itemize}
+
+\vspace{2mm}
+\begin{minipage}{3cm}
+\raggedright
+How do we monitor systems, and control changes, fixes, improvements?
+
+\end{minipage}
+\hspace{5mm}
+\begin{minipage}{3cm}
+\hspace{4cm}\includegraphics[height=3cm]{../../images/img13/mlops6.png}
+\end{minipage}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{MLOps perspective}
+
+\begin{itemize}
+  \item Behavior emerges from \rtext{data and training}
+  \item Models evolve through \rtext{retraining}
+  \item Performance can change \rtext{without code changes}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Operational impact}
+
+\begin{itemize}
+  \item Data becomes a \rtext{first-class artifact}
+  \item Validation must be \rtext{continuous}
+  \item \y{Rollback applies to \rtext{models}}, not just code
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf MLOps extends DevOps — it does not replace it.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{The Classical MLOps Cycle}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{From experiment to operation}
+
+\begin{itemize}
+  \item \y{Data ingestion} and preprocessing
+  \item \y{Model training} and validation
+  \item \y{Deployment} into an operational environment
+\end{itemize}
+
+\vspace{2mm}
+This cycle extends the classical DevOps loop by explicitly
+including \y{data and models}.
+
+\vspace{6mm}
+\color{darkgreen}\textbf{
+Modern MLOps has many elements of typical \g{NWP development
+cycles}. NWP also integrates data, e.g.\ orography, canopy layers,
+and real data through observations.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Operational feedback loop}
+
+\begin{itemize}
+  \item \y{Monitoring} of system and model performance
+  \item Detection of \rtext{drift and degradation}
+  \item Triggering \y{retraining or rollback}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key property}
+
+\begin{itemize}
+  \item The cycle is \rtext{continuous}, not linear
+  \item Operations actively influence development
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\hfill{\bf MLOps is a closed loop, not a one-time deployment.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{How Automation Is Achieved in MLOps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Automation principles}
+
+\begin{itemize}
+  \item Each step is \y{explicitly defined} and scripted
+  \item Execution is \y{trigger-based}, not manual
+  \item Results are \y{logged and versioned} automatically
+\end{itemize}
+
+\vspace{2mm}
+Automation replaces informal procedures by
+\rtext{repeatable execution rules}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\textbf{Technical mechanisms}
+
+\begin{itemize}
+  \item \y{CI/CD pipelines} trigger builds and checks
+  \item \y{Version control} tracks code, configs, and metadata
+  \item \y{Registries} store models and runtime artifacts
+  \item \y{Containers} freeze execution environments
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key effect}
+
+\begin{itemize}
+  \item Humans decide \y{what should happen}
+  \item Systems enforce \rtext{how it happens}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Automation makes MLOps scalable, auditable, and safe.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 07
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CI and CD in MLOps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+\footnotesize
+
+\vspace{-3mm}
+\textbf{Continuous Integration (CI)}
+
+\vspace{1mm}
+\texttt{CI = Every change is automatically built, checked, and validated}
+
+\begin{itemize}
+  \item Triggered by \y{commits} to code or configuration
+  \item Executes \y{tests, linters, and consistency checks}
+  \item Detects problems \rtext{early and reproducibly}
+\end{itemize}
+
+\vspace{3mm}
+
+\textbf{Continuous Delivery / Deployment (CD)}
+
+\vspace{1mm}
+\texttt{CD = Validated artifacts are automatically prepared for operation}
+
+\begin{itemize}
+  \item Packages \y{software, models, and environments}
+  \item Produces \y{versioned, deployable artifacts}
+  \item Enables \y{controlled rollout or rollback}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+\footnotesize
+
+\textbf{CI/CD in MLOps}
+
+\begin{itemize}
+  \item CI validates \y{logic and structure}
+  \item CD delivers \y{operational artifacts}
+\end{itemize}
+
+\vspace{2mm}
+
+\textbf{Important distinction}
+
+\begin{itemize}
+  \item CI/CD \rtext{does not decide} when models are used
+  \item Operations retain \y{execution control}
+\end{itemize}
+
+\vspace{2mm}
+
+\rtext{\bf Automation without loss of control.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{MLOps as a Role-Based Pipeline}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+It is a \y{\rtext{\bf sequence of responsibilities}} that together form a
+\y{complete lifecycle}:
+
+\begin{itemize}
+  \item data preparation and feature design
+  \item model development and validation
+  \item packaging and deployment
+  \item monitoring, feedback and retraining
+\end{itemize}
+
+\vspace{2mm}
+Each of these steps:
+\begin{itemize}
+  \item requires \y{different skills},
+  \item has \y{different risks},
+  \item and implies \y{different ownership}.
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-10mm}
+\footnotesize
+A useful way to understand MLOps is therefore as a
+\y{role game}, where different actors take responsibility for
+different parts of the pipeline.
+
+
+\vspace{2mm}
+\includegraphics[width=0.9\textwidth]{../../images/img13/mlops_roles.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Who Defines What “Good” Means?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+In MLOps, \y{quality is not a technical concept}.
+
+\vspace{2mm}
+It is defined by:
+\begin{itemize}
+  \item physical constraints,
+  \item domain knowledge,
+  \item operational requirements,
+  \item user expectations.
+\end{itemize}
+
+\vspace{2mm}
+These aspects cannot be learned from data alone.
+
+\vspace{2mm}
+\textbf{Therefore:}
+
+\begin{itemize}
+  \item \y{Domain experts define what “good” means},
+  \item ML systems optimize \emph{towards} this definition,
+  \item Operations validate it against reality.
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+
+\vspace{2mm}
+{\color{darkgreen}
+\textbf{\textit{Without a domain expertise, metrics are meaningless.}}
+}
+
+\vspace{6mm}
+\footnotesize
+\textbf{Domain Expert}
+
+\begin{itemize}
+  \item \y{Defines quality and success criteria}
+  \item Specifies relevant metrics and constraints
+  \item Interprets model behaviour in context
+  \item \rtext{Does not implement models or pipelines}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 10
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Roles in the MLOps Pipeline}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\textbf{Data Scientist}
+
+\begin{itemize}
+  \item \y{Develops models to optimize domain criteria}
+  \item Explores data and hypotheses
+  \item Translates questions into ML problems
+  \item \rtext{Does not decide operational relevance}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{ML Engineer}
+
+\begin{itemize}
+  \item \y{Turns models into software artifacts}
+  \item Builds training and inference pipelines
+  \item \y{Ensures reproducibility and versioning}
+  \item Bridges research and operations
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-4mm}
+\footnotesize
+\textbf{DevOps / Platform Engineer}
+
+\begin{itemize}
+  \item \y{Provides CI/CD and build infrastructure}
+  \item Manages containers and registries
+  \item Ensures security and scalability
+  \item \rtext{\bf Does not tune models}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Domain Expert / Operations / Users}
+
+\begin{itemize}
+  \item \y{Run models in production}
+  \item Monitor behaviour and failures
+  \item Validate outputs against reality
+  \item \rtext{Do not modify code or models}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\footnotesize
+\color{darkgreen}
+\centering
+\textit{\bf Roles should be clear, people may be the same.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Starting Point: A Baseline ML Application}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+We start with a \y{minimal working ML example}.
+
+\vspace{2mm}
+The goal at this stage is simple:
+\begin{itemize}
+  \item load a pretrained model,
+  \item apply it to input data,
+  \item inspect the output.
+\end{itemize}
+
+\vspace{2mm}
+This corresponds to running the notebook:
+\begin{itemize}
+  \item \texttt{00\_face-detection-onnx.py}
+\end{itemize}
+
+\vspace{2mm}
+At this point:
+\begin{itemize}
+  \item the method works,
+  \item results can be inspected visually.
+\end{itemize}
+
+\vspace{2mm}
+\rtext{Nothing here is operational yet.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-4mm}
+\includegraphics[width=\textwidth]{../../images/img13/i01.png}
+
+\vspace{1mm}
+\footnotesize
+The notebook instantiates a \y{pretrained} \y{face-detection model}
+and applies it directly to an input image.
+
+\vspace{0mm}
+\color{darkgreen}
+\tiny
+\begin{lstlisting}
+def mark_faces(image_filename):
+    """Mark all faces recognized in the image"""
+    image = PIL.Image.open(image_filename)
+
+    faces = detect_faces(image)
+
+    render_data = detections_to_render_data(
+        faces, bounds_color=Colors.GREEN, line_width=3 )
+    render_to_image(render_data, image)
+    display(image)
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-3mm}
+\includegraphics[width=0.9\textwidth]{../../images/img13/Apollo_11_Crew.jpg}
+
+\vspace{2mm}
+\footnotesize
+\textbf{Input image}
+
+\vspace{2mm}
+Raw input data, loaded via \texttt{PIL}.
+No preprocessing, no metadata,
+no assumptions beyond file availability.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-3mm}
+\includegraphics[width=0.9\textwidth]{../../images/img13/Apollo_11_Crew_out.jpg}
+
+\vspace{2mm}
+\footnotesize
+\textbf{Model output}
+
+\vspace{2mm}
+Bounding boxes produced by a
+\y{pretrained face-detection model}
+and rendered directly onto the image.
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{This is pure inference: load → detect → render.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Docker: Installation and Input Files}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+{\sl If you have \rtext{admin rights} on your computer, installation
+of docker is easy. }
+\begin{lstlisting}
+brew install --cask docker
+\end{lstlisting}
+
+\vspace{3mm}
+\textbf{Step 1: Install Docker}
+
+\begin{itemize}
+  \item Install \y{Docker Desktop} (Mac)
+  \item Start Docker service
+  \item Verify installation:
+\end{itemize}
+
+\begin{codeonly}{Check Docker}
+docker --version
+docker run hello-world
+\end{codeonly}
+
+\vspace{2mm}
+If this works, Docker is \y{ready to use}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\textbf{Step 2: Python code to run in Docker}
+
+\vspace{2mm}
+\begin{codeonly}{02\_code\_to\_execute\_in\_docker.py}
+from pathlib import Path
+
+print("Hello from Docker")
+
+out = Path("docker_output.txt")
+out.write_text("Generated inside Docker\n")
+
+print("Wrote:", out)
+\end{codeonly}
+
+\vspace{1mm}
+This is \y{ordinary Python}.  
+\rtext{No Docker logic} inside the code.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 14
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Dockerfile, Image Build, and Execution}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Step 3: Define the container}
+
+{\tiny
+\begin{lstlisting}
+FROM python:3.11-slim
+WORKDIR /app
+COPY 02_code_to_execute_in_docker.py /app/
+CMD ["python", "02_code_to_execute_in_docker.py"]
+\end{lstlisting}
+}
+
+\vspace{1mm}
+\footnotesize
+Docker \y{freezes the runtime environment}:
+\begin{itemize}
+  \item operating system (Debian slim)
+  \item Python version (\texttt{3.11.x})
+  \item system libraries and \texttt{pip}
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf A Docker image already acts as a virtual environment.}
+
+No \texttt{venv} activation is required;  
+packages installed in the image are isolated by default.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-7mm}
+\textbf{Step 4: Build and run}
+
+\begin{codeonly}{Build image}
+docker build -t \
+  python-hello-docker \
+  -f 02_dockerfile.txt .
+\end{codeonly}
+
+\vspace{6mm}
+\begin{codeonly}{Run container}
+docker run --rm \
+  -v "$(pwd):/app" \
+  python-hello-docker
+\end{codeonly}
+
+\vspace{1mm}
+\y{Volume mount} exposes results.  
+\rtext{Without \texttt{-v}, files disappear.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 15
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Building Docker Containers on GitHub}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{General principle}
+
+\begin{itemize}
+  \item Docker containers do \y{not need} to be built locally
+  \item GitHub provides \y{CI runners} with Docker installed
+  \item A container can be built \y{directly on the platform}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What is required}
+
+\begin{itemize}
+  \item Source code
+  \item A \y{Dockerfile}
+  \item A CI workflow definition
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf CI builds containers as first-class artifacts.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-6mm}
+\rtext{\bf The build is moved from the laptop to the platform.}
+
+\vspace{2mm}
+\textbf{Concrete example (this lecture)}
+
+\begin{itemize}
+  \item Python script generates a plot
+  \item Dockerfile defines the runtime
+  \item GitHub Actions builds the image
+  \item Image is pushed to a \y{container registry}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Result}
+
+\begin{itemize}
+  \item Reproducible container image
+  \item Independent of local setup
+  \item Ready for download and execution
+\end{itemize}
+
+\vspace{2mm}
+\y{Code lives in Git.}\\
+\y{Images live in the registry.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Downloading and Running a Container Image}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Pulling a container image}
+
+\begin{itemize}
+  \item Images are downloaded via \y{Docker CLI}
+  \item Private images require \y{authentication}
+  \item Access is granted via \y{registry tokens}
+\end{itemize}
+
+\vspace{2mm}
+\begin{codeonly}{Download image}
+docker pull ghcr.io/eumetnet-e-ai/docker-plot-03:latest
+\end{codeonly}
+
+\vspace{0mm}
+\textbf{Important distinction}
+
+\begin{itemize}
+  \item Git access $\neq$ registry access
+  \item Separate permissions for code and containers
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Running the container}
+
+\hspace{-1cm}
+\begin{minipage}{6cm}
+\tiny
+\begin{lstlisting}
+docker run --rm \
+  -v "$(pwd)/03_docker_plot:/app" \
+  ghcr.io/eumetnet-e-ai/docker-plot-03:latest
+\end{lstlisting}
+\end{minipage}
+
+\vspace{2mm}
+\textbf{Why the volume mount matters}
+
+\begin{itemize}
+  \item Container files are \rtext{ephemeral}
+  \item \y{Volume mounts expose results}
+  \item Without \texttt{-v}, outputs disappear
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Execution is decoupled from development.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\y{Build once, run anywhere — with controlled environments.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 17
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Docker Containers Built on GitHub}
+
+\vspace{-2mm}
+\begin{center}
+  \includegraphics[width=0.90\textwidth]{../../images/img13/github_docker_container.png}
+\end{center}
+
+\vspace{-2mm}
+\footnotesize
+\centering
+\y{Source code in Git} $\rightarrow$
+\y{CI build on GitHub} $\rightarrow$
+\y{Container registry} $\rightarrow$
+\y{Pull and run anywhere}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 18
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{GitHub Container Registry (ghcr.io)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{What is \texttt{ghcr.io}?}
+
+\begin{itemize}
+  \item GitHub’s \y{container registry service}
+  \item Stores Docker / OCI container images
+  \item Integrated with \y{GitHub repositories and CI}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{How it works}
+
+\begin{itemize}
+  \item CI builds an image from a Dockerfile
+  \item Image is \y{pushed to ghcr.io}
+  \item Image is identified by \y{name, tag, and SHA}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Containers are artifacts, not source code.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\vspace{-6mm}
+\textbf{Access and usage}
+
+\begin{itemize}
+  \item Images are \y{pulled via Docker or Apptainer}
+  \item Private images require \y{authentication}
+  \item Access control is \rtext{separate from Git}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Browser access}
+
+\begin{itemize}
+  \item Containers \y{can be inspected in the browser}
+  \item Tags, SHAs, and metadata are visible
+  \item \rtext{No direct download button}
+\end{itemize}
+
+\vspace{2mm}
+\y{Click to inspect. Pull to execute.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\centering
+\rtext{\bf ghcr.io stores images; runtimes execute them.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Apptainer on HPC: Build vs Run}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{What happens when pulling Docker images}
+
+\begin{itemize}
+  \item Apptainer converts Docker images into \y{local containers}
+  \item This involves \y{SquashFS compression}
+  \item Compression is \rtext{memory- and thread-intensive}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical failure on login nodes}
+
+\begin{itemize}
+  \item Limited memory and process counts
+  \item SquashFS build cannot create threads
+\end{itemize}
+
+\vspace{2mm}
+{\footnotesize
+\texttt{Out of memory (frag\_thrd)}\\
+\texttt{Failed to create thread}
+}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Important distinction}
+
+\begin{itemize}
+  \item \y{Running} containers is lightweight
+  \item \rtext{Building} containers is a compute task
+\end{itemize}
+
+\vspace{2mm}
+\textbf{HPC policy (typical)}
+
+\begin{itemize}
+  \item Login nodes: editing, submitting jobs
+  \item Compute nodes: builds, compression, heavy work
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Apptainer pull = build step, not runtime.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\centering
+\y{Disk quota is irrelevant — memory and threads decide.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Correct Apptainer Workflow on HPC}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Recommended solution}
+
+\begin{itemize}
+  \item Run container pulls as \y{batch jobs}
+  \item Request sufficient \y{memory}
+  \item Avoid compressed SIF builds on login nodes
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Use sandbox format}
+
+\begin{itemize}
+  \item Uncompressed directory container
+  \item Much lower memory pressure
+  \item Fully usable with Apptainer
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\vspace{-12mm}
+\begin{codeonly}{Batch job (concept)}
+#PBS -q gp_norm_all
+#PBS -l memsz_job=128gb
+#PBS -l cpunum_job=2
+
+apptainer build --sandbox \
+  my-container \
+  docker://ghcr.io/ORG/IMAGE:TAG
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Running the container}
+
+\begin{itemize}
+  \item No root privileges
+  \item Current directory mounted by default
+  \item Same performance as SIF
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf HPC rule: build elsewhere, run everywhere.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\centering
+\y{For production: build SIFs in CI, not on the cluster.}
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13, Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 13 — Slide 21}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13, Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 13 — Slide 22}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13, Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 13 — Slide 23}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13, Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 13 — Slide 24}
+
+  % Content goes here
+
+\end{frame}
+%!TEX root = lec13.tex
+% ================================================================================
+% Lecture 13, Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+  \mytitle{Lecture 13 — Slide 25}
+
+  % Content goes here
+
+\end{frame}

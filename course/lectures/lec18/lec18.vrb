@@ -1,0 +1,83 @@
+\begin{tightmath}
+
+\mytitle{Gaussian-Mixture PF: Comparing Two Distributions (Math)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{1) Ensembles as Gaussian mixtures}
+
+\vspace{0mm}
+Forecast particles $X^b=\{x_i^b\}_{i=1}^N$ and analysis particles
+$X^a=\{x_i^a\}_{i=1}^N$ define mixture densities, e.g.:
+\vspace{-2mm}
+\begin{equation*}
+q^a_\theta(x)=\tfrac1N\sum_{i=1}^N \mathcal{N}(x\mid x_i^a,\Sigma)
+\end{equation*}
+
+\vspace{-1mm}
+\textbf{2) Discretize comparison}
+
+\vspace{0mm}
+Choose evaluation points $Z=\{z_k\}_{k=1}^K$
+(from a Kalman-type proposal step in the notebook).
+
+\textbf{Target posterior on $Z$}
+
+\vspace{-2mm}
+\begin{equation*}
+w^\star_k
+=
+\frac{q^b(z_k)\;p(y\mid z_k)}
+     {\sum_{\ell=1}^K q^b(z_\ell)\;p(y\mid z_\ell)}
+\end{equation*}
+
+\vspace{-1mm}
+\y{Prior mixture + obs likelihood $\Rightarrow$ posterior weights.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{3) Model distribution on $Z$}
+
+\vspace{0mm}
+Evaluate the analysis mixture on the same points and normalize:
+\vspace{-2mm}
+\begin{equation*}
+\pi_{\theta,k}
+=
+\frac{q^a_\theta(z_k)}
+     {\sum_{\ell=1}^K q^a_\theta(z_\ell)}
+=
+\mathrm{softmax}\!\big(\log q^a_\theta(z_k)\big)
+\end{equation*}
+
+\vspace{2mm}
+\textbf{4) Fit posterior mass distribution}
+
+\vspace{0mm}
+Training minimizes the discrete KL divergence:
+\vspace{-2mm}
+\begin{equation*}
+L_{\rm GM}
+=
+\mathrm{KL}(w^\star\;\|\;\pi_\theta)
+=
+\sum_{k=1}^K w^\star_k\;
+\log\frac{w^\star_k}{\pi_{\theta,k}}
+\end{equation*}
+
+\vspace{-1mm}
+\rtext{\bf Network learns to move particles toward posterior mass.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}

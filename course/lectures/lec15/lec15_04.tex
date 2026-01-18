@@ -1,0 +1,61 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{YAML in Practice: Declaring an Experiment}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{A single YAML file describes an experiment}
+
+\begin{itemize}
+  \item what data is used
+  \item which model is trained
+  \item how training is executed
+\end{itemize}
+
+\vspace{2mm}
+No experiment logic is hidden in Python code.
+The configuration is the experiment.
+
+
+\vspace{5mm}
+\footnotesize
+\rtext{\bf This YAML file fully specifies one training run.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\begin{codeonly}{Example: training configuration (simplified)}
+dataset:
+  name: era5
+  variables: [t2m, u10, v10]
+  resolution: 0.25
+
+model:
+  name: graph_transformer
+  hidden_dim: 256
+  num_layers: 6
+
+training:
+  batch_size: 4
+  max_epochs: 50
+  accelerator: gpu
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

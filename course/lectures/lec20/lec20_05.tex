@@ -1,0 +1,34 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Energy / Mass Budget Monitoring (Sanity Checks)}
+
+\footnotesize
+\vspace{-2mm}
+
+We monitor injected heat content and losses:
+\[
+C(t)=\int\phi\,dx\,dz, \qquad
+I(t)=\int A(t)S\,dx\,dz,\qquad
+L(t)=\int(\lambda+\lambda_{top})\phi\,dx\,dz.
+\]
+
+\textbf{Cumulative budget (discrete)}
+\[
+\mathrm{acc\_in}=\sum_n I(t_n)\Delta t,
+\qquad
+\mathrm{acc\_loss}=\sum_n L(t_n)\Delta t.
+\]
+
+\begin{itemize}
+  \item $\int\phi$ stabilizes near equilibrium
+  \item injected vs lost energy becomes balanced
+  \item confirms numerical stability and correct forcing/damping design
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Always build monitoring into the toy model: it prevents silent nonsense.}
+
+\end{frame}

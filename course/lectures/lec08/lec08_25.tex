@@ -1,0 +1,65 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide XX
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Multimodal AI on IONOS}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{IONOS AI Model Hub}
+
+\vspace{2mm}
+Provides a curated set of foundation models via
+an OpenAI-compatible API endpoint.
+
+\vspace{2mm}
+\textbf{Available model categories}
+
+\begin{itemize}
+  \item Text-only language models
+  \item Embedding models
+  \item Image generation models
+  \item \textbf{One vision--language model}
+\end{itemize}
+
+\vspace{2mm}
+Most models remain text-only.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-8mm}
+\textbf{Multimodal image understanding}
+
+\vspace{2mm}
+\textbf{Mistral Small 24B}
+
+\begin{itemize}
+  \item Input: text + image
+  \item Output: text
+  \item Tool calling supported
+  \item OpenAI-compatible chat schema
+\end{itemize}
+
+\vspace{2mm}
+Successfully used to interpret:
+\begin{itemize}
+  \item radar reflectivity images
+  \item cloud top height (CTH) maps
+\end{itemize}
+
+\vspace{2mm}
+\emph{Selective but production-grade multimodality.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,65 @@
+%!TEX root = lec16.tex
+% ================================================================================
+% Lecture 16, Slide 13
+% ================================================================================
+\begin{frame}[t]
+  \mytitle{From Language to Interaction: LLMs + Tools}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{-1mm}
+
+\textbf{\textcolor{blue}{LLMs become useful at work when connected}}
+
+\vspace{-1mm}
+\begin{itemize}\setlength{\itemsep}{1mm}
+
+  \item \textbf{retrieval (RAG):} trusted documents
+  {\tiny
+  \begin{itemize}\setlength{\itemsep}{0mm}\setlength{\topsep}{0mm}\setlength{\parskip}{0mm}
+    \item policies, manuals, guidance, internal knowledge bases
+    \item reduces hallucinations by grounding on sources
+  \end{itemize}
+  }
+
+  \item \textbf{tools:} APIs, code execution, search
+  {\tiny
+  \begin{itemize}\setlength{\itemsep}{0mm}\setlength{\topsep}{0mm}\setlength{\parskip}{0mm}
+    \item from ``talking'' to \y{doing} (compute, query, automate)
+    \item reproducible outputs: scripts, plots, tables
+  \end{itemize}
+  }
+
+\end{itemize}
+
+\vspace{-1mm}
+\textbf{\textcolor{red}{Key message:}}
+\quad Real systems are \y{LLM-based assistants}, not just chat.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\begin{itemize}
+  \item \color{red}\textbf{memory:} project and user context
+  {\tiny
+  \begin{itemize}\setlength{\itemsep}{0mm}\setlength{\topsep}{0mm}\setlength{\parskip}{0mm}
+    \item remembers assumptions, preferences, ongoing tasks
+    \item avoids repeating the same onboarding every time
+  \end{itemize}
+  }
+\end{itemize}
+
+\includegraphics[width=\linewidth]{../../images/img16/rag.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

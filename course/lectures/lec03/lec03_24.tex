@@ -1,0 +1,63 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Parallel Matrix Multiplication — What Actually Works}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\vspace{-3mm}
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Naive multi-GPU often shows \y{no speed-up}
+  \item Reason: data transfers dominate computation
+  \item Solution: \y{true model parallelism}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{What works}
+
+\begin{itemize}
+  \item Build matrices \y{directly on each GPU}
+  \item Split the computation (block-wise)
+  \item Avoid CPU–GPU transfers
+  \item Collect results only at the end
+\end{itemize}
+
+\vspace{2mm}
+\begin{itemize}
+  \item 1 GPU: \textasciitilde 3 s
+  \item 2 GPUs (naive): \textasciitilde 3 s
+  \item 2 GPUs (correct): \y{\textasciitilde 0.5 s}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{True model-parallel matrix multiplication}
+import torch, time
+n = 30000
+A0 = torch.rand((n//2,n), device="cuda:0")
+A1 = torch.rand((n//2,n), device="cuda:1")
+B  = torch.rand((n,n),     device="cuda:0")
+t0 = time.time()
+C0 = A0 @ B
+C1 = A1 @ B.to("cuda:1")
+torch.cuda.synchronize()
+print("Time:", round(time.time()-t0,3))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

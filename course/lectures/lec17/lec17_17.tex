@@ -1,0 +1,56 @@
+% ================================================================================
+% Lecture 17 — Slide 17
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Graph structure: local neighborhoods on the ICON mesh}
+
+\vspace{-2mm}
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.49\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Why this matters}
+\begin{itemize}
+\item AICON runs on the ICON grid as \y{graph neural network (GNN)}
+\item each ICON cell $\Rightarrow$ one \y{graph node}
+\item edges connect \y{mesh neighbors}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Message passing view}
+\begin{itemize}
+\item prediction at one node uses information from:
+\begin{itemize}
+\item \textbf{1st neighbors} (directly connected)
+\item \textbf{2nd neighbors} (neighbors-of-neighbors)
+\end{itemize}
+\item this defines the local receptive field of the GNN
+\end{itemize}
+
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{-2mm}
+
+\vspace{2mm}
+\color{red}\bf
+\textbf{Take-away:}
+GNNs learn transport + interaction patterns through \y{local connectivity}.
+
+\vspace{0mm}
+\raggedleft
+% Replace with your exported image:
+\includegraphics[width=0.8\linewidth]{../../images/img17/graph_neighbours_crop.png}
+
+\vspace{-2mm}
+\scriptsize
+Example: subgraph around one node (orange) with 1st and 2nd neighbors.
+\end{column}
+
+\end{columns}
+\end{frame}

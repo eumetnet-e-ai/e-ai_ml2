@@ -1,0 +1,81 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Correlation vs Causality in Dynamical Systems}
+
+\footnotesize
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{-2mm}
+
+\textbf{The trap}
+
+\begin{itemize}
+  \item Many variables in geosciences are \y{strongly correlated}
+  \item But correlation alone cannot identify \y{directionality}
+  \item Hidden drivers (\y{confounders}) can create spurious links
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Causal question}
+
+\vspace{-2mm}
+\[
+P(T\,|\,P) \quad \neq \quad P\bigl(T\,|\,do(P)\bigr)
+\]
+
+\vspace{-1mm}
+\textbf{Why time series are special}
+
+\begin{itemize}
+  \item Dynamics introduce \y{time ordering}
+  \item Causal effects typically appear with \y{lags}
+  \item Strong autocorrelation can mask cross-effects
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-2mm}
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item Use \y{lagged dependencies} to separate:
+  \begin{itemize}
+    \item self-dynamics (memory)
+    \item cross-variable influences
+  \end{itemize}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{In Earth-system applications this matters because}
+
+\begin{itemize}
+  \item interventions (what-if) require causal structure
+  \item attribution needs confounding control
+  \item robust extrapolation benefits from causal mechanisms
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Take-home message:}
+
+\vspace{-4mm}
+\[
+\text{\rtext{similar correlations} do not imply \rtext{same physics}}
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,65 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 6
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{FFNN as a \y{Function Approximator}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-2mm}
+\textbf{Problem setting}
+
+\begin{itemize}
+  \item Unknown target function $f(x)$
+  \item Discrete training data available
+  \item Goal: approximate $f$ using a neural network
+\end{itemize}
+
+\vspace{-1mm}
+\textbf{Neural-network view}
+
+\begin{itemize}
+  \item The network defines a family of functions
+  \item Parameters determine the concrete shape
+  \item Training = selecting a suitable function
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-4mm}
+\[
+f(x) \;\approx\; f_\theta(x)
+\]
+
+\vspace{1mm}
+\includegraphics[width=0.48\textwidth]{../../images/img05/deep_nn_function_approximation.png}
+\includegraphics[width=0.48\textwidth]{../../images/img05/deep_nn_loss_curve.png}
+
+\vspace{1mm}
+\centering
+Ground truth (left) vs.\ NN approximation \\
+and training history (right)
+
+\vspace{1mm}
+\raggedright
+\textbf{Intuition}
+
+\begin{itemize}
+  \item Each layer further shapes the function
+  \item Nonlinearities enable complex forms
+  \item A smooth approximation emerges step by step
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

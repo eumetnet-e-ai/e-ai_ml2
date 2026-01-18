@@ -1,0 +1,76 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{\y{Batches} Explained: What Comes Out of the DataLoader}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Features and labels}
+
+\begin{itemize}
+  \item \y{Features} $x$: input quantities
+  \item \y{Labels} $y$: measured target values
+  \item Learning means fitting $x \rightarrow y$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Structure of the data}
+
+\begin{itemize}
+  \item $N$ = number of samples
+  \item $d$ = number of features per sample
+  \item One row = one $(x,y)$ pair
+\end{itemize}
+
+\vspace{1mm}
+\[
+X \in \mathbb{R}^{N \times d}
+\;\Rightarrow\;
+X_B \in \mathbb{R}^{B \times d}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Labels and targets}
+
+\begin{itemize}
+  \item Labels collected in $Y$
+  \item One target per input sample
+  \item Same batching as for features
+\end{itemize}
+\[
+Y \in \mathbb{R}^{N \times k}
+\;\Rightarrow\;
+Y_B \in \mathbb{R}^{B \times k}
+\]
+
+\vspace{0mm}
+\textbf{Why mini-batches help}
+
+\begin{itemize}
+  \item Memory-efficient processing
+  \item Faster parameter updates
+  \item Noise improves generalization
+\end{itemize}
+
+\vspace{-1mm}
+\[
+\nabla_\theta \mathcal{L}(X_B, Y_B)
+\;\approx\;
+\nabla_\theta \mathcal{L}(X, Y)
+\]
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,63 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-models: Neural Architectures}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item define \y{ML models} for weather prediction
+  \item separate architecture from training logic
+  \item support graph-based learning
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Model families}
+
+\begin{itemize}
+  \item \y{graph} neural networks
+  \item \y{transformer-based} architectures
+  \item hybrid models for spatio-temporal data
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+\footnotesize
+
+\vspace{-8mm}
+\textbf{Interfaces}
+
+\begin{itemize}
+  \item standardized input/output conventions
+  \item integration with PyTorch Lightning
+  \item instantiated via Hydra configs
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Models are components, not scripts.}
+
+\vspace{0mm}
+\hspace*{-1cm}
+\includegraphics[width=6cm]{../../images/img15/anemoi_graph_3.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/models/en/latest/}
+\texttt{Docs: https://anemoi.readthedocs.io/projects/models/en/latest/}
+
+\end{frame}

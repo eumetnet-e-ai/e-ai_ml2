@@ -1,0 +1,79 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 15
+% ================================================================================
+\begin{frame}[t, fragile]
+
+\mytitle{2D Data Assimilation Setup}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.34\textwidth}
+\footnotesize
+
+\textbf{2D atmospheric toy problem}
+
+\vspace{1mm}
+\begin{itemize}
+  \item horizontal–vertical grid
+  \item structured background errors
+  \item sparse column observations
+\end{itemize}
+
+\vspace{2mm}
+\textbf{State variables}
+
+\vspace{1mm}
+\begin{itemize}
+  \item truth $x_{true}(x,z)$
+  \item background $x_b(x,z)$
+  \item analysis $x_a(x,z)$
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf This already resembles NWP geometry.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.64\textwidth}
+\footnotesize
+
+\vspace{-4mm}
+\hspace*{-0.5cm}
+\begin{minipage}{11cm}
+\includegraphics[width=\textwidth]{../../images/img18/2d_setup.png}
+\end{minipage}
+
+\begin{minipage}{5cm}
+\tiny
+\textbf{2D setup in code}
+
+\begin{verbatim}
+# 2D grid (x,z)
+nx, nz = 120, 40
+x = np.linspace(0, Lx, nx)
+z = np.linspace(0, Lz, nz)
+
+# background covariance (separable)
+B = Bx x Bz
+
+# sparse vertical profiles
+H : (n_obs × n_state)
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{3cm}
+\includegraphics[width=\textwidth]{../../images/img18/2d_B.png} \\
+B matrix in 2d, $B e_{ij}$
+\end{minipage}
+
+\vspace{2mm}
+\y{Same DA ingredients as in 1D, now on a 2D grid.}
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,68 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Core Objects: Experiments and Runs}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\vspace{-2mm}
+\textbf{Experiment}
+
+\begin{itemize}
+  \item Logical \y{container} for related executions
+  \item Identified by name
+  \item Groups comparable runs
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Run}
+
+\begin{itemize}
+  \item One concrete execution of code
+  \item Has a unique ID
+  \item Records parameters, metrics, files
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\vspace{-8mm}
+\textbf{Key properties}
+
+\begin{itemize}
+  \item Named
+  \item Timestamped
+  \item \y{Reproducible}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Mental model}
+
+\begin{eqnarray*}
+&& \text{Experiment} \\
+&\supset& \text{Run}_1, \text{Run}_2, \ldots
+\end{eqnarray*}
+
+\vspace{2mm}
+Runs differ by:
+\begin{itemize}
+  \item parameters
+  \item code state
+  \item data
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

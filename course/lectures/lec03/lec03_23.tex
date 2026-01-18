@@ -1,0 +1,64 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CPU vs GPU — Execution Model and Performance: 30sec --> 3sec}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{CPU example}
+import torch, time
+n = 30000
+x0 = torch.rand((n,n))
+x1 = torch.rand((n,n))
+t0 = time.time()
+y0 = torch.matmul(x0,x0)
+y1 = torch.matmul(x1,x1)
+print(time.time()-t0)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Observed}
+
+\begin{itemize}
+  \item Operations are \y{blocking}
+  \item Second call starts after first ends
+  \item Parallelism only inside BLAS
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Two-GPU example}
+import torch, time
+d0 = torch.device("cuda:0")
+d1 = torch.device("cuda:1")
+n. = 30000
+x0 = torch.rand((n,n),device=d0)
+x1 = torch.rand((n,n),device=d1)
+t0 = time.time()
+torch.matmul(x0,x0)
+torch.matmul(x1,x1)
+torch.cuda.synchronize()
+print(time.time()-t0)
+\end{codeonly}
+
+\vspace{0mm}
+\begin{itemize}
+  \item Operations run \y{concurrently}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

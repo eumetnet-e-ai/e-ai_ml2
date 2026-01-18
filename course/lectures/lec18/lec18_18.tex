@@ -1,0 +1,53 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 18
+% ================================================================================
+\begin{frame}[t, fragile]
+
+\mytitle{2D Result: Variational Reference vs Learned Analysis}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+\footnotesize
+
+\textbf{What is compared}
+
+\vspace{1mm}
+\begin{itemize}
+  \item background $x_b$
+  \item 3D-Var analysis $x_a$
+  \item AI-Var analysis $\hat{x}_a$
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key observation}
+
+\vspace{1mm}
+\begin{itemize}
+  \item smooth spatial increments
+  \item correct information spreading
+  \item close to variational solution
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Learned analysis = inference of the minimizer.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+
+\centering
+\vspace{-3mm}
+\hspace*{0cm}
+\begin{minipage}{8.5cm}
+\includegraphics[width=\textwidth]{../../images/img18/2d_xa_MLP_xa_3dVAR_crop.png}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

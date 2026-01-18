@@ -1,0 +1,61 @@
+%!TEX root = lec17.tex
+% ================================================================================
+% Lecture 17 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AICON Walkthrough: Notebook Initialization}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Jupyter and runtime setup}
+
+\begin{codeonly}{Notebook basics}
+% Enable autoreload for iterative development
+%load_ext autoreload
+%autoreload 2
+
+# Standard imports
+import os
+import numpy as np
+import torch
+\end{codeonly}
+
+\vspace{1mm}
+Ensures code changes are picked up
+and the runtime environment is visible.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.51\textwidth}
+\footnotesize
+
+\textbf{Determinism and sanity checks}
+
+\begin{codeonly}{Reproducibility checks}
+# Fix random seeds
+torch.manual_seed(42)
+np.random.seed(42)
+
+# Check PyTorch device
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print("Using device:", device)
+\end{codeonly}
+
+\vspace{1mm}
+Deterministic behavior is essential
+for debugging and scientific comparison.
+
+\end{column}
+
+\end{columns}
+
+\footnotesize
+\rtext{\bf Initialization is not boilerplate — it defines the experimental contract.}
+
+\end{frame}

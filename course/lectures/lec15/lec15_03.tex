@@ -1,0 +1,61 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{YAML: The Configuration Backbone}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{Why configuration matters at scale}
+
+\begin{itemize}
+  \item experiments involve many interacting components
+  \item parameters change more often than code
+  \item reproducibility depends on \y{explicit configuration}
+\end{itemize}
+
+\vspace{2mm}
+In Anemoi, \y{YAML files define}:
+\begin{itemize}
+  \item datasets and preprocessing
+  \item model architectures and hyperparameters
+  \item training strategies and resources
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Why YAML?}
+
+\begin{itemize}
+  \item human-readable and versionable
+  \item hierarchical and structured
+  \item easy to override and compose
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design choice}
+
+\begin{itemize}
+  \item no Python code for experiment logic
+  \item no hidden defaults in scripts
+  \item configuration becomes a \rtext{first-class artifact}
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf In Anemoi, changing the experiment means changing YAML.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

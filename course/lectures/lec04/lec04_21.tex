@@ -1,0 +1,53 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Defining a \y{Classifier} — Simple Version}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Binary classification setup}
+
+\begin{itemize}
+  \item Input: 2D feature vector $x=(x_1,x_2)$
+  \item Output: probability $\hat{y} \in [0,1]$
+  \item Decision via threshold
+\end{itemize}
+
+\vspace{1mm}
+\[
+\hat{y} = f_\theta(x)
+\]
+Class label inferred from $\hat{y}$.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.57\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Simple classifier model}
+class SimpleClassifier(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2,1),
+            nn.Sigmoid()
+        )
+    def forward(self,x):
+        return self.net(x)
+\end{codeonly}
+
+\vspace{1mm}
+Minimal nonlinear decision model.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

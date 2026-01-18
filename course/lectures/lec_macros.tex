@@ -1,0 +1,423 @@
+% =================================================================================
+% E-AI Tutorial Tex Macros for Slides
+% Filename: lec_macros.tex
+% 
+% DWD, Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% =================================================================================
+
+% --------------------------------------------------------------------------------
+% Packages
+% --------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{listings,skins,breakable}
+\usepackage{listings}
+\tcbuselibrary{breakable}
+\usepackage{graphicx}
+\usepackage{fancybox}
+\usepackage{xcolor}
+\usepackage{xparse}
+\usepackage{tikz}
+\usepackage{fontawesome5}
+\usepackage{amsmath,amssymb}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+% in lec_macros.tex (or lec17.tex preamble)
+\usetikzlibrary{calc}
+
+% Shortcuts for number sets
+\newcommand{\R}{\mathbb{R}}
+
+\usetikzlibrary{positioning,arrows.meta}
+
+
+% --------------------------------------------------------------------------------
+% Beamer setup
+% --------------------------------------------------------------------------------
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{background canvas}{bg=white}
+\usepackage{pifont}
+\usepackage{xcolor}
+
+\usepackage{pifont}
+\newcommand{\mdcheck}{\textcolor{green!70!black}{\ding{51}}}
+
+% --------------------------------------------------------------------------------
+% Colours
+% --------------------------------------------------------------------------------
+\definecolor{DWDblue}{RGB}{0,68,136}
+\setbeamercolor{DWDrule}{fg=DWDblue}
+\definecolor{codegreen}{rgb}{0.0, 0.5, 0.0} % Dark green for comments
+\definecolor{codeblue}{rgb}{0.0, 0.2, 0.6} % Muted dark blue for keywords
+\definecolor{codered}{rgb}{0.6, 0.1, 0.1}  % Muted red for strings
+\definecolor{codegray}{rgb}{0.4, 0.4, 0.4} % Gray for numbers and operators
+\definecolor{backcolor}{rgb}{0.97, 0.97, 0.97} % Very light gray background
+\definecolor{lightblue}{RGB}{220, 230, 241} % Light blue for alternating rows
+\definecolor{headerblue}{RGB}{180, 200, 230} % Slightly darker blue for headers
+\definecolor{appendixblue}{RGB}{200, 220, 240} % Blue for appendix header
+\definecolor{darkgreen}{RGB}{0,110,80}
+
+\newcommand{\y}[1]{%
+\colorbox{yellow!50}{#1}%
+}\newcommand{\g}[1]{%
+\colorbox{darkgreen!30}{#1}%
+}
+\newcommand{\red}{\color{red}}
+
+% --------------------------------------------------------------------------------
+% 
+% --------------------------------------------------------------------------------
+\newcommand{\rtext}[1]{{\color{red}#1}}
+
+\newenvironment{tightmath}{
+  \setlength{\abovedisplayskip}{3pt}
+  \setlength{\belowdisplayskip}{3pt}
+  \setlength{\abovedisplayshortskip}{2pt}
+  \setlength{\belowdisplayshortskip}{2pt}
+}{}
+
+% --------------------------------------------------------------------------------
+% Fonts
+% --------------------------------------------------------------------------------
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{normal text}{size=\normalsize}
+
+% --------------------------------------------------------------------------------
+% Slide metadata
+% --------------------------------------------------------------------------------
+\newcommand{\LectureAuthor}{Roland Potthast}
+\newcommand{\LectureYear}{2025--2026}
+
+% --------------------------------------------------
+% Header with logos
+% --------------------------------------------------
+\newcommand{\toplogos}{
+  \noindent
+  \vspace*{-5mm}
+  \begin{minipage}{\textwidth}
+    \raisebox{-0.5\height}{\includegraphics[height=1cm]{../../images/img00/ecmwf.png}}
+    \hfill
+    \raisebox{-0.5\height}{\includegraphics[height=0.9cm]{../../images/img00/university-of-reading-logo-vector.png}}
+    \hfill
+    \raisebox{-0.5\height}{\includegraphics[height=0.7cm]{../../images/img00/DWD-Logo_2013.svg.png}}
+  \end{minipage}
+
+  \vspace{-1mm}
+\noindent
+\begin{tikzpicture}
+  \draw[DWDblue, line width=0.6pt] (0,0) -- (\textwidth,0);
+\end{tikzpicture}
+  \vspace{-3mm}
+}
+
+% --------------------------------------------------
+% Title macro
+% --------------------------------------------------
+\newcommand{\mytitle}[1]{%
+  {\usebeamerfont{title}\normalsize\color{DWDblue} #1}%
+  \vspace{2mm}
+}
+
+% --------------------------------------------------
+% Two-column layout macro
+% --------------------------------------------------
+\newcommand{\mycolumns}[2]{%
+  \begin{columns}[T,totalwidth=\textwidth]
+    \begin{column}{0.48\textwidth}
+      \justifying
+      #1
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      #2
+    \end{column}
+  \end{columns}
+}
+
+\makeatletter
+% --------------------------------------------------------------------------------
+% Footer: line + author | lecture | year | slide number
+% --------------------------------------------------------------------------------
+\setbeamertemplate{footline}{
+  \leavevmode
+
+% --- horizontal line above footer --------------------------------------------
+\hbox to \paperwidth{%
+  \hskip\beamer@leftmargin
+  \begin{tikzpicture}
+    \draw[DWDblue, line width=0.6pt]
+      (0,0) --
+      (\dimexpr\paperwidth-\beamer@leftmargin-\beamer@rightmargin\relax,0);
+  \end{tikzpicture}
+  \hskip\beamer@rightmargin
+}
+
+\vskip 0.6ex
+
+  % --- footer content -----------------------------------------------------------
+  \hbox to \paperwidth{%
+    \hskip\beamer@leftmargin
+    \begin{beamercolorbox}[
+      wd=\dimexpr\paperwidth-\beamer@leftmargin-\beamer@rightmargin\relax,
+      ht=2.2ex,
+      dp=1.0ex,
+      leftskip=0pt,
+      rightskip=0pt
+    ]{author in head/foot}
+      \tiny\color{DWDblue}
+      \LectureAuthor \hfill \LectureNumber \hfill \LectureYear \hfill Slide \insertframenumber
+    \end{beamercolorbox}
+    \hskip\beamer@rightmargin
+  }
+  \vskip 0.8ex
+}
+\makeatother
+
+% ================================================================================
+% Environment for Slides
+% Arguments:
+%   #1 : title
+%   #2 : left column content
+%   #3 : right column content
+% ================================================================================
+\newenvironment{myslide}[3]
+{
+  \begin{frame}[fragile]
+    \toplogos
+    \mytitle{#1}
+    \begin{columns}[T,totalwidth=\textwidth]
+      \begin{column}{0.48\textwidth}
+        #2
+      \end{column}
+      \begin{column}{0.48\textwidth}
+        #3
+      \end{column}
+    \end{columns}
+  \end{frame}
+}
+{}
+
+% Define the Python syntax highlighting style
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    basicstyle=\ttfamily\small,    % Monospace font
+    keywordstyle=\color{codeblue}\bfseries, % Keywords in blue
+    stringstyle=\color{codered},  % Strings in red
+    commentstyle=\color{codegreen}\itshape, % Comments in green italics
+    numberstyle=\tiny\color{codegray}, % Line numbers in gray
+    backgroundcolor=\color{gray!5}, % Light gray background
+    breaklines=true,
+    columns=fixed,
+    showspaces=false,
+    showstringspaces=false,
+    keepspaces=true,
+    numbers=left, % Show line numbers
+    numbersep=5pt, % Adjust separation between numbers and text
+    xleftmargin=7pt, % **Fix: Keeps numbers inside the box**
+    framexleftmargin=15pt, % **Fix: Adds padding inside the box for numbers**
+}
+
+
+% ================================================================================
+% Listing Environment
+% ================================================================================
+\newtcblisting{codeonly}[2][]{%
+  listing only,
+  listing options={
+		style=pythonstyle, 
+		basicstyle=\ttfamily\fontsize{9pt}{12pt}\selectfont,
+		tabsize=2,          % Tabs = 2 spaces
+    showtabs=false      % Don't show visible tab markers
+		},
+  breakable,
+  colback=gray!5,
+  colframe=gray!30,
+  boxrule=0.2pt,
+  arc=1.5mm,
+  left=2mm, right=2mm, top=-2mm, bottom=-1mm,
+  before skip=2pt, after skip=2pt,
+  coltitle=gray!100,
+  title={#2},
+  fonttitle=\bfseries\footnotesize,
+  #1
+}
+
+\makeatletter
+\setbeamertemplate{headline}{
+  \leavevmode
+  \vspace*{2mm}
+  \hbox to \paperwidth{%
+    \hskip\beamer@leftmargin
+    \begin{minipage}{\dimexpr\paperwidth-\beamer@leftmargin-\beamer@rightmargin\relax}
+      \raisebox{-0.5\height}{%
+        \includegraphics[height=1cm]{../../images/img00/ecmwf.png}%
+      }\hfill
+      \raisebox{-0.5\height}{%
+        \includegraphics[height=0.9cm]{../../images/img00/university-of-reading-logo-vector.png}%
+      }\hfill
+      \raisebox{-0.5\height}{%
+        \includegraphics[height=0.7cm]{../../images/img00/DWD-Logo_2013.svg.png}%
+      }
+    \end{minipage}
+    \hskip\beamer@rightmargin
+  }
+
+  \vspace{-2.5mm}
+
+  \hbox to \paperwidth{%
+    \hskip\beamer@leftmargin
+    \begin{tikzpicture}
+      \draw[DWDblue, line width=0.6pt]
+        (0,0) --
+        (\dimexpr\paperwidth-\beamer@leftmargin-\beamer@rightmargin\relax,0);
+    \end{tikzpicture}
+    \hskip\beamer@rightmargin
+  }
+
+  \vspace{0mm}
+}
+\makeatother
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  upquote=true
+}
+
+% --------------------------------------------------------------------------------
+% Image box with soft shadow (no fixed size)
+% --------------------------------------------------------------------------------
+\newcommand{\slideimage}[2][]{%
+  \tcbox[
+    colback=white,
+    boxrule=0pt,
+    arc=2mm,
+    shadow={1mm}{-1mm}{0mm}{black!30},
+    enhanced,
+    left=0pt,
+    right=0pt,
+    top=0pt,
+    bottom=0pt,
+  ]{%
+    \includegraphics[#1]{#2}%
+  }%
+}
+
+% ------------------------------------------------------------
+% Red rounded box overlay on an image
+% Usage:
+% \imgwithbox{<includegraphics>}{<x1>}{<y1>}{<x2>}{<y2>}
+%
+% Coordinates are in the same unit as you provide, typically cm.
+% Lower-left corner (x1,y1), upper-right corner (x2,y2).
+% ------------------------------------------------------------
+\newcommand{\imgwithbox}[5]{%
+\begin{tikzpicture}
+  \node[anchor=south west, inner sep=0] (img) {#1};
+  \begin{scope}[x={(img.south east)}, y={(img.north west)}]
+    % coordinates are now normalized 0..1 of image width/height
+    \draw[red, very thick, rounded corners=4pt]
+      (#2,#3) rectangle (#4,#5);
+  \end{scope}
+\end{tikzpicture}%
+}
+
+
+% ============================================================
+% Agenda highlight box from lecture number (1..20)
+% 5 columns × 4 rows (20 lectures)
+%
+% User defines ONE rectangle region on the agenda image:
+%   x in [\AgendaXLeft, \AgendaXRight]
+%   y in [\AgendaYBottom, \AgendaYTop]
+%
+% Mapping:
+%   row = mod(L-1,4) + 1    (top to bottom)
+%   col = floor((L-1)/4)+1  (left to right)
+%
+% Box size inside each cell:
+%   dx, dy ∈ (0..1]  fraction of cell width/height
+%   (can be tuned per lecture)
+%
+% Outputs:
+%   \AgBoxXone, \AgBoxYone, \AgBoxXtwo, \AgBoxYtwo
+% ============================================================
+
+% ------------------------------------------------------------
+% REGION (you adjust these by trial & error)
+% ------------------------------------------------------------
+\def\AgendaXLeft{0.13}
+\def\AgendaXRight{0.98}
+
+\def\AgendaYTop{0.87}
+\def\AgendaYBottom{0.03}
+
+% ------------------------------------------------------------
+% DEFAULT box size inside each cell (fractions of cell size)
+% ------------------------------------------------------------
+\def\AgendaBoxDX{1.05}   % 90% of cell width
+\def\AgendaBoxDY{1.00}   % 80% of cell height
+
+% ------------------------------------------------------------
+% OUTPUT variables (used by your drawing overlay)
+% ------------------------------------------------------------
+\def\AgBoxXone{0.10}
+\def\AgBoxYone{0.10}
+\def\AgBoxXtwo{0.20}
+\def\AgBoxYtwo{0.20}
+
+% ------------------------------------------------------------
+% MAIN FUNCTION
+% Usage:
+%   \setagendaboxforlecture{L}
+%   \setagendaboxforlecture[dx][dy]{L}
+%
+% Example:
+%   \setagendaboxforlecture{17}
+%   \setagendaboxforlecture[0.75][0.60]{17}
+% ------------------------------------------------------------
+\NewDocumentCommand{\setagendaboxforlecture}{ O{\AgendaBoxDX} O{\AgendaBoxDY} m }{%
+  \pgfmathtruncatemacro{\L}{#3}%
+
+  % row/col mapping
+  \pgfmathtruncatemacro{\row}{mod(\L-1,4)+1}% 1..4
+  \pgfmathtruncatemacro{\col}{floor((\L-1)/4)+1}% 1..5
+
+  % cell size
+  \pgfmathsetmacro{\W}{(\AgendaXRight-\AgendaXLeft)/5.0}%
+  \pgfmathsetmacro{\H}{(\AgendaYTop-\AgendaYBottom)/4.0}%
+
+  % cell bounds
+  \pgfmathsetmacro{\xAcell}{\AgendaXLeft + (\col-1)*\W}%
+  \pgfmathsetmacro{\xBcell}{\AgendaXLeft + (\col)*\W}%
+
+  % row=1 is top
+  \pgfmathsetmacro{\yTopCell}{\AgendaYTop - (\row-1)*\H}%
+  \pgfmathsetmacro{\yBotCell}{\AgendaYTop - (\row)*\H}%
+
+  % box fractions dx,dy
+  \pgfmathsetmacro{\dx}{#1}%
+  \pgfmathsetmacro{\dy}{#2}%
+
+  % mid point of the cell
+  \pgfmathsetmacro{\xMid}{0.5*(\xAcell+\xBcell)}%
+  \pgfmathsetmacro{\yMid}{0.5*(\yTopCell+\yBotCell)}%
+
+  % half box size in absolute figure coordinates
+  \pgfmathsetmacro{\xHalf}{0.5*\dx*\W}%
+  \pgfmathsetmacro{\yHalf}{0.5*\dy*\H}%
+
+  % export corners
+  \xdef\AgBoxXone{\xMid-\xHalf}%
+  \xdef\AgBoxXtwo{\xMid+\xHalf}%
+  \xdef\AgBoxYone{\yMid-\yHalf}%
+  \xdef\AgBoxYtwo{\yMid+\yHalf}%
+}
+

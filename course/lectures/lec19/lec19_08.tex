@@ -1,0 +1,59 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Result: Fourier-Feature PINN for a Modulated Oscillation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{What changed compared to previous examples}
+
+\begin{itemize}
+  \item Governing ODE and anchor conditions unchanged
+  \item Same PINN loss formulation
+  \item \y{Only the input representation is modified}
+\end{itemize}
+
+\vspace{2mm}
+The network uses a Fourier feature embedding.
+
+\vspace{2mm}
+\textbf{Observed behavior}
+
+\begin{itemize}
+  \item Accurate solution on the training domain $[0,\,5\pi]$
+  \item \y{Stable extrapolation} far beyond the training region
+  \item Correct phase and amplitude over many oscillations
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/pinn_sine_cosine.png}
+
+\vspace{2mm}
+\raggedright
+\footnotesize
+Gray shading indicates the training domain.
+The solution is evaluated well beyond the region where the ODE residual
+was enforced.
+
+
+\vspace{2mm}
+\rtext{\bf Representation choice alone can control extrapolation quality.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

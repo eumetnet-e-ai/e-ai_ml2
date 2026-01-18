@@ -1,0 +1,74 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Training the Transformer}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left -------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{Training objective}
+
+\begin{itemize}
+  \item Predict the \y{next token}
+  \item At every sequence position
+\end{itemize}
+
+\vspace{-2mm}
+\[
+\mathcal{L}
+=
+- \sum_{t=1}^{n}
+\log p_t(y_t)
+\]
+
+\vspace{1mm}
+\textbf{Learned parameters}
+
+\begin{itemize}
+  \item Embeddings
+  \item Attention projections
+  \item FFN weights
+  \item Output projection
+\end{itemize}
+
+\end{column}
+
+% --- Right ------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+
+\vspace{-10mm}
+\begin{codeonly}{Training loop (PyTorch)}
+criterion = CrossEntropyLoss(
+    ignore_index=0)
+optimizer = Adam(
+    model.parameters(), lr=1e-3)
+
+for x, y in dataloader:
+    optimizer.zero_grad()
+    logits = model(x)
+    loss = criterion(
+        logits.view(-1, V), y.view(-1))
+    loss.backward()
+    optimizer.step()
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize
+Gradients flow through the entire Transformer.
+}
+
+\vspace{2mm}
+\centering
+\y{Training is standard gradient-based optimization.}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

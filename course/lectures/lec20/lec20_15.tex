@@ -1,0 +1,43 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Evaluation 2: Full-Field Reconstruction at $t+1$ (Query Everywhere)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{2mm}
+
+The RS query head can be evaluated on the whole grid:
+\[
+x_{\mathrm{pred}}(x_i,z_j,t+1) := \hat y^{rs}_{t+1}(x_i,z_j).
+\]
+
+\textbf{We visualize}
+\begin{itemize}
+  \item $xtrue[t]$ (reference)
+  \item $xtrue[t+1]$ (truth)
+  \item $xpred[t+1]$ (prediction)
+  \item difference $\;xpred-xtrue$
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf This turns obs-to-obs learning into a state-like field prediction.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\centering
+\vspace{4mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/rs_rec/xpred_full_2x2_t05_to_06.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}

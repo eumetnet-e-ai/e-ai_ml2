@@ -1,0 +1,80 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Multi-Head Attention: Formulation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Per-head projections}
+
+For each head $h = 1,\dots,H$:
+\begin{eqnarray*}
+Q^{(h)} & = & X W^{Q^{(h)}}, \quad
+K^{(h)} = X W^{K^{(h)}}, \\
+V^{(h)} & = & X W^{V^{(h)}}
+\end{eqnarray*}
+
+\vspace{1mm}
+Each head applies scaled dot-product \y{attention}:
+\[
+Z^{(h)} =
+\operatorname{softmax}
+\!\left(
+\frac{Q^{(h)} K^{(h)T}}{\sqrt{d_k}}
+\right)
+V^{(h)}
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{Concatenation and projection}
+
+\[
+Z =
+\operatorname{Concat}
+\big(
+Z^{(1)}, \dots, Z^{(H)}
+\big)
+\]
+
+\vspace{1mm}
+Final linear projection:
+\[
+\operatorname{MultiHead}(X)
+=
+Z W^O
+\]
+
+\vspace{-2mm}
+\begin{itemize}
+  \item $H$: number of heads
+  \item $W^O$: output projection
+  \item Output in $\mathbb{R}^{n \times d_{\text{model}}}$
+\end{itemize}
+
+\vspace{1mm}
+\y{Multiple attention views are merged}
+\y{into one representation.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+{\footnotesize
+\rtext{Multi-head attention preserves model dimension while increasing expressiveness.}
+}
+
+\end{frame}

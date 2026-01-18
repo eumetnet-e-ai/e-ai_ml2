@@ -1,0 +1,56 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Critical Evaluation I — Reliability and Limits}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Strengths}
+
+\begin{itemize}
+  \item Fast pattern recognition
+  \item Handles high-dimensional data
+  \item Automates repetitive tasks
+  \item Strong empirical performance
+\end{itemize}
+
+\vspace{1mm}
+\[
+\hat{y} = f_\theta(x)
+\]
+
+Works well within  \\
+the \y{learned data regime.}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Limitations}
+
+\begin{itemize}
+  \item No physical understanding
+  \item Hallucinations possible
+  \item Sensitive to data bias
+  \item Weak extrapolation
+\end{itemize}
+
+\vspace{1mm}
+\[
+f_\theta(x) \neq \text{truth}
+\]
+
+\y{Prediction is not validation.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

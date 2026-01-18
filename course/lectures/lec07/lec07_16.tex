@@ -1,0 +1,61 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{OpenAI Streaming}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.35\textwidth}
+
+\textbf{Streaming API call}
+
+\begin{itemize}
+  \item Same prompt structure
+  \item \texttt{stream=True}
+  \item Tokens arrive as \y{deltas}
+\end{itemize}
+
+\vspace{2mm}
+Each chunk contains new text:
+\[
+\delta_k \subset \text{response}
+\]
+
+\begin{minipage}{4cm}
+\tiny\color{red}
+There are several older OpenAI interface versions that language models may still suggest.
+Be careful: to avoid deprecated APIs, it is often necessary to explicitly provide a current code template.
+\end{minipage}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.65\textwidth}
+
+\vspace{-9mm}
+\begin{codeonly}{OpenAI streaming in Jupyter}
+stream = client.chat.completions.create(
+  model="gpt-4o-mini", messages=[...],
+  stream=True )
+
+accumulated = ""
+handle = display(
+  Markdown(""), display_id=True)
+
+for chunk in stream:
+    delta = chunk.choices[0].delta
+    if delta.content:
+        accumulated += delta.content
+        handle.update(
+          Markdown(accumulated))
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

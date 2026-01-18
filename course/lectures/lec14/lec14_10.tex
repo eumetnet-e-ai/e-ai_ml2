@@ -1,0 +1,77 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{CI/CD Tools: \y{Local Discipline and Correctness}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{Version control}
+
+\begin{itemize}
+  \item \textbf{Git} \\
+  {\tiny Tracks changes to source code and configuration files, enabling
+  branching, merging, and full reconstruction of development history.}
+  
+  \item \textbf{GitHub / GitLab} \\
+  {\tiny Hosting platforms for Git repositories, providing collaboration,
+  access control, and CI integration.}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Local enforcement}
+
+\begin{itemize}
+  \item \textbf{Git hooks} \\
+  {\tiny Local scripts executed automatically on Git events
+  (e.g.\ \texttt{pre-commit}) to enforce rules before code is committed.}
+
+  \item \textbf{pre-commit framework} \\
+  {\tiny Version-controlled hook manager that ensures identical checks across
+  developers and CI environments.}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Code quality and correctness}
+
+\begin{itemize}
+  \item \textbf{Black} \\
+  {\tiny Automatic Python formatter that enforces a single,
+  deterministic code style without configuration decisions.}
+
+  \item \textbf{pytest} \\
+  {\tiny Python testing framework that executes test functions and
+  fails automatically when expected behavior is violated.}
+\end{itemize}
+
+\vspace{0mm}
+These tools:
+\begin{itemize}
+  \item run fast
+  \item provide immediate feedback
+  \item prevent trivial errors from propagating
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Local discipline reduces error rates before CI even starts.}
+
+\end{column}
+
+\end{columns}
+
+
+
+\end{frame}

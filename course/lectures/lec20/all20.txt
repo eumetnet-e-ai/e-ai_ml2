@@ -1,0 +1,1465 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 01
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Lecture 20 — Obs-to-Obs Learning on a 2D Toy Atmosphere}
+
+\footnotesize
+
+\vspace{4mm}
+\textbf{Goal of this lecture}
+
+\begin{itemize}
+  \item Build a simple 2D dynamical system $\phi(x,z,t)$ with \y{transport + diffusion + source}
+  \item Generate two observation types
+  \begin{itemize}
+    \item \textbf{Radiosondes (RS):} sparse vertical profiles at a few columns
+    \item \textbf{Satellite (SAT):} \y{integrated} vertical weighted observations for every column
+  \end{itemize}
+  \item Train a neural network to predict \y{next-step observations}
+  \[
+  (y^{sat}_t,\;y^{rs}_t) \;\mapsto\; (y^{sat}_{t+1},\;y^{rs}_{t+1})
+  \]
+  \item Reconstruct the full field at $t+1$ by querying RS predictions everywhere
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Key message:} learn a \y{forecast step} in observation space, and still recover a \y{state-like} field.
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 02
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Toy Dynamics: Advection--Diffusion with Source and Damping}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+We simulate a tracer/heating field $\phi(x,z,t)$ on a 2D domain:
+
+\vspace{-5mm}
+\[
+(x,z)\in[0,L_x]\times[0,L_z].
+\]
+
+\textbf{Dynamics (PDE)}
+\[
+\frac{\partial\phi}{\partial t}
+=
+-u\frac{\partial\phi}{\partial x}
+-w\frac{\partial\phi}{\partial z}
++K\nabla^2\phi
++A(t)\,S(x,z)
+-\lambda\,\phi
+-\lambda_{\text{top}}(z)\,\phi.
+\]
+
+\textbf{Key design choices}
+\begin{itemize}
+  \item Mean wind: $\,(u,w)\,$ \y{right + upward} $\Rightarrow$ visible transport
+  \item Source $S(x,z)$: localized bottom-left heating region
+  \item \y{Pulsed forcing} $A(t)$ $\Rightarrow$ visible trace stripes
+  \item Damping $\lambda$ + top sponge $\lambda_{\text{top}}$ $\Rightarrow$ equilibrium
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Time stepping:} RK4.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.43\textwidth}
+\centering
+\vspace{5mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_01.png}
+
+\vspace{1mm}
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_02.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 03
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Boundary Conditions: Wrap-Around Transport (Periodic in $x$)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+We want a flow where structures move out to the right and re-enter from the left.
+
+\vspace{2mm}
+\textbf{Boundary conditions}
+\begin{itemize}
+  \item \y{Periodic in $x$:} outflow wraps around
+  \item Reflective/top treatment in $z$ (plus sponge)
+\end{itemize}
+
+\textbf{Effect}
+\begin{itemize}
+  \item A persistent tracer train forms
+  \item The system reaches a \y{statistical steady state}
+  \item Ideal for learning \y{time transitions}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This creates a clean, cyclic “atmosphere” for ML demos.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\centering
+\vspace{4mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_03.png}
+
+\vspace{1mm}
+\includegraphics[width=\textwidth]{../../images/img20/images_dyn/1_dyn_04.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{RK4 Implementation (Core Loop)}
+
+\footnotesize
+\vspace{-1mm}
+
+\textbf{Right-hand side}
+\[
+\mathrm{RHS}(\phi,t)
+=
+-u\,\partial_x\phi
+-w\,\partial_z\phi
++K\nabla^2\phi
++A(t)S(x,z)
+-(\lambda+\lambda_{\text{top}})\phi.
+\]
+
+\textbf{One RK4 step (schematic)}
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+k1 = rhs(phi, t)
+k2 = rhs(phi + 0.5*dt*k1, t + 0.5*dt)
+k3 = rhs(phi + 0.5*dt*k2, t + 0.5*dt)
+k4 = rhs(phi + dt*k3,     t + dt)
+phi_next = phi + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)
+\end{lstlisting}
+
+\vspace{1mm}
+\textbf{Snapshot logic}
+\begin{itemize}
+  \item Choose $n_{vis}$ time indices between $0$ and $nsteps$
+  \item Save numbered PNGs: \texttt{1\_dyn\_XX.png}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This gives clean training snapshots + nice lecture figures.}
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Energy / Mass Budget Monitoring (Sanity Checks)}
+
+\footnotesize
+\vspace{-2mm}
+
+We monitor injected heat content and losses:
+\[
+C(t)=\int\phi\,dx\,dz, \qquad
+I(t)=\int A(t)S\,dx\,dz,\qquad
+L(t)=\int(\lambda+\lambda_{top})\phi\,dx\,dz.
+\]
+
+\textbf{Cumulative budget (discrete)}
+\[
+\mathrm{acc\_in}=\sum_n I(t_n)\Delta t,
+\qquad
+\mathrm{acc\_loss}=\sum_n L(t_n)\Delta t.
+\]
+
+\begin{itemize}
+  \item $\int\phi$ stabilizes near equilibrium
+  \item injected vs lost energy becomes balanced
+  \item confirms numerical stability and correct forcing/damping design
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Always build monitoring into the toy model: it prevents silent nonsense.}
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Observations: Radiosondes (Sparse Vertical Profiles)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{Radiosonde observation operator}
+
+At station column $x_{s}$ and selected heights $z_k$:
+\[
+y^{rs}_t(s,k)=\phi(x_s,z_k,t)+\epsilon.
+\]
+
+\textbf{Geometry is discrete}
+\begin{itemize}
+  \item $n_{rs}$ station columns: \texttt{rs\_ix}
+  \item $n_{vert}$ vertical levels: \texttt{rs\_iz}
+  \item output array: \texttt{yrs[time, station, vert]}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf RS gives a sparse but physically intuitive reference view.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/images_obs_rs/1_x_yrs_00.png}
+
+\vspace{1mm}
+\includegraphics[width=\textwidth]{../../images/img20/images_obs_rs/1_x_yrs_05.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 07
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Observations: Satellite (Vertical Weighting Integrals)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{Satellite observation operator}
+
+For each channel $c$ (Gaussian vertical weights $w_c(z)$):
+\[
+y^{sat}_t(c,x_i)
+=
+\sum_{j=1}^{n_z} w_c(z_j)\,\phi(x_i,z_j,t)\,\Delta z.
+\]
+
+\textbf{Properties}
+\begin{itemize}
+  \item available \y{for all columns} $x_i$
+  \item integrated information $\Rightarrow$ ill-posed inverse problem
+  \item multiple channels $\Rightarrow$ multi-layer sensitivity
+\end{itemize}
+
+\textbf{Array}
+\begin{itemize}
+  \item \texttt{ysat[time, channel, x]}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=0.95\textwidth]{../../images/img20/sat_weights.png}
+
+\vspace{2mm}
+\rtext{Gaussian vertical weighting functions used for the SAT channels.}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Saved Dataset: Truth + Two Observation Types}
+
+\footnotesize
+\vspace{4mm}
+
+We store everything into \texttt{dyn\_truth\_obs.npz}:
+
+\begin{itemize}
+  \item \textbf{Truth fields}
+  \[
+  xtrue \in \mathbb{R}^{T_{snap}\times n_z\times n_x}
+  \]
+  \item \textbf{Radiosondes}
+  \[
+  yrs \in \mathbb{R}^{T_{snap}\times n_{rs}\times n_{vert}}
+  \]
+  \item \textbf{Satellite}
+  \[
+  ysat \in \mathbb{R}^{T_{snap}\times n_{sat}\times n_x}
+  \]
+  \item Snapshot times: \texttt{t\_snap}
+  \item Geometry: \texttt{rs\_ix}, \texttt{rs\_iz}
+  \item SAT vertical weights: \texttt{sat\_w}
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This allows a clean separation:} Notebook 1 = generate dataset, Notebook 2 = learn transitions.
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 09
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Learning Task: Next-Step Obs Forecasting}
+
+\footnotesize
+\vspace{4mm}
+
+We train an ML model that predicts the next observation state:
+
+\[
+(y^{sat}_t,\;y^{rs}_t)\;\mapsto\;(\hat y^{sat}_{t+1},\;\hat y^{rs}_{t+1}(\cdot)).
+\]
+
+\textbf{Inputs at time $t$}
+\begin{itemize}
+  \item Satellite curtain: $y^{sat}_t(c,x)$ for all columns
+  \item RS set of points: $\{(x_m,z_m,y_m)\}_{m=1}^{N_{in}}$
+\end{itemize}
+
+\textbf{Outputs at time $t+1$}
+\begin{itemize}
+  \item Predicted satellite curtain $\hat y^{sat}_{t+1}(c,x)$
+  \item Predicted RS values at query points $\hat y^{rs}_{t+1}(x_q,z_q)$
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf Important:} query points can be anywhere $\Rightarrow$ \y{generalization to new RS placements}.
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Normalization: The Key Practical Ingredient}
+
+\footnotesize
+\vspace{4mm}
+
+We normalize observations before training:
+
+\vspace{2mm}
+\textbf{SAT: per-channel statistics}
+\[
+y^{sat}_n
+=
+\frac{y^{sat}-\mu_{sat}}{\sigma_{sat}},
+\qquad
+\mu_{sat}=\mathbb{E}_{t,x}[y^{sat}],
+\qquad
+\sigma_{sat}=\mathrm{std}_{t,x}[y^{sat}].
+\]
+
+\textbf{RS / truth: global}
+\[
+\phi_n=\frac{\phi-\mu_\phi}{\sigma_\phi},
+\qquad
+y^{rs}_n=\frac{y^{rs}-\mu_\phi}{\sigma_\phi}.
+\]
+
+\vspace{4mm}
+\rtext{\bf Without normalization} the training becomes unstable and “learns the wrong scale”.
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 11
+% ================================================================================
+\begin{frame}[t, fragile]
+\mytitle{Flexible RS Input: Two Dataset Modes (A/B Switch)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.7\textwidth}
+\footnotesize
+\vspace{4mm}
+
+We implement a dataset switch (important for interpretability):
+
+\vspace{2mm}
+\textbf{Mode A (synthetic RS from truth)}
+\begin{itemize}
+  \item sample RS input points randomly from $xtrue[t]$
+  \item add realistic noise $\sigma_{rs}$
+  \item \y{excellent generalization} for arbitrary RS geometry
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mode B (use only stored RS observations)}
+\begin{itemize}
+  \item RS input points are exactly \texttt{yrs[t,:,:]} at fixed \texttt{rs\_ix, rs\_iz}
+  \item strict statement: \rtext{\bf “input uses only observations at time $t$”}
+  \item weaker geometric diversity, but realistic RS network
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Reality:} We have only fixed radiosondes, but we have \y{airplanes}!
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.28\textwidth}
+\vspace{4mm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+Saved:
+  data_dyn_obs/dyn_truth_obs.npz
+
+Content:
+  xtrue  shape=(10,50,130)
+  yrs    shape=(10,7,18)
+  ysat   shape=(10,4,130)
+
+  t_snap shape=(10,)
+  rs_ix  shape=(7,)
+  rs_iz  shape=(18,)
+  sat_w  shape=(4,50)
+
+  x      shape=(130,)
+  z      shape=(50,)
+\end{lstlisting}
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 12
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Architecture: CNN on SAT + Set Encoder for RS + Query Head}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Why a CNN?}
+
+\vspace{3mm}
+SAT is a \y{curtain} $y^{sat}(c,x)$ along $x$. \\
+Spatial patterns advect $\Rightarrow$ translation-like structure.
+
+\vspace{3mm}
+\textbf{Components}
+\begin{itemize}
+  \item \textbf{SAT encoder:} 1D-CNN
+  \begin{itemize}
+    \item extracts local features along $x$
+  \end{itemize}
+  \item \textbf{RS encoder:} DeepSets / pooling
+  \begin{itemize}
+    \item handles variable-size RS point sets
+  \end{itemize}
+  \item \textbf{Query decoder:} predicts $y^{rs}_{t+1}(x_q,z_q)$
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf This enforces coupling:} RS inference is \\
+\centering
+\y{driven by SAT structure}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{Query-style output}
+\[
+\hat y^{rs}_{t+1}(x_q,z_q)
+=
+g_\theta\big( \mathrm{CNN}(y^{sat}_t),\;
+\mathrm{Set}(y^{rs}_t),\;
+x_q,z_q \big).
+\]
+
+\textbf{Practical win}
+\begin{itemize}
+  \item RS can be placed anywhere
+  \item same model predicts:
+  \begin{itemize}
+    \item sparse profiles
+    \item full fields (query everywhere)
+  \end{itemize}
+\end{itemize}
+
+\hspace*{-8mm}
+\begin{minipage}{7cm}
+\tiny\color{darkgreen}
+\textbf{DeepSets / pooling: why order does not matter}
+
+RS inputs form a \emph{set} $\mathcal S=\{(x_m,z_m,y_m)\}_{m=1}^{N}$.
+A set has no order, so the encoding must satisfy
+$F(\mathcal S)=F(\pi(\mathcal S))$ for any permutation $\pi$.
+
+We enforce this with a permutation-invariant encoder:
+\begin{equation*}
+e_m=\psi_\theta(x_m,z_m,y_m),\qquad
+E=\mathrm{pool}(e_1,\dots,e_N)
+\end{equation*}
+where pooling is sum/mean/max (commutative $\Rightarrow$ order-invariant).
+Locations matter via $(x_m,z_m)$ inside $\psi_\theta$.
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Training Loss: Joint SAT + RS Query Targets}
+
+\footnotesize
+\vspace{2mm}
+
+We train on snapshot transitions $t\to t+1$ using a joint loss:
+
+\vspace{2mm}
+\textbf{SAT loss (next curtain)}
+\[
+\mathcal{L}_{sat}
+=
+\| \hat y^{sat}_{t+1}-y^{sat}_{t+1}\|_2^2.
+\]
+
+\textbf{RS query loss (next profile at query points)}
+\[
+\mathcal{L}_{rs}
+=
+\frac{1}{N_q}\sum_{q=1}^{N_q}
+\left(
+\hat y^{rs}_{t+1}(x_q,z_q) - y^{rs}_{t+1}(x_q,z_q)
+\right)^2.
+\]
+
+\textbf{Total}
+\[
+\mathcal{L}=\mathcal{L}_{sat}+\alpha\,\mathcal{L}_{rs}.
+\]
+
+\vspace{2mm}
+\rtext{\bf Note:} RS targets for arbitrary $(x_q,z_q)$ are taken from truth $xtrue[t+1]$.
+
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 14
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Evaluation 1: Predict a New RS Profile at an Unseen Location}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{2mm}
+
+We test \y{generalization}:
+
+\begin{itemize}
+  \item Input RS: taken from stored network \texttt{yrs[t,:,:]}
+  \item Choose a new $x$ column not used by RS
+  \item Query all heights $\{z_q\}$ at that $x$
+  \item Compare predicted profile $\hat y^{rs}_{t+1}$ vs truth $xtrue[t+1]$
+\end{itemize}
+
+\vspace{4mm}
+\rtext{\bf This checks whether the model learned physics-like transport information from SAT.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/rs_rec/rs_profile_pred_truth_ix002_t05_to_06.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 15
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Evaluation 2: Full-Field Reconstruction at $t+1$ (Query Everywhere)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{2mm}
+
+The RS query head can be evaluated on the whole grid:
+\[
+x_{\mathrm{pred}}(x_i,z_j,t+1) := \hat y^{rs}_{t+1}(x_i,z_j).
+\]
+
+\textbf{We visualize}
+\begin{itemize}
+  \item $xtrue[t]$ (reference)
+  \item $xtrue[t+1]$ (truth)
+  \item $xpred[t+1]$ (prediction)
+  \item difference $\;xpred-xtrue$
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf This turns obs-to-obs learning into a state-like field prediction.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\centering
+\vspace{4mm}
+
+\includegraphics[width=\textwidth]{../../images/img20/rs_rec/xpred_full_2x2_t05_to_06.png}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 16
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Observation-based Reconstruction \& Inversion for Generative Emulation of Nonlinear Systems: \rtext{ORIGEN}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\begin{itemize}
+  \item A \y{closed learning cycle} linking
+  \y{observations}, \y{analysis reconstruction}, and \y{forecast models}.
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Conceptual loop}
+\begin{itemize}
+  \item Start from a \y{current model} (here: persistence / baseline)
+  \item Use \y{observations} to reconstruct state: \y{AI analysis / inversion}
+  \item Update the model/forecast emulator from reconstructed states
+  \item Iterate: \y{next cycle uses the new model}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{ORIGEN cycle schematic}
+\vspace{1mm}
+
+\begin{center}
+\includegraphics[width=0.98\textwidth]{../../images/img20/origen/origen_graphics.pdf}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{ORIGEN on a Minimal Example: Simple Oscillator}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Minimal testbed (2D circle)}
+\begin{itemize}
+  \item \y{Truth trajectory} $x_k=(x_{1,k},x_{2,k})$ on a circle
+  \[
+  x_k=
+  \begin{bmatrix}
+  \cos\theta_k\\ \sin\theta_k
+  \end{bmatrix},
+  \qquad
+  \theta_k=\frac{2\pi k}{n}
+  \]
+  \item Observations are \y{scalar} and \y{partial}:
+  \[
+  y_k = H_k x_k + \epsilon_k,
+  \qquad
+  H_k\in\{[1,0],[0,1]\}
+  \]
+\end{itemize}
+
+\vspace{1mm}
+\rtext{\bf Aim:}
+Explain ORIGEN mechanics without complex dynamics.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\footnotesize
+\vspace{-2mm}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../../images/img20/origen/origen01.png}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Observations: Partial Measurements of $x_1$ or $x_2$}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Time-dependent observation operator}
+\vspace{-1mm}
+\begin{itemize}
+  \item At each step $k$ we observe only \y{one component}
+  \item Selector:
+  \[
+    s_k\in\{1,2\}
+  \]
+  \item Observation operator:
+  \[
+    H_k =
+    \begin{cases}
+      [1,0] & s_k=1 \ (\text{observe }x_1)\\
+      [0,1] & s_k=2 \ (\text{observe }x_2)
+    \end{cases}
+  \]
+  \item Observation equation:
+  \[
+    y_k = H_k x_k + \epsilon_k,
+    \qquad
+    \epsilon_k\sim\mathcal N(0,R)
+  \]
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Interpretation:}
+This mimics \y{heterogeneous sensors} and \y{missing data}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.88\textwidth]{../../images/img20/origen/origen02.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Blue: $x_1$ observed \qquad Orange: $x_2$ observed}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 19
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{3D-Var Step: Background $\rightarrow$ Analysis (Single Observation)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{We combine background + one scalar obs}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Background state: $x_k^b\in\mathbb R^2$
+  \item Obs: $y_k\in\mathbb R$, operator $H_k\in\mathbb R^{1\times 2}$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Innovation}
+\vspace{-1mm}
+\[
+d_k = y_k - H_k x_k^b
+\]
+
+\textbf{Gain (scalar obs)}
+\vspace{-1mm}
+\[
+K_k = B H_k^\top \left(H_k B H_k^\top + R\right)^{-1}
+\]
+
+\textbf{Analysis update}
+\vspace{-1mm}
+\[
+x_k^a = x_k^b + K_k\,d_k
+\]
+
+\vspace{1mm}
+\rtext{\bf Effect:}
+update only in observed direction, but shaped by \y{$B$}.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{0mm}
+
+\textbf{Initial choice of covariances}
+\vspace{-1mm}
+\[
+B=
+\begin{bmatrix}
+\sigma_b^2(x_1) & 0\\
+0 & \sigma_b^2(x_2)
+\end{bmatrix},
+\qquad
+R=\sigma_o^2
+\]
+
+\vspace{2mm}
+\textbf{Cycling (persistence model)}
+\vspace{-1mm}
+\[
+x_{k+1}^b = M(x_k^a),
+\qquad
+M(x)=x
+\]
+
+\vspace{2mm}
+\begin{itemize}
+  \item This produces a full sequence:
+  \[
+  x_0^b \rightarrow x_0^a \rightarrow x_1^b \rightarrow \dots
+  \]
+  \item We visualize results next: truth vs background vs analysis
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{3D-Var Cycle Result: Time Series of $x_1$ and $x_2$}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{What we compare}
+\vspace{-1mm}
+\begin{itemize}
+  \item \y{Truth} $x_k$
+  \item \y{Background} $x_k^b$
+  \item \y{Analysis} $x_k^a$
+  \item and the \y{scalar observations} $y_k$
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key behavior}
+\vspace{-1mm}
+\begin{itemize}
+  \item analyses are pulled towards the obs
+  \item cycling propagates improvements forward
+  \item unobserved component still benefits \y{indirectly} (via $B$ and cycling)
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Idea:}
+Information is collected iteratively.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.95\textwidth]{../../images/img20/origen/origen03.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Top: $x_1$ time series \qquad Bottom: $x_2$ time series}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 21
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Sequential Rounds: With All Observations We Converge in Two Cycles}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Idea: assimilate in two rounds}
+\vspace{-1mm}
+\begin{itemize}
+  \item \y{Round 1:} observe $x_1$ only
+  
+  \vspace{-3mm}
+  \[
+    y_k^{(1)} = x_{1,k} + \epsilon_k
+  \]
+  \item \y{Round 2:} observe $x_2$ only, using
+
+  \vspace{-3mm}
+  \[
+    x_{k}^{b,(2)} := x_{k}^{a,(1)}
+  \]
+\end{itemize}
+
+\vspace{1mm}
+\textbf{If obs error is small}
+\vspace{-1mm}
+\begin{itemize}
+  \item after Round 1: $x_1$ aligns with truth
+  \item after Round 2: $x_2$ aligns with truth
+  \item \y{both components observed} $\Rightarrow$ fast convergence
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+With complete information, ORIGEN-style cycling converges quickly.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.92\textwidth]{../../images/img20/origen/origen05.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Truth vs Round 1 ($x_1$ obs) vs Round 2 ($x_2$ obs, bg=Round 1)}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 22
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Iterative 3D-Var: Reconstruction Improves over Cycles (Demo)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{What is iterated here?}
+\vspace{-1mm}
+\begin{itemize}
+  \item We reconstruct an \y{entire trajectory}
+  
+  \vspace{-3mm}
+  \[
+    \{x_k^a\}_{k=0}^{n-1}
+  \]
+  from \y{noisy, partial observations}
+
+  \vspace{-3mm}
+  \[
+    y_k = H_k x_k + \epsilon_k
+  \]
+  \item Each cycle produces a refined estimate of the full sequence:
+
+  \vspace{-3mm}
+  \[
+    \{x_k^{a,(c)}\} \;\Rightarrow\; \{x_k^{a,(c+1)}\}
+  \]
+\end{itemize}
+
+\vspace{-2mm}
+\textbf{Crucial point}
+\vspace{-1mm}
+\begin{itemize}
+  \item The ``dynamics'' is \y{implicit} in the reconstructed series
+  \item We are not propagating with a separate model;
+        we repeatedly improve the \y{sequence itself}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+\vspace{-5mm}
+
+\begin{center}
+\includegraphics[width=0.96\textwidth]{../../images/img20/origen/origen08_crop.png}
+\end{center}
+
+\vspace{-3mm}
+\begin{center}
+{\scriptsize RMSE per assimilation cycle: iterative 3D-Var improves the reconstructed trajectory}
+\end{center}
+
+\vspace{-2mm}
+\rtext{\bf ORIGEN:}
+from the reconstructed $\{x_k^a\}$ we learn a forecast map
+
+\vspace{-3mm}
+\[
+x^a(t)\mapsto x^a(t+\Delta t),
+\]
+in the notebook we focus on trajectory reconstruction.
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 23
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Reconstruction: 2D Trajectory over Iterative 3D-Var Cycles}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Iterative 3D-Var reconstruction}
+\vspace{-1mm}
+\begin{itemize}
+  \item Each cycle reconstructs the full sequence:
+
+  \vspace{-3mm}
+  \[
+  \{x_k^a\}_{k=0}^{n-1}
+  \]
+  \item Observations remain \y{noisy and partial}:
+
+  \vspace{-3mm}
+  \[
+  y_k = H_k x_k + \epsilon_k
+  \]
+  \item Repeated cycles reduce reconstruction error
+\end{itemize}
+
+\vspace{1mm}
+\textbf{What you see on the right}
+\vspace{-1mm}
+\begin{itemize}
+  \item Truth trajectory (black)
+  \item Selected analysis cycles (colored)
+  \item Later cycles are closer to truth
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+3D-Var keeps error coming in from the observation error
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.92\textwidth]{../../images/img20/origen/origen07.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Iterative reconstruction in state space $(x_1,x_2)$}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+
+
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Reconstruction: Cycle Time Series with Noisy Observations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Final-cycle diagnostics}
+\vspace{-1mm}
+\begin{itemize}
+  \item Compare \y{truth} vs \y{final reconstructed trajectory}
+  \item Show observations for the last random pattern:
+  \[
+    H_k \in \{[1,0],[0,1]\}
+  \]
+  \item Observations are noisy $\Rightarrow$ analysis does \y{not overfit}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{3D-Var property}
+\vspace{-1mm}
+\begin{itemize}
+  \item analysis is a \y{weighted compromise}
+  \item controlled by $\y{B}$ and $\y{R}$
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+3D-VAR is not enough
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.96\textwidth]{../../images/img20/origen/origen09.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Final cycle: time series for $x_1$ and $x_2$ with noisy partial observations}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Adding a Covariance Update: Kalman Filter--Type Uncertainty Reduction}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Upgrade: update $B$ during cycling}
+\vspace{-1mm}
+\begin{itemize}
+  \item Until now: fixed background covariance $B$
+  \item Now: after each analysis step we also update uncertainty
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Kalman filter covariance update}
+\vspace{-1mm}
+\[
+A_k = (I - K_k H_k)\,B_k
+\qquad\Rightarrow\qquad
+B_k \leftarrow A_k
+\]
+
+\vspace{1mm}
+\textbf{Effect:}
+\vspace{-1mm}
+\begin{itemize}
+  \item uncertainty shrinks in observed directions
+  \item gain adapts across cycles
+  \item analysis trajectory converges strongly to truth
+\end{itemize}
+
+\vspace{0mm}
+\rtext{\bf Message:}
+\y{With adaptive $B$, iterative DA converges.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.92\textwidth]{../../images/img20/origen/origen10.png}
+\end{center}
+
+\vspace{-1mm}
+\begin{center}
+{\scriptsize Selected cycles: trajectory converges towards the true circle}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+
+
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 26
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Full Convergence: Final Trajectory with Covariance Update}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{Final-cycle reconstruction}
+\vspace{-1mm}
+\begin{itemize}
+  \item With $B$ update, repeated cycling yields \y{near-perfect reconstruction}
+  \item Even with noisy and partial observations
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why it converges}
+\vspace{-1mm}
+\begin{itemize}
+  \item analysis reduces both error \y{and} uncertainty
+  \item smaller uncertainty $\Rightarrow$ more consistent updates
+  \item loop stabilizes around the truth trajectory
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Message:}
+ORIGEN principle: reconstruction + uncertainty adaptation $\Rightarrow$ convergence.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\begin{center}
+\includegraphics[width=0.96\textwidth]{../../images/img20/origen/origen12.png}
+\end{center}
+
+\vspace{-4mm}
+\begin{center}
+{\scriptsize Final cycle: time series $x_1$, $x_2$ converged}
+\end{center}
+
+\end{column}
+
+\end{columns}
+\end{frame}
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 27
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Lorenz-63: ORIGEN Reconstruction \& Learned Forecast Model}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+\vspace{-1mm}
+\textbf{ORIGEN loop (concept)}
+\begin{enumerate}
+  \item Assimilate random observed subsets ($x$, $y$, $z$, $xy$, $xz$, $yz$)
+  \item Update background $\mathbf{x}^b \leftarrow \mathbf{x}^a$
+  \item Update covariance $B \leftarrow P^a$ (Kalman-style)
+\end{enumerate}
+
+\vspace{1mm}
+\textbf{Model learning}
+\begin{itemize}
+  \item Train NN to learn one-step map
+  \[
+    \mathbf{x}^a(k)\ \mapsto\ \mathbf{x}^a(k+1)
+  \]
+  \item \y{\rtext{\bf Fine-Tuning with Rollout}}
+\end{itemize}
+
+Rollout: many subsequent short forecasts
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{-2mm}
+\centering
+\includegraphics[width=0.9\textwidth]{../../images/img20/L63_6_ML_model_fc_test_2.png}
+
+\vspace{1mm}
+\scriptsize
+Forecast rollouts (blue) starting from analysis states (red dots), compared to the
+reconstructed reference trajectory (black dashed).
+\end{column}
+
+\end{columns}
+\end{frame}
+% ================================================================================
+% E-AI Tutorial Slides
+% Filename: lec20.tex
+%
+% Roland Potthast 2025/2026
+% Licence: CC-BY4.0
+% ================================================================================
+\documentclass[aspectratio=169]{beamer}
+
+% --- Load lecture macros --------------------------------------------------------
+\input{../lec_macros.tex}
+\newcommand{\LectureNumber}{Lecture 20}
+
+% --- Document -------------------------------------------------------------------
+\begin{document}
+
+\setagendaboxforlecture{20}
+
+\input{../lec_agenda.tex}
+\input{lec20_01.tex}
+\input{lec20_02.tex}
+\input{lec20_03.tex}
+\input{lec20_04.tex}
+\input{lec20_05.tex}
+\input{lec20_06.tex}
+\input{lec20_07.tex}
+\input{lec20_08.tex}
+\input{lec20_09.tex}
+\input{lec20_10.tex}
+\input{lec20_11.tex}
+\input{lec20_12.tex}
+\input{lec20_13.tex}
+\input{lec20_14.tex}
+\input{lec20_15.tex}
+\input{lec20_16.tex}
+\input{lec20_17.tex}
+\input{lec20_18.tex}
+\input{lec20_19.tex}
+\input{lec20_20.tex}
+\input{lec20_21.tex}
+\input{lec20_22.tex}
+\input{lec20_23.tex}
+\input{lec20_24.tex}
+\input{lec20_25.tex}
+\input{lec20_26.tex}
+\input{lec20_27.tex}
+
+% --- End Document ---------------------------------------------------------------
+\end{document}

@@ -1,0 +1,61 @@
+%!TEX root = lec17.tex
+% ================================================================================
+% Lecture 17 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+\mytitle{ICON-DREAM Reanalysis: High-quality training basis for AI emulators}
+
+\begin{columns}[T,totalwidth=\textwidth]
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{Motivation}
+\begin{itemize}
+\item reanalyses are key for \y{climate services} and many applications
+\item now also essential as \y{training basis} for AI-based NWP emulators
+\end{itemize}
+
+\vspace{0mm}
+\textbf{ICON reanalysis framework at DWD}
+\begin{itemize}
+\item \textbf{ICON-DREAM:} global-to-regional \y{ensemble reanalysis}
+\item \textbf{ICON-FORCE:} 2.1\,km ensemble reanalysis for Central Europe
+\item focus on \y{Europe} and on \y{continuous updates} (2010--present)
+\end{itemize}
+
+\vspace{0mm}
+ICON-DREAM delivers \y{consistent, high-resolution} data
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\vspace{-1mm}
+\footnotesize
+
+\textbf{ICON-DREAM: key characteristics}
+\begin{itemize}
+\item global ICON at \textbf{13\,km}, 120 levels
+\item two-way nest over Europe at \textbf{6.5\,km}
+\item DA: \y{LETKF} with \textbf{20-member ensemble} for $B$-covariances
+\item ensemble at 40\,km (20\,km over Europe)
+\end{itemize}
+
+\vspace{2mm}
+\textbf{ICON-FORCE (2\,km):}
+\begin{itemize}
+\item hourly LETKF (KENDA), incl.\ radar + SEVIRI
+\item 2-moment microphysics, snow / SST analyses
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Outlook:}
+backward extension to the 1980s using rescued obs + CDR products.
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+

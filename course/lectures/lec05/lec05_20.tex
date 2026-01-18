@@ -1,0 +1,57 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Why LSTMs for Time Series and Anomalies?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.40\textwidth}
+
+\textbf{Problem setting}
+
+\begin{itemize}
+  \item Sequential sensor data
+  \item \y{Temporal correlations}
+  \item Deviations over time
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why not FFNN / CNN?}
+
+\begin{itemize}
+  \item No explicit memory
+  \item Limited temporal context
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea:}
+
+anomaly = temporal \\
+\hspace{2cm} inconsistency
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-5mm}
+\includegraphics[width=0.95\textwidth]{../../images/img05/lstm_graph.pdf}
+
+\vspace{-1mm}
+\raggedright
+LSTM provides:
+\begin{itemize}
+  \item \y{Explicit memory state}
+  \item Controlled information flow
+  \item Long-term dependency modeling
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

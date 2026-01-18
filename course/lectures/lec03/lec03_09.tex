@@ -1,0 +1,62 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 09
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Observational Data — Purpose and Characteristics}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Observations anchor models to \y{reality}
+  \item Essential for:
+    \begin{itemize}
+      \item verification
+      \item data assimilation
+      \item ML training and validation
+    \end{itemize}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical properties}
+
+\begin{itemize}
+  \item Irregular spatial distribution
+  \item Sparse and heterogeneous
+  \item Strong metadata dependence
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.56\textwidth}
+
+\vspace{-1mm}
+\textbf{Common observation types}
+
+\begin{itemize}
+  \item SYNOP (surface stations)
+  \item TEMP / radiosondes
+  \item AIREP / AMDAR (aircraft)
+  \item Satellite observations
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key difference to models}
+
+\begin{itemize}
+  \item No grid
+  \item Point-based measurements
+  \item Representativeness matters
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

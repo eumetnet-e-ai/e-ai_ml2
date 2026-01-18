@@ -1,0 +1,56 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 05
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Plotting an IFS Field (Regular Grid)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.3\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item IFS open data uses a \y{regular lat–lon grid}
+  \item Field values form a 2-D NumPy array
+  \item Plotting is straightforward
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Important}
+
+\begin{itemize}
+  \item Grid size is fixed by the model
+  \item figsize controls readability only
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.74\textwidth}
+
+\vspace{-0.4cm}
+\begin{codeonly}{Plotting IFS 2 m temperature}
+import eccodes
+import numpy as np
+import matplotlib.pyplot as plt
+
+f = open("ifs_2t.grib2", "rb")
+gid = eccodes.codes_grib_new_from_file(f)
+
+nx = eccodes.codes_get(gid, "Ni")
+ny = eccodes.codes_get(gid, "Nj")
+values = eccodes.codes_get_array(gid, "values")
+field = values.reshape(ny, nx)
+
+plt.figure(figsize=(7, 3.5))
+plt.imshow(field, origin="lower")
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

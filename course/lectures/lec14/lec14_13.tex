@@ -1,0 +1,63 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Zarr: Why It Is Attractive for AI/ML}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Design principles}
+
+\begin{itemize}
+  \item Chunked, array-based storage
+  \item Designed for cloud and HPC
+  \item Partial reads without full downloads
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Performance features}
+
+\begin{itemize}
+  \item Parallel reads of independent chunks
+  \item Flexible chunk layout
+  \item Compression per chunk
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\footnotesize
+
+\textbf{Why this helps ML training}
+
+\begin{itemize}
+  \item Efficient random sampling
+  \item Scales to distributed workers
+  \item Reduces I/O bottlenecks
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Typical use cases}
+
+\begin{itemize}
+  \item Images and video
+  \item Satellite and geospatial data
+  \item Scientific simulation output
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf Zarr optimizes data access patterns — not the ML logic itself.}
+
+\end{frame}

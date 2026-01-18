@@ -1,0 +1,76 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 03
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Tool Calls in Model Output}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+Modern LLMs can output:
+\begin{itemize}
+  \item normal assistant text
+  \item \y{structured tool calls}
+\end{itemize}
+
+\vspace{1mm}
+A tool call contains:
+\begin{itemize}
+  \item tool name
+  \item arguments
+  \item no natural language
+\end{itemize}
+
+\vspace{1mm}
+This decision is:
+\begin{itemize}
+  \item made by the model
+  \item enforced by the API
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Conceptual output}
+
+\vspace{-10mm}
+\begin{codeonly}{LLM output}
+tool_call:
+  name: get_temperature
+  arguments:
+    location: "Berlin"
+    leadtime: 24
+\end{codeonly}
+
+\vspace{1mm}
+No parsing of prose required.
+
+\hspace*{-2.8cm}
+\begin{minipage}{6cm}
+\footnotesize\color{red}
+\begin{lstlisting}
+try:
+    tool_call = json.loads(raw_output)["tool_call"]
+    print("Parsed tool call:")
+    print("Tool name:", tool_call["name"])
+    print("Arguments:", tool_call["arguments"])
+except Exception as e:
+    print("Failed to parse JSON output")
+    print("Error:", e)
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

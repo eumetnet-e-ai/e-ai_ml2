@@ -1,0 +1,65 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Outcome: Town Forecasts from ML Rollout}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+\textbf{Town-level evaluation}
+
+\vspace{0mm}
+After rollout, we extract time series at town locations:
+\begin{itemize}
+  \item nearest neighbor on the lat/lon grid
+  \item compare truth vs ML forecast
+  \item generate one plot per town
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Saved outputs}
+
+\vspace{0mm}
+\begin{itemize}
+  \item figures: \texttt{fc\_<town>.png}
+  \item fast way to compare skill across cities
+\end{itemize}
+
+\vspace{-2mm}
+\begin{minipage}{7.2cm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+for town, (lat0, lon0) in TOWNS.items():
+    # nearest grid point
+    pt_true = ds.sel(lat=lat0, lon=lon0, method="nearest")
+
+    # predicted series at same grid point
+    y_true = pt_true["t2m"].values[:n_forecast+1]
+    y_pred = pred_series[:, iy, ix]   # from rollout
+\end{lstlisting}
+\end{minipage}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\footnotesize
+\vspace{-1mm}
+
+\includegraphics[width=7cm]{../../images/img14/town_forecasts/fc_hamburg_crop.png}
+
+\vspace{1mm}
+\includegraphics[width=7cm]{../../images/img14/town_forecasts/fc_vienna_crop.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

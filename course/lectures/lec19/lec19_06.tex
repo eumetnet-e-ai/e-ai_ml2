@@ -1,0 +1,56 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 06
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Improving Extrapolation by Wider Residual Sampling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\textbf{Key modification}
+
+The PINN formulation is unchanged, but the
+\y{ODE residual is enforced on a wider domain}.
+
+\vspace{2mm}
+\textbf{Training setup}
+
+\begin{itemize}
+  \item ODE residual sampled beyond $[0,\,2\pi]$
+  \item Boundary conditions still imposed at $x=0$
+  \item Same network architecture and loss terms
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Effect}
+
+\begin{itemize}
+  \item Physics is enforced more \y{globally}
+  \item Extrapolation becomes significantly more stable
+  \item No change in representation or constraints
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=\textwidth]{../../images/img19/pinn_sine_3.png}
+
+
+\vspace{2mm}
+\rtext{ This already fixes many extrapolation problems for simple ODEs.}
+
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

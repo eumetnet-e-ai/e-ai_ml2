@@ -1,0 +1,75 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Tool Contracts and Schemas}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-2mm}
+A tool is defined by:
+\begin{itemize}
+  \item name
+  \item description
+  \item input schema
+\end{itemize}
+
+\vspace{1mm}
+Schemas specify:
+\begin{itemize}
+  \item required arguments
+  \item data types
+  \item allowed structure
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Important:}
+\begin{itemize}
+  \item tools are defined by the \y{system}
+  \item never invented by the model
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Example (conceptual)}
+
+\vspace{-10mm}
+\begin{codeonly}{Tool schema}
+name: get_temperature
+arguments:
+  location: string
+  leadtime: integer
+\end{codeonly}
+
+\vspace{1mm}
+The model learns:
+\begin{itemize}
+  \item when this tool applies
+  \item how to fill arguments
+\end{itemize}
+
+\footnotesize\color{red}
+\begin{lstlisting}
+{
+  "tool_call": {
+    "name": "<function name>",
+    "arguments": { ... }
+  }
+}
+\end{lstlisting}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

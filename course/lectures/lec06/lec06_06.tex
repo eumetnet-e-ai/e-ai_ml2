@@ -1,0 +1,78 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 6
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Sinusoidal Positional Encoding}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-1mm}
+\textbf{Sinusoidal construction}
+
+\begin{itemize}
+  \item Fixed, deterministic encoding
+  \item Different frequencies per dimension
+\end{itemize}
+
+For position $i$ and dimension $j$:
+
+\vspace{-4mm}
+\[
+p_{i,2j}   = \sin\!\left(\frac{i}{10000^{2j/d_{\text{model}}}}\right)
+\]
+\[
+p_{i,2j+1} = \cos\!\left(\frac{i}{10000^{2j/d_{\text{model}}}}\right)
+\]
+
+\vspace{1mm}
+\begin{itemize}
+  \item Smooth variation with position
+  \item Relative distances are encoded
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-1mm}
+\textbf{Why sinusoids?}
+
+\begin{itemize}
+  \item Works for arbitrary sequence lengths
+  \item No additional parameters
+  \item Relative positions can be inferred
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why \emph{add}, not concatenate?}
+
+{\scriptsize
+\begin{itemize}
+  \item Addition keeps dimension at $d_{\text{model}}$
+  \item Attention projections expect fixed size
+  \item Concatenation doubles dimension
+  \item Would require retraining all layers
+\end{itemize}
+}
+
+\vspace{1mm}
+\y{Addition preserves efficiency} 
+\y{and model structure.}
+
+\end{column}
+
+\end{columns}
+
+\vspace{1mm}
+\centering
+{\footnotesize
+Positional information is injected without changing model dimensionality.
+}
+
+\end{frame}

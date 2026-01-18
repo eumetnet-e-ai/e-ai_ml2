@@ -1,0 +1,74 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 10
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Adjacency and \texttt{edge\_index}}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Adjacency matrix}
+
+\begin{itemize}
+  \item Matrix $A \in \{0,1\}^{N\times N}$
+  \item $A_{ij}=1$ if nodes $i,j$ are connected
+  \item Simple, but memory expensive
+\end{itemize}
+
+\vspace{1mm}
+\begin{minipage}[b]{2.2cm}
+$
+\begin{pmatrix}
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0\\
+0 & 1 & 0 & 1\\
+1 & 0 & 1 & 0
+\end{pmatrix}
+$
+\end{minipage}
+\begin{minipage}{3.2cm}
+\includegraphics[width=3.2cm]{../../images/img05/diff_matrix_smaller_const.png}
+\end{minipage}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-5mm}
+\textbf{\texttt{edge\_index} representation}
+
+\begin{itemize}
+  \item Sparse edge list format
+  \item Two rows: source and target nodes
+  \item Standard in PyTorch Geometric
+\end{itemize}
+
+\vspace{1mm}
+\[
+\texttt{edge\_index} =
+\begin{pmatrix}
+0 & 1 & 1 & 2 \\
+1 & 0 & 2 & 1
+\end{pmatrix}
+\]
+
+\vspace{1mm}
+\raggedright
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item Scales to large graphs
+  \item Efficient message passing
+  \item Natural for irregular structures
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

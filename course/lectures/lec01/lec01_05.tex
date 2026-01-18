@@ -1,0 +1,56 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Installing Python Packages with \texttt{pip}}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.35\textwidth}
+
+\textbf{Why package management matters}
+
+\begin{itemize}
+  \item Python itself is \y{minimal}
+  \item Most functionality comes from packages
+  \item Packages define your \y{working environment}
+  \item Reproducibility depends on exact versions
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea:}
+\begin{itemize}
+  \item One project $\Rightarrow$ one environment
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.63\textwidth}
+
+\begin{codeonly}{Basic pip workflow}
+# activate aipy, list installed 
+aipy
+pip list
+
+# install core packages
+pip install numpy
+pip install matplotlib
+
+# verify installation
+python -c "import numpy, matplotlib; print('ok')"
+\end{codeonly}
+
+\vspace{1mm}
+{\footnotesize Always install packages \y{inside} an activated virtual environment}
+
+\end{column}
+
+% --- End Frame -----------------------------------------------------------------
+\end{columns}
+\end{frame}

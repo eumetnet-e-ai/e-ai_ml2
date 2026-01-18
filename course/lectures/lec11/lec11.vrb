@@ -1,0 +1,57 @@
+\begin{tightmath}
+
+\mytitle{Lecture 11 — Summary}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+
+\textbf{DAWID Platform}
+
+\begin{itemize}
+  \item \rtext{\bf Productivity platform} for NHMS
+  \item Supports \y{internal and external} users
+  \item Lightweight web frontend
+  \item Streaming interaction and session management
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Backend Architecture}
+
+\begin{itemize}
+  \item Modular FastAPI backend
+  \item Unified access to \y{multiple LLM families}
+  \item \y{Controlled function} execution
+  \item Local and external services integrated
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\textbf{AI Integration}
+
+\begin{itemize}
+  \item \y{Function calling} via LangGraph workflows
+  \item \y{External tools} accessed through validated APIs
+  \item Retrieval-Augmented Generation \y{RAG using FAISS}
+\end{itemize}
+
+\vspace{4mm}
+\color{darkgreen}
+\textbf{Operational Feature Detection}
+
+\begin{itemize}
+  \item \color{darkgreen}AI-based feature detection in operations
+  \item Front detection integrated into \y{NinJo}
+  \item High acceptance among forecasters
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}

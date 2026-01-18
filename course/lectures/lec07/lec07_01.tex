@@ -1,0 +1,51 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 01
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Why Retrieval-Augmented Generation (RAG)?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Limitations of standalone LLMs}
+
+\begin{itemize}
+  \item Fixed knowledge at training time
+  \item No access to private or local data
+  \item Risk of hallucinated answers
+\end{itemize}
+
+
+\includegraphics[width=7cm]{../../images/img07/hallucinations.png}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{1mm}
+LLMs answer from \emph{learned parameters only}. 
+\rtext{This can be completely off reality!}
+
+\vspace{3mm}
+\textbf{Typical real-world needs}
+
+\begin{itemize}
+  \item Large code bases
+  \item Technical documentation
+  \item Evolving project knowledge
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key idea:}  
+\y{Bring the knowledge to the model.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,61 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 04
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Why Experiment Tracking?}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\begin{itemize}
+  \item \y{Repeated training runs}
+  \item Changing \y{hyperparameters}
+  \item Evolving \y{code versions}
+  \item Different \y{datasets}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Core requirement}
+
+\begin{itemize}
+  \item \y{reproducibility}
+  \item \y{transparency}
+\end{itemize}
+
+\vspace{-1cm}
+\raggedleft
+\includegraphics[width=3.5cm]{../../images/img12/MLFlow.png}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\vspace{-2mm}
+\textbf{Typical problems without tracking}
+
+\begin{itemize}
+  \item \rtext{Best parameter settings get lost}
+  \item Results cannot be \rtext{reproduced}
+  \item \rtext{Missing or incomplete metadata}
+  \item Knowledge is \rtext{locked in scripts}
+\end{itemize}
+
+\vspace{2mm}
+Common symptoms:
+\begin{itemize}
+  \item many scripts with \rtext{unclear differences}
+  \item results that cannot be \rtext{explained later}
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

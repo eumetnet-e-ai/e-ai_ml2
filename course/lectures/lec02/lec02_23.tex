@@ -1,0 +1,55 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide 23
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Remote Jupyter — Principle}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Core Idea}
+
+\begin{itemize}
+  \item Compute: \y{remote} (server, HPC, cloud)
+  \item Visualization: \y{local} in the browser
+  \item Browser setup remains unchanged
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical Scenarios}
+
+\begin{itemize}
+  \item HPC login or compute nodes
+  \item Cloud virtual machines
+  \item Office workstation / bastion host
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Security Principle}
+
+\begin{itemize}
+  \item \textbf{No} open notebook ports to the network
+  \item Never expose \texttt{:8888} on a public IP
+  \item Access exclusively via \y{SSH tunnels}
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Takeaway}
+
+\begin{itemize}
+  \item Jupyter only listens \y{locally}
+  \item SSH provides secure transport
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+\end{frame}

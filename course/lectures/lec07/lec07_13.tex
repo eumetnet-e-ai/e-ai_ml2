@@ -1,0 +1,68 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{FAISS — Vector Search at Scale}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\begin{itemize}
+  \item \y{Facebook AI Similarity Search}
+  \item Optimized nearest-neighbor search
+  \item Designed for large vector collections
+\end{itemize}
+
+\vspace{1mm}
+Stores vectors:
+\[
+z_i \in \mathbb{R}^d
+\]
+
+\textbf{Key idea}
+
+\begin{itemize}
+  \item \y{Build an index once}
+  \item Query many times
+  \item Fast top-\(k\) retrieval
+\end{itemize}
+
+Search replaces explicit loops.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-5mm}
+\textbf{Hierarchical search in FAISS}
+
+FAISS accelerates nearest-neighbor search by introducing
+a \emph{coarse-to-fine hierarchy} in vector space.
+
+\vspace{3mm}
+\textbf{Step 1: Coarse partitioning}
+
+The vector space is partitioned into \(M\) regions
+using representative centroids:
+\[
+\{ c_1, \dots, c_M \}, \quad c_j \in \mathbb{R}^d .
+\]
+
+Each stored vector \(z_i\) is assigned to its nearest centroid:
+\[
+z_i \;\mapsto\; c(z_i).
+\]
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,72 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 25
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Causal Discovery from Time Series: PCMCI (Classical Method)}
+
+\footnotesize
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-2mm}
+
+\textbf{Goal}
+
+\begin{itemize}
+  \item learn the directed graph from multivariate time series
+  \item distinguish:
+  \begin{itemize}
+    \item \y{direct causal links}
+    \item \y{common forcing} and confounding
+  \end{itemize}
+\end{itemize}
+
+\vspace{0mm}
+\textbf{PCMCI in one line}
+
+\begin{itemize}
+  \item PC algorithm + conditional independence tests
+  \item works with lagged dependencies
+  \item reduces false links by conditioning on relevant parents
+\end{itemize}
+
+\vspace{-1mm}
+\rtext{\bf Important:} PCMCI is \y{statistical causal discovery}, not neural.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\vspace{-2mm}
+\centering
+
+\includegraphics[width=\textwidth]{../../images/img19/causal_pcmci_graphs.png}
+
+\vspace{1mm}
+\raggedright
+\footnotesize
+\textbf{Discovered graphs (PCMCI).}
+Left: Scenario 1 matches the chain \y{$F\rightarrow P\rightarrow T$}.
+Right: Scenario 2 reveals no direct \y{$P\rightarrow T$} link.
+
+\vspace{1mm}
+\rtext{\bf Message:} same correlation $\neq$ same causal structure.
+
+\vspace{0mm}
+\textbf{Key capability}
+
+\begin{itemize}
+  \item Scenario 1: recover \y{$F \rightarrow P \rightarrow T$}
+  \item Scenario 2: recover \y{$F \rightarrow P$ and $F \rightarrow T$} only
+\end{itemize}
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

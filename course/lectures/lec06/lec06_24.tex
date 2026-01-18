@@ -1,0 +1,72 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{What the Model Predicts}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left -------------------------------------------------
+\begin{column}[T]{0.45\textwidth}
+
+\textbf{Given input}
+
+\[
+\text{``I am''}
+\;\longrightarrow\;
+[1,\,2]
+\]
+
+\vspace{1mm}
+\textbf{Model output}
+
+\begin{itemize}
+  \item Probability over vocabulary
+  \item One distribution per position
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Prediction}
+
+\[
+\arg\max p(\text{token})
+\;\Rightarrow\;
+\text{``hungry''}
+\]
+
+\end{column}
+
+% --- Right ------------------------------------------------
+\begin{column}[T]{0.5\textwidth}
+
+\vspace{-8mm}
+\begin{codeonly}{Inference (greedy decoding)}
+model.eval()
+x = [I, am]
+
+logits = model(x)
+next = argmax( logits[-1] )
+
+x = append(x, next)
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key point}
+
+\begin{itemize}
+  \item Same model as during training
+  \item No architecture change
+  \item Only token selection differs
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{Generation is just repeated next-token prediction.}
+
+\end{frame}

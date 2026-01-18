@@ -1,0 +1,60 @@
+%!TEX root = lec11.tex
+% ================================================================================
+% Lecture 11 — Slide 12
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Audio Routes: Speech-to-Text}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Motivation}
+
+\begin{itemize}
+  \item Natural user interaction via speech
+  \item Hands-free input for complex queries
+  \item Multimodal access without UI complexity
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Frontend Interaction}
+
+\begin{itemize}
+  \item Audio recorded in the browser
+  \item File uploaded via gateway
+  \item Treated like any other uploaded resource
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-5mm}
+\textbf{Backend Processing}
+
+\begin{itemize}
+  \item Local or remote speech-to-text engine
+  \item Conversion to plain text
+  \item Injected into standard LLM pipeline
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Design Principle}
+
+\begin{itemize}
+  \item Audio is a \y{preprocessing step}
+  \item All downstream logic remains text-based
+  \item No special cases for speech afterwards
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

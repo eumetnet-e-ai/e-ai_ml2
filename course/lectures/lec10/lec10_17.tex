@@ -1,0 +1,65 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 17
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Survey of Agent Frameworks (\y{Critical View})}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\vspace{2mm}
+\textbf{Why so many frameworks?}
+
+\begin{itemize}
+  \item \rtext{\bf No standard agent abstraction}
+  \item \rtext{Rapidly evolving LLM APIs}
+  \item Different design philosophies
+\end{itemize}
+
+\vspace{0mm}
+\textbf{Main categories}
+
+\begin{itemize}
+  \item Loop-based agents
+  \item Chain-based frameworks
+  \item Graph-based workflows
+  \item Multi-agent orchestration
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-1mm}
+\textbf{Typical examples}
+
+\begin{itemize}
+  \item \y{LangChain}: chaining + tools
+  \item \y{LangGraph}: explicit control flow
+  \item \y{CrewAI}: role-based agents
+  \item AutoGPT-style: autonomous loops
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Practical assessment}
+
+\begin{itemize}
+  \item Most are \y{experimental}
+  \item APIs change quickly
+  \item Production use needs caution
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Rule:}  
+Use frameworks to \y{clarify}, not to hide logic.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

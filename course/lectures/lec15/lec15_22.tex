@@ -1,0 +1,48 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 22
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Learning Demo: Inputs (Wind/Gust) $\rightarrow$ True vs Predicted Mask \& Polygons}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{-2mm}
+
+\textbf{This figure shows one training/evaluation example}
+
+\vspace{0mm}
+\begin{itemize}
+  \item predictors are \y{gridded forecast fields}
+  \item target is a \y{warning mask} derived from forecaster polygons
+  \item predicted mask is transformed back into \y{polygons}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Layout (4 columns)}
+
+\vspace{0mm}
+\begin{enumerate}
+  \item \textbf{Input 1:} wind field
+  \item \textbf{Input 2:} gust field
+  \item \textbf{Target:} true mask + true polygons
+  \item \textbf{Prediction:} predicted mask + recovered polygons
+\end{enumerate}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\vspace{-4mm}
+\centering
+\includegraphics[width=\textwidth]{../../images/img15/polygon_prediction_test2.png}
+
+\vspace{1mm}
+\scriptsize 4-column result: inputs, target, prediction.
+\end{column}
+
+\end{columns}
+\end{frame}

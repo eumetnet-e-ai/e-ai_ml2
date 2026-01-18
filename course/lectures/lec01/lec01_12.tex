@@ -1,0 +1,42 @@
+%!TEX root = lec01.tex
+% ================================================================================
+% Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Functions: Turn {\red Ideas} into Reusable Tools}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+\begin{column}{0.32\textwidth}
+
+\textbf{Why functions matter}
+
+\begin{itemize}
+  \item Turn a workflow step into a \y{reusable tool}
+  \item Make intent explicit: inputs $\rightarrow$ output
+  \item Easier testing, debugging, and collaboration
+  \item Foundation for \y{pipelines} and \y{ML training loops}
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.66\textwidth}
+
+\begin{codeonly}{Mini tool: normalize a signal}
+import numpy as np
+
+def normalize(x):
+    x = np.asarray(x)
+    return (x - x.mean()) / x.std()
+
+x = np.array([2., 3., 5., 9.])
+print("x =", x)
+print("z =", normalize(x))
+\end{codeonly}
+
+{\footnotesize A pattern you will reuse everywhere: prepare data in one function}
+
+\end{column}
+\end{columns}
+\end{frame}

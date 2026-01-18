@@ -1,0 +1,51 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 07
+% ================================================================================
+\begin{frame}[t]
+\mytitle{Observations: Satellite (Vertical Weighting Integrals)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+\vspace{4mm}
+
+\textbf{Satellite observation operator}
+
+For each channel $c$ (Gaussian vertical weights $w_c(z)$):
+\[
+y^{sat}_t(c,x_i)
+=
+\sum_{j=1}^{n_z} w_c(z_j)\,\phi(x_i,z_j,t)\,\Delta z.
+\]
+
+\textbf{Properties}
+\begin{itemize}
+  \item available \y{for all columns} $x_i$
+  \item integrated information $\Rightarrow$ ill-posed inverse problem
+  \item multiple channels $\Rightarrow$ multi-layer sensitivity
+\end{itemize}
+
+\textbf{Array}
+\begin{itemize}
+  \item \texttt{ysat[time, channel, x]}
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.46\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=0.95\textwidth]{../../images/img20/sat_weights.png}
+
+\vspace{2mm}
+\rtext{Gaussian vertical weighting functions used for the SAT channels.}
+
+\end{column}
+
+\end{columns}
+\end{frame}

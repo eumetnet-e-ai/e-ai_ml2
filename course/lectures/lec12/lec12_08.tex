@@ -1,0 +1,83 @@
+%!TEX root = lec12.tex
+% ================================================================================
+% Chapter 12 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Tracking URI}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-2mm}
+\footnotesize
+\textbf{Definition}
+
+\begin{itemize}
+  \item URI = \texttt{Uniform Resource Identifier}
+  \item \y{address} of the MLflow tracking backend
+  \item Decides \y{where} runs are written
+\end{itemize}
+
+\begin{itemize}
+  \item Destination of
+    \begin{itemize}
+      \item experiments
+      \item runs
+      \item metrics
+      \item artifacts
+    \end{itemize}
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Keep untouched:}
+
+\begin{itemize}
+  \item Training code
+  \item Logging calls
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\vspace{-6mm}
+\footnotesize
+\textbf{How it is set in code}
+
+\begin{codeonly}{}
+import mlflow
+
+mlflow.set_tracking_uri(
+    "http://localhost:5000")
+\end{codeonly}
+
+\vspace{2mm}
+\textbf{Typical values}
+
+\begin{itemize}
+  \item \texttt{file:./mlruns} for local storage only
+  \item \texttt{http://localhost:5000} for using the mlflow server
+\end{itemize}
+
+\vspace{2mm}
+\tiny
+The MLflow tracking behavior is fully determined by the tracking URI.
+If the URI is set to \texttt{sqlite:///mlflow.db}, the Python process writes
+experiment metadata directly into a local SQLite database, without using
+any HTTP communication or server process.
+In contrast, if the URI is set to \texttt{http://localhost:5000}, all tracking
+data is sent via HTTP to a running MLflow server, which then stores the
+results using its configured backend store (e.g.\ SQLite).
+
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

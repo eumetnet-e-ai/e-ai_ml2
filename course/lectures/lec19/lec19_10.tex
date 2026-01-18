@@ -1,0 +1,74 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 10
+% ================================================================================
+\begin{frame}[t, fragile]
+
+\mytitle{SINDy Sparse Regression of Nonlinear Dynamics: Lorenz--63 System}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+\footnotesize
+
+\vspace{-2mm}
+\textbf{True governing equations}
+
+The Lorenz--63 system is defined by
+\[
+\begin{aligned}
+\dot{x} &= \sigma (y - x), \\
+\dot{y} &= x(\rho - z) - y, \\
+\dot{z} &= x y - \beta z,
+\end{aligned}
+\qquad
+\begin{minipage}{3cm}$
+\sigma=10, \\ 
+\rho=28, \\
+\beta=\tfrac{8}{3}.
+$
+\end{minipage}
+\]
+
+\vspace{0mm}
+\textbf{SINDy function library}
+
+SINDy assumes the dynamics can be written as a sparse linear combination of
+candidate functions:
+
+\begin{lstlisting}[basicstyle=\ttfamily\scriptsize]
+Theta(x,y,z) = [  1,  x, y, z,
+                      x*y, x*z, y*z ]
+\end{lstlisting}
+
+Only a few of these terms are retained in each equation after sparse
+regression.
+
+\vspace{2mm}
+\rtext{\bf Goal:} \y{recover the correct active terms} and coefficients
+directly from time series data.
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\centering
+\vspace{-2mm}
+
+\includegraphics[width=6cm]{../../images/img19/sindy_timeseries.png}
+
+\vspace{2mm}
+\raggedright
+\footnotesize
+Time series of the Lorenz--63 state variables used as input for SINDy
+{\color{blue}(blue)}.
+Numerical derivatives are estimated and matched against the candidate
+library during sparse regression. \color{darkgreen}
+Discovered dynamics evolution in Green.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

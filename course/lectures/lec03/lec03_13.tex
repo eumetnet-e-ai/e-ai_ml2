@@ -1,0 +1,52 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Feedback Files — Linking Models and Observations}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}{0.42\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Feedback files store \y{model–observation pairs}
+  \item Generated during data assimilation
+  \item Central diagnostic product
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Contained information}
+
+\begin{itemize}
+  \item Observation value
+  \item \y{Model equivalent} (H(x))
+  \item Quality control flags
+  \item Metadata (time, location, type)
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}{0.56\textwidth}
+
+\vspace{-1mm}
+\textbf{Why they matter}
+
+\begin{itemize}
+  \item Quantify model bias and error
+  \item Basis for monitoring systems
+  \item Ideal input for \y{ML analysis}
+\end{itemize}
+
+\vspace{2mm}
+\includegraphics[width=0.99\textwidth]{../../images/img03/airep.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

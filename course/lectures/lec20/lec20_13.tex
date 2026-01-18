@@ -1,0 +1,39 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 13
+% ================================================================================
+\begin{frame}[t,fragile]
+\mytitle{Training Loss: Joint SAT + RS Query Targets}
+
+\footnotesize
+\vspace{2mm}
+
+We train on snapshot transitions $t\to t+1$ using a joint loss:
+
+\vspace{2mm}
+\textbf{SAT loss (next curtain)}
+\[
+\mathcal{L}_{sat}
+=
+\| \hat y^{sat}_{t+1}-y^{sat}_{t+1}\|_2^2.
+\]
+
+\textbf{RS query loss (next profile at query points)}
+\[
+\mathcal{L}_{rs}
+=
+\frac{1}{N_q}\sum_{q=1}^{N_q}
+\left(
+\hat y^{rs}_{t+1}(x_q,z_q) - y^{rs}_{t+1}(x_q,z_q)
+\right)^2.
+\]
+
+\textbf{Total}
+\[
+\mathcal{L}=\mathcal{L}_{sat}+\alpha\,\mathcal{L}_{rs}.
+\]
+
+\vspace{2mm}
+\rtext{\bf Note:} RS targets for arbitrary $(x_q,z_q)$ are taken from truth $xtrue[t+1]$.
+
+\end{frame}

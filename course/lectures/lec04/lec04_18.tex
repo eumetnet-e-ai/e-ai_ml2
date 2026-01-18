@@ -1,0 +1,56 @@
+%!TEX root = lec04.tex
+% ================================================================================
+% Lecture 4 — Slide 18
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{DataLoader Without Shuffling}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{What happens?}
+
+\begin{itemize}
+  \item Samples returned in fixed order
+  \item Batches follow dataset sequence
+  \item Same batches every epoch
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Why this can be problematic}
+
+\begin{itemize}
+  \item Correlated samples in one batch
+  \item Biased gradient estimates
+  \item Slower or unstable learning
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-6mm}
+\begin{codeonly}{Ordered batches}
+loader = DataLoader(
+    dataset,
+    batch_size=4,
+    shuffle=False
+)
+
+for x_b, y_b in loader:
+    print(y_b.squeeze())
+    break
+\end{codeonly}
+
+\vspace{1mm}
+First batch always contains the same labels.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

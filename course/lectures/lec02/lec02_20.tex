@@ -1,0 +1,49 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Native Code Integration — Fortran vs. C++ from Python}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-4mm}
+\centering
+\includegraphics[width=\linewidth]{../../images/img02/fortran_python_sines.png}
+
+\vspace{1mm}
+{\small
+Fortran via \texttt{ISO\_C\_BINDING} + \texttt{ctypes}\\
+Numerics compiled, called from Python
+}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\centering
+\includegraphics[width=\linewidth]{../../images/img02/c++_python_sines.png}
+
+\vspace{1mm}
+{\small
+C++ via C-compatible ABI + \texttt{ctypes}\\
+Explicit interface, manual symbol control
+}
+
+\end{column}
+
+% --- End Columns --------------------------------------------------------------
+\end{columns}
+
+\vspace{1mm}
+\begin{itemize}
+  \item Python orchestrates, \y{native code computes}
+  \item Identical workflow: compile → load → call → plot
+\end{itemize}
+
+\end{frame}

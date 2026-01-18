@@ -1,0 +1,52 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Feed Forward Neural Networks (FFNN)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Basic idea}
+
+\begin{itemize}
+  \item Directed \y{acyclic} network
+  \item Information flows strictly forward
+  \item \y{No memory}, no recurrence
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Typical use cases}
+
+\begin{itemize}
+  \item Regression
+  \item Classification
+  \item Function approximation
+\end{itemize}
+
+\vspace{1mm}
+Each layer applies a learned transformation.
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-6mm}
+\begin{center}
+\includegraphics[width=\textwidth]{../../images/img05/feed_forward_network.png}
+\end{center}
+
+\vspace{-2mm}
+\centering
+Input $\rightarrow$ hidden layers $\rightarrow$ output
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

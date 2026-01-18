@@ -1,0 +1,62 @@
+%!TEX root = lec20.tex
+% ================================================================================
+% Lecture 20 — Slide 11
+% ================================================================================
+\begin{frame}[t, fragile]
+\mytitle{Flexible RS Input: Two Dataset Modes (A/B Switch)}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.7\textwidth}
+\footnotesize
+\vspace{4mm}
+
+We implement a dataset switch (important for interpretability):
+
+\vspace{2mm}
+\textbf{Mode A (synthetic RS from truth)}
+\begin{itemize}
+  \item sample RS input points randomly from $xtrue[t]$
+  \item add realistic noise $\sigma_{rs}$
+  \item \y{excellent generalization} for arbitrary RS geometry
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Mode B (use only stored RS observations)}
+\begin{itemize}
+  \item RS input points are exactly \texttt{yrs[t,:,:]} at fixed \texttt{rs\_ix, rs\_iz}
+  \item strict statement: \rtext{\bf “input uses only observations at time $t$”}
+  \item weaker geometric diversity, but realistic RS network
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Reality:} We have only fixed radiosondes, but we have \y{airplanes}!
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.28\textwidth}
+\vspace{4mm}
+\begin{lstlisting}[basicstyle=\ttfamily\tiny]
+Saved:
+  data_dyn_obs/dyn_truth_obs.npz
+
+Content:
+  xtrue  shape=(10,50,130)
+  yrs    shape=(10,7,18)
+  ysat   shape=(10,4,130)
+
+  t_snap shape=(10,)
+  rs_ix  shape=(7,)
+  rs_iz  shape=(18,)
+  sat_w  shape=(4,50)
+
+  x      shape=(130,)
+  z      shape=(50,)
+\end{lstlisting}
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,70 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide 11
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Closed-Form Forward Diffusion}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.62\textwidth}
+
+Because all forward steps are Gaussian, the marginal
+distribution of $x_t$ given $x_0$ has a closed form:
+\[
+q(x_t \mid x_0)
+= \mathcal{N}\!\left(
+x_t;\, \sqrt{\bar{\alpha}_t}\,x_0,\,
+(1-\bar{\alpha}_t) I
+\right)
+\]
+
+with cumulative noise factor
+\[
+\bar{\alpha}_t
+= \prod_{s=1}^t (1-\beta_s).
+\]
+
+\vspace{1mm}
+Equivalently, sampling can be written as
+\[
+x_t
+= \sqrt{\bar{\alpha}_t}\,x_0
++ \sqrt{1-\bar{\alpha}_t}\,\epsilon,
+\quad \epsilon \sim \mathcal{N}(0,I).
+\]
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.36\textwidth}
+
+\vspace{-1mm}
+\textbf{Interpretation}
+
+\begin{itemize}
+  \item Signal amplitude decays with $\sqrt{\bar{\alpha}_t}$
+  \item Noise amplitude grows with $\sqrt{1-\bar{\alpha}_t}$
+  \item $t$ directly controls noise level
+\end{itemize}
+
+\vspace{1mm}
+As $t \to T$:
+\[
+\bar{\alpha}_t \to 0
+\quad \Rightarrow \quad
+x_t \sim \mathcal{N}(0,I).
+\]
+
+\vspace{1mm}
+This matches the example exactly.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

@@ -1,0 +1,51 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 24
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Detected Anomalies in Sensor Data}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\textbf{What is shown?}
+
+\begin{itemize}
+  \item Unseen test sequences
+  \item Reconstruction vs. input
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Color coding}
+
+\begin{itemize}
+  \item Blue: normal
+  \item Red: anomaly
+\end{itemize}
+
+\vspace{1mm}
+Interpretation:
+\begin{itemize}
+  \item Model flags temporal inconsistency
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.60\textwidth}
+
+\vspace{-2mm}
+\includegraphics[width=0.99\textwidth]{../../images/img05/lstm_anomaly_detection_samples_selected.png}
+
+\vspace{1mm}
+\centering
+Original (solid) vs. reconstructed (dashed)
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

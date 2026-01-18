@@ -1,0 +1,56 @@
+%!TEX root = lec05.tex
+% ================================================================================
+% Lecture 5 — Slide 9
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Basic Graph Concepts}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.4\textwidth}
+
+\textbf{Graph definition}
+
+\begin{itemize}
+  \item Graph $G = (V,E)$
+  \item Nodes $V$: entities
+  \item Edges $E$: relations
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Node data}
+
+\begin{itemize}
+  \item Each node has features $x_i$
+  \item Labels $y_i$ for supervision
+  \item Features may be physical states
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.58\textwidth}
+
+\vspace{-1cm}
+\hfill\includegraphics[width=4.5cm]{../../images/img05/gnn_ikosahedral.png}
+
+\vspace{-1cm}
+\hspace*{1cm}Ikosahedral graph
+
+\vspace{5mm}
+\raggedright
+\textbf{Key distinction}
+
+\begin{itemize}
+  \item Data lives on nodes
+  \item Structure lives in edges
+  \item Learning uses both
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

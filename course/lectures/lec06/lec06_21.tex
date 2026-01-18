@@ -1,0 +1,64 @@
+%!TEX root = lec06.tex
+% ================================================================================
+% Lecture 6 — Slide 19b
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Self-Attention Layer: Class Setup}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.33\textwidth}
+
+\vspace{-1mm}
+\textbf{What is defined here}
+
+\begin{itemize}
+  \item Learnable weight matrices
+  \item Head configuration
+  \item No computation yet
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key parameters}
+
+\begin{itemize}
+  \item $d_{\text{model}}$: embedding dimension
+  \item $H$: number of heads
+  \item $d_k = d_{\text{model}} / H$
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.66\textwidth}
+
+\vspace{-4mm}
+\begin{codeonly}{Self-attention layer (initialization)}
+class SelfAttention(nn.Module):
+   def __init__(self, d_m, num_heads):
+     super().__init__()
+     assert d_model % num_heads == 0
+     self.num_heads = num_heads
+     self.d_k = d_m // num_heads
+     
+     self.q_linear = nn.Linear(d_m, d_m)
+     self.k_linear = nn.Linear(d_m, d_m)
+     self.v_linear = nn.Linear(d_m, d_m)
+     self.out_linear = nn.Linear(d_m, d_m)
+\end{codeonly}
+\centering
+{\footnotesize
+This sets up the attention mechanism structurally.
+}
+
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\centering
+\y{The class defines \emph{what can be learned}, not how it is used.}
+
+\end{frame}

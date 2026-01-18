@@ -1,0 +1,55 @@
+%!TEX root = lec03.tex
+% ================================================================================
+% Lecture 3 — Slide 06
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Cartopy — Map Projections for Meteorological Fields}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\vspace{-2mm}
+\begin{itemize}
+  \item Cartopy provides projection-aware plotting
+  \item Separates \y{data coordinates} from \y{map projection}
+  \item Built on top of matplotlib
+\end{itemize}
+
+\vspace{1mm}
+\textbf{In practice}
+
+\begin{itemize}
+  \item Define projection, e.g.\ \texttt{PlateCarree} 
+  \item Coastlines, borders, land masks
+  \item Define geographic extent
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.63\textwidth}
+
+\vspace{-0.4cm}
+\begin{codeonly}{Cartopy-based map plot}
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+
+fig, ax = plt.subplots( figsize=(10,5),
+    subplot_kw={"projection": ccrs.PlateCarree()})
+
+ax.coastlines()
+ax.add_feature(cfeature.BORDERS)
+
+ax.pcolormesh(lon, lat, field,
+    transform=ccrs.PlateCarree(),
+    cmap="jet" )
+\end{codeonly}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

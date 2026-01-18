@@ -1,0 +1,74 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 04
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{Vector Databases and Transformer Embeddings}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{\y{Text to vector mapping}}
+
+Given a tokenized input sequence
+\[
+(w_1, w_2, \dots, w_n)
+\]
+
+a Transformer maps tokens to embeddings:
+\[
+x_i = E(w_i) \in \mathbb{R}^d
+\]
+
+After contextualization (self-attention):
+\[
+h_i = \mathrm{Transformer}(x_1,\dots,x_n)
+\]
+
+\vspace{1mm}
+A sentence or paragraph embedding is typically:
+
+\vspace{-7mm}
+\[
+z = \frac{1}{n}\sum_{i=1}^n h_i
+\]
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Vector database view}
+
+Each paragraph is stored as:
+\[
+z_j \in \mathbb{R}^d
+\]
+
+\y{Similarity search} uses a distance measure, e.g.
+\[
+\mathrm{sim}(z_q, z_j)
+=
+\frac{z_q \cdot z_j}{\|z_q\|\,\|z_j\|}
+\]
+
+or equivalently:
+\[
+\| z_q - z_j \|_2
+\]
+
+\vspace{1mm}
+\textbf{Key point:}  
+The same embedding space is reused —  
+now \emph{outside} the LLM.
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

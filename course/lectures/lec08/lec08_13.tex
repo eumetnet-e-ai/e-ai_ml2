@@ -1,0 +1,66 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Vision Transformer — Slide B
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Vision Transformer: Self-Attention}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{\y{Transformer} processing}
+
+The patch embedding sequence is processed by
+$L$ stacked transformer layers:
+\begin{eqnarray*}
+\mathbf{Z}_{\ell+1}
+& = & \text{Transformer}(\mathbf{Z}_{\ell}), \\
+&& \quad \ell = 0,\dots,L-1
+\end{eqnarray*}
+
+\vspace{2mm}
+Each layer consists of:
+\begin{itemize}
+  \item \rtext{Multi-head self-attention}
+  \item \rtext{Feed-forward networks}
+  \item \rtext{Residual connections} $x + {\cal F}(x)$
+  \item \rtext{Layer normalization}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-3mm}
+\textbf{CLS token as global image embedding}
+
+\vspace{2mm}
+Self-attention enables each patch to attend
+to all other patches.
+
+\vspace{2mm}
+After the final layer, the CLS token is:
+\[
+\mathbf{z}_{\text{CLS}}^{(L)} \in \mathbb{R}^{D}
+\]
+
+\vspace{2mm}
+\y{This vector represents the entire image} and
+can be used for:
+\begin{itemize}
+  \item Image classification
+  \item Regression tasks
+  \item Multimodal conditioning of language models
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

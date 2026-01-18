@@ -1,0 +1,52 @@
+%!TEX root = lec19.tex
+% ================================================================================
+% Lecture 19 — Slide 05
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{PINN Result: Naive Training, Extended Evaluation}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+\footnotesize
+
+\textbf{Training setup}
+
+\begin{itemize}
+  \item ODE residual enforced on $[0,\,2\pi]$
+  \item Boundary conditions at $x=0$
+  \item No data, no periodic constraints
+  \item Standard MLP representation
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Evaluation}
+
+\begin{itemize}
+  \item Solution evaluated on a \y{larger domain}
+  \item Outside the region where physics was enforced
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf This tests extrapolation, not interpolation.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.50\textwidth}
+
+\centering
+\vspace{-4mm}
+\includegraphics[width=5.5cm]{../../images/img19/pinn_sine_1_crop.png}
+
+\vspace{-2mm}
+
+\includegraphics[width=5.6cm]{../../images/img19/pinn_sine_2_crop.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

@@ -1,0 +1,55 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 21
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{From FAISS Indices to Text Chunks}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Stored metadata per chunk}
+
+Each vector \(z_i\) is linked to:
+\begin{itemize}
+  \item file path
+  \item line range or section
+  \item raw text content
+\end{itemize}
+
+\vspace{2mm}
+This mapping is stored outside FAISS  
+(e.g.\ Python lists, JSON, databases).
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{\color{red}Lookup step}
+
+\vspace{2mm}
+For each returned index \(i_j\):
+\[
+i_j \;\rightarrow\;
+(\text{file}, \text{lines}, \text{text})
+\]
+
+\vspace{2mm}
+This produces a ranked list:
+\[
+(\text{chunk}_1, \dots, \text{chunk}_k)
+\]
+
+\vspace{2mm}
+\textbf{Result:}  
+\y{Concrete, inspectable evidence.}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

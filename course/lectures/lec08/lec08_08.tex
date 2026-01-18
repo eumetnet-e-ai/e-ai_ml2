@@ -1,0 +1,72 @@
+%!TEX root = lec08.tex
+% ================================================================================
+% Lecture 08 — Slide 08
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Example B: Visual Multimodality}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Key difference to Example A}
+
+\begin{itemize}
+  \item No symbolic preprocessing
+  \item No explicit speed or direction given
+  \item The model receives an \textbf{image only}
+  \item Converted to RGB pixel values
+\end{itemize}
+
+\vspace{2mm}
+All physical structure must be inferred visually.
+
+{\tiny
+\begin{lstlisting}
+# Draw the canvas
+fig.canvas.draw()
+
+buf = np.asarray(fig.canvas.buffer_rgba())
+image = buf[..., :3]   # drop alpha channel
+
+# Normalize to [0, 1]
+return image.astype(np.float32) / 255.0
+\end{lstlisting}
+}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Multimodal processing pipeline}
+
+\begin{itemize}
+  \item Wind field rendered as image
+  \item Vision encoder extracts features
+  \item Features are mapped to language space
+  \item Language model generates text
+\end{itemize}
+
+\vspace{2mm}
+This is \emph{true} multimodal learning.
+
+\vspace{1mm}
+{\tiny
+\begin{lstlisting}
+# -----------------------------------------
+# Render the wind field as an image
+# This image is the ONLY input seen by
+# the multimodal model.
+# -----------------------------------------
+img = render_wind_image(LON, LAT, U, V)
+\end{lstlisting}
+}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

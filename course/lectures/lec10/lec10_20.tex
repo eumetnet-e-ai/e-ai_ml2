@@ -1,0 +1,59 @@
+%!TEX root = lec10.tex
+% ================================================================================
+% Lecture 10 — Slide 20
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{Autonomous Coding Agent — Self-Correcting Loop}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.38\textwidth}
+
+\vspace{-2mm}
+\textbf{Agent task}
+
+\begin{itemize}
+  \item Natural-language goal
+  \item LLM generates full script
+  \item Script is executed
+  \item Errors are fed back automatically
+\end{itemize}
+
+\vspace{1mm}
+This is already a \y{true agent}:
+\begin{itemize}
+  \item autonomous retries
+  \item internal state (prompt history)
+  \item stop criterion
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.6\textwidth}
+
+\vspace{-3mm}
+\begin{codeonly}{Autonomous code agent (excerpt)}
+def autonomous_code_agent(task):
+  for attempt in range(5):
+    code = llm.invoke(task).content
+    try:
+      exec(code)
+      return True
+    except Exception as e:
+      task += traceback.format_exc()
+  return False
+\end{codeonly}
+
+\vspace{1mm}
+\textbf{Key point:}  
+No framework required —  
+this is \y{pure control logic} around an LLM.
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

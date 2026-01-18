@@ -1,0 +1,55 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 08
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{Document Search via Embeddings}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Goal}
+
+\begin{itemize}
+  \item Search \emph{inside} a document
+  \item Retrieve relevant pages or sections
+  \item No keyword matching required
+\end{itemize}
+
+\vspace{1mm}
+We use the same vector-space idea  
+as in the elementary example.
+
+\vspace{1cm}
+\raggedleft
+\textbf{"temporal pattern"}
+$\;\xrightarrow{\text{find pdf}}\;$
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Input}
+
+\begin{itemize}
+  \item One lecture PDF (Lecture 05)
+  \item Pages as semantic units
+  \item Natural-language queries
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Output:}  
+Relevant pages from the PDF
+
+\vspace{3mm}
+\includegraphics[width=5cm]{../../images/img07/slide_from_rag}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}

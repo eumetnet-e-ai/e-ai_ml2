@@ -1,0 +1,58 @@
+%!TEX root = lec02.tex
+% ================================================================================
+% Slide
+% ================================================================================
+\begin{frame}[t,fragile]
+
+% --- Title ---------------------------------------------------------------------
+\mytitle{Jupyter Architecture: Browser – Server – Kernel}
+
+% --- Content -------------------------------------------------------------------
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Three Core Components}
+
+\begin{itemize}
+  \item \textbf{Browser}  
+        User interface: notebooks, plots, interaction
+  \item \textbf{Jupyter Server}  
+        Manages files, sessions, security
+  \item \textbf{Kernel}  
+        Executes Python code, holds state
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key Idea}
+
+\begin{itemize}
+  \item UI and computation are \y{decoupled}
+\end{itemize}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Why This Matters}
+
+\begin{itemize}  \item Code runs in the \y{kernel}, not in the browser
+  \item Kernel state persists across cells
+  \item Server and kernel may run \y{remotely}
+  \item Multiple notebooks can share one kernel
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Strength and Risk}
+
+\begin{itemize}
+  \item Powerful interactive workflow
+  \item Risk of hidden state and irreproducibility
+\end{itemize}
+
+% --- End Columns, Column and Frame ---------------------------------------------
+\end{column}
+\end{columns}
+\end{frame}

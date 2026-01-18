@@ -1,0 +1,63 @@
+%!TEX root = lec15.tex
+% ================================================================================
+% Lecture 15 — Slide 13
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{anemoi-datasets: Data and Metadata}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.55\textwidth}
+\footnotesize
+
+\textbf{Purpose}
+
+\begin{itemize}
+  \item prepare large meteorological datasets for ML
+  \item unify metadata, statistics, and structure
+  \item decouple raw data formats from training
+\end{itemize}
+
+\vspace{2mm}
+\textbf{Key features}
+
+\begin{itemize}
+  \item \y{ingestion} from GRIB / NetCDF
+  \item conversion to \y{Zarr}
+  \item automatic statistics (mean, std, min, max)
+  \item validation and consistency checks
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.41\textwidth}
+\footnotesize
+
+\vspace{-5mm}
+\textbf{Why this matters}
+
+\begin{itemize}
+  \item scalable I/O for HPC and cloud
+  \item reproducible data pipelines
+  \item identical datasets across experiments
+\end{itemize}
+
+\vspace{2mm}
+\rtext{\bf Data becomes a first-class, validated object.}
+
+\vspace{2mm}
+\includegraphics[width=6cm]{../../images/img15/anemoi_datasets.png}
+
+\end{column}
+
+\end{columns}
+
+\vspace{5mm}
+\footnotesize
+\href{https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+{\texttt https://anemoi.readthedocs.io/projects/datasets/en/latest/}
+
+\end{frame}

@@ -1,0 +1,84 @@
+%!TEX root = lec18.tex
+% ================================================================================
+% Lecture 18 — Slide 19  (tight version)
+% ================================================================================
+\begin{frame}[t]
+\begin{tightmath}
+
+\mytitle{AI Particle Filter (Gaussian Mixture): Core Idea}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.54\textwidth}
+\footnotesize
+
+\textbf{Filtering problem}
+
+\vspace{0mm}
+Sequential posterior:
+
+\vspace{-3mm}
+\[
+p(x_n \mid y_{1:n})
+\]
+
+\vspace{-1mm}
+Represent the distribution by \y{particles}
+
+\vspace{-2mm}
+\[
+X_n = \{x^{(i)}_n\}_{i=1}^N
+\]
+
+\vspace{1mm}
+\textbf{AI Particle Filter (this tutorial)}
+
+\vspace{0mm}
+Forecast ensemble $X^b_n$ is transformed into analysis ensemble:
+\[
+X^a_n = \mathcal{N}_\theta(X^b_n,\; y_n)
+\]
+
+\vspace{1mm}
+\textbf{Gaussian mixture view}
+
+\vspace{0mm}
+Both prior and posterior are approximated by mixtures:
+\[
+q^b(x)\approx \frac1N\sum_i \mathcal{N}(x|x^{b,(i)},\Sigma),
+\qquad
+q^a(x)\approx \frac1N\sum_i \mathcal{N}(x|x^{a,(i)},\Sigma)
+\]
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.42\textwidth}
+\footnotesize
+
+\textbf{Model problem: Lorenz-63}
+
+\vspace{0mm}
+\begin{itemize}
+  \item state $x=(x_1,x_2,x_3)\in\mathbb{R}^3$
+  \item partial observations $y=(x_1,x_2)$ + noise
+  \item wrong forecast model (intentional)
+\end{itemize}
+
+\vspace{1mm}
+\textbf{Key message}
+
+\vspace{0mm}
+Instead of resampling / MCMC moves, we learn a
+\y{distribution transform} that fits the ensemble to the posterior.
+
+\vspace{4mm}
+\rtext{\bf Network output is a posterior particle cloud.}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

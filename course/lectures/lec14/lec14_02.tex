@@ -1,0 +1,67 @@
+%!TEX root = lec14.tex
+% ================================================================================
+% Lecture 14 — Slide 02
+% ================================================================================
+\begin{frame}[t,fragile]
+
+\mytitle{AI/ML Is Not Special — But Updating Becomes Complex}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+\footnotesize
+
+\textbf{From a software engineering perspective}
+
+\begin{itemize}
+  \item AI/ML systems are still \y{software systems}
+  \item They use standard languages, libraries and toolchains
+  \item The same DevOps principles apply
+\end{itemize}
+
+\vspace{2mm}
+There is \rtext{no special engineering magic} in AI/ML:
+\begin{itemize}
+  \item version control
+  \item testing
+  \item packaging
+  \item deployment
+\end{itemize}
+
+\vspace{2mm}
+\footnotesize
+\rtext{\bf CI/CD is needed to manage updates, not to handle “AI magic”.}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+\footnotesize
+
+\color{darkgreen}
+\textbf{Where the real complexity comes from}
+
+\begin{itemize}
+  \item \color{darkgreen}
+	Frequent retraining with \y{new data}
+  \item Multiple preprocessing and feature pipelines
+  \item Changing \y{model architectures}
+  \item Different \y{loss functions} and objectives
+  \item Many runtime and training configurations
+\end{itemize}
+
+\vspace{2mm}
+As a result:
+\begin{itemize}
+  \item Updates are \rtext{continuous}
+  \item Reproducibility becomes \rtext{non-trivial}
+  \item Manual tracking no longer works
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+
+\end{frame}

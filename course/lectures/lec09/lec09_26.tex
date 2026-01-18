@@ -1,0 +1,77 @@
+%!TEX root = lec09.tex
+% ================================================================================
+% Lecture 9 — Slide XX
+% ================================================================================
+\begin{frame}[t,fragile]
+\begin{tightmath}
+
+\mytitle{Graph Representation: Data vs Structure}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.52\textwidth}
+
+\textbf{Node data}
+
+\vspace{-4mm}
+\begin{eqnarray*}
+& X \in \mathbb{R}^{N \times d} \\
+& \mathbf{x}_i \in \mathbb{R}^d
+\quad (i = 1,\dots,N)
+\end{eqnarray*}
+
+\begin{itemize}
+\item $N$: number of \y{nodes}
+\item $d$: \y{features} per node
+\item One feature vector per node
+\end{itemize}
+
+\medskip
+\textbf{Interpretation}
+
+\begin{itemize}
+\item Rows correspond to nodes
+\item Columns correspond to features
+\item Node order is arbitrary
+\end{itemize}
+
+\end{column}
+
+% ------------------------------------------------------------
+\begin{column}[T]{0.44\textwidth}
+
+\vspace{-1cm}
+\textbf{Graph structure}
+
+\[
+\texttt{edge\_index} \in \mathbb{N}^{2 \times E}
+\]
+
+Each column defines one directed \y{edge}:
+\[
+(j \rightarrow i)
+\]
+
+\vspace{0mm}
+\begin{itemize}
+\item Encodes connectivity only
+\item No numerical weights
+\item No trainable parameters
+\end{itemize}
+
+\medskip
+\textbf{Separation of roles}
+
+\begin{itemize}
+\item Data: $X$
+\item Structure: \texttt{edge\_index}
+\item Learning: weights (later)
+\end{itemize}
+
+\end{column}
+
+\end{columns}
+
+\end{tightmath}
+\end{frame}

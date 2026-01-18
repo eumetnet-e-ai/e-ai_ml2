@@ -1,0 +1,50 @@
+%!TEX root = lec07.tex
+% ================================================================================
+% Lecture 7 — Slide 19
+% ================================================================================
+\begin{frame}[t]
+
+\mytitle{RAG Implementation: Concrete Steps}
+
+\begin{columns}[T,totalwidth=\textwidth]
+
+% --- Left column ---------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\textbf{Implemented components}
+
+\begin{itemize}
+  \item text chunking (files $\rightarrow$ chunks) \mdcheck
+  \item sentence embeddings \mdcheck
+  \item FAISS index \mdcheck
+  \item metadata tracking \mdcheck
+  \item LLM query with context \mdcheck
+\end{itemize}
+
+\vspace{3mm}
+\begin{minipage}{5cm}
+\tiny
+\textbf{Execution order}
+
+\begin{enumerate}
+  \item build vector database (offline)
+  \item embed user query
+  \item retrieve top-$k$ chunks
+  \item assemble prompt context
+  \item generate answer (optional streaming)
+\end{enumerate}
+\end{minipage}
+
+\end{column}
+
+% --- Right column --------------------------------------------------------------
+\begin{column}[T]{0.48\textwidth}
+
+\vspace{-9mm}
+\includegraphics[width=7.3cm]{../../images/img07/openai_context.png}
+
+\end{column}
+
+\end{columns}
+
+\end{frame}
