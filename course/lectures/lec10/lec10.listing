@@ -1,8 +1,0 @@
-def plot_temperature_node(state: MyState) -> MyState:
-  if state.get("temperature_data") is None:
-    state["output"] = "No data available"
-    return state
-
-  plot_t2m_EU(state["temperature_data"], save_plot=True)
-  state["output"] = "Plot created"
-  return state

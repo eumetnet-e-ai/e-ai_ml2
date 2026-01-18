@@ -1,2 +1,0 @@
-ssh -N -L 9001:localhost:8888 \
-    user@remote-host

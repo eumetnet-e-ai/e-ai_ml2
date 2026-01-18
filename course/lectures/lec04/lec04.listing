@@ -1,9 +1,0 @@
-loss_fn = nn.BCELoss()
-opt = optim.Adam(model.parameters(), lr=0.01)
-
-for epoch in range(epochs):
-    opt.zero_grad()
-    y_p = model(X)
-    loss = loss_fn(y_p, y_true)
-    loss.backward()
-    opt.step()

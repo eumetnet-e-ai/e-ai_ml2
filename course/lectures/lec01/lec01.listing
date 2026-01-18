@@ -1,7 +1,0 @@
-class Box:
-    def __init__(s,x): s.x=x
-    def step(s,dt,t): s.x+=0.2*dt*(t-s.x)
-
-atm, ocn = Box(288.), Box(290.)
-ocn.step(1., atm.x); atm.step(1., ocn.x)
-print("atm=", atm.x, "ocn=", ocn.x)

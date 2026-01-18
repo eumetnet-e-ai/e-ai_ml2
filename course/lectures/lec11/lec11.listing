@@ -1,5 +1,0 @@
-{"function_calls": [{
-      "name": "get_icon_forecast",
-      "arguments": {
-        "variable": "t2m",
-        "region": "Germany" }}]}

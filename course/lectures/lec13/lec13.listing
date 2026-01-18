@@ -1,3 +1,0 @@
-apptainer exec \
-docker-plot-03.sif python \
--B 03_plot_curve.py

@@ -1,5 +1,0 @@
-mlflow server ... &
-
-nohup mlflow server ... &
-
-screen -S mlflow
