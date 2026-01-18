@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streaming Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chat-container {
+            width: min(95vw, 1200px);
+            height: min(95vh, 800px);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        #chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff;
+            font-size: clamp(14px, 2vw, 18px);
+        }
+
+        .message {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+
+        .user { background: #d1e7fd; text-align: right; }
+        .bot { background: #e6e6e6; text-align: left; }
+
+        /* Code block styling */
+        .code-block {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+
+        #input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: clamp(14px, 1.8vw, 20px);
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: clamp(14px, 1.8vw, 20px);
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        @media (min-width: 1400px) {
+            #chat-container {
+                width: 70vw;
+                height: 80vh;
+                max-width: 1400px;
+                max-height: 900px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            #chat-container {
+                width: 95vw;
+                height: 85vh;
+                padding: 10px;
+            }
+
+            input, button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="chat-container">
+        <h2>Streaming Chatbot</h2>
+        <div id="chat-box"></div>
+        <div id="input-container">
+            <input type="text" id="user-input" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let userInput = document.getElementById("user-input").value;
+            if (userInput.trim() === "") return;
+
+            let chatBox = document.getElementById("chat-box");
+
+            let userMessage = document.createElement("div");
+            userMessage.classList.add("message", "user");
+            userMessage.textContent = userInput;
+            chatBox.appendChild(userMessage);
+
+            document.getElementById("user-input").value = "";
+
+            let botMessage = document.createElement("div");
+            botMessage.classList.add("message", "bot");
+            chatBox.appendChild(botMessage);
+
+            let insideCodeBlock = false;
+            let codeBuffer = "";
+            let codeElement = null;
+
+            fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => {
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                function readStream() {
+                    return reader.read().then(({ done, value }) => {
+                        if (done) return;
+
+                        let text = decoder.decode(value);
+                        text.split("\n").forEach(line => {
+                            if (line.startsWith("data: ")) {
+                                let data = JSON.parse(line.replace("data: ", ""));
+                                let chunk = data.text;
+
+                                if (chunk.includes("'''python") || chunk.includes("'''")) {
+                                    insideCodeBlock = !insideCodeBlock;
+
+                                    if (insideCodeBlock) {
+                                        // Start a new code block
+                                        codeBuffer = "";
+                                        codeElement = document.createElement("pre");
+                                        codeElement.classList.add("code-block");
+                                    } else {
+                                        // End code block and display it
+                                        codeElement.textContent = codeBuffer;
+                                        chatBox.appendChild(codeElement);
+                                        codeBuffer = "";
+                                        codeElement = null;
+                                    }
+                                } else if (insideCodeBlock) {
+                                    // Append to the code block
+                                    codeBuffer += chunk + "\n";
+                                } else {
+                                    // Normal text message
+                                    botMessage.innerHTML += chunk;
+                                }
+
+                                chatBox.scrollTop = chatBox.scrollHeight;
+                            }
+                        });
+
+                        return readStream();
+                    });
+                }
+
+                return readStream();
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+    </script>
+
+</body>
+</html>
