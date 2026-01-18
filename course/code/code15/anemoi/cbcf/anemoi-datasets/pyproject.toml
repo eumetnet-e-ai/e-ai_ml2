@@ -1,0 +1,150 @@
+# (C) Copyright 2024 Anemoi contributors.
+#
+# This software is licensed under the terms of the Apache Licence Version 2.0
+# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+#
+# In applying this licence, ECMWF does not waive the privileges and immunities
+# granted to it by virtue of its status as an intergovernmental organisation
+# nor does it submit to any jurisdiction.
+
+[build-system]
+requires = [
+  "setuptools>=60",
+  "setuptools-scm>=8",
+]
+
+[project]
+name = "anemoi-datasets"
+
+description = "A package to hold various functions to support training of ML models on ECMWF data."
+keywords = [
+  "ai",
+  "datasets",
+  "tools",
+]
+
+license = { file = "LICENSE" }
+authors = [
+  { name = "European Centre for Medium-Range Weather Forecasts (ECMWF)", email = "software.support@ecmwf.int" },
+]
+
+requires-python = ">=3.10"
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+
+version = "0.5.29.dev10+g5fee63185"
+
+dependencies = [
+  "anemoi-transform>=0.1.10",
+  "anemoi-utils[provenance]>=0.4.38",
+  "cfunits",
+  "glom",
+  "jsonschema",
+  "numcodecs<0.16",                   # Until we move to zarr3
+  "numpy",
+  "pyyaml",
+  "ruamel-yaml",
+  "tqdm",
+  "zarr<=2.18.4",
+]
+
+optional-dependencies.all = [
+  "anemoi-datasets[comparelam,create,remote,xarray]",
+]
+
+optional-dependencies.comparelam = [
+  "prettytable",
+  "termcolor",
+]
+
+optional-dependencies.create = [
+  "cachetools",
+  "earthkit-data[mars]>=0.14",
+  "earthkit-geo>=0.3",
+  "earthkit-meteo>=0.3",
+  "eccodes>=2.39.1",
+  "entrypoints",
+  "pyproj>=3",
+]
+
+optional-dependencies.dev = [
+  "anemoi-datasets[all,docs,tests]",
+]
+
+optional-dependencies.docs = [
+  "anemoi-datasets[all]",
+  "nbsphinx",
+  "pandoc",
+  "sphinx",
+  "sphinx-argparse",
+  "sphinx-rtd-theme",
+]
+
+optional-dependencies.remote = [
+  "boto3",
+  "requests",
+]
+
+optional-dependencies.tests = [
+  "anemoi-datasets[xarray]",
+  "pytest",
+  "pytest-skip-slow",
+  "pytest-xdist",
+]
+
+optional-dependencies.xarray = [
+  "adlfs",
+  "gcsfs",
+  "kerchunk",
+  "pandas",
+  "planetary-computer",
+  "pystac-client",
+  "s3fs",
+]
+
+urls.Changelog = "https://github.com/ecmwf/anemoi-datasets/CHANGELOG.md"
+
+urls.Documentation = "https://anemoi-datasets.readthedocs.io/"
+urls.Homepage = "https://github.com/ecmwf/anemoi-datasets/"
+urls.Issues = "https://github.com/ecmwf/anemoi-datasets/issues"
+urls.Repository = "https://github.com/ecmwf/anemoi-datasets/"
+scripts.anemoi-datasets = "anemoi.datasets.__main__:main"
+
+[tool.setuptools.package-data]
+"anemoi.datasets.data" = [
+  "*.css",
+]
+
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+addopts = [
+  "--numprocesses=auto",
+  "--maxprocesses=16",
+  "--strict-config",
+]
+
+[tool.mypy]
+strict = false
+exclude = [
+  "docs/**",
+]
+
+[tool.pydocstringformatter]
+write = true
+exclude = "docs/**"
+style = "numpydoc"

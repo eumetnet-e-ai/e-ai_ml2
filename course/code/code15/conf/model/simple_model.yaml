@@ -1,0 +1,5 @@
+
+name: SimpleNet
+input_size: 10
+hidden_size: 32
+output_size: 1

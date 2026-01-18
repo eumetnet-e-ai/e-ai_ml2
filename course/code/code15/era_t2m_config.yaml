@@ -1,0 +1,14 @@
+dataset:
+  name: "era_t2m"
+  source: "ERA5"
+  description: "Temperature data from ERA5"
+variables:
+  - name: "data"
+    dtype: float32
+    dimensions: ["valid_time", "latitude", "longitude"]
+metadata:
+  Conventions: "CF-1.7"
+  institution: "European Centre for Medium-Range Weather Forecasts"
+  source: "ERA5"
+  frequency: "daily"
+

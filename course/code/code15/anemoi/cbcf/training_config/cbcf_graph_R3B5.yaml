@@ -1,0 +1,74 @@
+nodes:
+  data:
+    node_builder:
+      _target_: anemoi.graphs.nodes.AnemoiDatasetNodes
+      dataset:
+        #HIGHRES#dataset: /hpc/uwork/majacob/cbcf/dwd-dream-eu-archive-R03B08-20240501-20240501-3h-v1-CBCF.zarr
+        dataset: /hpc/uwork/majacob/cbcf/dwd-dream-eu-archive-R03B05-20240502-20241016-3h-v1-CBCF.zarr
+        #thinning: 5
+    attributes:
+      area_weight:
+        _target_: anemoi.graphs.nodes.attributes.SphericalAreaWeights
+        norm: unit-max
+        fill_value: 0
+
+  hidden:
+    node_builder:
+      _target_: anemoi.graphs.nodes.LimitedAreaTriNodes
+      #HIGHRES#resolution: 7
+      resolution: 6
+      reference_node_name: data
+      mask_attr_name: null # MX ???
+      margin_radius_km: 100
+edges:
+- source_name: data
+  target_name: hidden
+  edge_builders:
+  - _target_: anemoi.graphs.edges.CutOffEdges
+    cutoff_factor: 0.6
+    source_mask_attr_name: null
+    target_mask_attr_name: null
+    max_num_neighbours: 64
+  attributes:
+    edge_length:
+      _target_: anemoi.graphs.edges.attributes.EdgeLength
+      norm: unit-std
+    edge_dirs:
+      _target_: anemoi.graphs.edges.attributes.EdgeDirection
+      norm: unit-std
+- source_name: hidden
+  target_name: hidden
+  edge_builders:
+  - _target_: anemoi.graphs.edges.MultiScaleEdges
+    x_hops: 1
+    scale_resolutions: 5
+    source_mask_attr_name: null
+    target_mask_attr_name: null
+  attributes:
+    edge_length:
+      _target_: anemoi.graphs.edges.attributes.EdgeLength
+      norm: unit-std
+    edge_dirs:
+      _target_: anemoi.graphs.edges.attributes.EdgeDirection
+      norm: unit-std
+- source_name: hidden
+  target_name: data
+  edge_builders:
+  - _target_: anemoi.graphs.edges.KNNEdges
+    num_nearest_neighbours: 3
+    source_mask_attr_name: null
+    target_mask_attr_name: null
+  attributes:
+    edge_length:
+      _target_: anemoi.graphs.edges.attributes.EdgeLength
+      norm: unit-std
+    edge_dirs:
+      _target_: anemoi.graphs.edges.attributes.EdgeDirection
+      norm: unit-std
+
+#x#post_processors:
+#x#- _target_: anemoi.graphs.processors.RemoveUnconnectedNodes
+#x#  nodes_name: data
+#x#  ignore: cutout_mask
+#x#  save_mask_indices_to_attr: indices_connected_nodes
+

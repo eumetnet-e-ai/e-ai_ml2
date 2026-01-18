@@ -1,0 +1,205 @@
+# debug.yaml - Anemoi training configuration for a Graph model with specific data
+
+defaults:
+  - _self_
+  - data: zarr
+  - dataloader: native_grid
+  - datamodule: single
+  - diagnostics: evaluation
+  - hardware: example
+  - training: default
+
+config_validation: True
+
+data:
+  _target_: anemoi.data.datamodules.SingleDataModule
+  dataset_config:
+    _target_: anemoi.data.datasets.ZarrDataset
+    path: "${hardware.paths.data}/${hardware.files.dataset}"
+    resolution: n320
+    atmospheric_variables: []
+    pressure_levels: []
+    surface_variables:
+      - z
+    start_date: 2024-03-01
+    end_date: 2024-03-01
+    time_steps:
+      - "13:00"
+    output_variables:
+      atmospheric: []
+      surface: [z]
+
+hardware:
+  num_gpus_per_node: 0
+  paths:
+    output: output
+    data: datasets
+    graph: graphs
+  files:
+    dataset: download.zarr
+    graph: first_graph_n320.pt
+  accelerator: auto
+  num_gpus_per_model: 0
+  num_nodes: 1
+
+diagnostics:
+  log:
+    wandb:
+      enabled: False
+      entity: your_wandb_entity
+      project: your_wandb_project
+    mlflow:
+      enabled: False
+      tracking_uri: your_mlflow_tracking_uri
+  plot:
+    callbacks: []
+
+graph:
+  overwrite: True
+  data: "data"
+  hidden: "hidden"
+
+  nodes:
+    data:
+      node_builder:
+        _target_: anemoi.graphs.nodes.ZarrDatasetNodes
+        dataset: ${dataloader.dataset}
+      attributes: ${graph.attributes.nodes} # Keep this for 'data' nodes
+    hidden:
+      node_builder:
+        _target_: anemoi.graphs.nodes.TriNodes
+        resolution: 5
+      attributes: {} # <--- CHANGE THIS: No node attributes for hidden nodes initially
+  edges:
+    - source_name: ${graph.data}
+      target_name: ${graph.hidden}
+      edge_builders:
+        - _target_: anemoi.graphs.edges.CutOffEdges
+          cutoff_factor: 0.6
+          source_mask_attr_name: null
+          target_mask_attr_name: null
+      attributes: ${graph.attributes.edges}
+
+    - source_name: ${graph.hidden}
+      target_name: ${graph.hidden}
+      edge_builders:
+        - _target_: anemoi.graphs.edges.MultiScaleEdges
+          x_hops: 1
+          scale_resolutions: [1, 2, 4]
+          source_mask_attr_name: null
+          target_mask_attr_name: null
+      attributes: ${graph.attributes.edges}
+
+    - source_name: ${graph.hidden}
+      target_name: ${graph.data}
+      edge_builders:
+        - _target_: anemoi.graphs.edges.KNNEdges
+          num_nearest_neighbours: 3
+          source_mask_attr_name: null
+          target_mask_attr_name: null
+      attributes: ${graph.attributes.edges}
+
+  attributes:
+    nodes:
+      area_weight:
+        _target_: anemoi.graphs.nodes.attributes.SphericalAreaWeights
+        norm: unit-max
+        fill_value: 0
+    edges:
+      edge_length:
+        _target_: anemoi.graphs.edges.attributes.EdgeLength
+        norm: unit-std
+      edge_dirs:
+        _target_: anemoi.graphs.edges.attributes.EdgeDirection
+        norm: unit-std
+
+  post_processors: []
+
+# COMPLETE model definition, now with the correct nesting
+model:
+  # These are the fields of BaseModelSchema
+  num_channels: 512
+  cpu_offload: false
+
+  # This is the nested 'model' field of type 'Model'
+  model: # <-------------------- NEW NESTED 'model' KEY!
+    _target_: anemoi.models.models.encoder_processor_decoder.AnemoiModelEncProcDec
+    _convert_: all # Good practice to include this as it's required by the Model schema
+
+  output_mask:
+    _target_: anemoi.training.utils.masks.NoOutputMask # <--- THIS MUST BE EXACTLY AS SHOWN
+
+  input_dim: 1
+  output_dim: 1
+  hidden_dim: 128
+  num_layers: 10
+  activation: GELU # Moved here, as it's a direct child of BaseModelSchema
+
+  layer_kernels:
+    processor:
+      LayerNorm:
+        _target_: anemoi.models.layers.normalization.AutocastLayerNorm
+        _partial_: true
+      Linear:
+        _target_: torch.nn.Linear
+        _partial_: true
+    encoder:
+      LayerNorm:
+        _target_: anemoi.models.layers.normalization.AutocastLayerNorm
+        _partial_: true
+      Linear:
+        _target_: torch.nn.Linear
+        _partial_: true
+    decoder:
+      LayerNorm:
+        _target_: anemoi.models.layers.normalization.AutocastLayerNorm
+        _partial_: true
+      Linear:
+        _target_: torch.nn.Linear
+        _partial_: true
+
+  processor:
+    _target_: anemoi.models.layers.processor.GNNProcessor
+    activation: ${model.activation}
+    trainable_size: ${model.trainable_parameters.hidden2hidden}
+    sub_graph_edge_attributes: ${model.attributes.edges}
+    num_layers: 16
+    num_chunks: 2
+    mlp_extra_layers: 0
+    cpu_offload: ${model.cpu_offload}
+
+  encoder:
+    _target_: anemoi.models.layers.mapper.GNNForwardMapper
+    trainable_size: ${model.trainable_parameters.data2hidden}
+    sub_graph_edge_attributes: ${model.attributes.edges}
+    activation: ${model.activation}
+    num_chunks: 1
+    mlp_extra_layers: 0
+    cpu_offload: ${model.cpu_offload}
+
+  decoder:
+    _target_: anemoi.models.layers.mapper.GNNBackwardMapper
+    trainable_size: ${model.trainable_parameters.hidden2data}
+    sub_graph_edge_attributes: ${model.attributes.edges}
+    activation: ${model.activation}
+    num_chunks: 1
+    mlp_extra_layers: 0
+    cpu_offload: ${model.cpu_offload}
+
+  trainable_parameters:
+    data: 8
+    hidden: 8
+    data2hidden: 8
+    hidden2data: 8
+    hidden2hidden: 8
+
+  attributes:
+    edges:
+    - edge_length
+    - edge_dirs
+    nodes: []
+
+  bounding:
+  - _target_: anemoi.models.layers.bounding.ReluBounding
+    variables:
+    - tp

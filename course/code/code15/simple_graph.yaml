@@ -1,0 +1,18 @@
+node_builders:
+  - type: LatLonNodes
+    latitudes: [-60, -30, 0, 30, 60]
+    longitudes: [0, 60, 120, 180, 240, 300]
+
+edge_builders:
+  - type: KNNEdges
+    k: 4
+
+node_attributes:
+  - type: AreaWeights
+
+edge_attributes:
+  - type: EdgeLength
+  - type: EdgeDirection
+
+overwrite: true
+

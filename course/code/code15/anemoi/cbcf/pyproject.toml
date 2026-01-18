@@ -1,0 +1,34 @@
+[project]
+name = "cbcf"
+version = "0.1.0"
+description = "Diagnose convective areas with Anemoi"
+readme = "README.md"
+requires-python = "~=3.10.0"
+dependencies = [
+    "anemoi-datasets",
+    "anemoi-graphs[all]",
+    "anemoi-models[all]",
+    "anemoi-training[all,tests]",
+    "anemoi-transform",
+    "ipdb>=0.13.13",
+    "pytest>=9.0.1",
+    "uv>=0.9.11",
+    "matplotlib",
+    "cartopy",
+]
+
+[tool.uv.workspace]
+members = [
+    "anemoi-core/training",
+    "anemoi-core/models",
+    "anemoi-core/graphs",
+    "anemoi-datasets",
+    "anemoi-transform",
+]
+
+[tool.uv.sources]
+anemoi-training = { workspace = true, editable = true }
+anemoi-models = { workspace = true, editable = true }
+anemoi-graphs = { workspace = true, editable = true }
+anemoi-datasets = { workspace = true, editable = true }
+anemoi-transform = { workspace = true, editable = true }

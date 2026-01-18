@@ -1,0 +1,5 @@
+
+defaults:
+  - model: mlp
+  - training: simple
+  - _self_

@@ -1,0 +1,10 @@
+[datasets]
+path = [
+    "/home/mlx/ai-ml/datasets/stable",
+    "/home/mlx/ai-ml/datasets/experimental",
+    "/home/mlx/ai-ml/datasets/testing",
+    "s3://ml-datasets",
+]
+
+[datasets.named]
+test = "/home/mlx/test-dataset.zarr"
