@@ -19,11 +19,11 @@ for i in range(1, N):
 sns.set(style="white")
 plt.figure(figsize=(6, 5))
 kde = sns.kdeplot(
-    x=xyz[:,0], y=xyz[:,2], 
+    x=xyz[:,0], y=xyz[:,2],
     fill=True, cmap="viridis", levels=100, thresh=0.02
 )
 plt.colorbar(kde.collections[0], label="Density")
 plt.title("Lorenz Attractor Density (x vs z)")
 plt.xlabel("x"); plt.ylabel("z")
 plt.tight_layout()
-plt.savefig("images/lorenz63-seaborn.png")
+plt.savefig("lorenz63-seaborn.png")
