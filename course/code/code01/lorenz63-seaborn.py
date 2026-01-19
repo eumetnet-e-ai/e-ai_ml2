@@ -16,7 +16,7 @@ for i in range(1, N):
     xyz[i] = x + dt*dx, y + dt*dy, z + dt*dz
 
 # KDE plot with colorbar
-sns.set(style="white")
+sns.set_theme(style="white")
 plt.figure(figsize=(6, 5))
 kde = sns.kdeplot(
     x=xyz[:,0], y=xyz[:,2],
