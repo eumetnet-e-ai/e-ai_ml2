@@ -31,7 +31,7 @@ pip install uv
 
 ### Manually install local packages
 ```
-uv pip install --no-cache -e "anemoi-core/training/[tests]"  -e "anemoi-core/graphs/[tests]" -e "anemoi-core/models/[tests]" -e "anemoi-datasets/[tests]" -e "anemoi-transform/[tests] cartopy matplotlib"
+uv pip install --no-cache -e "anemoi-core/training/[tests]"  -e "anemoi-core/graphs/[tests]" -e "anemoi-core/models/[tests]" -e "anemoi-datasets/[tests]" -e "anemoi-transform/[tests]" cartopy matplotlib
 ```
 
 # Training:
