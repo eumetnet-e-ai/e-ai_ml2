@@ -3,7 +3,7 @@
 ## ECMWF -- University of Reading -- Deutscher Wetterdienst (DWD)
 ### January 2026
 
-This repository contains the material for the **E-AI AI/ML Intensive Training Course**. The first version was developed at **DWD in 2025** and delivered to **160 participants**. Parts of the course wer given at the E-AI Summer Workshop in July, 2026, with about 80 people participating. The course was also delivered to a team of **NWP scientists in Oman in November 2026**. It was revised and extended and then delivered at **ECMWF in January 2026** for **220+ participants from ECMWF staff**.
+This repository contains the material for the **E-AI AI/ML Intensive Training Course**. The first version was developed at **DWD in 2025** and delivered to **160 participants**. Parts of the course were given at the E-AI Summer Workshop in July, 2026, with about 80 people participating. The course was also delivered to a team of **NWP scientists in Oman in November 2026**. It was revised and extended and then delivered at **ECMWF in January 2026** for **220+ participants from ECMWF staff**.
 
 The course provides a structured, hands-on introduction to **modern AI/ML methods** with a strong focus on **weather and climate applications**, including operational perspectives, reproducibility, and best practices for building reliable ML workflows. 
 
