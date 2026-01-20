@@ -1,0 +1,607 @@
+{
+    "allow_nans": true,
+    "attribution": "Deutscher Wetterdienst",
+    "constant_fields": [
+        "WSPR",
+        "WSPR_likeliness",
+        "WSPR_top"
+    ],
+    "data_request": {
+        "area": [
+            null,
+            null,
+            null,
+            null
+        ],
+        "grid": null,
+        "param_level": {
+            "sfc": [
+                "CAPE_CON",
+                "CBCF",
+                "CBCF_likeliness",
+                "CBCF_top",
+                "CLST",
+                "CLST_likeliness",
+                "CLST_top",
+                "HTOP_CON",
+                "ISOL",
+                "ISOL_likeliness",
+                "ISOL_top",
+                "LPI_CON_MAX",
+                "PREC_CON",
+                "TOT_PREC",
+                "WSPR",
+                "WSPR_likeliness",
+                "WSPR_top"
+            ]
+        },
+        "param_step": {
+            "sfc": [
+                [
+                    "CAPE_CON",
+                    "0s"
+                ],
+                [
+                    "CBCF",
+                    "0s"
+                ],
+                [
+                    "CBCF_likeliness",
+                    "0s"
+                ],
+                [
+                    "CBCF_top",
+                    "0s"
+                ],
+                [
+                    "CLST",
+                    "0s"
+                ],
+                [
+                    "CLST_likeliness",
+                    "0s"
+                ],
+                [
+                    "CLST_top",
+                    "0s"
+                ],
+                [
+                    "HTOP_CON",
+                    "0s"
+                ],
+                [
+                    "ISOL",
+                    "0s"
+                ],
+                [
+                    "ISOL_likeliness",
+                    "0s"
+                ],
+                [
+                    "ISOL_top",
+                    "0s"
+                ],
+                [
+                    "LPI_CON_MAX",
+                    "0s"
+                ],
+                [
+                    "PREC_CON",
+                    "3h"
+                ],
+                [
+                    "TOT_PREC",
+                    "3h"
+                ],
+                [
+                    "WSPR",
+                    "0s"
+                ],
+                [
+                    "WSPR_likeliness",
+                    "0s"
+                ],
+                [
+                    "WSPR_top",
+                    "0s"
+                ]
+            ]
+        }
+    },
+    "description": "Test Dataset ICON DREAM Global reanalysis, 13 km resolution deterministic  EU nest, CBCF, croped to operation area",
+    "end_date": "2024-10-17T21:00:00",
+    "ensemble_dimension": 1,
+    "field_shape": [
+        2305
+    ],
+    "flatten_grid": true,
+    "frequency": "3h",
+    "history": [
+        {
+            "action": "initialised",
+            "timestamp": "2025-11-28T14:36:01.303150"
+        },
+        {
+            "action": "tmp_statistics_initialised",
+            "timestamp": "2025-11-28T14:36:01.308087",
+            "version": 3
+        },
+        {
+            "action": "init finished",
+            "timestamp": "2025-11-28T14:36:01.323513"
+        },
+        {
+            "action": "compute_statistics_end",
+            "timestamp": "2025-11-28T14:51:32.707602"
+        }
+    ],
+    "latest_write_timestamp": "2025-11-28T14:51:30.052396",
+    "licence": "unknown",
+    "missing_dates": [],
+    "order_by": [
+        {
+            "valid_datetime": "ascending"
+        },
+        {
+            "param_level": "ascending"
+        },
+        {
+            "number": "ascending"
+        }
+    ],
+    "proj_string": null,
+    "provenance_load": {
+        "distribution_names": {
+            "_cffi_backend": "cffi",
+            "array_api_compat": "array-api-compat",
+            "cartopy": "Cartopy",
+            "charset_normalizer": "charset-normalizer",
+            "dateutil": "python-dateutil",
+            "gribapi": "eccodes",
+            "markupsafe": "MarkupSafe",
+            "semantic_version": "semantic-version",
+            "tlz": "toolz",
+            "yaml": "PyYAML"
+        },
+        "git_versions": {
+            "aicon_catalog": {
+                "git": {
+                    "modified_files": 0,
+                    "sha1": "6b866435e2627c65b7618f5e13991cae03b1e19b",
+                    "untracked_files": 0
+                }
+            },
+            "anemoi.datasets": {
+                "git": {
+                    "modified_files": 0,
+                    "sha1": "5fee6318516294785a92321c92d96c1e3f233fb3",
+                    "untracked_files": 0
+                }
+            },
+            "anemoi.transform": {
+                "git": {
+                    "modified_files": 0,
+                    "sha1": "a657c7d54cb6e76c9658e13e6f29b946bd59c92c",
+                    "untracked_files": 0
+                }
+            }
+        },
+        "module_versions": {
+            "_cffi_backend": "2.0.0",
+            "_csv": "1.0",
+            "_ctypes": "1.1.0",
+            "_decimal": "1.70",
+            "aicon_catalog": "2.0.0rc1",
+            "anemoi.datasets": "0.5.29.dev10+g5fee63185",
+            "anemoi.transform": "0.1.20.dev2+ga657c7d54",
+            "anemoi.utils": "0.4.39",
+            "aniso8601": "10.0.1",
+            "argparse": "1.1",
+            "array_api_compat": "1.12.0",
+            "attr": "25.4.0",
+            "cachetools": "6.2.2",
+            "cartopy": "0.25.0",
+            "certifi": "2025.11.12",
+            "cffi": "2.0.0",
+            "cfgrib": "0.9.15.1",
+            "cftime": "1.6.5",
+            "charset_normalizer": "3.4.4",
+            "cloudpickle": "3.1.2",
+            "csv": "1.0",
+            "ctypes": "1.1.0",
+            "dask": "2025.11.0",
+            "dateutil": "2.9.0.post0",
+            "decimal": "1.70",
+            "deprecation": "2.1.0",
+            "earthkit": "-1",
+            "eccodes": "2.40.0",
+            "entrypoints": "0.4",
+            "fasteners": "0.20",
+            "fsspec": "2025.9.0",
+            "geopandas": "1.1.1",
+            "glom": "24.11.0",
+            "gribapi": "2.40.0",
+            "idna": "3.11",
+            "ipaddress": "1.0",
+            "jinja2": "3.1.6",
+            "json": "2.0.9",
+            "kerchunk": "0.2.7",
+            "logging": "0.5.1.2",
+            "markupsafe": "2.1.5",
+            "multiurl": "0.3.7",
+            "netCDF4": "1.7.3",
+            "numcodecs": "0.13.1",
+            "numpy": "1.26.3",
+            "omegaconf": "2.3.0",
+            "packaging": "25.0",
+            "pandas": "2.3.3",
+            "platform": "1.0.8",
+            "psutil": "7.1.3",
+            "pycparser": "2.23",
+            "pyproj": "3.7.1",
+            "pytz": "2025.2",
+            "re": "2.2.1",
+            "requests": "2.32.5",
+            "ruamel.yaml": "0.18.16",
+            "scipy": "1.15.3",
+            "semantic_version": "2.10.0",
+            "shapefile": "3.0.2.post1",
+            "shapely": "2.1.2",
+            "six": "1.17.0",
+            "tlz": "1.1.0",
+            "tomli": "2.3.0",
+            "toolz": "1.1.0",
+            "tqdm": "4.67.1",
+            "urllib3": "2.5.0",
+            "xarray": "2025.6.1",
+            "yaml": "6.0.3",
+            "zarr": "2.18.3",
+            "zlib": "1.0"
+        },
+        "python": "3.10.11",
+        "time": "2025-11-28T14:39:00.505425"
+    },
+    "recipe": {
+        "attribution": "Deutscher Wetterdienst",
+        "build": {
+            "allow_nans": true,
+            "group_by": "daily",
+            "use_grib_paramid": false,
+            "variable_naming": "{param}"
+        },
+        "common": {
+            "grid_definition": {
+                "icon": {
+                    "path": "/.../icon_grid_0027_R03B08_N02_ai.nc"
+                }
+            },
+            "refinement_level_c": 5,
+            "sfc_flavour": [
+                [
+                    {},
+                    {
+                        "levelist": null,
+                        "levtype": "sfc"
+                    }
+                ]
+            ]
+        },
+        "dates": {
+            "end": "2024-10-17T21:00:00+00:00",
+            "frequency": "3h",
+            "group_by": "daily",
+            "start": "2024-05-02T00:00:00+00:00"
+        },
+        "description": "Test Dataset ICON DREAM Global reanalysis, 13 km resolution deterministic  EU nest, CBCF, croped to operation area",
+        "env": {
+            "ECCODES_DEFINITION_PATH": "/.../definitions",
+            "ECCODES_DIR": "/.../python"
+        },
+        "input": {
+            "pipe": [
+                {
+                    "join": [
+                        {
+                            "pipe": [
+                                {
+                                    "grib": {
+                                        "flavour": [
+                                            [
+                                                {},
+                                                {
+                                                    "levelist": null,
+                                                    "levtype": "sfc"
+                                                }
+                                            ]
+                                        ],
+                                        "grid_definition": {
+                                            "icon": {
+                                                "path": "/.../icon_grid_0027_R03B08_N02_ai.nc"
+                                            }
+                                        },
+                                        "param": [
+                                            "CAPE_CON",
+                                            "LPI_CON_MAX",
+                                            "HTOP_CON"
+                                        ],
+                                        "path": "/.../{date:strftimedelta(+3h;%Y%m%d%H)}/fc_R03B08_N02_rea_ml.{date:strftime(%Y%m%d%H)}"
+                                    }
+                                },
+                                {
+                                    "cbcf": {
+                                        "climatology_zarr": "/.../dwd-dream-eu-archive-R03B08-20240502-20241017-3h-v2-CBCF.zarr",
+                                        "convectionfraction": [
+                                            "CLST",
+                                            "ISOL",
+                                            "WSPR"
+                                        ],
+                                        "path": "/.../D0-{date:strftimedelta(-24h;%Y-%m-%d)}-dwd_crossborder.final_internal.json",
+                                        "template_param": "CAPE_CON"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "grib": {
+                                "grid_definition": {
+                                    "icon": {
+                                        "path": "/.../icon_grid_0027_R03B08_N02_ai.nc"
+                                    }
+                                },
+                                "indicatorOfUnitForTimeRange": 13,
+                                "lengthOfTimeRange": 10800,
+                                "param": [
+                                    "TOT_PREC",
+                                    "PREC_CON"
+                                ],
+                                "path": "/.../{date:strftimedelta(+0h;%Y%m%d%H)}/fc_R03B08_N02_rea_ml.{date:strftime(%Y%m%d%H)}",
+                                "typeOfStatisticalProcessing": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "icon_refinement_level": {
+                        "grid": "/.../icon_grid_0027_R03B08_N02_ai.nc",
+                        "refinement_level_c": 5
+                    }
+                },
+                {
+                    "remove_nans": {
+                        "param": "CBCF"
+                    }
+                }
+            ]
+        },
+        "licence": "unknown",
+        "name": "dwd-dream-eu-archive-R03B05-20240502-20241017-3h-v3-CBCF",
+        "output": {
+            "chunking": {
+                "dates": 1,
+                "ensembles": 1
+            },
+            "dtype": "float32",
+            "ensemble_dimension": 2,
+            "flatten_grid": true,
+            "order_by": [
+                {
+                    "valid_datetime": "ascending"
+                },
+                {
+                    "param_level": "ascending"
+                },
+                {
+                    "number": "ascending"
+                }
+            ],
+            "remapping": {
+                "param_level": "{param}"
+            },
+            "statistics": "param_level"
+        },
+        "statistics": {
+            "allow_nans": []
+        },
+        "verbose": false
+    },
+    "remapping": {
+        "param_level": "{param}"
+    },
+    "resolution": "mrl5",
+    "start_date": "2024-05-02T00:00:00",
+    "statistics_end_date": "2024-09-14T00:00:00",
+    "statistics_start_date": "2024-05-02T00:00:00",
+    "total_number_of_files": 1389,
+    "total_size": 24717412,
+    "uuid": "0f15eeaa-0605-46fc-9431-e0283635cc15",
+    "variables": [
+        "CAPE_CON",
+        "CBCF",
+        "CBCF_likeliness",
+        "CBCF_top",
+        "CLST",
+        "CLST_likeliness",
+        "CLST_top",
+        "HTOP_CON",
+        "ISOL",
+        "ISOL_likeliness",
+        "ISOL_top",
+        "LPI_CON_MAX",
+        "PREC_CON",
+        "TOT_PREC",
+        "WSPR",
+        "WSPR_likeliness",
+        "WSPR_top"
+    ],
+    "variables_metadata": {
+        "CAPE_CON": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CAPE_CON",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "CBCF": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CBCF",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "CBCF_likeliness": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CBCF_likeliness",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "CBCF_top": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CBCF_top",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "CLST": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CLST",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "CLST_likeliness": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CLST_likeliness",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "CLST_top": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "CLST_top",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "HTOP_CON": {
+            "mars": {
+                "date": 20240502,
+                "levelist": null,
+                "levtype": "sfc",
+                "param": "HTOP_CON",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "ISOL": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "ISOL",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "ISOL_likeliness": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "ISOL_likeliness",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "ISOL_top": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "ISOL_top",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "LPI_CON_MAX": {
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "LPI_CON_MAX",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "PREC_CON": {
+            "mars": {
+                "date": 20240501,
+                "levtype": "sfc",
+                "param": "PREC_CON",
+                "step": "3h",
+                "time": 2100
+            },
+            "period": [
+                "0d",
+                "3h"
+            ],
+            "process": "accumulation"
+        },
+        "TOT_PREC": {
+            "mars": {
+                "date": 20240501,
+                "levtype": "sfc",
+                "param": "TOT_PREC",
+                "step": "3h",
+                "time": 2100
+            },
+            "period": [
+                "0d",
+                "3h"
+            ],
+            "process": "accumulation"
+        },
+        "WSPR": {
+            "constant_in_time": true,
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "WSPR",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "WSPR_likeliness": {
+            "constant_in_time": true,
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "WSPR_likeliness",
+                "step": "0s",
+                "time": 0
+            }
+        },
+        "WSPR_top": {
+            "constant_in_time": true,
+            "mars": {
+                "date": 20240502,
+                "levtype": "sfc",
+                "param": "WSPR_top",
+                "step": "0s",
+                "time": 0
+            }
+        }
+    },
+    "variables_with_nans": [],
+    "version": "0.30"
+}
