@@ -1,2 +1,11 @@
 venv/
 *.png
+# Python bytecode / caches
+__pycache__/
+*.py[cod]
+*$py.class
+# packaging artifacts
+*.egg-info/
+build/
+dist/
+
