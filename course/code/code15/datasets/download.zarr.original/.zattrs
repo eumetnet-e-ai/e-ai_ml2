@@ -1,0 +1,276 @@
+{
+    "allow_nans": false,
+    "attribution": "unknown",
+    "constant_fields": [
+        "z_1000"
+    ],
+    "data_request": {
+        "area": [
+            90.0,
+            0.0,
+            -90.0,
+            359.75
+        ],
+        "grid": [
+            0.25,
+            0.25
+        ],
+        "param_level": {
+            "pl": [
+                [
+                    "z",
+                    1000
+                ]
+            ]
+        },
+        "param_step": {}
+    },
+    "description": "No description provided.",
+    "end_date": "2024-03-01T13:00:00",
+    "ensemble_dimension": 1,
+    "field_shape": [
+        721,
+        1440
+    ],
+    "flatten_grid": true,
+    "frequency": "1d",
+    "history": [
+        {
+            "action": "initialised",
+            "timestamp": "2025-05-24T18:01:10.889477"
+        },
+        {
+            "action": "tmp_statistics_initialised",
+            "timestamp": "2025-05-24T18:01:10.909463",
+            "version": 3
+        },
+        {
+            "action": "init finished",
+            "timestamp": "2025-05-24T18:01:10.954333"
+        },
+        {
+            "action": "compute_statistics_end",
+            "timestamp": "2025-05-24T18:01:59.042917"
+        }
+    ],
+    "latest_write_timestamp": "2025-05-24T18:01:11.157408",
+    "licence": "unknown",
+    "missing_dates": [],
+    "order_by": [
+        {
+            "valid_datetime": "ascending"
+        },
+        {
+            "param_level": "ascending"
+        },
+        {
+            "number": "ascending"
+        }
+    ],
+    "proj_string": null,
+    "provenance_load": {
+        "distribution_names": {
+            "IPython": "ipython",
+            "_cffi_backend": "cffi",
+            "_distutils_hack": "setuptools",
+            "antlr4": "antlr4-python3-runtime",
+            "array_api_compat": "array-api-compat",
+            "attr": "attrs",
+            "cartopy": "Cartopy",
+            "charset_normalizer": "charset-normalizer",
+            "dateutil": "python-dateutil",
+            "deprecated": "Deprecated",
+            "gribapi": "eccodes",
+            "lru": "lru-dict",
+            "pygments": "Pygments",
+            "semantic_version": "semantic-version",
+            "shapefile": "pyshp",
+            "socks": "PySocks",
+            "stack_data": "stack-data",
+            "yaml": "PyYAML"
+        },
+        "git_versions": {
+            "anemoi.datasets": {
+                "git": {
+                    "modified_files": 0,
+                    "sha1": "61100819e60f986be8a9aced1151b44305f22b24",
+                    "untracked_files": 0
+                }
+            }
+        },
+        "module_versions": {
+            "IPython": "9.0.2",
+            "__main__": ".../anemoi-datasets",
+            "__mp_main__": ".../anemoi-datasets",
+            "_cffi_backend": "1.17.1",
+            "_csv": "1.0",
+            "_ctypes": "1.1.0",
+            "_decimal": "1.70",
+            "_distutils_hack": ".../__init__.py",
+            "anemoi.datasets": "0.5.24",
+            "anemoi.transform": "0.1.10",
+            "anemoi.utils": "0.4.23",
+            "aniso8601": "10.0.1",
+            "antlr4": ".../__init__.py",
+            "argparse": "1.1",
+            "array_api_compat": "1.12.0",
+            "asciitree": ".../__init__.py",
+            "asttokens": ".../__init__.py",
+            "attr": "23.2.0",
+            "cachetools": "5.3.2",
+            "cartopy": "0.24.1",
+            "certifi": "2024.06.02",
+            "cffi": "1.17.1",
+            "cftime": "1.6.4.post1",
+            "charset_normalizer": "3.3.2",
+            "cloudpickle": "3.1.1",
+            "colorama": "0.4.6",
+            "comm": "0.2.2",
+            "csv": "1.0",
+            "ctypes": "1.1.0",
+            "dateutil": "2.8.2",
+            "decimal": "1.70",
+            "decorator": "5.2.1",
+            "deprecated": "1.2.14",
+            "deprecation": "2.1.0",
+            "earthkit.data": "0.14.3",
+            "earthkit.utils": "0.0.1",
+            "eccodes": "2.40.1",
+            "entrypoints": "0.4",
+            "executing": "2.2.0",
+            "fasteners": "0.19",
+            "fsspec": "2023.12.2",
+            "gribapi": "2.40.1",
+            "idna": "3.6",
+            "ipaddress": "1.0",
+            "ipywidgets": "8.1.5",
+            "jedi": "0.19.2",
+            "json": "2.0.9",
+            "logging": "0.5.1.2",
+            "lru": ".../__init__.py",
+            "msgpack": "1.1.0",
+            "multiurl": "0.3.5",
+            "numcodecs": "0.15.1",
+            "numpy": "1.26.3",
+            "omegaconf": "2.3.0",
+            "packaging": "23.2",
+            "pandas": "2.2.3",
+            "parso": "0.8.4",
+            "platform": "1.0.8",
+            "prompt_toolkit": "3.0.50",
+            "pure_eval": "0.2.3",
+            "pyarrow": "19.0.1",
+            "pycparser": "2.22",
+            "pygments": "2.19.1",
+            "pyproj": "3.7.1",
+            "pytz": "2025.2",
+            "re": "2.2.1",
+            "requests": "2.31.0",
+            "semantic_version": "2.10.0",
+            "shapefile": "2.3.1",
+            "shapely": "2.1.0",
+            "simplejson": "3.20.1",
+            "six": "1.16.0",
+            "socketserver": "0.4",
+            "socks": "1.7.1",
+            "stack_data": "0.6.3",
+            "tqdm": "4.66.1",
+            "traitlets": "5.14.3",
+            "urllib3": "1.26.18",
+            "wcwidth": "0.2.13",
+            "wrapt": "1.16.0",
+            "xarray": "2025.3.1",
+            "yaml": "6.0.1",
+            "zarr": "2.18.4",
+            "zlib": "1.0",
+            "zstandard": "0.23.0"
+        },
+        "python": "3.12.3",
+        "time": "2025-05-24T18:01:14.895421"
+    },
+    "recipe": {
+        "attribution": "unknown",
+        "build": {
+            "group_by": "monthly",
+            "use_grib_paramid": false,
+            "variable_naming": "default"
+        },
+        "dates": {
+            "end": "2024-03-02T12:00:00",
+            "frequency": "24h",
+            "group_by": "monthly",
+            "start": "2024-03-01T13:00:00"
+        },
+        "description": "No description provided.",
+        "input": {
+            "join": [
+                {
+                    "grib": {
+                        "path": "download.grib"
+                    }
+                }
+            ]
+        },
+        "licence": "unknown",
+        "output": {
+            "chunking": {
+                "dates": 1,
+                "ensembles": 1
+            },
+            "dtype": "float32",
+            "ensemble_dimension": 2,
+            "flatten_grid": true,
+            "order_by": [
+                {
+                    "valid_datetime": "ascending"
+                },
+                {
+                    "param_level": "ascending"
+                },
+                {
+                    "number": "ascending"
+                }
+            ],
+            "remapping": {
+                "param_level": "{param}_{levelist}"
+            },
+            "statistics": "param_level"
+        },
+        "statistics": {
+            "allow_nans": []
+        }
+    },
+    "remapping": {
+        "param_level": "{param}_{levelist}"
+    },
+    "resolution": 0.25,
+    "start_date": "2024-03-01T13:00:00",
+    "statistics_end_date": "2024-03-01T13:00:00",
+    "statistics_start_date": "2024-03-01T13:00:00",
+    "total_number_of_files": 75,
+    "total_size": 2067519,
+    "uuid": "f1b30606-b63c-4fae-9038-eec815804e9c",
+    "variables": [
+        "z_1000"
+    ],
+    "variables_metadata": {
+        "z_1000": {
+            "constant_in_time": true,
+            "mars": {
+                "class": "ea",
+                "date": 20240301,
+                "domain": "g",
+                "expver": "0001",
+                "levelist": 1000,
+                "levtype": "pl",
+                "param": "z",
+                "step": 0,
+                "stream": "oper",
+                "time": 1300,
+                "type": "an"
+            }
+        }
+    },
+    "variables_with_nans": [],
+    "version": "0.30"
+}
