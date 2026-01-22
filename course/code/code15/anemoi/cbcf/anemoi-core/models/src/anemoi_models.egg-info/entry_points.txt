@@ -1,0 +1,2 @@
+[console_scripts]
+anemoi-models = anemoi.models.__main__:main
